@@ -33,7 +33,7 @@ nginx:
     - web
 
 postgres:
-  image: postgres:9.5
+  image: postgres:10
   volumes:
     - /var/lib/postgresql
   ports:

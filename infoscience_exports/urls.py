@@ -9,7 +9,7 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
 
     url(r'^', include('exports.urls')),
 

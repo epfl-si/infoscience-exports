@@ -5,6 +5,8 @@ from .views import LoggedExportViewSet
 router = DefaultRouter()
 router.register(r'exports', LoggedExportViewSet)
 
+app_name = 'api'
+
 urlpatterns = [
-    url(r'', include(router.urls, namespace='api')),
+    url(r'', include(router.urls)),
 ]

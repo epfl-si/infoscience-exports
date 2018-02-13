@@ -105,11 +105,11 @@ To set up data and static files ::
 
 To create your super user ::
 
-    $ docker-compose run web python infoscience_exports/manage.py createsuperuser
+    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py createsuperuser
 
 To run the tests (in production environment)::
 
-    $ docker-compose run web python infoscience_exports/manage.py test exports [--failfast -k]
+    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py test exports [--failfast -k]
 
 Or to test more intensively with nose and coverage ::
 
@@ -117,7 +117,7 @@ Or to test more intensively with nose and coverage ::
 
 To check your environment variables ::
 
-    $ docker-compose run web env
+    $ docker-compose -f docker-compose-dev.yml run web env
 
 You can then access the app with
 

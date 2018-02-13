@@ -5,6 +5,8 @@ from exports.views import MockExportViewSet
 router = DefaultRouter()
 router.register(r'exports', MockExportViewSet)
 
+app_name = 'mock'
+
 urlpatterns = [
-    url(r'', include(router.urls, namespace='mock')),
+    url(r'', include(router.urls)),
 ]

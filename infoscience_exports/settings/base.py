@@ -29,14 +29,13 @@ INSTALLED_APPS = (
     # Third party apps
     'rest_framework',            # utilities for rest apis
     'rest_framework.authtoken',  # token authentication
-    'bootstrap3',
+    'bootstrap4',
 
     # Your apps
     'exports',
 )
 
-# https://docs.djangoproject.com/en/1.8/topics/http/middleware/
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

@@ -1,5 +1,5 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from selenium.webdriver.firefox.webdriver import WebDriver
 from exports.models import Export
 
