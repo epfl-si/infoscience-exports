@@ -1,0 +1,36 @@
+language: python
+
+services:
+  - postgresql
+  - redis-server
+
+python:
+  - "3.5"
+
+before_script:
+- "export DISPLAY=:99.0"
+- "sh -e /etc/init.d/xvfb start"
+- sleep 3 # give xvfb some time to start
+- export SECRET_KEY=`openssl rand -base64 32`
+- psql -c 'CREATE DATABASE "infoscience_exports";' -U postgres
+- psql -c 'CREATE DATABASE "mock_infoscience_exports";' -U postgres
+- psql -c "CREATE USER django WITH PASSWORD 'django';" -U postgres
+- psql -c "ALTER ROLE django WITH CREATEDB;" -U postgres
+- export DJANGO_SETTINGS_MODULE=settings.test
+
+install:
+  - "pip install -r ./requirements.txt"
+
+script:
+  - ./infoscience_exports/manage.py test infoscience_exports
+
+
+after_success:
+  - coveralls
+
+
+notifications:
+  email: false
+
+matrix:
+  fast_finish: true

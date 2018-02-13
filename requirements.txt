@@ -1,0 +1,81 @@
+# BASE
+######
+
+# Django
+django==1.8.4
+
+# For the persistence stores
+psycopg2==2.6
+dj-database-url==0.3.0
+
+# Models
+django-model-utils==2.3.1
+
+# Rest apis
+djangorestframework==3.2.3
+Markdown==2.6.2
+django-filter==0.11.0
+
+# Time zones support
+pytz==2015.4
+
+django-bootstrap3==6.2.2
+
+# WSGI Handler
+gevent==1.0.2
+gunicorn==19.3.0
+
+django-dirtyfields==0.8
+
+# TEST
+######
+
+# Mocking
+mock==1.3.0
+
+# Fixtures
+factory-boy==2.5.2
+fake-factory==0.5.2
+
+# Test Runner
+django-nose==1.4.1
+nose-progressive==1.5.1
+
+# Code Coverage
+coverage==3.7.1
+
+# Style Enforcement
+flake8==2.4.1
+
+# Coveralls.io
+coveralls==1.1
+
+selenium
+
+# DEV
+######
+
+# Debugging
+ipdb==0.8
+ipython==3.1.0
+
+# Docs
+mkdocs==0.14.0
+
+# Command Utils
+Fabric==1.10.1
+
+django-debug-toolbar==1.4
+
+# PROD
+######
+
+# Caching
+hiredis==0.2.0
+django-redis-cache==0.13.1
+
+# Django-secure
+django-secure==1.0.1
+
+# Graylog connector
+graypy==0.2.12

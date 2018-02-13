@@ -1,0 +1,10 @@
+[run]
+branch = True
+omit = *migrations*,
+       *urls*,
+       */test*,
+       *admin*,
+       ./infoscience_exports/config/*,
+       ./infoscience_exports/manage.py,
+       ./infoscience_exports/wsgi.py,
+       *__init__*

@@ -1,0 +1,16 @@
+[
+{
+    "fields": {
+        "name": "Name1"
+    },
+    "model": "exports.export",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "Name2"
+    },
+    "model": "exports.export",
+    "pk": 2
+}
+]

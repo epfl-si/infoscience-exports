@@ -1,0 +1,8 @@
+general:
+  build_dir: fortune_teller
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - $DEPLOY

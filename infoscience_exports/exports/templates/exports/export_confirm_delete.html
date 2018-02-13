@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Delete</h1>
+    <p>Are you sure you want to delete?</p>
+
+    <form id="{{cookiecutter.nocase_model_name}}_form" method="post" action=".">
+    {% csrf_token %}
+    <input type="submit" value="Yes" class="btn btn-primary" /> <a href="{% url 'crud:export-list' %}" class="btn btn-danger">No</a>
+    </form>
+{% endblock %}
+

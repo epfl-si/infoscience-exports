@@ -1,0 +1,40 @@
+web:
+  build: .
+  restart: always
+  expose:
+    # used by nginx: see proxy in sites-enabled
+    - "8000"
+  links:
+    - postgres
+    - redis
+  env_file:
+    # uses for passwords (kept out of git)
+    # SECRET_KEY=
+    # DATABASE_PASSWORD_PROD=
+    - ./env/django.env
+  environment:
+    - DJANGO_SETTINGS_MODULE=settings.prod
+  command: gunicorn --reload -w 4 -b :8000 --chdir /usr/src/app/infoscience_exports wsgi:application
+
+nginx:
+  build: ./nginx
+  ports:
+    # out:in = from [out] host, into [in] container 
+    - "8000:80"
+  links:
+    # used in nginx/sites-enabled/web.conf
+    - web
+
+postgres:
+  image: postgres:9.5
+  volumes:
+    - pgdata:/var/lib/postgresql
+  ports:
+    - "25432:5432"
+
+redis:
+  image: redis:3.2
+  ports:
+    - "26379:6379"
+  volumes:
+    - redisdata:/data
