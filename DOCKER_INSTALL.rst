@@ -107,7 +107,7 @@ To create your super user ::
 
     $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py createsuperuser
 
-To run the tests (in production environment)::
+To run the tests ::
 
     $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py test exports [--failfast -k]
 
