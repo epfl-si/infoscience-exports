@@ -109,7 +109,7 @@ To create your super user ::
 
 To run the tests ::
 
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py test exports --noinput [--failfast -k]
+    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py test exports --noinput [--failfast --keepdb]
 
 Or to test more intensively with nose and coverage ::
 
