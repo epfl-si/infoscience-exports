@@ -5,7 +5,9 @@ DEBUG = True
 for config in TEMPLATES:
     config['OPTIONS']['debug'] = DEBUG
 
-INSTALLED_APPS += ('debug_toolbar',)
+INSTALLED_APPS += ('debug_toolbar',
+                   'django_extensions',
+                   )
 MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 # Postgres
