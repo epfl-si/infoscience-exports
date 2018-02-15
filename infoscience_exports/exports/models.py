@@ -13,4 +13,7 @@ class Export(DirtyFieldsMixin, models.Model):
     def get_absolute_url(self):
         return reverse('crud:export-detail', args=[str(self.id)])
 
+    class Meta:
+        ordering = ['-id']
+
 Export.mock_objects = Export.objects.db_manager('mock')
