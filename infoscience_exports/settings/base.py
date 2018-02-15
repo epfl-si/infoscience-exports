@@ -150,9 +150,8 @@ LOGGING = {
 
 # Django Rest Framework
 REST_FRAMEWORK = {
-    'PAGINATE_BY': 30,
-    'PAGINATE_BY_PARAM': 'per_page',
-    'MAX_PAGINATE_BY': 1000,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
     "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
