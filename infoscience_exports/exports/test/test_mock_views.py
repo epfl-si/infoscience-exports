@@ -67,6 +67,11 @@ class MockTestCase(TransactionTestCase):
                                    follow=True)
 
         self.assertEqual(response.status_code, 200)
+
+        # as order matter, do the order before the check
+        id_values = list(Export.mock_objects.all())
+        id_values = sorted(id_values, key=lambda tup: tup.pk, reverse=True)
+
         self.assertJSONEqual(response.content,
                              """
                              {
@@ -75,16 +80,20 @@ class MockTestCase(TransactionTestCase):
                                  "previous": null,
                                  "results": [
                                      {
-                                        "id": 1,
-                                        "name": "Name1"
+                                        "id": %s,
+                                        "name": "%s"
                                      },
                                      {
-                                        "id": 2,
-                                        "name": "Name2"
+                                        "id": %s,
+                                        "name": "%s"
                                      }
                                  ]
                              }
-                             """)
+                             """ % (id_values[0].pk,
+                                    id_values[0].name,
+                                    id_values[1].pk,
+                                    id_values[1].name)
+                             )
 
         self.assertEqual(Export.mock_objects.count(), 2)
 

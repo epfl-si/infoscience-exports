@@ -50,6 +50,11 @@ class APITestCase(TransactionTestCase):
         response = self.client.get(reverse('api:export-list'), follow=True)
 
         self.assertEqual(response.status_code, 200)
+
+        # as order matter, do the order before the check
+        id_values = (self.mpl, self.mi)
+        id_values = sorted(id_values, key=lambda tup: tup.pk, reverse=True)
+
         self.assertJSONEqual(response.content,
                              """
                              {
@@ -59,15 +64,19 @@ class APITestCase(TransactionTestCase):
                                  "results": [
                                      {
                                         "id": %s,
-                                        "name": "Name1"
+                                        "name": "%s"
                                      },
                                      {
                                         "id": %s,
-                                        "name": "Name2"
+                                        "name": "%s"
                                      }
                                  ]
                              }
-                             """ % (self.mpl.pk, self.mi.pk,))
+                             """ % (id_values[0].pk,
+                                    id_values[0].name,
+                                    id_values[1].pk,
+                                    id_values[1].name)
+                             )
 
         self.assertEqual(Export.objects.count(), 2)
 

@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse_lazy as django_reverse_lazy
+from django.urls import reverse_lazy as django_reverse_lazy
 from django.db import transaction
 from django.http import HttpResponse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, \

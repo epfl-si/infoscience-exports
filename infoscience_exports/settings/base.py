@@ -29,14 +29,13 @@ INSTALLED_APPS = (
     # Third party apps
     'rest_framework',            # utilities for rest apis
     'rest_framework.authtoken',  # token authentication
-    'bootstrap3',
+    'bootstrap4',
 
     # Your apps
     'exports',
 )
 
-# https://docs.djangoproject.com/en/1.8/topics/http/middleware/
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -151,9 +150,8 @@ LOGGING = {
 
 # Django Rest Framework
 REST_FRAMEWORK = {
-    'PAGINATE_BY': 30,
-    'PAGINATE_BY_PARAM': 'per_page',
-    'MAX_PAGINATE_BY': 1000,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
     "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
