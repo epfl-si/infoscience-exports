@@ -27,10 +27,6 @@ DATABASES = {
     }
 }
 
-# django-secure
-# http://django-secure.readthedocs.org/en/v0.1.2/settings.html
-INSTALLED_APPS += ("djangosecure", )
-
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
