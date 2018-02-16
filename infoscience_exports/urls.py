@@ -5,6 +5,7 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
+from django_tequila.urls import urlpatterns as django_tequila_urlpatterns
 
 router = DefaultRouter()
 
@@ -19,3 +20,5 @@ urlpatterns = [
     url(r'^mock/v1/', include('exports.mock')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += django_tequila_urlpatterns
