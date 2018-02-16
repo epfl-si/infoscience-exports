@@ -19,6 +19,7 @@ django-filter==2.0.0.dev1
 # Time zones support
 pytz==2018.3
 
+-e git+https://github.com/epfl-idevelop/django-tequila.git#egg=django_tequila
 django-bootstrap4==0.0.5
 
 # WSGI Handler

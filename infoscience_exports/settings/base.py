@@ -30,6 +30,7 @@ INSTALLED_APPS = (
     'rest_framework',            # utilities for rest apis
     'rest_framework.authtoken',  # token authentication
     'bootstrap4',
+    'django_tequila',
 
     # Your apps
     'exports',
@@ -42,6 +43,7 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_tequila.middleware.TequilaMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -165,3 +167,14 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+# Django Tequila
+AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
+TEQUILA_SERVICE_NAME = "Infoscience exports"
+
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = "/exports"
+LOGIN_REDIRECT_IF_NOT_ALLOWED = "/not_allowed"
+LOGOUT_URL = '/exports'
+
+AUTH_USER_MODEL = 'exports.User'

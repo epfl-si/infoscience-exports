@@ -103,9 +103,9 @@ To set up data and static files ::
     $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py migrate --database=mock
     $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py collectstatic --noinput
 
-To create your super user ::
+To create your super user, customize and run this line ::
 
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py createsuperuser
+    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py createsuperuser --username=your_username --email=same_as_tequila
 
 To run the tests ::
 
@@ -121,9 +121,9 @@ To check your environment variables ::
 
 You can then access the app with
 
-* its CRUD interface : http://127.0.0.1:8000/exports/
-* or the API : http://127.0.0.1:8000/api/v1/exports/
-* or through admin: http://127.0.0.1:8000/admin/login
+* its CRUD interface : https://127.0.0.1:8000/exports/
+* or the API : https://127.0.0.1:8000/api/v1/exports/
+* or through admin: https://127.0.0.1:8000/admin
 
 And, finally, go on with your nice feature ::
 

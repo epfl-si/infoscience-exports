@@ -22,7 +22,7 @@ nginx:
   build: ./nginx
   ports:
     # out:in = from [out] host, into [in] container 
-    - "8000:80"
+    - "8000:8000"
   volumes:
     - ./nginx/sites-enabled/web.conf:/etc/nginx/conf.d/web.conf
     - ./nginx/assets:/usr/share/nginx/html
