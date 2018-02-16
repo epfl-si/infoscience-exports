@@ -2,17 +2,17 @@
 
 {% block content %}
     <h1>Exports Listing</h1>
-    <a href="{% url 'crud:export-create' %}">Create</a>
+    <a href="{% url 'crud:export-create' %}">Create a new configuration</a>
     <ul>
         {% for object in object_list %}
             <li>
-                {{ object }}
+                {{ object.name }}
                 <a href="{{ object.get_absolute_url }}">Details</a>
                 <a href="{% url 'crud:export-update' object.pk %}">Update</a>
                 <a href="{% url 'crud:export-delete' object.pk %}">Delete</a>
             </li>
         {% empty %}
-                <p>No items.</p>
+                <p>You currently have no export configured.</p>
         {% endfor %}
     </ul>
 

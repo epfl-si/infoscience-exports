@@ -12,5 +12,6 @@ export_patterns = ([
     ], 'exports')
 
 urlpatterns = [
+    url(r'^', include(export_patterns, namespace='crud')),
     url(r'^exports/', include(export_patterns, namespace='crud')),
 ]
