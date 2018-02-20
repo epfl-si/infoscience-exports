@@ -21,12 +21,12 @@ class FakeTestCase(TransactionTestCase):
 
         # first test the standard
 
-        response = self.client.get(rest_reverse('mock:export-detail',
+        response = self.client.get(rest_reverse('mock:export-view',
                                                 args=[1]), follow=True)
 
         self.assertNotEqual(response.status_code, test_status_code)
 
-        response = self.client.get(rest_reverse('mock:export-detail',
+        response = self.client.get(rest_reverse('mock:export-view',
                                                 args=[1]) +
                                    '?fake=%s' % test_status_code,
                                    follow=True)
@@ -98,7 +98,7 @@ class MockTestCase(TransactionTestCase):
         self.assertEqual(Export.mock_objects.count(), 2)
 
     def test_get_export_1(self):
-        response = self.client.get(rest_reverse('mock:export-detail',
+        response = self.client.get(rest_reverse('mock:export-view',
                                                 args=[1]),
                                    follow=True)
 
@@ -141,7 +141,7 @@ class MockTestCase(TransactionTestCase):
     def test_put_export(self):
         before_count = Export.mock_objects.count()
 
-        response = self.client.put(rest_reverse('mock:export-detail',
+        response = self.client.put(rest_reverse('mock:export-view',
                                                 args=[1]),
                                    """
                                    {
@@ -168,7 +168,7 @@ class MockTestCase(TransactionTestCase):
     def test_delete_export(self):
         self.assertTrue(Export.mock_objects.get(id=1))
 
-        response = self.client.delete(rest_reverse('mock:export-detail',
+        response = self.client.delete(rest_reverse('mock:export-view',
                                                    args=[1]),
                                       follow=True)
 

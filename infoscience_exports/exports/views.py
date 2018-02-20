@@ -54,6 +54,20 @@ class MockExportViewSet(ExportViewSet):
             return response
 
 
+class ExportView(DetailView):
+    model = Export
+    template_name_suffix = ''
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        url = "https://infoscience.epfl.ch/search?ln=fr&p=&f=&rm=&ln=fr&sf=&so=d&rg=10&c=Infoscience&of=xm"
+        marc21xml = import_marc21xml(url)
+        context['marc21xml'] = marc21xml
+
+        return context
+
+
 class ExportList(LogMixin, ListView):
     model = Export
     paginate_by = 20
@@ -80,9 +94,6 @@ class ExportCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(ExportCreate, self).form_valid(form)
-
-class ExportDetail(DetailView):
-    model = Export
 
 
 class ExportUpdate(UpdateView):

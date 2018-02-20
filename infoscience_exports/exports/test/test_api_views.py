@@ -82,7 +82,7 @@ class APITestCase(TransactionTestCase):
 
     # - 2. GET /exports/1
     def test_get_export_1(self):
-        response = self.client.get(reverse('api:export-detail',
+        response = self.client.get(reverse('api:export-view',
                                            args=[self.mpl.pk]),
                                    follow=True)
 
@@ -100,14 +100,14 @@ class APITestCase(TransactionTestCase):
 
         self.mpl.delete()
 
-        response = self.client.get(reverse('api:export-detail',
+        response = self.client.get(reverse('api:export-view',
                                            args=[pk]),
                                    follow=True)
 
         self.assertEqual(response.status_code, 404)
 
     def test_get_export_invalid_pk(self):
-        response = self.client.get(reverse('api:export-detail',
+        response = self.client.get(reverse('api:export-view',
                                            args=['invalid_pk']),
                                    follow=True)
 
@@ -177,7 +177,7 @@ class APITestCase(TransactionTestCase):
         pk = self.mpl.pk
         self.assertNotEqual(self.mpl.name, 'newName')
 
-        response = self.client.put(reverse('api:export-detail',
+        response = self.client.put(reverse('api:export-view',
                                            args=[pk]),
                                    """
                                    {
@@ -201,7 +201,7 @@ class APITestCase(TransactionTestCase):
                              """ % (pk,))
 
     def test_put_export_invalid_payload(self):
-        response = self.client.put(reverse('api:export-detail',
+        response = self.client.put(reverse('api:export-view',
                                            args=[self.mpl.pk]),
                                    """
                                    {
@@ -216,7 +216,7 @@ class APITestCase(TransactionTestCase):
         self.assertTrue("JSON parse error" in response.data.get('detail'))
 
     def test_put_export_invalid_pk(self):
-        response = self.client.put(reverse('api:export-detail',
+        response = self.client.put(reverse('api:export-view',
                                            args=['invalid_pk']),
                                    """
                                    {
@@ -232,7 +232,7 @@ class APITestCase(TransactionTestCase):
         name_max_length = Export._meta.get_field('name').max_length
         too_long = 'x' * (name_max_length + 1)
 
-        response = self.client.put(reverse('api:export-detail',
+        response = self.client.put(reverse('api:export-view',
                                            args=[self.mpl.pk]),
                                    """
                                    {
@@ -250,7 +250,7 @@ class APITestCase(TransactionTestCase):
     def test_delete_export(self):
         pk = self.mpl.pk
 
-        response = self.client.delete(reverse('api:export-detail',
+        response = self.client.delete(reverse('api:export-view',
                                               args=[self.mpl.pk]),
                                       follow=True)
 
@@ -261,7 +261,7 @@ class APITestCase(TransactionTestCase):
     def test_delete_export_invalid_pk(self):
         before_count = Export.objects.count()
 
-        response = self.client.delete(reverse('api:export-detail',
+        response = self.client.delete(reverse('api:export-view',
                                               args=['invalid_pk']),
                                       follow=True)
 

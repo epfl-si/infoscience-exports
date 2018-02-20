@@ -19,7 +19,6 @@
 				<a class="btn btn-primary" href="{{ object.get_absolute_url }}" role="button">{% trans "Details" %}</a>
 				<a class="btn btn-primary" href="{% url 'crud:export-update' object.pk %}" role="button">{% trans "Update" %}</a>
 				<a class="btn btn-primary" href="{% url 'crud:export-delete' object.pk %}" role="button">{% trans "Delete" %}</a>
-				<a class="btn btn-success" href="#" role="button">{% trans "Preview" %}</a>
 				</p>
 			</div>
 		</li>

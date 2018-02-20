@@ -25,7 +25,7 @@ class Export(BulletsSettings,
         return "Export {} {}".format(self.id, self.name)
 
     def get_absolute_url(self):
-        return reverse('crud:export-detail', args=[str(self.id)])
+        return reverse('crud:export-view', args=[str(self.id)])
 
     class Meta:
         ordering = ['-id']

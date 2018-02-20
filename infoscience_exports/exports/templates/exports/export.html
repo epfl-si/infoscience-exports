@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load staticfiles %}
+
+{% for article in marc21xml %}
+	<div class="marc21xm-record-template1">
+		<p>
+		{% if article.Authors %}<span>{% include "exports/objects_list.html" with objects_css='marc21xml-author' objects=article.Authors %}.</span>{% endif %}
+		{% if article.Title_All %}<span style="font-style: italic">{{ article.Title_All }}.</span>{% endif %}
+		{% if article.Publisher %}<span>{{ article.Publisher }}</span>{% endif %}
+		{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
+		</p>
+		<span><a href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en">{% trans "Detailed record" %}</a></span>
+		<p>
+		{% if not article.last %}<div style="width:100%; border-bottom: 1px dotted #000;"></div>{% endif %}
+	</div>
+	{% empty %}
+	<p>{% trans "No items" %}.</p>
+{% endfor %}
