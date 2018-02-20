@@ -2,6 +2,8 @@ from .test import *  # noqa
 
 DEBUG = True
 
+SITE_URL = 'https://127.0.0.1:8000'
+
 for config in TEMPLATES:
     config['OPTIONS']['debug'] = DEBUG
 

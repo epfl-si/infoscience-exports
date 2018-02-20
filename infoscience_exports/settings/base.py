@@ -17,6 +17,7 @@ def get_env_variable(var_name):
 
     return environ_var
 
+SITE_URL = ''
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -59,6 +60,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'exports.context_processor.site_url'
             ],
         },
     },
