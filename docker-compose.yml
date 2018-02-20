@@ -2,8 +2,7 @@ web:
   image: epflidevelop/infoscience-exports
   restart: always
   expose:
-    # used by nginx: see proxy in sites-enabled
-    - "8000"
+    - "80"
   links:
     - postgres
   env_file:
@@ -13,16 +12,7 @@ web:
     - ./env/django.env
   environment:
     - DJANGO_SETTINGS_MODULE=settings.prod
-  command: gunicorn --reload -w 4 -b :8000 --chdir /usr/src/app/infoscience_exports wsgi:application
-
-nginx:
-  build: ./nginx
-  ports:
-    # out:in = from [out] host, into [in] container 
-    - "8000:80"
-  links:
-    # used in nginx/sites-enabled/web.conf
-    - web
+  command: gunicorn --reload -w 4 -b :80 --chdir /usr/src/app/infoscience_exports wsgi:application
 
 postgres:
   image: postgres:10
