@@ -36,8 +36,6 @@ mkdocs = "==0.17.2"
 "Fabric3" = "==1.14.post1"
 django-debug-toolbar = "==1.9.1"
 django-extensions = "==1.9.9"
-hiredis = "==0.2.0"
-django-redis-cache = "==1.7.1"
 graypy = "==0.2.14"
 
 

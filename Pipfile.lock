@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "08f327ebb91d3561daef489ff7453f112942ff913a6f6f4834fd1bede27a9dea"
+            "sha256": "4f64e08657cd24135b6290c8e50762c09fc3a1efdab99ac33df9b0a63c8f909e"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -283,12 +283,6 @@
             ],
             "version": "==1.4.5"
         },
-        "django-redis-cache": {
-            "hashes": [
-                "sha256:2b4e3510bbcaf3d331975717afd6f15a36fbaf7622504599d2727dc99f90c64d"
-            ],
-            "version": "==1.7.1"
-        },
         "django-tequila": {
             "editable": true,
             "git": "https://github.com/epfl-idevelop/django-tequila.git"
@@ -404,12 +398,6 @@
                 "sha256:eee1169f0ca667be05db3351a0960765620dad53f53434262ff8901b68a1b622"
             ],
             "version": "==19.7.1"
-        },
-        "hiredis": {
-            "hashes": [
-                "sha256:ca958e13128e49674aa4a96f02746f5de5973f39b57297b84d59fd44d314d5b5"
-            ],
-            "version": "==0.2.0"
         },
         "idna": {
             "hashes": [
@@ -708,13 +696,6 @@
                 "sha256:5ac82e411044fb129bae5cfbeb3ba626acb2af31a8d17d175004b70862a741a7"
             ],
             "version": "==3.12"
-        },
-        "redis": {
-            "hashes": [
-                "sha256:8a1900a9f2a0a44ecf6e8b5eb3e967a9909dfed219ad66df094f27f7d6f330fb",
-                "sha256:a22ca993cea2962dbb588f9f30d0015ac4afcc45bee27d3978c0dbe9e97c6c0f"
-            ],
-            "version": "==2.10.6"
         },
         "requests": {
             "hashes": [

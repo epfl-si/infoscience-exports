@@ -1,12 +1,11 @@
 web:
-  build: .
+  image: epflidevelop/infoscience-exports
   restart: always
   expose:
     # used by nginx: see proxy in sites-enabled
     - "8000"
   links:
     - postgres
-    - redis
   env_file:
     # uses for passwords (kept out of git)
     # SECRET_KEY=
@@ -31,10 +30,3 @@ postgres:
     - pgdata:/var/lib/postgresql
   ports:
     - "25432:5432"
-
-redis:
-  image: redis:3
-  ports:
-    - "26379:6379"
-  volumes:
-    - redisdata:/data

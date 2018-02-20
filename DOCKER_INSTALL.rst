@@ -29,16 +29,6 @@ Three docker images (postgres, web, nginx) will be pulled / build on the followi
 Production
 ..........
 
-The production make use of one more container, from a standard redis image ::
-
-    $ docker-compose build
-    postgres uses an image, skipping
-    redis uses an image, skipping
-    Building web
-    ... (7 steps)
-    Building nginx
-    ... (4 steps)
-
 Files are copied inside the images for production purpose. 
 
 * the code of the application: ./infoscience_exports
