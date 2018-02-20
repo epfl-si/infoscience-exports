@@ -6,20 +6,19 @@
 {% block content %}
 	<h1>{% trans "Configurations" %}</h1>
 
-	<p>{{ request.user }}</p>
-
 	<p><a class="btn btn-primary" href="{% url 'crud:export-create' %}" role="button">{% trans "Create" %}</a></p>
 
 	<ul class="list-group">
 		{% for object in object_list %}
 		<li class="list-group-item">
-			<div >
-				<h4>{{ object.name }}</h4>
-				<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}">{{ SITE_URL }}{{ object.get_absolute_url }}</a></p>
-				<p>
-				<a class="btn btn-primary" href="{% url 'crud:export-update' object.pk %}" role="button">{% trans "Edit" %}</a>
-				<a class="btn btn-primary" href="{% url 'crud:export-delete' object.pk %}" role="button">{% trans "Delete" %}</a>
-				</p>
+			<div class="row">
+				<div class="col-10">
+					<h4><a href="{% url 'crud:export-update' object.pk %}">{{ object.name }}</a></h4>
+					<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}">{{ SITE_URL }}{{ object.get_absolute_url }}</a></p>				
+				</div>
+				<div class="col-2">
+					<a class="btn btn-primary" style="float:right" href="{% url 'crud:export-delete' object.pk %}" role="button">{% trans "Delete" %}</a>
+				</div>
 			</div>
 		</li>
 		{% empty %}
@@ -31,13 +30,13 @@
 	<div class="pagination">
 	    <span class="page-links">
 	        {% if page_obj.has_previous %}
-	            <a href="{% url 'crud:export-list' %}?page={{ page_obj.previous_page_number }}">previous</a>
+	            <a href="{% url 'crud:export-list' %}?page={{ page_obj.previous_page_number }}">{% trans "previous" %}</a>
 	        {% endif %}
 	        <span class="page-current">
-	            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+	            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}.
 	        </span>
 	        {% if page_obj.has_next %}
-	            <a href="{% url 'crud:export-list' %}?page={{ page_obj.next_page_number }}">next</a>
+	            <a href="{% url 'crud:export-list' %}?page={{ page_obj.next_page_number }}">{% trans "next" %}</a>
 	        {% endif %}
 	    </span>
 	</div>
