@@ -7,4 +7,5 @@ from .models import Export
 class ExportForm(FormLoggingMixin, forms.ModelForm):
     class Meta:
         model = Export
-        fields = ['user', 'name', 'url']
+        #fields = ['name', 'url']
+        exclude = ['user']

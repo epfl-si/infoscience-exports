@@ -77,6 +77,9 @@ class ExportCreate(CreateView):
     form_class = ExportForm
     success_url = django_reverse_lazy('crud:export-list')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(ExportCreate, self).form_valid(form)
 
 class ExportDetail(DetailView):
     model = Export
