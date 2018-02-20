@@ -79,7 +79,6 @@ class ExportList(LogMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        
         url = "https://infoscience.epfl.ch/search?ln=fr&p=&f=&rm=&ln=fr&sf=&so=d&rg=10&c=Infoscience&of=xm"
         marc21xml = import_marc21xml(url)       
         context['marc21xml'] = marc21xml

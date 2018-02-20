@@ -4,20 +4,20 @@
 {% load staticfiles %}
 
 {% block content %}
-	<h1>Exports Listing</h1>
+	<h1>{% trans "Configurations" %}</h1>
+
+	<p>{{ request.user }}</p>
 
 	<p><a class="btn btn-primary" href="{% url 'crud:export-create' %}" role="button">{% trans "Create" %}</a></p>
 
 	<ul class="list-group">
 		{% for object in object_list %}
 		<li class="list-group-item">
-			<div>
-				<p>{{ object.user }}</p>
+			<div >
 				<h4>{{ object.name }}</h4>
-				<p>{% trans "url" %}: <a href="{{ object.url }}">{{ object.url }}</a></p>
+				<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}">https://epfl-export.tind.io/{{ object.pk }}</a></p>
 				<p>
-				<a class="btn btn-primary" href="{{ object.get_absolute_url }}" role="button">{% trans "Details" %}</a>
-				<a class="btn btn-primary" href="{% url 'crud:export-update' object.pk %}" role="button">{% trans "Update" %}</a>
+				<a class="btn btn-primary" href="{% url 'crud:export-update' object.pk %}" role="button">{% trans "Edit" %}</a>
 				<a class="btn btn-primary" href="{% url 'crud:export-delete' object.pk %}" role="button">{% trans "Delete" %}</a>
 				</p>
 			</div>
@@ -26,22 +26,6 @@
 		<p>{% trans "You currently have no export configured" %}.</p>
 		{% endfor %}
 	</ul>
-
-	<div class="marc21xm-records-template">
-		{% for article in marc21xml %}
-		<div class="marc21xm-records">
-			<p>
-			{% if article.Authors %}<span>{% include "exports/objects_list.html" with objects_css='marc21xml-author' objects=article.Authors %}.</span>{% endif %}
-			{% if article.Title_All %}<span style="font-style: italic">{{ article.Title_All }}.</span>{% endif %}
-			{% if article.Publisher %}<span>{{ article.Publisher }}</span>{% endif %}
-			{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
-			</p>
-			<span><a href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en">{% trans "Detailed record" %}</a></span>
-		</div>
-		{% empty %}
-		<p>{% trans "No records" %}.</p>
-		{% endfor %}
-	</div>
 
 	{% if is_paginated %}
 	<div class="pagination">

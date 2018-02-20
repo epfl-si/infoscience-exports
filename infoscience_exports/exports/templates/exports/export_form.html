@@ -9,6 +9,8 @@
 		{% csrf_token %}
 		{% bootstrap_form form layout='horizontal' %}
 		{% buttons %}
+		<a class="btn btn-primary" href="{% url 'crud:export-list' %}" role="button">{% trans "Cancel" %}</a>
+		<button type="submit" class="btn btn-primary">{% trans "Preview" %}</button>
 		<button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
 		{% endbuttons %}
 	</form>
