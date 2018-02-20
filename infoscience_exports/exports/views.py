@@ -3,6 +3,7 @@ from django.db import transaction
 from django.http import HttpResponse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, \
     DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from rest_framework import viewsets, permissions, mixins
 from rest_framework.request import Request
@@ -68,7 +69,7 @@ class ExportView(DetailView):
         return context
 
 
-class ExportList(LogMixin, ListView):
+class ExportList(LoginRequiredMixin, LogMixin, ListView):
     model = Export
     paginate_by = 20
 
@@ -86,7 +87,7 @@ class ExportList(LogMixin, ListView):
         return context
 
 
-class ExportCreate(CreateView):
+class ExportCreate(LoginRequiredMixin, CreateView):
     model = Export
     form_class = ExportForm
     success_url = django_reverse_lazy('crud:export-list')
@@ -96,12 +97,12 @@ class ExportCreate(CreateView):
         return super(ExportCreate, self).form_valid(form)
 
 
-class ExportUpdate(UpdateView):
+class ExportUpdate(LoginRequiredMixin, UpdateView):
     model = Export
     form_class = ExportForm
     success_url = django_reverse_lazy('crud:export-list')
 
 
-class ExportDelete(DeleteView):
+class ExportDelete(LoginRequiredMixin, DeleteView):
     model = Export
     success_url = django_reverse_lazy('crud:export-list')
