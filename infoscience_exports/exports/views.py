@@ -1,8 +1,8 @@
 from django.urls import reverse_lazy as django_reverse_lazy
 from django.db import transaction
 from django.http import HttpResponse
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, \
-    DeleteView
+from django.template import Context, loader
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from rest_framework import viewsets, permissions, mixins
@@ -61,11 +61,8 @@ class ExportView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-
-        url = "https://infoscience.epfl.ch/search?ln=fr&p=&f=&rm=&ln=fr&sf=&so=d&rg=10&c=Infoscience&of=xm"
-        marc21xml = import_marc21xml(url)
-        context['marc21xml'] = marc21xml
-
+        context['marc21xml'] = import_marc21xml(self.object.url)
+        context['id'] = self.object.pk
         return context
 
 
@@ -73,14 +70,8 @@ class ExportList(LoginRequiredMixin, LogMixin, ListView):
     model = Export
     paginate_by = 20
 
-    #def get(self, *args, **kwargs):
-    #    to_return = super(ExportList, self).get(*args, **kwargs)
-    #    self.logger.info("Get a list of exports")
-    #    return to_return
-
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        
         url = "https://infoscience.epfl.ch/search?ln=fr&p=&f=&rm=&ln=fr&sf=&so=d&rg=10&c=Infoscience&of=xm"
         marc21xml = import_marc21xml(url)       
         context['marc21xml'] = marc21xml
@@ -106,3 +97,11 @@ class ExportUpdate(LoginRequiredMixin, UpdateView):
 class ExportDelete(LoginRequiredMixin, DeleteView):
     model = Export
     success_url = django_reverse_lazy('crud:export-list')
+
+
+def preview(request):
+    url = request.GET['url']
+    t = loader.get_template('exports/export.html')
+    marc21xml = import_marc21xml(url)
+    c = {'marc21xml': marc21xml}
+    return HttpResponse(t.render(c))

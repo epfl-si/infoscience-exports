@@ -2,6 +2,8 @@ from .base import *  # noqa
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SITE_URL = 'https://127.0.0.1'
+
 DEBUG = True
 
 for config in TEMPLATES:

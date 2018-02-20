@@ -1,5 +1,7 @@
 from .base import *  # noqa
 
+SITE_URL = 'https://epfl-export.tind.io'
+
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 # https://devcenter.heroku.com/articles/getting-started-with-django
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

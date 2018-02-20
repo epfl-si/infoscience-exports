@@ -4,22 +4,21 @@
 {% load staticfiles %}
 
 {% block content %}
-	<h1>Exports Listing</h1>
+	<h1>{% trans "Configurations" %}</h1>
 
 	<p><a class="btn btn-primary" href="{% url 'crud:export-create' %}" role="button">{% trans "Create" %}</a></p>
 
 	<ul class="list-group">
 		{% for object in object_list %}
 		<li class="list-group-item">
-			<div>
-				<p>{{ object.user }}</p>
-				<h4>{{ object.name }}</h4>
-				<p>{% trans "url" %}: <a href="{{ object.url }}">{{ object.url }}</a></p>
-				<p>
-				<a class="btn btn-primary" href="{{ object.get_absolute_url }}" role="button">{% trans "Details" %}</a>
-				<a class="btn btn-primary" href="{% url 'crud:export-update' object.pk %}" role="button">{% trans "Update" %}</a>
-				<a class="btn btn-primary" href="{% url 'crud:export-delete' object.pk %}" role="button">{% trans "Delete" %}</a>
-				</p>
+			<div class="row">
+				<div class="col-10">
+					<h4><a href="{% url 'crud:export-update' object.pk %}">{{ object.name }}</a></h4>
+					<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}">{{ SITE_URL }}{{ object.get_absolute_url }}</a></p>				
+				</div>
+				<div class="col-2">
+					<a class="btn btn-primary" style="float:right" href="{% url 'crud:export-delete' object.pk %}" role="button">{% trans "Delete" %}</a>
+				</div>
 			</div>
 		</li>
 		{% empty %}
@@ -27,33 +26,17 @@
 		{% endfor %}
 	</ul>
 
-	<div class="marc21xm-records-template">
-		{% for article in marc21xml %}
-		<div class="marc21xm-records">
-			<p>
-			{% if article.Authors %}<span>{% include "exports/objects_list.html" with objects_css='marc21xml-author' objects=article.Authors %}.</span>{% endif %}
-			{% if article.Title_All %}<span style="font-style: italic">{{ article.Title_All }}.</span>{% endif %}
-			{% if article.Publisher %}<span>{{ article.Publisher }}</span>{% endif %}
-			{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
-			</p>
-			<span><a href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en">{% trans "Detailed record" %}</a></span>
-		</div>
-		{% empty %}
-		<p>{% trans "No records" %}.</p>
-		{% endfor %}
-	</div>
-
 	{% if is_paginated %}
 	<div class="pagination">
 	    <span class="page-links">
 	        {% if page_obj.has_previous %}
-	            <a href="{% url 'crud:export-list' %}?page={{ page_obj.previous_page_number }}">previous</a>
+	            <a href="{% url 'crud:export-list' %}?page={{ page_obj.previous_page_number }}">{% trans "previous" %}</a>
 	        {% endif %}
 	        <span class="page-current">
-	            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+	            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}.
 	        </span>
 	        {% if page_obj.has_next %}
-	            <a href="{% url 'crud:export-list' %}?page={{ page_obj.next_page_number }}">next</a>
+	            <a href="{% url 'crud:export-list' %}?page={{ page_obj.next_page_number }}">{% trans "next" %}</a>
 	        {% endif %}
 	    </span>
 	</div>
