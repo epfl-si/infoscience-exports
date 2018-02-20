@@ -4,10 +4,11 @@ from django.conf import settings
 
 from dirtyfields import DirtyFieldsMixin
 
-from .settings import BulletsSettings
+from .settings import BulletsSettings, ThumbnailSettings
 
 
 class Export(BulletsSettings,
+             ThumbnailSettings,
              models.Model,
              DirtyFieldsMixin,
              ):
