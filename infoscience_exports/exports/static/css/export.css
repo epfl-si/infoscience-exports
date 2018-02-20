@@ -2,7 +2,13 @@ body {
 	background-color: rgb(245, 245, 245);
 }
 
-.marc21xm-record-template1 {
+.marc21xm-records-template {
 	margin-top: 40px;
 	margin-bottom: 40px;
+}
+
+.marc21xm-records {
+	padding-top: 8px;
+	padding-bottom: 7px;
+	border-bottom: 1px dotted #000;
 }
