@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 
+{% load i18n %}
 {% load bootstrap4 %}
 
 {% block content %}
-    <h1>Create/Update</h1>
+    <h1>{% trans "Create/Update" %}</h1>
     <form id="export_form" method="post" action="." class="form">
-      {% csrf_token %}
-      {% bootstrap_form form layout='horizontal' %}
-      {% buttons %}
-        <button type="submit" class="btn btn-primary">Submit</button>
-      {% endbuttons %}
-    </form>
+		{% csrf_token %}
+		{% bootstrap_form form layout='horizontal' %}
+		{% buttons %}
+		<button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+		{% endbuttons %}
+	</form>
 {% endblock %}
 

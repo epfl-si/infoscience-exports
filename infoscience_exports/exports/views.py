@@ -11,6 +11,7 @@ from log_utils import LogMixin
 from .models import Export
 from .serializers import ExportSerializer
 from .forms import ExportForm
+from .marc21xml import import_marc21xml
 
 
 class ExportViewSet(mixins.ListModelMixin,
@@ -48,8 +49,7 @@ class MockExportViewSet(ExportViewSet):
         else:
             # NB: the 'mock' db is configured with ATOMIC_REQUESTS = True
             sid = transaction.savepoint(using='mock')
-            response = super(MockExportViewSet, self).dispatch(request,
-                                                             *args, **kwargs)
+            response = super(MockExportViewSet, self).dispatch(request, *args, **kwargs)
             transaction.savepoint_rollback(sid, using='mock')
             return response
 
@@ -58,10 +58,18 @@ class ExportList(LogMixin, ListView):
     model = Export
     paginate_by = 20
 
-    def get(self, *args, **kwargs):
-        to_return = super(ExportList, self).get(*args, **kwargs)
-        self.logger.info("Get a list of exports")
-        return to_return
+    #def get(self, *args, **kwargs):
+    #    to_return = super(ExportList, self).get(*args, **kwargs)
+    #    self.logger.info("Get a list of exports")
+    #    return to_return
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        
+        url = "https://infoscience.epfl.ch/search?ln=fr&p=&f=&rm=&ln=fr&sf=&so=d&rg=10&c=Infoscience&of=xm"
+        marc21xml = import_marc21xml(url)       
+        context['marc21xml'] = marc21xml
+        return context
 
 
 class ExportCreate(CreateView):

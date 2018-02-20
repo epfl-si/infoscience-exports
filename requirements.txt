@@ -11,6 +11,9 @@ dj-database-url==0.4.2
 # Models
 django-model-utils==3.1.1
 
+# Marc21
+pymarc==3.1.7
+
 # Rest apis
 djangorestframework==3.7.7
 Markdown==2.6.11
