@@ -173,8 +173,8 @@ AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
 TEQUILA_SERVICE_NAME = "Infoscience exports"
 
 LOGIN_URL = "/login"
-LOGIN_REDIRECT_URL = "/exports"
+LOGIN_REDIRECT_URL = "/"
 LOGIN_REDIRECT_IF_NOT_ALLOWED = "/not_allowed"
-LOGOUT_URL = '/exports'
+LOGOUT_URL = '/logged-out'
 
 AUTH_USER_MODEL = 'exports.User'
