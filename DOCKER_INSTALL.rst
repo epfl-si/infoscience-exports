@@ -24,27 +24,15 @@ In the first one, you will need to create two files :
 A few words on config
 ---------------------
 
-Three docker images (postgres, web, nginx) will be pulled / build on the following command. Those docker images are the same for all environments. 
+Three docker images will be pulled / build on the following command. Those docker images are the same for all environments. 
 
 Production
 ..........
-
-The production make use of one more container, from a standard redis image ::
-
-    $ docker-compose build
-    postgres uses an image, skipping
-    redis uses an image, skipping
-    Building web
-    ... (7 steps)
-    Building nginx
-    ... (4 steps)
 
 Files are copied inside the images for production purpose. 
 
 * the code of the application: ./infoscience_exports
 * the generated static files:  ./staticfiles
-* some assets you might need:  ./nginx/assets
-* the nginx configuration:     ./nginx/sites-enabled/web.conf
 
 Once the images built, just run the containers with ::
 
