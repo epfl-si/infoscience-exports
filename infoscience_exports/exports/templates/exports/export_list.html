@@ -13,12 +13,13 @@
 		<li class="list-group-item">
 			<div>
 				<p>{{ object.user }}</p>
-				<h4 class="marc21xml-title">{{ object.name }}</h4>
+				<h4>{{ object.name }}</h4>
 				<p>{% trans "url" %}: <a href="{{ object.url }}">{{ object.url }}</a></p>
 				<p>
 				<a class="btn btn-primary" href="{{ object.get_absolute_url }}" role="button">{% trans "Details" %}</a>
 				<a class="btn btn-primary" href="{% url 'crud:export-update' object.pk %}" role="button">{% trans "Update" %}</a>
 				<a class="btn btn-primary" href="{% url 'crud:export-delete' object.pk %}" role="button">{% trans "Delete" %}</a>
+				<a class="btn btn-success" href="#" role="button">{% trans "Preview" %}</a>
 				</p>
 			</div>
 		</li>
@@ -27,21 +28,21 @@
 		{% endfor %}
 	</ul>
 
-	{% for article in marc21xml %}
-	<div class="marc21xm-record-template1">
-		<p>
-		{% if article.Authors %}<span>{% include "exports/export_list_list.html" with objects_css='marc21xml-author' objects=article.Authors %}.</span>{% endif %}
-		{% if article.Title_All %}<span style="font-style: italic">{{ article.Title_All }}.</span>{% endif %}
-		{% if article.Publisher %}<span>{{ article.Publisher }}</span>{% endif %}
-		{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
-		</p>
-		<span><a href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en">{% trans "Detailed record" %}</a></span>
-		<p>
-		{% if not article.last %}<div style="width:100%; border-bottom: 1px dotted #000;"></div>{% endif %}
+	<div class="marc21xm-records-template">
+		{% for article in marc21xml %}
+		<div class="marc21xm-records">
+			<p>
+			{% if article.Authors %}<span>{% include "exports/objects_list.html" with objects_css='marc21xml-author' objects=article.Authors %}.</span>{% endif %}
+			{% if article.Title_All %}<span style="font-style: italic">{{ article.Title_All }}.</span>{% endif %}
+			{% if article.Publisher %}<span>{{ article.Publisher }}</span>{% endif %}
+			{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
+			</p>
+			<span><a href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en">{% trans "Detailed record" %}</a></span>
+		</div>
+		{% empty %}
+		<p>{% trans "No records" %}.</p>
+		{% endfor %}
 	</div>
-	{% empty %}
-	<p>{% trans "No items" %}.</p>
-	{% endfor %}
 
 	{% if is_paginated %}
 	<div class="pagination">
