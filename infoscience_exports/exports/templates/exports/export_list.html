@@ -15,7 +15,7 @@
 		<li class="list-group-item">
 			<div >
 				<h4>{{ object.name }}</h4>
-				<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}">{{ SITE_URL }}/{{ object.pk }}</a></p>
+				<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}">{{ SITE_URL }}{{ object.get_absolute_url }}</a></p>
 				<p>
 				<a class="btn btn-primary" href="{% url 'crud:export-update' object.pk %}" role="button">{% trans "Edit" %}</a>
 				<a class="btn btn-primary" href="{% url 'crud:export-delete' object.pk %}" role="button">{% trans "Delete" %}</a>
