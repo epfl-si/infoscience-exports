@@ -71,12 +71,12 @@ You can check the correct intallation with
     -rw-r--r--. 1 infoscience-exports 231 Sep  6 18:25 .bashrc
     drwx------. 2 infoscience-exports  28 Feb 21 13:14 .ssh
 
-4. Do not forget to add you public key
---------------------------------------
+4. Do not forget to add your public key
+---------------------------------------
 
 .. code-block:: bash
 
-    echo "your key" > .ssh/authorized_keys
+    echo "your key" >> .ssh/authorized_keys
     chmod 600 .ssh/authorized_keys
 
 You can check the correct intallation from your host
