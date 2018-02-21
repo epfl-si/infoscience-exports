@@ -7,7 +7,7 @@
     <h1>{% trans "Create/Update" %}</h1>
     <form id="export_form" method="post" action="." class="form">
 		{% csrf_token %}
-		{% bootstrap_form form layout='horizontal' %}
+		{% bootstrap_form form layout='' %}
 		{% buttons %}
 		<a class="btn btn-primary" href="{% url 'crud:export-list' %}" role="button">{% trans "Cancel" %}</a>
 		<button id="btn-preview" type="button" class="btn btn-primary">{% trans "Preview" %}</button>
@@ -18,4 +18,3 @@
 	<div id="display-mrc21xml" class="modal-content">
     </div>
 {% endblock %}
-
