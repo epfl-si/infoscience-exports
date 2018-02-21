@@ -12,6 +12,12 @@ web:
   env_file:
     - .env
   environment:
+    # explicitely sets the useful env vars
+    - SECRET_KEY=${SECRET_KEY}
+    - SITE_URL=${SITE_URL}
+    - DATABASE_URL=${DATABASE_URL}
+    - MOCKS_DATABASE_URL=${MOCKS_DATABASE_URL}
+    # apply settings specific for development
     - DJANGO_SETTINGS_MODULE=settings.dev
   command: gunicorn --reload -w 4 -b :${DEV_PORT} --chdir /usr/src/app/infoscience_exports wsgi:application
 
