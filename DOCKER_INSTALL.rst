@@ -4,37 +4,73 @@ Initial setup with Docker
 Express set-up
 --------------
 
-Pre-requisite
+0. Pre-requisite
+................
 
 - git repo checked out (`git clone git@github.com:epfl-idevelop/infoscience-exports.git`)
 
+1. initialize a fresh .env file
+...............................
 
-For dev ::
-    
+.. code-block:: bash
+
     $ make init-venv
     ...
-    -> update env vars
 
 You might want to change the default values for the following vars:
 
 - DJANGO_SETTINGS_MODULE=settings.dev
 - SITE_URL=https://your-host.epfl.ch
 - ALLOWED_HOST=your-host
-- DEV_PORT=80
+- DEV_PORT=443
+
+You can check what values will be taken into account with 
+
+.. code-block:: bash
+
+    $ make vars
+    App-related vars:
+      SECRET_KEY="SeLKDmig0mYF04WVkpZ6mowJ1FiodYkC0C4ZV6Rkuvc="
+      DJANGO_SETTINGS_MODULE=settings.dev
+      SITE_URL=https://127.0.0.1:8080
+      ALLOWED_HOST=127.0.0.1
+      DATABASE_URL=postgres://django:django@postgres:5432/infoscience_exports
+      MOCKS_DATABASE_URL=postgres://django:django@postgres:5432/mock_infoscience_exports
+
+    Dev-related vars:
+      DEV_PORT=8080
+
+2. Setup containers and DB 
+..........................
 
 .. code-block:: bash
 
     $ make init-docker
     $ make init-db
 
-To set up data and static files ::
+or the following alias 
 
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py migrate --database=mock
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py collectstatic --noinput
+.. code-block:: bash
 
-To create your super user, customize and run this line ::
+    $ make reset
 
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py createsuperuser --username=your_username --email=same_as_tequila
+
+Development
+-----------
+
+To deploy a new version of your code (without losing data) ::
+
+    $ make deploy
+
+To rebuild everything from scratch
+
+    $ make reset
+
+This command can actually be split in two parts if you only want to reset docker / db
+
+    $ make init-docker
+    ...
+    $ make init-db
 
 To run the tests ::
 
@@ -50,9 +86,9 @@ To check your environment variables ::
 
 You can then access the app with
 
-* its CRUD interface : https://127.0.0.1:${DEV_PORT}/exports/
-* or the API : https://127.0.0.1:${DEV_PORT}/api/v1/exports/
-* or through admin: https://127.0.0.1:${DEV_PORT}/admin
+* its CRUD interface : https://${SITE_URL}/exports/
+* or the API : https://${SITE_URL}/api/v1/exports/
+* or through admin: https://${SITE_URL}/admin
 
 And, finally, go on with your nice feature ::
 
