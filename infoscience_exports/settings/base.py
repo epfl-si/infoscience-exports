@@ -22,7 +22,7 @@ SITE_URL = get_env_variable('SITE_URL')
 
 # Site
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [get_env_variable('ALLOWED_HOSTS')]
+ALLOWED_HOSTS = [get_env_variable('ALLOWED_HOST')]
 
 INSTALLED_APPS = (
     'django.contrib.admin',
