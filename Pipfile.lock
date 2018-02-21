@@ -285,8 +285,7 @@
         },
         "django-tequila": {
             "editable": true,
-            "git": "https://github.com/epfl-idevelop/django-tequila.git",
-            "ref": "787b0af52142aad08fe739e821eff3c543991f61"
+            "git": "https://github.com/epfl-idevelop/django-tequila.git"
         },
         "djangorestframework": {
             "hashes": [

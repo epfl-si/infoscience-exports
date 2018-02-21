@@ -30,11 +30,11 @@ vars:
 init-venv:
 ifeq ($(wildcard .env),)
 	cp env/django.env .env
+	echo SECRET_KEY=`openssl rand -base64 32` >> .env
 	echo PYTHONPATH=`pwd`/infoscience_exports >> .env
-	SECRET=`openssl rand -base64 32` sed -i s/your-secret/${SECRET}/g .env
 endif
 	pipenv --update 
-	pipenv update --dev --python 3
+	pipenv update --dev --python 3.6
 	@echo "! Set up your .env file before running"
 	@echo "!   $$ make init-heroku"
 	@echo "! If you want a clean state from a docker standpoint, run"
