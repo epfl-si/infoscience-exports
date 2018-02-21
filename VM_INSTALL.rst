@@ -92,7 +92,7 @@ You can check the correct intallation from your host
 
     git clone git@github.com:epfl-idevelop/infoscience-exports.git
 
-and continue the reading with `./DOCKER_INSTALL.rst`_
+and continue the reading with DOCKER_INSTALL_
 
 
 6. Planning to `make` ?
@@ -103,3 +103,5 @@ If you plan to initialize and use a custom environment, you will have to use `ma
 .. code-block:: bash
 
     pip3.6 install pipenv
+
+.. _DOCKER_INSTALL: https://github.com/epfl-idevelop/infoscience-exports/blob/master/DOCKER_INSTALL.rst
