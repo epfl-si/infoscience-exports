@@ -1,20 +1,46 @@
 {% load i18n %}
 {% load staticfiles %}
 
-{{ id }}
 
-{% for article in marc21xml %}
-	<div class="marc21xml-record-template1">
-		<p>
-		{% if article.Authors %}<span>{% include "exports/objects_list.html" with objects_css='marc21xml-author' objects=article.Authors %}.</span>{% endif %}
-		{% if article.Title_All %}<span style="font-style: italic">{{ article.Title_All }}.</span>{% endif %}
-		{% if article.Publisher %}<span>{{ article.Publisher }}</span>{% endif %}
-		{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
-		</p>
-		<span><a href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en">{% trans "Detailed record" %}</a></span>
-		<p>
-		{% if not article.last %}<div style="width:100%; border-bottom: 1px dotted #000;"></div>{% endif %}
+{% for article in context.marc21xml %}
+	<div class="marc21xml-records">
+		{% if context.bullet %}
+		<div class="row-with-bullet-col1">
+			<div class="record-bullet">
+				{% if context.bullet == '1, 2, 3, ...' %}{{ forloop.counter }}
+				{% elif context.bullet == '..., 3, 2, 1' %}{{ forloop.revcounter }}
+				{% elif context.bullet == '*' %}*
+				{% elif context.bullet == '-' %}-
+				{% endif %}
+			</div>
+		</div>
+		<div class="row-with-bullet-col2">
+		{% else %}
+		<div>
+		{% endif %}
+			<div class="record-content">
+				{% if article.Authors %}<span>{% include "exports/objects_list.html" with objects_css='marc21xml-author' objects=article.Authors %}.</span>{% endif %}
+				{% if article.Title_All %}<span style="font-style: italic">{{ article.Title_All }}.</span>{% endif %}
+				{% if article.Publisher %}<span>{{ article.Publisher }}</span>{% endif %}
+				{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
+			</div>
+			{% if context.thumb and article.ELA_Icon %}
+			<div class="record-image">
+				<img src="{{ article.ELA_Icon.0 }}" class="record-illustration" alt="n/a">
+			</div>
+			{% endif %}
+			<div class="record-link">
+				<span><a href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en" target="_blank">{% trans "Detailed record" %}</a></span>
+				{% for fulltext in article.ELA_URL %}
+				<span> - <a href="{{ fulltext }}" target="_blank">{% trans "Full text" %}</a></span>
+				{% endfor %}
+				{% for view_publisher in article.View_Publisher %}
+				<span> - <a href="{{ view_publisher }}" target="_blank">{% trans "View at publisher" %}</a></span>
+				{% endfor %}
+			</div>
+		</div>
 	</div>
 	{% empty %}
 	<p>{% trans "No items" %}.</p>
 {% endfor %}
+

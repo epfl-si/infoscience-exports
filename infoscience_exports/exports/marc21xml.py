@@ -9,13 +9,13 @@ from pymarc import marcxml
 #import sys
 
 
-def get_list(fields, name):
+def get_list(fields, code, subcode='', subcode2=''):
     result = []
     for element in fields:
         for key, value in element.items():
             value_to_append = value
-            if key == name:
-                if name == '013':
+            if key == code:
+                if code == '013':
                     subfields = value['subfields']
                     res_value = {}
                     for element1 in subfields:
@@ -23,22 +23,41 @@ def get_list(fields, name):
                             res_value[key1] = value1
                     value_to_append = res_value['a'] if 'a' in res_value else ''
                     value_to_append += '(' + res_value['c'] + ')' if 'c' in res_value else ''
-                elif name == '520':
+                elif code == '024':
+                    subfields = value['subfields']
+                    res_value = {}
+                    for element1 in subfields:
+                        for key1, value1 in element1.items():
+                            res_value[key1] = value1
+                    if len(subfields) == 2 and subcode in res_value and '2' in res_value and res_value['2'] == subcode2:
+                        value_to_append = "http://dx.doi.org/" + res_value['a']
+                    else:
+                        value_to_append = ''
+                elif code == '520':
                     subfields = value['subfields']
                     res_value = {}
                     for element1 in subfields:
                         for key1, value1 in element1.items():
                             res_value[key1] = value1
                     value_to_append = res_value['a'] if 'a' in res_value else ''
-                elif name == '700':
+                elif code == '700':
                     subfields = value['subfields']
                     res_value = {}
                     for element1 in subfields:
                         for key1, value1 in element1.items():
                             res_value[key1] = value1
                     value_to_append = res_value['a'] if 'a' in res_value else ''
+                elif code == '856':
+                    subfields = value['subfields']
+                    res_value = {}
+                    for element1 in subfields:
+                        for key1, value1 in element1.items():
+                            res_value[key1] = value1
+                    value_to_append = res_value['u'] if 'u' in res_value and 'x' in res_value and res_value['x'] == subcode else ''
                   
                 result.append(value_to_append)
+
+    result = list(filter(None, result))
     return result
   
 def parse_dict(record):
@@ -46,8 +65,11 @@ def parse_dict(record):
     fields = record['fields']
     result['control_number'] = get_list(fields, '001')[0]
     result['patent_control_information'] = get_list(fields, '013')
+    result['osi_doi'] = get_list(fields, '024', 'a', 'doi')
     result['summary'] = get_list(fields, '520')
     result['added_entry_personal_name'] = get_list(fields, '700')
+    result['ela_icon'] = get_list(fields, '856', 'ICON')
+    result['ela_url'] = get_list(fields, '856', 'PUBLIC')
     return result
 
 def import_marc21xml(url):
@@ -57,7 +79,9 @@ def import_marc21xml(url):
         dict_result = {}
         dict_record = parse_dict(record.as_dict())
         dict_result['Id'] = dict_record['control_number']
-        dict_result['Record'] = dict_record
+        dict_result['ELA_Icon'] = dict_record['ela_icon'] # Electronic Location and Access
+        dict_result['ELA_URL'] = dict_record['ela_url'] # Electronic Location and Access   
+        dict_result['View_Publisher'] = dict_record['osi_doi'] # Other Standard Identifier - Digital Object Identifier   
         dict_result['Title'] = record.uniformtitle()
         dict_result['Title_All'] = record.title()
         dict_result['Authors'] = dict_record['added_entry_personal_name'] #[entry.format_field() for entry in record.addedentries()]

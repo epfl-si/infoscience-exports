@@ -2,13 +2,55 @@ body {
 	background-color: rgb(245, 245, 245);
 }
 
-.marc21xml-records-template {
-	margin-top: 40px;
-	margin-bottom: 40px;
+/*
+ * Export List
+*/ 
+
+.category-content {
+	float: left;
 }
+
+.category-tools {
+	float: right;
+}
+
+/*
+ * Export
+*/ 
 
 .marc21xml-records {
 	padding-top: 8px;
 	padding-bottom: 7px;
 	border-bottom: 1px dotted #000;
+}
+
+.record-bullet {
+	float: right;
+	padding-right: 40%;
+}
+
+.record-content {
+	margin-bottom: 10px;
+}
+
+.record-image {
+	margin-bottom: 10px;
+}
+
+.record-link {
+	font-style: italic;
+}
+
+.row-with-bullet-col1 {
+	float: left;
+	width : 10%;
+}
+
+.row-with-bullet-col2 {
+	float: left;
+	width : 90%;
+}
+
+.record-illustration {
+	max-height: 200px;
 }
