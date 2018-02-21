@@ -1,25 +1,73 @@
 Initial setup with Docker
 =========================
 
-What you do not get with the pull
----------------------------------
+Express set-up
+--------------
 
-You will miss two directories :
+Pre-requisite
 
-* env
-* staticfiles
+- pipenv installed
+- git repo checked out (`git clone git@github.com:epfl-idevelop/infoscience-exports.git`)
 
-In the first one, you will need to create two files :
 
-* django.env ::
+For dev ::
+    
+    $ make init-env
+    ...
+    -> update env vars
 
-   SECRET_KEY=your-secret
-   DATABASE_PASSWORD_PROD=django
+You might want to change the default values for the following vars:
 
-* django-dev.env ::
+- DJANGO_SETTINGS_MODULE=settings.dev
+- SITE_URL=https://your-host.epfl.ch
+- ALLOWED_HOSTS=your-host
+- DEV_PORT=80
+- DEV_DB_HOST=127.0.0.1
+- DEV_DB_PORT=25432
 
-   SECRET_KEY=your-secret
-   DATABASE_PASSWORD_DEV=django
+.. code-block:: bash
+
+    $ pipenv shell
+    $ make init-docker
+    $ make init-db
+
+To set up data and static files ::
+
+    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py migrate --database=mock
+    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py collectstatic --noinput
+
+To create your super user, customize and run this line ::
+
+    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py createsuperuser --username=your_username --email=same_as_tequila
+
+To run the tests ::
+
+    $ docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --noinput [--failfast --keepdb]
+
+Or to test more intensively with nose and coverage ::
+
+    $ docker-compose -f docker-compose-dev.yml exec web infoscience_exports/manage.py test exports --noinput [-x]
+
+To check your environment variables ::
+
+    $ docker-compose -f docker-compose-dev.yml run web env
+
+You can then access the app with
+
+* its CRUD interface : https://127.0.0.1:${DEV_PORT}/exports/
+* or the API : https://127.0.0.1:${DEV_PORT}/api/v1/exports/
+* or through admin: https://127.0.0.1:${DEV_PORT}/admin
+
+And, finally, go on with your nice feature ::
+
+    $ git checkout -b my-nice-feature master
+    ...
+    $ git push -u origin my-nice-feature
+    ...
+    $ git push
+
+check this link for nice description of the git workflow: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow 
+
 
 A few words on config
 ---------------------
@@ -60,65 +108,10 @@ You will thus be allowed to get change on the fly :
 
 Aside from the volumes, docker-compose-dev.yml  also makes use of 
 
-* env/django-dev.env to define passwords (set in environment variables)
+* .env to load environment variables
 * settings/dev.py to set django settings
 
 Would you need to connect directly to the DB, we exposed an access to the host on port 25432 ::
 
-    $ psql -h localhost -p 25432 -U django -W infoscience_exports
+    $ psql -h 127.0.0.1 -p 25432 -U django -W infoscience_exports
 
-Express set-up
---------------
-
-For dev ::
-    
-    $ docker-compose build
-    $ docker-compose -f docker-compose-dev.yml up -d
-
-
-Initialize the docker app this way. Please, replace the names with your previous choices::
-
-    $ docker exec -it infoscienceexports_postgres_1 /bin/bash
-    root@xxx:/# createuser -dSR django -P -U postgres
-      Enter password for new role: django
-      Enter it again: django
-    root@xxx:/# createdb -O django infoscience_exports -U postgres
-    root@xxx:/# createdb -O django mock_infoscience_exports -U postgres
-
-To set up data and static files ::
-
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py migrate
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py migrate --database=mock
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py collectstatic --noinput
-
-To create your super user, customize and run this line ::
-
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py createsuperuser --username=your_username --email=same_as_tequila
-
-To run the tests ::
-
-    $ docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --noinput [--failfast --keepdb]
-
-Or to test more intensively with nose and coverage ::
-
-    $ docker-compose -f docker-compose-dev.yml exec web infoscience_exports/manage.py test exports --noinput [-x]
-
-To check your environment variables ::
-
-    $ docker-compose -f docker-compose-dev.yml run web env
-
-You can then access the app with
-
-* its CRUD interface : https://127.0.0.1:8000/exports/
-* or the API : https://127.0.0.1:8000/api/v1/exports/
-* or through admin: https://127.0.0.1:8000/admin
-
-And, finally, go on with your nice feature ::
-
-    $ git checkout -b my-nice-feature master
-    ...
-    $ git push -u origin my-nice-feature
-    ...
-    $ git push
-
-check this link for nice description of the git workflow: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow 

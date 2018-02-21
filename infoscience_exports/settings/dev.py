@@ -1,8 +1,7 @@
-from .test import *  # noqa
+# flake8: noqa
+from .test import *
 
 DEBUG = True
-
-SITE_URL = 'https://127.0.0.1:8000'
 
 for config in TEMPLATES:
     config['OPTIONS']['debug'] = DEBUG
@@ -11,27 +10,6 @@ INSTALLED_APPS += ('debug_toolbar',
                    'django_extensions',
                    )
 MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-
-# Postgres
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'infoscience_exports',
-        'USER': 'django',
-        'PASSWORD': get_env_variable('DATABASE_PASSWORD_DEV'),
-        'HOST': 'postgres',
-        'PORT': '',
-    },
-    'mock': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mock_infoscience_exports',
-        'USER': 'django',
-        'PASSWORD': get_env_variable('DATABASE_PASSWORD_DEV'),
-        'HOST': 'postgres',
-        'PORT': '',
-        'ATOMIC_REQUESTS': 'True',
-    }
-}
 
 LOGGING['loggers'] = {
     'django.db': {

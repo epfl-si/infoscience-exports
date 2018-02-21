@@ -6,17 +6,15 @@ web:
   links:
     - postgres
   env_file:
-    # uses for passwords (kept out of git)
-    # SECRET_KEY=
-    # DATABASE_PASSWORD_PROD=
     - ./env/django.env
   environment:
-    - DJANGO_SETTINGS_MODULE=settings.prod
+    # explicitely sets the useful env vars
+    - SECRET_KEY=${SECRET_KEY}
+    - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
+    - SITE_URL=${SITE_URL}
+    - DATABASE_URL=${DATABASE_URL}
+    - MOCKS_DATABASE_URL=${MOCKS_DATABASE_URL}
   command: gunicorn --reload -w 4 -b :80 --chdir /usr/src/app/infoscience_exports wsgi:application
 
 postgres:
   image: postgres:10
-  volumes:
-    - pgdata:/var/lib/postgresql
-  ports:
-    - "25432:5432"

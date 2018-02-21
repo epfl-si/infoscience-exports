@@ -1,34 +1,11 @@
-from .base import *  # noqa
+from .base import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-SITE_URL = 'https://127.0.0.1'
 
 DEBUG = True
 
 for config in TEMPLATES:
     config['OPTIONS']['debug'] = DEBUG
-
-# Postgres
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'infoscience_exports',
-        'USER': 'django',
-        # docker container 'postgres' not used in test
-        'HOST': 'localhost',
-        'PORT': '',
-    },
-    'mock': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mock_infoscience_exports',
-        'USER': 'django',
-        # docker container 'postgres' not used in test
-        'HOST': 'localhost',
-        'PORT': '',
-        'ATOMIC_REQUESTS': 'True',
-    }
-}
 
 # Testing
 INSTALLED_APPS += ('django_nose',)
