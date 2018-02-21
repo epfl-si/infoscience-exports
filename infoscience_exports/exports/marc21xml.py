@@ -72,6 +72,12 @@ def parse_dict(record):
     result['ela_url'] = get_list(fields, '856', 'PUBLIC')
     return result
 
+
+def get_authors_initials(authors):
+    result = ";".join(str(item) for item in authors)
+    return result
+
+
 def import_marc21xml(url):
     reader = marcxml.parse_xml_to_array(urlopen(url))
     result = []
@@ -86,6 +92,7 @@ def import_marc21xml(url):
         dict_result['Title_All'] = record.title()
         dict_result['Authors'] = dict_record['added_entry_personal_name'] #[entry.format_field() for entry in record.addedentries()]
         dict_result['Author'] = record.author() if record.author() else ''
+        dict_result['Authors_Initials'] = get_authors_initials(dict_result['Authors'])
         dict_result['Patents'] = dict_record['patent_control_information']
         dict_result['Publisher'] = record.publisher() if record.publisher() else ''
         dict_result['Publisher_Date'] = record.pubyear() if record.pubyear() else ''

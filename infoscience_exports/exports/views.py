@@ -87,13 +87,17 @@ class ExportDelete(LoginRequiredMixin, DeleteView):
 
 class ExportView(DetailView):
     model = Export
-    #template_name_suffix = ''
+    template_name_suffix = ''
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['marc21xml'] = import_marc21xml(self.object.url)
-        context['bullet'] = self.object.bullets_type
-        context['thumb'] = self.object.show_thumbnail
+        options = {}
+        options['object'] = self.object
+        options['is_extern'] = True
+        options['marc21xml'] = import_marc21xml(self.object.url)
+        options['bullet'] = self.object.bullets_type
+        options['thumb'] = self.object.show_thumbnail
+        context['options'] = options
         return context
 
 
@@ -103,11 +107,12 @@ def preview(request):
     bullet = params['params[bullet]']
     thumb = params['params[thumb]']
     
-    context = {}
-    context['marc21xml'] = import_marc21xml(url) if url else ''
-    context['bullet'] = bullet
-    context['thumb'] = thumb == 'true'
-    c = { 'context': context }
+    options = {}
+    options['is_extern'] = False
+    options['marc21xml'] = import_marc21xml(url) if url else ''
+    options['bullet'] = bullet
+    options['thumb'] = thumb == 'true'
+    c = { 'options': options }
 
     t = loader.get_template('exports/export.html')
     return HttpResponse(t.render(c))
