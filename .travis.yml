@@ -10,9 +10,8 @@ before_script:
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
 - sleep 3 # give xvfb some time to start
-- export SECRET_KEY=`openssl rand -base64 32`
-- export DJANGO_SETTINGS_MODULE=settings.test
-- make init-db
+  - export DJANGO_SETTINGS_MODULE=settings.test
+  - make init-db
 
 install:
   - "pip install -r ./requirements.txt"

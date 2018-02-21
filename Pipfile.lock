@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4f64e08657cd24135b6290c8e50762c09fc3a1efdab99ac33df9b0a63c8f909e"
+            "sha256": "75816485187ccbb4919e9a8656866ef42ec3e7c1c1e1cef9e27e096b988ad1cc"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -123,7 +123,6 @@
                 "sha256:87f837459c3c78d75cb4f5aadf08a7104db15e8c7618a5c732e60f252279c7a6",
                 "sha256:df9083a992b17a28cd4251a3f5c879e0198bb26c9e808c4647e0a18739f1d11d"
             ],
-            "markers": "platform_python_implementation != 'PyPy'",
             "version": "==1.11.4"
         },
         "chardet": {
@@ -286,7 +285,8 @@
         },
         "django-tequila": {
             "editable": true,
-            "git": "https://github.com/epfl-idevelop/django-tequila.git"
+            "git": "https://github.com/epfl-idevelop/django-tequila.git",
+            "ref": "787b0af52142aad08fe739e821eff3c543991f61"
         },
         "djangorestframework": {
             "hashes": [
@@ -779,5 +779,19 @@
             "version": "==0.1.7"
         }
     },
-    "develop": {}
+    "develop": {
+        "autopep8": {
+            "hashes": [
+                "sha256:c7be71ab0cb2f50c9c22c82f0c9acaafc6f57492c3fbfee9790c415005c2b9a5"
+            ],
+            "version": "==1.3.4"
+        },
+        "pycodestyle": {
+            "hashes": [
+                "sha256:6c4245ade1edfad79c3446fadfc96b0de2759662dc29d07d80a6f27ad1ca6ba9",
+                "sha256:682256a5b318149ca0d2a9185d365d8864a768a28db66a84a2ea946bcc426766"
+            ],
+            "version": "==2.3.1"
+        }
+    }
 }
