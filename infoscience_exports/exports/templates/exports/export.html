@@ -5,7 +5,7 @@
 <div class="infoscience_export">
 
 {% for article in options.marc21xml %}
-	{% if options.bullet %}
+	{% if options.bullet != 'NONE' %}
 	<div class="infoscience_record infoscience_record_bulleted">
 		<span class="infoscience_bullet">
 			{% if options.bullet == 'NUMBER_ASC' %}{{ forloop.counter }}

@@ -21,7 +21,7 @@ class ThumbnailSettings(BaseSettings):
 
 class BulletsSettings(BaseSettings):
     BULLETS_TYPE_CHOICE = (
-        ('', ''),
+        ('NONE', ''),
         ('CHARACTER_STAR', '*'),
         ('CHARACTER_MINUS', '-'),
         ('NUMBER_ASC', '1, 2, 3, ...'),
@@ -30,7 +30,7 @@ class BulletsSettings(BaseSettings):
 
     bullets_type = models.CharField(max_length=255,
                                     choices=BULLETS_TYPE_CHOICE,
-                                    null=True
+                                    default='NONE'
                                     )
 
     class Meta:
