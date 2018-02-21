@@ -3,34 +3,35 @@ web:
   restart: always
   expose:
     # used by nginx: see proxy in sites-enabled
-    - "8000"
+    - "${DEV_PORT}"
   links:
     - postgres
   volumes:
     - ./infoscience_exports:/usr/src/app/infoscience_exports
     - ./staticfiles:/usr/src/app/staticfiles
   env_file:
-    # uses for passwords (kept out of git)
-    # SECRET_KEY=
-    # DATABASE_PASSWORD_DEV=
-    - ./env/django-dev.env
+    - .env
   environment:
     - DJANGO_SETTINGS_MODULE=settings.dev
-  command: gunicorn --reload -w 4 -b :8000 --chdir /usr/src/app/infoscience_exports wsgi:application
+  command: gunicorn --reload -w 4 -b :${DEV_PORT} --chdir /usr/src/app/infoscience_exports wsgi:application
 
 nginx:
   build: ./nginx
   ports:
     # out:in = from [out] host, into [in] container 
-    - "8000:8000"
+    - "${DEV_PORT}:${DEV_PORT}"
   volumes:
-    - ./nginx/sites-enabled/web.conf:/etc/nginx/conf.d/web.conf
+    - ./nginx/sites-enabled/web.template:/etc/nginx/conf.d/web.template
     - ./nginx/assets:/usr/share/nginx/html
   volumes_from:
     - web
   links:
     # used in nginx/sites-enabled/web.conf
     - web
+  environment:
+    - DEV_PORT=${DEV_PORT}
+    - DOLLAR=$$
+  command: /bin/bash -c "envsubst < /etc/nginx/conf.d/web.template > /etc/nginx/conf.d/web.conf && nginx -g 'daemon off;'" 
 
 postgres:
   image: postgres:10

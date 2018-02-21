@@ -11,11 +11,8 @@ before_script:
 - "sh -e /etc/init.d/xvfb start"
 - sleep 3 # give xvfb some time to start
 - export SECRET_KEY=`openssl rand -base64 32`
-- psql -c 'CREATE DATABASE "infoscience_exports";' -U postgres
-- psql -c 'CREATE DATABASE "mock_infoscience_exports";' -U postgres
-- psql -c "CREATE USER django WITH PASSWORD 'django';" -U postgres
-- psql -c "ALTER ROLE django WITH CREATEDB;" -U postgres
 - export DJANGO_SETTINGS_MODULE=settings.test
+- make init-db
 
 install:
   - "pip install -r ./requirements.txt"

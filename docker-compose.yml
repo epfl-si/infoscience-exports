@@ -6,9 +6,6 @@ web:
   links:
     - postgres
   env_file:
-    # uses for passwords (kept out of git)
-    # SECRET_KEY=
-    # DATABASE_PASSWORD_PROD=
     - ./env/django.env
   environment:
     - DJANGO_SETTINGS_MODULE=settings.prod

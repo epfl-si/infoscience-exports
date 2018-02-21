@@ -1,33 +1,10 @@
 from .base import *  # noqa
 
-SITE_URL = 'https://epfl-export.tind.io'
-
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 # https://devcenter.heroku.com/articles/getting-started-with-django
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 SECRET_KEY = get_env_variable('SECRET_KEY')
-
-# Postgres
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'infoscience_exports',
-        'USER': 'django',
-        'PASSWORD': get_env_variable('DATABASE_PASSWORD_PROD'),
-        'HOST': 'postgres',
-        'PORT': '',
-    },
-    'mock': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mock_infoscience_exports',
-        'USER': 'django',
-        'PASSWORD': get_env_variable('DATABASE_PASSWORD_PROD'),
-        'HOST': 'postgres',
-        'PORT': '',
-        'ATOMIC_REQUESTS': 'True',
-    }
-}
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

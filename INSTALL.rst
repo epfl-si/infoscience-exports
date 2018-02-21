@@ -62,7 +62,7 @@ Do the first migration::
     
 It may be the good timing to set your environment variable::
 
-    $ export DATABASE_PASSWORD_DEV='django'
+    $ export DATABASE_PASSWORD='django'
 
 Load mock data::
 
@@ -80,7 +80,7 @@ See by yourself live::
 
     $ fab serve
 
-And go to `http://127.0.0.1:8000/exports <http://127.0.0.1:8000/exports/>`_.
+And go to `http://127.0.0.1:${DEV_PORT}/exports <http://127.0.0.1:8000/exports/>`_.
 
 ====================================
 How to start the development process

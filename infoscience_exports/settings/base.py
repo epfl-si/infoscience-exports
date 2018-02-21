@@ -1,5 +1,6 @@
 import os
 from os.path import join
+from urllib import parse
 
 from django.core.exceptions import ImproperlyConfigured
 
@@ -17,7 +18,7 @@ def get_env_variable(var_name):
 
     return environ_var
 
-SITE_URL = ''
+SITE_URL = get_env_variable('SITE_URL')
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -48,6 +49,30 @@ MIDDLEWARE = (
 )
 
 ROOT_URLCONF = 'urls'
+
+# Postgres
+parse.uses_netloc.append("postgres")
+database_url = parse.urlparse(get_env_variable("DATABASE_URL"))
+mocks_url = parse.urlparse(get_env_variable("MOCKS_DATABASE_URL"))
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': database_url.path[1:],
+        'USER': database_url.username,
+        'PASSWORD': database_url.password,
+        'HOST': database_url.hostname,
+        'PORT': database_url.port,
+    },
+    'mock': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': mocks_url.path[1:],
+        'USER': mocks_url.username,
+        'PASSWORD': mocks_url.password,
+        'HOST': mocks_url.hostname,
+        'PORT': mocks_url.port,
+    }
+}
 
 TEMPLATES = [
     {
