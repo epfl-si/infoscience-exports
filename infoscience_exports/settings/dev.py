@@ -1,4 +1,5 @@
-from .test import *  # noqa
+# flake8: noqa
+from .test import *
 
 DEBUG = True
 

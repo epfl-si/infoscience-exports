@@ -1,4 +1,5 @@
-from .base import *  # noqa
+# flake8: noqa
+from .base import *
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 # https://devcenter.heroku.com/articles/getting-started-with-django
