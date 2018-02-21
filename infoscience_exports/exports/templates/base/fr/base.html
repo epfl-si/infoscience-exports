@@ -1,0 +1,150 @@
+{% comment %}
+    See base/en/base.html for applied modifications
+{% endcomment %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://opengraphprotocol.org/schema/"
+      lang="fr"
+      xml:lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="fr"/>
+    <title>{% block headtitle %}{% endblock %}</title>
+
+    <link rev="made" href="mailto:infoscience@tind.io"/>
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.4/dist/css/lightgallery.min.css" type="text/css"/>
+
+    <link rel="stylesheet" href="//infoscience.epfl.ch/img/invenio.css?1cfcadb8e1e1e5d868f519777e477c2a" type="text/css"/>
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" type="text/css" href="//infoscience.epfl.ch/img/invenio-ie7.css" />
+    <![endif]-->
+    <!--[if gt IE 8]>
+    <style type="text/css">div.restrictedflag {filter:none;}</style>
+    <![endif]-->
+      <link rel="canonical" href="https://infoscience.epfl.ch/search?em=H" />
+  <link rel="alternate" hreflang="fr" href="https://infoscience.epfl.ch/search?em=H&amp;ln=fr" />
+  <link rel="alternate" hreflang="en" href="https://infoscience.epfl.ch/search?em=H&amp;ln=en" />
+
+    <link rel="alternate" type="application/rss+xml" title="Infoscience RSS"
+          href="/rss?ln=fr"/>
+    <link rel="search" type="application/opensearchdescription+xml"
+          href="https://infoscience.epfl.ch/opensearchdescription"
+          title="Infoscience"/>
+    <link rel="unapi-server" type="application/xml" title="unAPI" href="https://infoscience.epfl.ch/unapi"/>
+
+    <meta name="description" content="Infoscience configuration des exports."/>
+    <meta name="keywords" content="Infoscience, Exports"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+
+
+    <script type="text/javascript" src="//infoscience.epfl.ch/js/jquery.min.js"></script>
+    <script type="text/javascript" src="//infoscience.epfl.ch/js/tind.js?d87f701abc988557a2d54ac310781f13"></script>
+
+    {% block headcss %}{% endblock %}
+
+    <script src="{% static "js/export.js" %}" type="text/javascript"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    {% block headjs %}{% endblock %}
+
+
+</head>
+<body class="Infoscience search">
+<div class="pageheader">
+
+    <!-- replaced page header -->
+    <div class="headerbox headerlogo">
+        <div class="topleftmenu-wrapper">
+            <ul class="menu neutrallist">
+                <li class="topleftmenu headermoduleboxbody"><div class="hassubmenu"><span class="langinfo headerspan">Français</span><ul class="subsubmenu"><li><a href="/?ln=en">English</a></li></ul></div></li>
+            </ul>
+        </div>
+
+        <a class="menu-toggle">
+            <span class="menu-icon"><i class="fa fa-fw fa-bars"></i></span>
+        </a>
+        <ul class="menu topmenu neutrallist" style="display:none;">
+            <li class="headermoduleboxbody">
+                <a class="header"
+                   href="/?ln=fr">Recherche</a>
+            </li>
+
+            <li class="headermoduleboxbody">
+                <div class="hassubmenu">
+        <a hreflang="fr" class="header" href="https://infoscience.epfl.ch/youraccount/display?ln=fr">Personnaliser</a>
+        <ul class="subsubmenu"><li><a href="https://infoscience.epfl.ch/youraccount/display?ln=fr">Votre compte</a></li><li><a href="https://infoscience.epfl.ch/youralerts/list?ln=fr">Vos alertes</a></li><li><a href="https://infoscience.epfl.ch/yourapprovals.py?ln=fr">Vos approbations</a></li><li><a href="https://infoscience.epfl.ch/yourbaskets/display?ln=fr">Vos paniers</a></li><li><a href="https://infoscience.epfl.ch/yourcomments?ln=fr">Vos commentaires</a></li><li><a href="https://infoscience.epfl.ch/yourgroups/display?ln=fr">Vos groupes</a></li><li><a href="https://infoscience.epfl.ch/yourloans/display?ln=fr">Vos emprunts</a></li><li><a href="https://infoscience.epfl.ch/yourmessages/display?ln=fr">Vos messages</a></li><li><a href="https://infoscience.epfl.ch/yoursubmissions.py?ln=fr">Vos soumissions</a></li><li><a href="https://infoscience.epfl.ch/youralerts/display?ln=fr">Vos recherches</a></li></ul><div class="subsubmenu-wrapper"><ul class="subsubmenu"><li><a href="https://infoscience.epfl.ch/youraccount/display?ln=fr">Votre compte</a></li><li><a href="https://infoscience.epfl.ch/youralerts/list?ln=fr">Vos alertes</a></li><li><a href="https://infoscience.epfl.ch/yourapprovals.py?ln=fr">Vos approbations</a></li><li><a href="https://infoscience.epfl.ch/yourbaskets/display?ln=fr">Vos paniers</a></li><li><a href="https://infoscience.epfl.ch/yourcomments?ln=fr">Vos commentaires</a></li><li><a href="https://infoscience.epfl.ch/yourgroups/display?ln=fr">Vos groupes</a></li><li><a href="https://infoscience.epfl.ch/yourloans/display?ln=fr">Vos emprunts</a></li><li><a href="https://infoscience.epfl.ch/yourmessages/display?ln=fr">Vos messages</a></li><li><a href="https://infoscience.epfl.ch/yoursubmissions.py?ln=fr">Vos soumissions</a></li><li><a href="https://infoscience.epfl.ch/youralerts/display?ln=fr">Vos recherches</a></li></ul></div></div>
+            </li>
+
+
+
+
+
+                    <li class="headermoduleboxbody">
+                        <a class="header" href="https://infoscience.epfl.ch/collections/?c=Infoscience%2FResearch">
+                            Browse Collections
+                        </a>
+                    </li>
+
+
+                    <li class="headermoduleboxbody">
+                        <a class="header" href="http://help-infoscience.epfl.ch/">
+                            Aide
+                        </a>
+                    </li>
+
+
+
+        </ul>
+        <div class="userinfoboxbody">
+            {% if user.is_authenticated %}
+            <i class="user-icon"></i><span class="account">{{ user.first_name }}&nbsp;{{ user.last_name }}</span><span class="separator"> :: </span>
+                   <a class="userinfo logout" href="/logout">logout</a>
+            {% else %}
+            <i class="user-icon"></i><span class="account">guest</span><span class="separator"> :: </span>
+                   <a class="userinfo logout" href="/login">login</a>
+
+            {% endif %}
+        </div>
+    </div>
+    <table class="navtrailbox">
+        <tr>
+            <td class="navtrailboxbody">
+                <a href="/?ln=fr" class="navtrail">Accueil</a> &gt; Résultats de la recherche
+            </td>
+        </tr>
+    </table>
+    <!-- end replaced page header -->
+
+</div>
+
+<div class="headerboxbodylogo-wrapper">
+
+
+
+    <div class="headerboxbodylogo scrolled">
+        <div class="logo-wrapper">
+
+                <a class="header-link has-img" href="/?ln=fr">
+                    <img class="header-img" src="//infoscience.epfl.ch/img/main_logo_en.png" alt="Infoscience"/>
+                </a>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="pagebody"><div class="pagebodystripemiddle"><h1 class="headline">{% block headline %}{% endblock %}</h1>
+        {% block content %}
+        {% endblock %}
+</div></div>
+
+{% include "base/footer.html" %}
