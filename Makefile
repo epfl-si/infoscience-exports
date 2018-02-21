@@ -7,11 +7,8 @@
 vars:
 	@echo 'App-related vars:'
 	@echo '  SECRET_KEY=${SECRET_KEY}'
+	@echo '  DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}'
 	@echo '  SITE_URL=${SITE_URL}'
-	@echo '  DATABASE_USER=${DATABASE_USER}'
-	@echo '  DATABASE_PASSWORD=${DATABASE_PASSWORD}'
-	@echo '  DATABASE_HOST=${DATABASE_HOST}'
-	@echo '  DATABASE_PORT=${DATABASE_PORT}'
 	@echo '  DATABASE_URL=${DATABASE_URL}'
 	@echo '  MOCKS_DATABASE_URL=${MOCKS_DATABASE_URL}'
 	@echo ''
@@ -51,8 +48,8 @@ init-heroku:
 	@heroku config:set MAIL_PASSWORD="${HEROKU_PASSWORD}" > /dev/null
 	heroku addons:add heroku-postgresql:hobby-dev
 	heroku addons:add heroku-postgresql:hobby-dev
-	@echo "-> Replace HEROKU_APP vars in your .env file"
-	@echo "-> Run 'heroku run init' when done"
+	@echo "  -> Replace HEROKU_APP vars in your .env file"
+	@echo "  -> Run 'heroku run init' when done"
 
 init-docker:
 	docker-compose -f docker-compose-dev.yml down
@@ -69,14 +66,21 @@ init-db:
 	@echo "! init-db needs a clean DB... if you wantwork locally, run :"
 	@echo "!   $$ make init-docker"
 	@echo "! first in order to clean docker volumes"
+	# create DB
 	psql ${DEV_DB_URL} -c 'CREATE DATABASE "${DB_NAME}";' -U postgres
 	psql ${DEV_DB_URL} -c 'CREATE DATABASE "${MOCKS_DB_NAME}";' -U postgres
+	# create DB user for app
 	psql ${DEV_DATABASE_URL} -c "CREATE USER ${DATABASE_USER} WITH PASSWORD '${DATABASE_PASSWORD}';" -U postgres
 	psql ${DEV_DATABASE_URL} -c "ALTER ROLE ${DATABASE_USER} WITH CREATEDB;" -U postgres
+	# initialize DBs executing migration scripts
 	DATABASE_URL=postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DEV_DB_HOST}:${DEV_DB_PORT}/${DB_NAME} \
 		python infoscience_exports/manage.py migrate
 	MOCKS_DATABASE_URL=postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DEV_DB_HOST}:${DEV_DB_PORT}/${MOCKS_DB_NAME} \
 		python infoscience_exports/manage.py migrate --database=mock
+	# create super admin in app
+	DATABASE_URL=postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DEV_DB_HOST}:${DEV_DB_PORT}/${DB_NAME} \
+		python infoscience_exports/manage.py createsuperuser --username=${SUPER_ADMIN_USERNAME} --email=${SUPER_ADMIN_EMAIL} --noinput
+	@echo "  -> All set up! You can connect with your tequilla acount or the admin (${SUPER_ADMIN_EMAIL})"
 
 info:
 	heroku apps

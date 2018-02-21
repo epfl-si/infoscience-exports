@@ -10,11 +10,10 @@ web:
   environment:
     # explicitely sets the useful env vars
     - SECRET_KEY=${SECRET_KEY}
+    - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
     - SITE_URL=${SITE_URL}
     - DATABASE_URL=${DATABASE_URL}
     - MOCKS_DATABASE_URL=${MOCKS_DATABASE_URL}
-    # apply settings specific for production
-    - DJANGO_SETTINGS_MODULE=settings.prod
   command: gunicorn --reload -w 4 -b :80 --chdir /usr/src/app/infoscience_exports wsgi:application
 
 postgres:
