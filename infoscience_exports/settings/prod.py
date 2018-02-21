@@ -19,10 +19,6 @@ SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
 SECURE_SSL_REDIRECT = True
 
-# Site
-# https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["*"]
-
 # Template
 # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_LOADERS = (

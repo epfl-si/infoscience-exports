@@ -20,6 +20,7 @@ You might want to change the default values for the following vars:
 
 - DJANGO_SETTINGS_MODULE=settings.dev
 - SITE_URL=https://your-host.epfl.ch
+- ALLOWED_HOSTS=your-host
 - DEV_PORT=80
 - DEV_DB_HOST=127.0.0.1
 - DEV_DB_PORT=25432
