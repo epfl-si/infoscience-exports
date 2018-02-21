@@ -2,7 +2,7 @@
 # Default values, can be overridden either on the command line of make
 # or in .env
 
-.PHONY: init-venv init-docker init-db vars coverage run gunicorn local deploy
+.PHONY: init-venv init-docker init-db vars test coverage reset deploy
 
 vars:
 	@echo 'App-related vars:'
@@ -33,10 +33,6 @@ init-docker:
 	docker-compose -f docker-compose-dev.yml up -d
 	docker-compose -f docker-compose-dev.yml logs
 
-restart-docker:
-	docker-compose -f docker-compose-dev.yml down
-	docker-compose -f docker-compose-dev.yml up -d
-
 init-db:
 	# create DB
 	docker-compose -f docker-compose-dev.yml exec postgres \
@@ -65,6 +61,13 @@ test: check-env
 coverage: test
 	coverage html
 	open htmlcov/index.html
+
+reset: init-docker init-db
+
+deploy:
+	docker-compose -f docker-compose-dev.yml stop web
+	docker-compose -f docker-compose-dev.yml build web
+	docker-compose -f docker-compose-dev.yml run -d web
 
 check-env:
 ifeq ($(wildcard .env),)
