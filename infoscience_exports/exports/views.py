@@ -55,27 +55,13 @@ class MockExportViewSet(ExportViewSet):
             return response
 
 
-class ExportView(DetailView):
-    model = Export
-    template_name_suffix = ''
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['marc21xml'] = import_marc21xml(self.object.url)
-        context['id'] = self.object.pk
-        return context
-
-
 class ExportList(LoginRequiredMixin, LogMixin, ListView):
     model = Export
     paginate_by = 20
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        url = "https://infoscience.epfl.ch/search?ln=fr&p=&f=&rm=&ln=fr&sf=&so=d&rg=10&c=Infoscience&of=xm"
-        marc21xml = import_marc21xml(url)       
-        context['marc21xml'] = marc21xml
-        return context
+    def get(self, *args, **kwargs):
+        to_return = super(ExportList, self).get(*args, **kwargs)
+        return to_return
 
 
 class ExportCreate(LoginRequiredMixin, CreateView):
@@ -99,9 +85,34 @@ class ExportDelete(LoginRequiredMixin, DeleteView):
     success_url = django_reverse_lazy('crud:export-list')
 
 
+class ExportView(DetailView):
+    model = Export
+    template_name_suffix = ''
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        options = {}
+        options['object'] = self.object
+        options['is_extern'] = True
+        options['marc21xml'] = import_marc21xml(self.object.url)
+        options['bullet'] = self.object.bullets_type
+        options['thumb'] = self.object.show_thumbnail
+        context['options'] = options
+        return context
+
+
 def preview(request):
-    url = request.GET['url']
+    params = request.GET.dict()
+    url = params['params[url]']
+    bullet = params['params[bullet]']
+    thumb = params['params[thumb]']
+    
+    options = {}
+    options['is_extern'] = False
+    options['marc21xml'] = import_marc21xml(url) if url else ''
+    options['bullet'] = bullet
+    options['thumb'] = thumb == 'true'
+    c = { 'options': options }
+
     t = loader.get_template('exports/export.html')
-    marc21xml = import_marc21xml(url)
-    c = {'marc21xml': marc21xml}
     return HttpResponse(t.render(c))

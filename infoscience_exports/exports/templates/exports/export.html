@@ -1,20 +1,48 @@
 {% load i18n %}
 {% load staticfiles %}
 
-{{ id }}
 
-{% for article in marc21xml %}
-	<div class="marc21xml-record-template1">
-		<p>
-		{% if article.Authors %}<span>{% include "exports/objects_list.html" with objects_css='marc21xml-author' objects=article.Authors %}.</span>{% endif %}
-		{% if article.Title_All %}<span style="font-style: italic">{{ article.Title_All }}.</span>{% endif %}
-		{% if article.Publisher %}<span>{{ article.Publisher }}</span>{% endif %}
-		{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
-		</p>
-		<span><a href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en">{% trans "Detailed record" %}</a></span>
-		<p>
-		{% if not article.last %}<div style="width:100%; border-bottom: 1px dotted #000;"></div>{% endif %}
+<div class="infoscience_export">
+
+{% for article in options.marc21xml %}
+	{% if options.bullet %}
+	<div class="infoscience_record infoscience_record_bulleted">
+		<span class="infoscience_bullet">
+			{% if options.bullet == 'NUMBER_ASC' %}{{ forloop.counter }}
+			{% elif options.bullet == 'NUMBER_DESC' %}{{ forloop.revcounter }}
+			{% elif options.bullet == 'CHARACTER_STAR' %}*
+			{% elif options.bullet == 'CHARACTER_MINUS' %}-
+			{% endif %}
+		</span>
+	{% else %}
+	<div class="infoscience_record">
+	{% endif %}
+		<div class="infoscience_data">
+			{% if article.Authors %}
+			<div class="record-content">
+				{% if article.Authors_Initials %}<span class="infoscience_authors">{{ article.Authors_Initials }}.</span>{% endif %}			
+				{% if article.Title_All %}<span class="infoscience_title">{{ article.Title_All }}.</span>{% endif %}
+				{% if article.Publisher %}<span class="infoscience_host">{{ article.Publisher }}</span>{% endif %}
+				{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
+			</div>
+			{% endif %}
+			{% if options.thumb and article.ELA_Icon %}
+			<img class="record-illustration" src="{{ article.ELA_Icon.0 }}" class="record-illustration" alt="n/a">
+			{% endif %}
+			<p class="infoscience_links">
+				<a class="infoscience_link_detailed" href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en" target="_blank">{% trans "Detailed record" %}</a>
+				{% for fulltext in article.ELA_URL %}
+				 - <a class="infoscience_link_fulltext" href="{{ fulltext }}" target="_blank">{% trans "Full text" %}</a>
+				{% endfor %}
+				{% for view_publisher in article.View_Publisher %}
+				 - <a class="infoscience_link_official" href="{{ view_publisher }}" target="_blank">{% trans "View at publisher" %}</a>
+				{% endfor %}
+			</p>
+		</div>
 	</div>
 	{% empty %}
 	<p>{% trans "No items" %}.</p>
 {% endfor %}
+
+</div>
+

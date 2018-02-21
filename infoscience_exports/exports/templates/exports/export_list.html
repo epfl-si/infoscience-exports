@@ -1,4 +1,4 @@
-{% extends "base/en/base.html" %}
+{% extends "base.html" %}
 
 {% load i18n %}
 {% load staticfiles %}
@@ -11,13 +11,13 @@
 	<ul class="list-group">
 		{% for object in object_list %}
 		<li class="list-group-item">
-			<div class="row">
-				<div class="col-10">
+			<div>
+				<div class="category-content">
 					<h4><a href="{% url 'crud:export-update' object.pk %}">{{ object.name }}</a></h4>
-					<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}">{{ SITE_URL }}{{ object.get_absolute_url }}</a></p>
+					<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}" target="_blank">{{ SITE_URL }}{{ object.get_absolute_url }}</a></p>
 				</div>
-				<div class="col-2">
-					<a class="btn btn-primary" style="float:right" href="{% url 'crud:export-delete' object.pk %}" role="button">{% trans "Delete" %}</a>
+				<div class="category-tools">
+					<a class="btn btn-primary" style="float:right" href="{% url 'crud:export-delete' object.pk %}" role="button"><span class="fa fa-trash fa-lg"></span></a>
 				</div>
 			</div>
 		</li>

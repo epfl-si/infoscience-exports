@@ -2,13 +2,59 @@ body {
 	background-color: rgb(245, 245, 245);
 }
 
-.marc21xml-records-template {
-	margin-top: 40px;
-	margin-bottom: 40px;
+/*
+ * Export List
+*/ 
+
+.category-content {
+	float: left;
 }
 
-.marc21xml-records {
-	padding-top: 8px;
-	padding-bottom: 7px;
+.category-tools {
+	float: right;
+}
+
+/*
+ * Export
+*/ 
+
+.infoscience_record {
+	padding-top: 4px;
 	border-bottom: 1px dotted #000;
+    margin-top: 8px;
+    padding-bottom: 7px;
+}
+
+.infoscience_record p {
+    margin-bottom: 0;
+}
+
+.infoscience_export img.record-illustration {
+    order: 4;
+    align-self: flex-start;
+    height: 200px;
+	max-width: 100%;
+}
+
+.infoscience_bullet {
+    float: left;
+    text-align: right;
+    width: 3em;
+}
+
+.infoscience_record_bulleted .infoscience_data {
+    margin-left: 4em;
+}
+
+.infoscience_title {
+    font-style: italic;
+}
+
+.infoscience_links {
+    padding-top: 0px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-family: Georgia,'Times New Roman',Times,serif;
+    font-style: italic;
+    clear: left;
 }
