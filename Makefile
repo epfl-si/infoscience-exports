@@ -47,9 +47,9 @@ init-heroku:
 	heroku create ${HEROKU_APP} || true
 	heroku config:set PYTHONPATH="./infoscience_exports"
 	heroku config:set SECRET_KEY="${SECRET_KEY}"
-	heroku config:set DJANGO_PASSWORD="${DJANGO_PASSWORD}"
 	heroku config:set MAIL_USERNAME="${HEROKU_USERNAME}"
 	@heroku config:set MAIL_PASSWORD="${HEROKU_PASSWORD}" > /dev/null
+	heroku addons:add heroku-postgresql:hobby-dev
 	heroku addons:add heroku-postgresql:hobby-dev
 	@echo "-> Replace HEROKU_APP vars in your .env file"
 	@echo "-> Run 'heroku run init' when done"
@@ -73,8 +73,10 @@ init-db:
 	psql ${DEV_DB_URL} -c 'CREATE DATABASE "${MOCKS_DB_NAME}";' -U postgres
 	psql ${DEV_DATABASE_URL} -c "CREATE USER ${DATABASE_USER} WITH PASSWORD '${DATABASE_PASSWORD}';" -U postgres
 	psql ${DEV_DATABASE_URL} -c "ALTER ROLE ${DATABASE_USER} WITH CREATEDB;" -U postgres
-	DATABASE_URL=${DEV_DATABASE_URL} python infoscience_exports/manage.py migrate
-	MOCKS_DATABASE_URL=${DEV_MOCKS_DATABASE_URL} python infoscience_exports/manage.py migrate --database=mock
+	DATABASE_URL=postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DEV_DB_HOST}:${DEV_DB_PORT}/${DB_NAME} \
+		python infoscience_exports/manage.py migrate
+	MOCKS_DATABASE_URL=postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DEV_DB_HOST}:${DEV_DB_PORT}/${MOCKS_DB_NAME} \
+		python infoscience_exports/manage.py migrate --database=mock
 
 info:
 	heroku apps
@@ -94,7 +96,7 @@ heroku: test
 	@echo "!   $$ make init-docker"
 	@echo "!   $$ make init-db"
 	docker-compose -f docker-compose-dev.yml start postgres
-	DATABASE_URL=postgres://127.0.0.1:25432/infoscience_exports heroku local -p 7000
+	DATABASE_URL=${DEV_DATABASE_URL} heroku local -p 7000
 
 deploy: test
 	git push heroku master
