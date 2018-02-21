@@ -92,7 +92,8 @@ You can check the correct intallation from your host
 
     git clone git@github.com:epfl-idevelop/infoscience-exports.git
 
-and continue the reading with DOCKER_INSTALL.rst
+and continue the reading with `./DOCKER_INSTALL.rst`_
+
 
 6. Planning to `make` ?
 -----------------------
