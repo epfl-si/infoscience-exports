@@ -1,6 +1,73 @@
 Initial setup with Docker
 =========================
 
+Express set-up
+--------------
+
+Pre-requisite
+
+- pipenv installed
+- git repo checked out (`git clone git@github.com:epfl-idevelop/infoscience-exports.git`)
+
+
+For dev ::
+    
+    $ make init-env
+    ...
+    -> update env vars
+
+You might want to change the default values for the following vars:
+
+- DJANGO_SETTINGS_MODULE=settings.dev
+- SITE_URL=https://your-host.epfl.ch
+- DEV_PORT=80
+- DEV_DB_HOST=127.0.0.1
+- DEV_DB_PORT=25432
+
+.. code-block:: bash
+
+    $ pipenv shell
+    $ make init-docker
+    $ make init-db
+
+To set up data and static files ::
+
+    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py migrate --database=mock
+    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py collectstatic --noinput
+
+To create your super user, customize and run this line ::
+
+    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py createsuperuser --username=your_username --email=same_as_tequila
+
+To run the tests ::
+
+    $ docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --noinput [--failfast --keepdb]
+
+Or to test more intensively with nose and coverage ::
+
+    $ docker-compose -f docker-compose-dev.yml exec web infoscience_exports/manage.py test exports --noinput [-x]
+
+To check your environment variables ::
+
+    $ docker-compose -f docker-compose-dev.yml run web env
+
+You can then access the app with
+
+* its CRUD interface : https://127.0.0.1:${DEV_PORT}/exports/
+* or the API : https://127.0.0.1:${DEV_PORT}/api/v1/exports/
+* or through admin: https://127.0.0.1:${DEV_PORT}/admin
+
+And, finally, go on with your nice feature ::
+
+    $ git checkout -b my-nice-feature master
+    ...
+    $ git push -u origin my-nice-feature
+    ...
+    $ git push
+
+check this link for nice description of the git workflow: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow 
+
+
 A few words on config
 ---------------------
 
@@ -47,51 +114,3 @@ Would you need to connect directly to the DB, we exposed an access to the host o
 
     $ psql -h 127.0.0.1 -p 25432 -U django -W infoscience_exports
 
-Express set-up
---------------
-
-For dev ::
-    
-    $ make init-env
-    ...
-    -> update env vars
-    $ pipenv shell
-    $ make init-docker
-    $ make init-db
-
-To set up data and static files ::
-
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py migrate --database=mock
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py collectstatic --noinput
-
-To create your super user, customize and run this line ::
-
-    $ docker-compose -f docker-compose-dev.yml run web python infoscience_exports/manage.py createsuperuser --username=your_username --email=same_as_tequila
-
-To run the tests ::
-
-    $ docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --noinput [--failfast --keepdb]
-
-Or to test more intensively with nose and coverage ::
-
-    $ docker-compose -f docker-compose-dev.yml exec web infoscience_exports/manage.py test exports --noinput [-x]
-
-To check your environment variables ::
-
-    $ docker-compose -f docker-compose-dev.yml run web env
-
-You can then access the app with
-
-* its CRUD interface : https://127.0.0.1:${DEV_PORT}/exports/
-* or the API : https://127.0.0.1:${DEV_PORT}/api/v1/exports/
-* or through admin: https://127.0.0.1:${DEV_PORT}/admin
-
-And, finally, go on with your nice feature ::
-
-    $ git checkout -b my-nice-feature master
-    ...
-    $ git push -u origin my-nice-feature
-    ...
-    $ git push
-
-check this link for nice description of the git workflow: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow 

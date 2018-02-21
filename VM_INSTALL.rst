@@ -52,6 +52,7 @@ You can check the correct intallation with
     adduser infoscience-exports
     passwd infoscience-exports
     usermod -aG wheel infoscience-exports
+    usermod -aG docker infoscience-exports
 
     mkdir .ssh
     chmod 700 .ssh/
