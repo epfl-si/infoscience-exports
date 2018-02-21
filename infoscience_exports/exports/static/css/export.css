@@ -58,3 +58,15 @@ body {
     font-style: italic;
     clear: left;
 }
+
+.form-control {
+    color: #000;
+    background: #fff;
+    background-color: rgb(255, 255, 255);
+    background-clip: border-box;
+    border: 1px solid #555;
+}
+
+.form-group:last-of-type {
+    margin-top: 45px;
+}
