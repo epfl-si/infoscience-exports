@@ -96,14 +96,4 @@ You can check the correct intallation from your host
 and continue the reading with DOCKER_INSTALL_
 
 
-6. Planning to `make` ?
------------------------
-
-If you plan to initialize and use a custom environment, you will have to use `make` and `pipenv`
-
-.. code-block:: bash
-
-    yum install -y postgresql
-    pip3.6 install pipenv
-
 .. _DOCKER_INSTALL: https://github.com/epfl-idevelop/infoscience-exports/blob/master/DOCKER_INSTALL.rst

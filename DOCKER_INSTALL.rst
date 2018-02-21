@@ -6,13 +6,12 @@ Express set-up
 
 Pre-requisite
 
-- pipenv installed
 - git repo checked out (`git clone git@github.com:epfl-idevelop/infoscience-exports.git`)
 
 
 For dev ::
     
-    $ make init-env
+    $ make init-venv
     ...
     -> update env vars
 
@@ -20,14 +19,11 @@ You might want to change the default values for the following vars:
 
 - DJANGO_SETTINGS_MODULE=settings.dev
 - SITE_URL=https://your-host.epfl.ch
-- ALLOWED_HOSTS=your-host
+- ALLOWED_HOST=your-host
 - DEV_PORT=80
-- DEV_DB_HOST=127.0.0.1
-- DEV_DB_PORT=25432
 
 .. code-block:: bash
 
-    $ pipenv shell
     $ make init-docker
     $ make init-db
 
