@@ -61,10 +61,12 @@ Development
 You can access, with the default configuration :
 
 * the app itself
+
   * any gaspar credential
   * https://127.0.0.1:8000/
 
-* its admin:
+* its admin
+
   * with the service account infoscience-exports
   * or with a gaspar account which as received admin rights
   * https://127.0.0.1:8000/admin
@@ -74,11 +76,11 @@ To deploy a new version of your code (without losing data) ::
 
     $ make deploy
 
-To rebuild everything from scratch
+To rebuild everything from scratch ::
 
     $ make reset
 
-This command can actually be split in two parts if you only want to reset docker / db
+This command can actually be split in two parts if you only want to reset docker / db ::
 
     $ make init-docker
     ...
