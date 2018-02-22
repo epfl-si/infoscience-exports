@@ -18,11 +18,22 @@ from .marc21xml import import_marc21xml
 
 class IsTheUserAccessTest(UserPassesTestMixin):
     # only allow the creator of the object or the staff to access the view
+    # trigger the self.get_object()
     raise_exception = True
 
     def test_func(self):
+        # this object's load happens before the view is shown, so we have
+        # to cancel other getters
         object = self.get_object()
         return object.user == self.request.user or self.request.user.is_staff
+
+    def get(self, request, *args, **kwargs):
+        # overload only to remove self.get_object()
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        # overload only to remove self.get_object()
+        return super().post(request, *args, **kwargs)
 
 
 class ExportViewSet(UserPassesTestMixin,
