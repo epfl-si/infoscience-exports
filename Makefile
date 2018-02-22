@@ -64,6 +64,7 @@ coverage: test
 
 reset: 
 	make init-docker
+	@echo ''
 	@echo "sleeping 3secs, time for postgres container to be available"
 	make init-db
 
@@ -71,6 +72,9 @@ deploy:
 	docker-compose -f docker-compose-dev.yml stop web
 	docker-compose -f docker-compose-dev.yml build web
 	docker-compose -f docker-compose-dev.yml run -d web
+	@echo ''
+	@echo "Deployment done with following commit:"
+	git log -n 1
 
 check-env:
 ifeq ($(wildcard .env),)
