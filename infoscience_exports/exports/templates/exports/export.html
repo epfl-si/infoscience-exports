@@ -8,8 +8,8 @@
 	{% if options.bullet != 'NONE' %}
 	<div class="infoscience_record infoscience_record_bulleted">
 		<span class="infoscience_bullet">
-			{% if options.bullet == 'NUMBER_ASC' %}{{ forloop.counter }}
-			{% elif options.bullet == 'NUMBER_DESC' %}{{ forloop.revcounter }}
+			{% if options.bullet == 'NUMBER_ASC' %}[{{ forloop.counter }}]
+			{% elif options.bullet == 'NUMBER_DESC' %}[{{ forloop.revcounter }}]
 			{% elif options.bullet == 'CHARACTER_STAR' %}*
 			{% elif options.bullet == 'CHARACTER_MINUS' %}-
 			{% endif %}

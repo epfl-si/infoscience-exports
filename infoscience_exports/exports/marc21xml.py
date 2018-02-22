@@ -74,14 +74,13 @@ def parse_dict(record):
 
 
 def get_authors_initials(authors):
-    #result = ";".join(str(item) for item in authors)
     n = len(authors)
     n1 = n - 1
     i = 0
     result = ""
     for author in authors:
         names = author.split(',')
-        family = names[0].lstrip() if len(names) > 0 else ''
+        family = names[0].strip() if len(names) > 0 else ''
         fnames = names[1].split(' ') if len(names) > 1 else ''
         for fname in fnames:
             if not fname:
@@ -89,9 +88,16 @@ def get_authors_initials(authors):
             fname = fname.strip()
             if "-" in fname:
                 snames = fname.split("-")
-                result += snames[0][0] + ".-" + snames[1][0] + ". "
+                if len(snames[0]) > 1:
+                    result += snames[0][0] + "."
+                if len(snames[0]) > 1 or len(snames[1]) > 1:
+                    result += "-"
+                if len(snames[1]) > 1:
+                    result += snames[1][0] + ". "
             else:   
-                result += fname.lstrip()[0] + ". "
+                fname = fname.strip()
+                if len(fname) > 0:  
+                    result += fname.strip()[0] + ". "
         if family:
             result += family
         
