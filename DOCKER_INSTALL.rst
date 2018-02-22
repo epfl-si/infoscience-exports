@@ -58,6 +58,18 @@ or the following alias
 Development
 -----------
 
+You can access, with the default configuration :
+
+* the app itself
+  * any gaspar credential
+  * https://127.0.0.1:8000/
+
+* its admin:
+  * with the service account infoscience-exports
+  * or with a gaspar account which as received admin rights
+  * https://127.0.0.1:8000/admin
+
+
 To deploy a new version of your code (without losing data) ::
 
     $ make deploy
@@ -82,13 +94,15 @@ Or to test more intensively with nose and coverage ::
 
 To check your environment variables ::
 
+    # on your host
+    $ make vars
+
+    # inside the web container
     $ docker-compose -f docker-compose-dev.yml run web env
 
-You can then access the app with
 
-* its CRUD interface : https://${SITE_URL}/exports/
-* or the API : https://${SITE_URL}/api/v1/exports/
-* or through admin: https://${SITE_URL}/admin
+Contributing
+------------
 
 And, finally, go on with your nice feature ::
 
