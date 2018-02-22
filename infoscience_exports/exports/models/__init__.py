@@ -1,3 +1,3 @@
-from .export import Export
-from .settings import BulletsSettings
-from .user import User
+from .export import Export  # noqa
+from .settings import BulletsSettings  # noqa
+from .user import User  # noqa
