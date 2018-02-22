@@ -62,7 +62,10 @@ coverage: test
 	coverage html
 	open htmlcov/index.html
 
-reset: init-docker init-db
+reset: 
+	make init-docker
+	@echo "sleeping 3secs, time for postgres container to be available"
+	make init-db
 
 deploy:
 	docker-compose -f docker-compose-dev.yml stop web
