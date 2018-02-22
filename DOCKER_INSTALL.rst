@@ -67,8 +67,8 @@ You can access, with the default configuration :
 
 * its admin
 
-  * with the service account infoscience-exports
-  * or with a gaspar account which as received admin rights
+  * with the service account *infoscience-exports*
+  * or with a gaspar account which has received admin rights
   * https://127.0.0.1:8000/admin
 
 
