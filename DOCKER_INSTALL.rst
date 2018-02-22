@@ -103,20 +103,6 @@ To check your environment variables ::
     $ docker-compose -f docker-compose-dev.yml run web env
 
 
-Contributing
-------------
-
-And, finally, go on with your nice feature ::
-
-    $ git checkout -b my-nice-feature master
-    ...
-    $ git push -u origin my-nice-feature
-    ...
-    $ git push
-
-check this link for nice description of the git workflow: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow 
-
-
 A few words on config
 ---------------------
 
