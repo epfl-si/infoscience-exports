@@ -12,10 +12,8 @@ web:
   env_file:
     - .env
   environment:
-    # explicitely sets the useful env vars
-    - SECRET_KEY=${SECRET_KEY}
-    - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
-    - SITE_URL=${SITE_URL}
+    # the following vars need to be overridden because the directive env_file
+    # does not compute their value from the other variables
     - DATABASE_URL=${DATABASE_URL}
     - MOCKS_DATABASE_URL=${MOCKS_DATABASE_URL}
   command: gunicorn --reload -w 4 -b :${DEV_PORT} --chdir /usr/src/app/infoscience_exports wsgi:application

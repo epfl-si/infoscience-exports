@@ -5,16 +5,28 @@
 .PHONY: init-venv init-docker init-db vars test coverage reset deploy
 
 vars:
-	@echo 'App-related vars:'
+	@echo 'Used by App:'
 	@echo '  SECRET_KEY=${SECRET_KEY}'
 	@echo '  DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}'
-	@echo '  SITE_URL=${SITE_URL}'
 	@echo '  ALLOWED_HOST=${ALLOWED_HOST}'
+	@echo '  SITE_URL=${SITE_URL}'
 	@echo '  DATABASE_URL=${DATABASE_URL}'
 	@echo '  MOCKS_DATABASE_URL=${MOCKS_DATABASE_URL}'
 	@echo ''
-	@echo 'Dev-related vars:'
+	@echo 'Used by docker-compose and Nginx'
 	@echo '  DEV_PORT=${DEV_PORT}'
+	@echo '  ALLOWED_HOST=${ALLOWED_HOST}'
+	@echo ''
+	@echo 'Used by Makefile'
+	@echo '  SUPER_ADMIN_USERNAME=${SUPER_ADMIN_USERNAME}'
+	@echo '  SUPER_ADMIN_EMAIL=${SUPER_ADMIN_EMAIL}'
+	@echo '  DATABASE_USER=${DATABASE_USER}'
+	@echo '  DATABASE_PASSWORD=xxx'
+	@echo '  DB_NAME=${DB_NAME}'
+	@echo '  MOCKS_DB_NAME=${MOCKS_DB_NAME}'
+	@echo ''
+	@echo 'Defined as helpers'
+	@echo '  DB_URL=${DB_URL}'
 
 init-venv:
 ifeq ($(wildcard .env),)

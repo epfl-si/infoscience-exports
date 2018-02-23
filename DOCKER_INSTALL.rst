@@ -32,13 +32,9 @@ You can check what values will be taken into account with
     App-related vars:
       SECRET_KEY="SeLKDmig0mYF04WVkpZ6mowJ1FiodYkC0C4ZV6Rkuvc="
       DJANGO_SETTINGS_MODULE=settings.dev
-      SITE_URL=https://127.0.0.1:8080
-      ALLOWED_HOST=127.0.0.1
-      DATABASE_URL=postgres://django:django@postgres:5432/infoscience_exports
-      MOCKS_DATABASE_URL=postgres://django:django@postgres:5432/mock_infoscience_exports
-
-    Dev-related vars:
-      DEV_PORT=8080
+      SITE_URL=https://your-host.epfl.ch
+      ALLOWED_HOST=your-host
+    ...
 
 2. Setup containers and DB 
 ..........................
