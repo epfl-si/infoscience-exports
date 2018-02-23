@@ -56,9 +56,11 @@ init-db:
 
 test: check-env
 	flake8 infoscience_exports/exports --max-line-length=120
-	pytest --cov=infoscience_exports/exports infoscience_exports/exports/test
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --noinput --failfast --keepdb
 
-coverage: test
+coverage: check-env
+	flake8 infoscience_exports/exports --max-line-length=120
+	docker-compose -f docker-compose-dev.yml exec web infoscience_exports/manage.py test exports --noinput
 	coverage html
 	open htmlcov/index.html
 
