@@ -1,19 +1,11 @@
-import os
-import subprocess
+# get release from git-release.py, auto updated by git pre-commit hook
+from .versions import _release, _build, _version
 
-__version__ = '0.1.1'
+__release__ = _release
+__version__ = _version
 
 # sensible synonym
 VERSION = __version__
 
-# setting build number from git (if available)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-try:
-    __release__ = subprocess.check_output(
-        ["git", "describe", "--tags"], cwd=BASE_DIR).decode('utf-8').strip()
-    __build__ = subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], cwd=BASE_DIR).decode('utf-8').strip()
-except Exception:
-    __release__ = __version__ + " ?"
-    __build__ = __version__ + " ?"
+# build number is actually from the previous commit
+__build__ = '++{}'.format(_build)

@@ -17,7 +17,7 @@ class Command(LabelCommand):
         elif label == 'release':
             self.stdout.write(__release__)
         elif label == 'all':
-            self.stdout.write("release {}, build {}, version {}".format(
+            self.stdout.write("release {}, build {}, RC.version {}".format(
                 __release__, __build__, __version__
             ))
         else:
