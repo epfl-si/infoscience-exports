@@ -65,13 +65,30 @@ coverage: test
 reset: 
 	make init-docker
 	@echo ''
-	@echo "sleeping 3secs, time for postgres container to be available"
+	@echo "! sleeping 3secs, time for postgres container to be available"
+	@echo ''
 	make init-db
 
-deploy:
-	docker-compose -f docker-compose-dev.yml stop web
+restart:
+	docker-compose -f docker-compose-dev.yml restart web
+
+dump:
+	@echo dumping DB on last commit `git rev-parse --verify HEAD`
+	docker-compose -f docker-compose-dev.yml run --rm \
+		-v $(shell pwd)/backup/:/backup \
+		postgres sh -c 'exec pg_dump -C -hpostgres -Upostgres -Ox -Ft \
+		   -f/backup/$(shell date +"%F:%T")-$(shell git rev-parse --verify HEAD).sql.tar -d${DB_NAME}'
+
+restore:
+	@echo restoring DB from file `ls -t backup/*.sql.tar | head -1`
+	docker-compose -f docker-compose-dev.yml run --rm \
+		-v $(shell pwd)/backup/:/backup \
+		postgres sh -c 'exec pg_restore -c -hpostgres -U${DATABASE_USER} -Ox -Ft -d${DB_NAME} `ls -t /backup/*.sql.tar | head -1`'
+	make restart
+
+deploy: dump
 	docker-compose -f docker-compose-dev.yml build web
-	docker-compose -f docker-compose-dev.yml run -d web
+	make restart
 	@echo ''
 	@echo "Deployment done with following commit:"
 	git log -n 1

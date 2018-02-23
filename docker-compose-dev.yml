@@ -41,6 +41,6 @@ nginx:
 postgres:
   image: postgres:10
   volumes:
-    - /var/lib/postgresql
+    - ./db_data:/var/lib/postgresql
   ports:
     - "25432:5432"
