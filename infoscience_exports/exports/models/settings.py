@@ -4,7 +4,6 @@ Abstract classes, mainly used to avoid the one big model
 """
 
 from django.db import models
-from enum import Enum
 
 
 class BaseSettings(models.Model):
