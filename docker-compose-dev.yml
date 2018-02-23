@@ -34,6 +34,7 @@ nginx:
     # used in nginx/sites-enabled/web.conf
     - web
   environment:
+    - ALLOWED_HOST=${ALLOWED_HOST}
     - DEV_PORT=${DEV_PORT}
     - DOLLAR=$$
   command: /bin/bash -c "envsubst < /etc/nginx/conf.d/web.template > /etc/nginx/conf.d/web.conf && nginx -g 'daemon off;'" 
