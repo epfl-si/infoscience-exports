@@ -1,8 +1,7 @@
 server {
     listen ${DEV_PORT} ssl http2;
 
-    #FIXME set real server name
-    server_name localhost;
+    server_name ${ALLOWED_HOST};
     charset utf-8;
 
     ssl                             on;

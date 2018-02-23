@@ -5,16 +5,28 @@
 .PHONY: init-venv init-docker init-db vars test coverage reset deploy
 
 vars:
-	@echo 'App-related vars:'
+	@echo 'Used by App:'
 	@echo '  SECRET_KEY=${SECRET_KEY}'
 	@echo '  DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}'
-	@echo '  SITE_URL=${SITE_URL}'
 	@echo '  ALLOWED_HOST=${ALLOWED_HOST}'
+	@echo '  SITE_URL=${SITE_URL}'
 	@echo '  DATABASE_URL=${DATABASE_URL}'
 	@echo '  MOCKS_DATABASE_URL=${MOCKS_DATABASE_URL}'
 	@echo ''
-	@echo 'Dev-related vars:'
+	@echo 'Used by docker-compose and Nginx'
 	@echo '  DEV_PORT=${DEV_PORT}'
+	@echo '  ALLOWED_HOST=${ALLOWED_HOST}'
+	@echo ''
+	@echo 'Used by Makefile'
+	@echo '  SUPER_ADMIN_USERNAME=${SUPER_ADMIN_USERNAME}'
+	@echo '  SUPER_ADMIN_EMAIL=${SUPER_ADMIN_EMAIL}'
+	@echo '  DATABASE_USER=${DATABASE_USER}'
+	@echo '  DATABASE_PASSWORD=xxx'
+	@echo '  DB_NAME=${DB_NAME}'
+	@echo '  MOCKS_DB_NAME=${MOCKS_DB_NAME}'
+	@echo ''
+	@echo 'Defined as helpers'
+	@echo '  DB_URL=${DB_URL}'
 
 init-venv:
 ifeq ($(wildcard .env),)
@@ -28,7 +40,6 @@ endif
 
 init-docker:
 	docker-compose -f docker-compose-dev.yml down
-	docker system prune
 	docker-compose -f docker-compose-dev.yml build
 	docker-compose -f docker-compose-dev.yml up -d
 	docker-compose -f docker-compose-dev.yml logs
@@ -56,9 +67,11 @@ init-db:
 
 test: check-env
 	flake8 infoscience_exports/exports --max-line-length=120
-	pytest --cov=infoscience_exports/exports infoscience_exports/exports/test
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --noinput --failfast --keepdb
 
-coverage: test
+coverage: check-env
+	flake8 infoscience_exports/exports --max-line-length=120
+	docker-compose -f docker-compose-dev.yml exec web infoscience_exports/manage.py test exports --noinput
 	coverage html
 	open htmlcov/index.html
 
