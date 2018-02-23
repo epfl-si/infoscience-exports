@@ -5,6 +5,7 @@ import os
 import logging
 import subprocess
 import sys
+import shutil
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -13,8 +14,10 @@ if BASE_DIR.endswith('hooks'):
         [BASE_DIR, '..', '..']))
     sys.path.append(BASE_DIR)
 
-from versions import __file__ as REALEASE_FILE  # noqa
+from versions import __file__ as RELEASE_FILE  # noqa
 from versions import _release, _build, _version  # noqa
+
+COPY_PATH = os.path.sep.join([BASE_DIR, 'infoscience_exports', 'exports', 'versions.py'])
 
 
 def main():
@@ -46,8 +49,9 @@ def main():
         build = _build + " ?"
 
     # update file
-    with open(REALEASE_FILE, 'w') as output:
-        content = """# This file is autognerated by post-commit hook
+    with open(RELEASE_FILE, 'w') as output:
+        content = """# flake8: noqa
+# This file is autognerated by post-commit hook
 
 _release = '{0}'
 _version = '{1}'
@@ -58,6 +62,9 @@ _build = '{2}'
         """.format(release, version, build)
         output.write(content)
         logging.info(content)
+
+    # copy file in package
+    shutil.copy(RELEASE_FILE, COPY_PATH)
 
 
 if __name__ == '__main__':

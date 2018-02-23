@@ -9,6 +9,7 @@ from django.utils.translation import gettext as _
 from rest_framework import viewsets, permissions, mixins
 from rest_framework.request import Request
 
+from exports import format_version
 from log_utils import LogMixin
 from .models import Export
 from .serializers import ExportSerializer
@@ -155,3 +156,8 @@ def preview(request):
 
     t = loader.get_template('exports/export.html')
     return HttpResponse(t.render(c))
+
+
+def version(request):
+    label = request.GET.dict().get('label', 'version')
+    return HttpResponse(format_version(label))
