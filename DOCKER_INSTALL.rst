@@ -54,7 +54,7 @@ or the following alias
 Development
 -----------
 
-The first thing to do is enable a post-commit git hook in order to have the versions taken care of.
+The first thing to do is enable a post-commit git hook in order to have the versions taken care of ::
 
     $ cp update_releases.py .git/hooks/post-commit
 
