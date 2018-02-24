@@ -1,13 +1,15 @@
-from django.core.management.base import LabelCommand
+from django.core.management.base import BaseCommand
 
 from exports import format_version
 
 
-class Command(LabelCommand):
+class Command(BaseCommand):
 
-    help = "Display version or build number"
-    label = "version, release, build, all"
+    help = "Display version, release or build number (or all)"
+
+    def add_arguments(self, parser):
+        parser.add_argument('label', nargs='*', type=str)
 
     # A command must define handle()
-    def handle_label(self, label, **options):
-        return format_version(label)
+    def handle(self, label, *args, **options):
+        self.stdout.write(format_version(label=label))

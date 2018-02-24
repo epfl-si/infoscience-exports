@@ -158,6 +158,5 @@ def preview(request):
     return HttpResponse(t.render(c))
 
 
-def version(request):
-    label = request.GET.dict().get('label', 'version')
+def version(request, label='version'):
     return HttpResponse(format_version(label))
