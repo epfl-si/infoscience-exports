@@ -1,4 +1,4 @@
-# Contributing to Jahia2wp
+# Contributing to Infoscience-exports
 
 As an open source project, we always welcome contributions of many forms.
 
