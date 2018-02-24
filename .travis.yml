@@ -21,8 +21,5 @@ script:
 # after_success:
 # - coveralls
 
-notifications:
-  email: false
-
 matrix:
   fast_finish: true
