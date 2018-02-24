@@ -8,6 +8,8 @@ export_patterns = ([
     url(r'^(?P<pk>\d+)/update/$', views.ExportUpdate.as_view(), name='export-update'),
     url(r'^(?P<pk>\d+)/delete/$', views.ExportDelete.as_view(), name='export-delete'),
     url(r'^preview/$', views.preview, name='export-preview'),
+    url(r'^version/$', views.version),
+    url(r'^version/(?P<label>\w+)/$', views.version, name='export-version'),
     ], 'exports')
 
 urlpatterns = [

@@ -1,9 +1,9 @@
 import os
+
 from os.path import join
 from urllib import parse
 
 from django.core.exceptions import ImproperlyConfigured
-
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -17,6 +17,7 @@ def get_env_variable(var_name):
         raise ImproperlyConfigured(error_msg)
 
     return environ_var
+
 
 SITE_URL = get_env_variable('SITE_URL')
 

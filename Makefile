@@ -2,7 +2,11 @@
 # Default values, can be overridden either on the command line of make
 # or in .env
 
-.PHONY: init-venv init-docker init-db vars test coverage reset deploy
+.PHONY: version vars init-venv init-docker init-db test coverage reset deploy
+
+version:
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py appversion all
 
 vars:
 	@echo 'Used by App:'

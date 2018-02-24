@@ -54,6 +54,17 @@ or the following alias
 Development
 -----------
 
+The first thing to do is enable a post-commit git hook in order to have the versions taken care of ::
+
+    $ cp update_releases.py .git/hooks/post-commit
+
+    $ which python
+    /usr/bin/python
+
+    # if your path is different, change it in the first line of the post-commit file
+    $ vi .git/hooks/post-commit
+    ...
+
 You can access, with the default configuration :
 
 * the app itself
