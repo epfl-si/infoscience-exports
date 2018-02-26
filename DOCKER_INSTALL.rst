@@ -53,6 +53,17 @@ or the following alias
 
 Development
 -----------
+Warning :
+
+First, check your VPN connexion is not blocked par your docker ::
+    
+    $ sudo iptables -L
+
+If ciscovpn services are inside "Chain FORWAR (policy DROP)", you should ::
+
+    $ sudo iptables -F ciscovpn
+    
+    
 
 The first thing to do is enable a post-commit git hook in order to have the versions taken care of ::
 
