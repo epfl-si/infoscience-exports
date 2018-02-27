@@ -136,11 +136,13 @@ release: build
 	# git merge master
 
 deploy: dump
+	# update docker image
 	docker-compose -f docker-compose-dev.yml build web
+	# update DB
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py migrate
+	# restart web container
 	make restart-web
-	@echo ''
-	@echo "Deployment done with following commit:"
-	git log -n 1
 
 check-env:
 ifeq ($(wildcard .env),)
