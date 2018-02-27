@@ -57,7 +57,7 @@ build:
 	docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml build
 
-init-docker: build
+init-docker:
 	docker-compose -f docker-compose-dev.yml up -d
 	docker-compose -f docker-compose-dev.yml logs
 
@@ -92,8 +92,7 @@ coverage: check-env
 	coverage html
 	open htmlcov/index.html
 
-reset: 
-	make init-docker
+reset: build init-docker
 	@echo ''
 	@echo "! sleeping 3secs, time for postgres container to be available"
 	@echo ''
@@ -116,7 +115,7 @@ restore:
 		postgres sh -c 'exec pg_restore -c -hpostgres -U${DATABASE_USER} -Ox -Ft -d${DB_NAME} `ls -t /backup/*.sql.tar | head -1`'
 	make restart
 
-release:
+release: build
 	# updating CHANGELOG
 	github_changelog_generator
 	# confirm version number
