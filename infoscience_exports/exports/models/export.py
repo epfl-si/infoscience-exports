@@ -4,11 +4,15 @@ from django.conf import settings
 
 from dirtyfields import DirtyFieldsMixin
 
-from .settings import BulletsSettings, ThumbnailSettings
+from .settings import BulletsSettings, ThumbnailSettings, LinksSettings, \
+    GroupBySettings, FormatsSettings
 
 
 class Export(BulletsSettings,
              ThumbnailSettings,
+             LinksSettings,
+             GroupBySettings,
+             FormatsSettings,             
              models.Model,
              DirtyFieldsMixin,
              ):

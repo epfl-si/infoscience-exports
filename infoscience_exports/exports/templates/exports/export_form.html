@@ -2,12 +2,79 @@
 
 {% load i18n %}
 {% load bootstrap4 %}
+{% load staticfiles %}
+
+
+{% block headjs %}
+<script type="text/javascript" src="/static/js/export.js"></script>
+{% endblock %}
+
 
 {% block content %}
     <h1>{% trans "Create/Update" %}</h1>
     <form id="export_form" method="post" action="." class="form">
 		{% csrf_token %}
-		{% bootstrap_form form layout='' %}
+
+		<div class="row">
+			<div class="col-12">
+				<h4>{% trans "Name" %}</h4>
+			</div>
+			<div class="col-12">
+				{{ form.name }}
+			</div>
+			<div class="col-12">
+				<h4>{% trans "Url" %}</h4>
+			</div>
+			<div class="col-12">
+				{{ form.url }}
+			</div>
+{% comment %}
+			<div class="col-12">	
+				<h4>{% trans "Format" %}</h4>
+			</div>
+			<div class="col-12">
+				{{ form.formats_type }}
+			</div>
+{% endcomment %}
+			<div class="col-12">
+				<h4>{% trans "Group by" %}</h4>
+			</div>
+			<div class="col-12">
+				<label>{% trans "Group by" %} (1)</label>
+				{{ form.groupsby_type }}
+				<br />
+				<br />
+				<label>{% trans "Group by" %} (2)</label>
+				{{ form.groupsby_year }}
+				{{ form.groupsby_doc }}
+			</div>
+			<div class="col-12">
+				<h4>{% trans "Bullets and Numbering" %}</h4>
+			</div>
+			<div class="col-12">
+				{{ form.bullets_type }}
+			</div>
+			<div class="col-12">
+				<h4>{% trans "Thumbnail" %}</h4>
+			</div>
+			<div class="col-12">
+				<div>{{ form.show_thumbnail }}   {% trans "Show illustration" %}</div>
+			</div>
+			<div class="col-12">
+				<h4>{% trans "Links" %}</h4>
+			</div>
+			<div class="col-12 col-sm-6">
+				<div>{{ form.show_linkable_titles }}   {% trans "Clickable titles" %}</div>
+				<div>{{ form.show_linkable_authors }}   {% trans "Clickable authors" %}</div>
+				<div>{{ form.show_links_for_printing }}   {% trans "Format links for printing" %}</div>
+			</div>
+			<div class="col-12 col-sm-6">
+				<div>{{ form.show_detailed }}   {% trans "Detailed record" %}</div>
+				<div>{{ form.show_fulltext }}   {% trans "Full Text" %}</div>
+				<div>{{ form.show_viewpublisher }}   {% trans "View at publisher" %}</div> 
+			</div>
+		</div>
+
 		{% buttons %}
 		<a class="btn btn-primary" href="{% url 'crud:export-list' %}" role="button">{% trans "Cancel" %}</a>
 		<button id="btn-preview" type="button" class="btn btn-primary">{% trans "Preview" %}</button>
