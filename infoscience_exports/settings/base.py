@@ -23,6 +23,11 @@ parsed_url = parse.urlparse(get_env_variable('SITE_URL'))
 SITE_DOMAIN = "{0}://{1}".format(parsed_url.scheme, parsed_url.netloc)
 SITE_PATH = parsed_url.path.strip('/')
 
+# Django Tequila
+AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
+TEQUILA_SERVICE_NAME = "Infoscience exports"
+AUTH_USER_MODEL = 'exports.User'
+
 # override django-tequila urls if we are serving the application from a folder path
 if SITE_PATH:
     LOGIN_URL = "/{}/login".format(SITE_PATH)
@@ -209,14 +214,3 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
-
-# Django Tequila
-AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
-TEQUILA_SERVICE_NAME = "Infoscience exports"
-
-LOGIN_URL = "/login"
-LOGIN_REDIRECT_URL = "/"
-LOGIN_REDIRECT_IF_NOT_ALLOWED = "/not_allowed"
-LOGOUT_URL = '/logged-out'
-
-AUTH_USER_MODEL = 'exports.User'

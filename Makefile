@@ -87,12 +87,14 @@ reset:
 	make init-db
 
 restart:
-	docker-compose -f docker-compose-dev.yml down
+	# FIXME: OperationalError at / FATAL: role "django" does not exist
+	# docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml up -d
 	docker-compose -f docker-compose-dev.yml logs
 
 restart-web:
-	docker-compose -f docker-compose-dev.yml restart web
+	docker-compose -f docker-compose-dev.yml stop web
+	docker-compose -f docker-compose-dev.yml start web
 
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
