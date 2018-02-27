@@ -8,9 +8,9 @@ RUN mkdir -p /usr/src/app && \
 
 # install requirements 
 # (asap to make cache more efficent)
-COPY ./requirements.txt /usr/src/app/
+COPY ./requirements*.txt /usr/src/app/
 WORKDIR /usr/src/app
-RUN pip install -r requirements.txt
+RUN pip install -r requirements-dev.txt
 
 # copy project files
 COPY ./staticfiles /usr/src/app/staticfiles

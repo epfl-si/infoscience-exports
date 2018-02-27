@@ -42,9 +42,22 @@ endif
 	@echo "! If you want a clean state from a docker standpoint, run"
 	@echo "!   $$ make init-docker"
 
-init-docker:
+build:
+	# udpating requirements
+	pipenv lock --requirements > requirements.txt
+	echo "-r requirements.txt" > requirements-dev.txt
+	pipenv lock --requirements --dev >> requirements-dev.txt
+	# clean up requirements	
+	sed -i "s/# -e git/-e git/g" requirements.txt
+	sed -i -r "s/--hash=[^ ]+//g" requirements.txt
+	sed -i -r "s/--hash=[^ ]+//g" requirements-dev.txt
+	# collectstatic
+	python infoscience_exports/manage.py collectstatic
+	# build docker image
 	docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml build
+
+init-docker: build
 	docker-compose -f docker-compose-dev.yml up -d
 	docker-compose -f docker-compose-dev.yml logs
 
@@ -104,10 +117,6 @@ restore:
 	make restart
 
 release:
-	# udpating requirements
-	pipenv lock --requirements > requirements.txt
-	echo "-r requirements.txt" > requirements-dev.txt
-	pipenv lock --requirements --dev >> requirements-dev.txt
 	# updating CHANGELOG
 	github_changelog_generator
 	# confirm version number
