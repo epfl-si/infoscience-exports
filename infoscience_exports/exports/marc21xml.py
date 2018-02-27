@@ -121,7 +121,6 @@ def set_authors(authors):
     return result
 
 
-
 def import_marc21xml(url):
     reader = marcxml.parse_xml_to_array(urlopen(url))
     result = []

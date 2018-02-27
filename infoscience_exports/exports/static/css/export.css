@@ -85,6 +85,13 @@ h1 {
     margin-bottom: 20px;
 }
 
+ul {
+	margin: 5px 35px 0 0;
+    display: block; 
+	list-style-type: none;
+    padding: 0 3px 0 0;
+}
+
 .infoscience_header2 {
     color: #000;
     font-family: Arial,Helvetica,sans-serif;
