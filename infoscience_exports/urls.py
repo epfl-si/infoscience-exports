@@ -13,7 +13,7 @@ from django_tequila.urls import urlpatterns as django_tequila_urlpatterns
 
 router = DefaultRouter()
 
-app_patterns =  [
+app_patterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^', include('exports.urls')),
@@ -23,8 +23,7 @@ app_patterns =  [
     url(r'^api/v1/', include(router.urls)),
     url(r'^api/v1/', include('exports.api')),
     url(r'^mock/v1/', include('exports.mock')),
-
-] 
+]
 
 app_patterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 app_patterns += django_tequila_urlpatterns
@@ -35,7 +34,7 @@ app_patterns += staticfiles_urlpatterns()
 
 urlpatterns = [
     url(
-        r'^%s/'%settings.SITE_PATH,
+        r'^%s/' % settings.SITE_PATH,
         include(app_patterns)
     ),
 ]
