@@ -13,7 +13,7 @@ from django_tequila.urls import urlpatterns as django_tequila_urlpatterns
 
 router = DefaultRouter()
 
-urlpatterns = [
+app_patterns =  [
     url(r'^admin/', admin.site.urls),
 
     url(r'^', include('exports.urls')),
@@ -21,13 +21,21 @@ urlpatterns = [
     url(r'^logged-out/$', TemplateView.as_view(template_name='log_out.html')),
 
     url(r'^api/v1/', include(router.urls)),
-
     url(r'^api/v1/', include('exports.api')),
     url(r'^mock/v1/', include('exports.mock')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
 
-urlpatterns += django_tequila_urlpatterns
+app_patterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+app_patterns += django_tequila_urlpatterns
 
 # FIXME: to remove once nginx is intalled on TIND infrastructure
-urlpatterns += staticfiles_urlpatterns()
+app_patterns += staticfiles_urlpatterns()
+
+
+urlpatterns = [
+    url(
+        r'^%s/'%settings.SITE_PATH,
+        include(app_patterns)
+    ),
+]
