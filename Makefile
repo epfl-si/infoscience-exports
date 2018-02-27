@@ -2,7 +2,7 @@
 # Default values, can be overridden either on the command line of make
 # or in .env
 
-.PHONY: version vars init-venv init-docker init-db test coverage reset deploy
+.PHONY: version vars init-venv init-docker init-db test coverage reset deploy release
 
 version:
 	docker-compose -f docker-compose-dev.yml exec web \
@@ -42,9 +42,22 @@ endif
 	@echo "! If you want a clean state from a docker standpoint, run"
 	@echo "!   $$ make init-docker"
 
-init-docker:
+build:
+	# udpating requirements
+	pipenv lock --requirements > requirements.txt
+	echo "-r requirements.txt" > requirements-dev.txt
+	pipenv lock --requirements --dev >> requirements-dev.txt
+	# clean up requirements	
+	sed -i "s/# -e git/-e git/g" requirements.txt
+	sed -i -r "s/--hash=[^ ]+//g" requirements.txt
+	sed -i -r "s/--hash=[^ ]+//g" requirements-dev.txt
+	# collectstatic
+	python infoscience_exports/manage.py collectstatic
+	# build docker image
 	docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml build
+
+init-docker:
 	docker-compose -f docker-compose-dev.yml up -d
 	docker-compose -f docker-compose-dev.yml logs
 
@@ -79,8 +92,7 @@ coverage: check-env
 	coverage html
 	open htmlcov/index.html
 
-reset: 
-	make init-docker
+reset: build init-docker
 	@echo ''
 	@echo "! sleeping 3secs, time for postgres container to be available"
 	@echo ''
@@ -102,6 +114,19 @@ restore:
 		-v $(shell pwd)/backup/:/backup \
 		postgres sh -c 'exec pg_restore -c -hpostgres -U${DATABASE_USER} -Ox -Ft -d${DB_NAME} `ls -t /backup/*.sql.tar | head -1`'
 	make restart
+
+release: build
+	# updating CHANGELOG
+	github_changelog_generator
+	# confirm version number
+	# see https://stackoverflow.com/questions/39272954/how-to-prompt-user-for-y-n-in-my-makefile-with-pure-make-syntaxis
+	# docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py appversion version
+	# commit master
+
+	# git tag ADD-$-TO-(sell command) (shell docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py appversion version)
+	# git push --tags
+	# git checkout release
+	# git merge master
 
 deploy: dump
 	docker-compose -f docker-compose-dev.yml build web

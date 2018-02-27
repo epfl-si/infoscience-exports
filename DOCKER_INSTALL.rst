@@ -8,6 +8,7 @@ Express set-up
 ................
 
 - git repo checked out (`git clone git@github.com:epfl-idevelop/infoscience-exports.git`)
+- sudo gem install github_changelog_generator in order to generate automatically the CHANGELOG file
 
 1. initialize a fresh .env file
 ...............................
@@ -53,7 +54,8 @@ or the following alias
 
 Development
 -----------
-Warning :
+
+Warning if you are an EPFL developer, running your developement environment on Ubuntu, with VPN activated :
 
 First, check your VPN connexion is not blocked par your docker ::
     
@@ -64,7 +66,6 @@ If ciscovpn services are inside "Chain FORWAR (policy DROP)", you should ::
     $ sudo iptables -F ciscovpn
     
     
-
 The first thing to do is enable a post-commit git hook in order to have the versions taken care of ::
 
     $ cp update_releases.py .git/hooks/post-commit

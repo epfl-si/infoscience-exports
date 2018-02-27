@@ -11,7 +11,8 @@ python:
 
 install:
 - make init-venv
-- make reset
+- make init-docker
+- make init-db
 
 script:
 - make vars
