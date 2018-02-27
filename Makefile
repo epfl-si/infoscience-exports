@@ -87,6 +87,11 @@ reset:
 	make init-db
 
 restart:
+	docker-compose -f docker-compose-dev.yml down
+	docker-compose -f docker-compose-dev.yml up -d
+	docker-compose -f docker-compose-dev.yml logs
+
+restart-web:
 	docker-compose -f docker-compose-dev.yml restart web
 
 dump:
@@ -101,11 +106,11 @@ restore:
 	docker-compose -f docker-compose-dev.yml run --rm \
 		-v $(shell pwd)/backup/:/backup \
 		postgres sh -c 'exec pg_restore -c -hpostgres -U${DATABASE_USER} -Ox -Ft -d${DB_NAME} `ls -t /backup/*.sql.tar | head -1`'
-	make restart
+	make restart-web
 
 deploy: dump
 	docker-compose -f docker-compose-dev.yml build web
-	make restart
+	make restart-web
 	@echo ''
 	@echo "Deployment done with following commit:"
 	git log -n 1
