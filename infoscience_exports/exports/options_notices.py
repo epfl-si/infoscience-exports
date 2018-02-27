@@ -32,14 +32,15 @@ DOC_TYPE_ORDERED = (
 
 
 def get_groups(options, notices, attr, subattr):
+    doc_type = dict(DOC_TYPE_ORDERED)
     groups_list = []
     for key, items in groupby(notices, itemgetter(attr)):
         subgroups_list = []
         for subkey, subitems in groupby(items, itemgetter(subattr)):
-            list2 = [{'title': subkey[0]}] if subattr == 'Doc_Type' else [{'title': subkey}]
+            list2 = [{'title': doc_type[subkey[0]]}] if subattr == 'Doc_Type' else [{'title': subkey}]
             list2.extend(list(subitems))
             subgroups_list.append(list2)
-        list1 = [{'title': key[0]}] if attr == 'Doc_Type' else [{'title': key}]
+        list1 = [{'title': doc_type[key[0]]}] if attr == 'Doc_Type' else [{'title': key}]
         list1.extend(list(subgroups_list))
         groups_list.append(list1)
     return groups_list
