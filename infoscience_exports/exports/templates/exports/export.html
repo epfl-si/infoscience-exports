@@ -27,7 +27,26 @@
 				<div class="infoscience_data">
 					{% if article.Authors %}
 					<div class="record-content">
-						{% if article.Authors_Initials %}<span class="infoscience_authors">{{ article.Authors_Initials }}</span>{% endif %}			
+						{% if article.Authors %}
+						<span class="infoscience_authors">
+                        {% for author in article.Authors %}
+							{% if not forloop.first %}
+								{% if forloop.last %}
+       								{% trans " and " %}
+								{% else %}
+									,	
+								{% endif %}
+							{% endif %}
+							{% if options.link_authors %}<a href="https://infoscience.epfl.ch/search?p={{author.url}}" target="_blank">{%endif %}
+  							{{ author.initname }}
+							{% if options.link_authors %}</a>{% endif %}
+							{% if forloop.last %}
+       						.
+							{% endif %}
+						{% endfor %}
+						</span>
+						{% endif %}			
+
 						{% if article.Title_All %}<span class="infoscience_title">{{ article.Title_All }}.</span>{% endif %}
 						{% if article.Publisher %}<span class="infoscience_host">{{ article.Publisher }}</span>{% endif %}
 						{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
