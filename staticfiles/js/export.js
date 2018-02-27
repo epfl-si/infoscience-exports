@@ -5,7 +5,7 @@ jQuery(function($) {
         params['url'] = $("#id_url").val();
 		params['bullet'] = $("#id_bullets_type").find(":selected").val();
 		params['thumb'] = $("#id_show_thumbnail").is(':checked');
-        $.get('/preview/', {params: params}, function (data) {
+        $.get(INFOSCIENCE_PATH+'/preview/', {params: params}, function (data) {
             ($("#display-mrc21xml").html(data));
         });
     });
