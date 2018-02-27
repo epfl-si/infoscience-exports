@@ -99,7 +99,14 @@ reset: build init-docker
 	make init-db
 
 restart:
-	docker-compose -f docker-compose-dev.yml restart web
+	# FIXME: OperationalError at / FATAL: role "django" does not exist
+	# docker-compose -f docker-compose-dev.yml down
+	docker-compose -f docker-compose-dev.yml up -d
+	docker-compose -f docker-compose-dev.yml logs
+
+restart-web:
+	docker-compose -f docker-compose-dev.yml stop web
+	docker-compose -f docker-compose-dev.yml start web
 
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
@@ -113,7 +120,7 @@ restore:
 	docker-compose -f docker-compose-dev.yml run --rm \
 		-v $(shell pwd)/backup/:/backup \
 		postgres sh -c 'exec pg_restore -c -hpostgres -U${DATABASE_USER} -Ox -Ft -d${DB_NAME} `ls -t /backup/*.sql.tar | head -1`'
-	make restart
+	make restart-web
 
 release: build
 	# updating CHANGELOG
@@ -129,11 +136,13 @@ release: build
 	# git merge master
 
 deploy: dump
+	# update docker image
 	docker-compose -f docker-compose-dev.yml build web
-	make restart
-	@echo ''
-	@echo "Deployment done with following commit:"
-	git log -n 1
+	# update DB
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py migrate
+	# restart web container
+	make restart-web
 
 check-env:
 ifeq ($(wildcard .env),)

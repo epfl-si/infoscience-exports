@@ -14,7 +14,8 @@
 			<div>
 				<div class="category-content">
 					<h4><a href="{% url 'crud:export-update' object.pk %}">{{ object.name }}</a></h4>
-					<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}" target="_blank">{{ SITE_URL }}{{ object.get_absolute_url }}</a></p>
+					<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}" target="_blank">
+						{{ SITE_DOMAIN }}{{ object.get_absolute_url }}</a></p>
 				</div>
 				<div class="category-tools">
 					<input type="hidden" value="{{ SITE_URL }}{{ object.get_absolute_url }}">

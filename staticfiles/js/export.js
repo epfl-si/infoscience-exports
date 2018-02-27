@@ -14,7 +14,7 @@ jQuery(function($) {
 		params['link_detailed'] = $("#id_show_detailed").is(':checked');
 		params['link_fulltext'] = $("#id_show_fulltext").is(':checked');
 		params['link_publisher'] = $("#id_show_viewpublisher").is(':checked');
-        $.get('/preview/', {params: params}, function (data) {
+        $.get(INFOSCIENCE_PATH+'/preview/', {params: params}, function (data) {
             ($("#display-mrc21xml").html(data));
         });
     });
