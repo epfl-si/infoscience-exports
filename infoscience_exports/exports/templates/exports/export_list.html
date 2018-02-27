@@ -17,7 +17,9 @@
 					<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}" target="_blank">{{ SITE_URL }}{{ object.get_absolute_url }}</a></p>
 				</div>
 				<div class="category-tools">
-					<a class="btn btn-primary" style="float:right" href="{% url 'crud:export-delete' object.pk %}" role="button"><span class="fa fa-trash fa-lg"></span></a>
+					<input type="hidden" value="{{ SITE_URL }}{{ object.get_absolute_url }}">
+					<a class="btn btn-primary" href="{% url 'crud:export-delete' object.pk %}" role="button" title="{% trans 'Remove' %}"><span class="fa fa-trash fa-lg"></span></a>
+					<a class="btn btn-primary" href="#" role="button" title="{% trans 'Copy to clipboard' %}"><span class="fa fa-clipboard fa-lg"></span></a>
 				</div>
 			</div>
 		</li>

@@ -2,6 +2,54 @@ body {
 	background-color: rgb(245, 245, 245);
 }
 
+textarea:focus,
+input:focus,
+select:focus {   
+  border-color: rgba(0, 123, 255, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 123, 255, 0.6);
+  outline: 0 none;
+}
+
+/*
+ * Export Edit
+*/
+
+#export_form h4 {
+    margin: 30px 0 12px 0;
+}
+
+#export_form input[type="text"], 
+#export_form select {
+	width: 100%;
+}
+
+#export_form input, 
+#export_form select {
+    color: #000;
+    background: #fff;
+    background-color: rgb(255, 255, 255);
+    background-clip: border-box;
+    border: 1px solid #555;
+	border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	padding: 5px 35px 5px 5px;
+}
+
+.bloc_checkboxes {
+	margin-top: 10px;
+}
+
+.span_checkbox {
+}
+
+.span_checkbox_label {
+	margin-left: 10px;
+}
+
+.form-group {
+	margin-top: 4rem;
+}
+
 /*
  * Export List
 */ 
@@ -12,6 +60,12 @@ body {
 
 .category-tools {
 	float: right;
+}
+
+.category-tools .btn {
+	float: right;
+	width: 40px;
+	margin-left: 20px;
 }
 
 /*
@@ -59,14 +113,3 @@ body {
     clear: left;
 }
 
-.form-control {
-    color: #000;
-    background: #fff;
-    background-color: rgb(255, 255, 255);
-    background-clip: border-box;
-    border: 1px solid #555;
-}
-
-.form-group:last-of-type {
-    margin-top: 45px;
-}

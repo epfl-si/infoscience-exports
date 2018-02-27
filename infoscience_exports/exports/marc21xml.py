@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Example usage: python simpledump.py data/marc/010-lok.mrc
+Parse a marc-21-xml file
 """
 
 from urllib.request import urlopen
@@ -54,6 +54,13 @@ def get_list(fields, code, subcode='', subcode2=''):
                         for key1, value1 in element1.items():
                             res_value[key1] = value1
                     value_to_append = res_value['u'] if 'u' in res_value and 'x' in res_value and res_value['x'] == subcode else ''
+                elif code == '980':
+                    subfields = value['subfields']
+                    res_value = {}
+                    for element1 in subfields:
+                        for key1, value1 in element1.items():
+                            res_value[key1] = value1
+                    value_to_append = res_value['a'] if 'a' in res_value else ''
                   
                 result.append(value_to_append)
 
@@ -70,6 +77,7 @@ def parse_dict(record):
     result['added_entry_personal_name'] = get_list(fields, '700')
     result['ela_icon'] = get_list(fields, '856', 'ICON')
     result['ela_url'] = get_list(fields, '856', 'PUBLIC')
+    result['doc_type'] = get_list(fields, '980')
     return result
 
 
@@ -129,6 +137,7 @@ def import_marc21xml(url):
         dict_result['Patents'] = dict_record['patent_control_information']
         dict_result['Publisher'] = record.publisher() if record.publisher() else ''
         dict_result['Publisher_Date'] = record.pubyear() if record.pubyear() else ''
+        dict_result['Doc_Type'] = dict_record['doc_type']
         dict_result['ISBN'] = record.isbn()
         dict_result['Description'] = [entry.format_field() for entry in record.physicaldescription()]
         dict_result['Summary'] = dict_record['summary'] #[entry.format_field() for entry in record.notes()]

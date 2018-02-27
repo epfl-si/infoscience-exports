@@ -12,7 +12,7 @@ from log_utils import LogMixin
 from .models import Export
 from .serializers import ExportSerializer
 from .forms import ExportForm
-from .marc21xml import import_marc21xml
+from .options_notices import get_notices
 
 
 class ExportViewSet(mixins.ListModelMixin,
@@ -94,24 +94,43 @@ class ExportView(DetailView):
         options = {}
         options['object'] = self.object
         options['is_extern'] = True
-        options['marc21xml'] = import_marc21xml(self.object.url)
+        options['url'] = self.object.url
         options['bullet'] = self.object.bullets_type
         options['thumb'] = self.object.show_thumbnail
+        options['link_title'] = self.object.show_linkable_titles
+        options['link_authors'] = self.object.show_linkable_authors
+        options['link_print'] = self.object.show_links_for_printing
+        options['link_detailed'] = self.object.show_detailed
+        options['link_fulltext'] = self.object.show_fulltext
+        options['link_publisher'] = self.object.show_viewpublisher
+        options['groupsby_all'] = self.object.groupsby_type
+        options['groupsby_year'] = self.object.groupsby_year
+        options['groupsby_doc'] = self.object.groupsby_doc
+
+        options = get_notices(options)
         context['options'] = options
         return context
 
 
 def preview(request):
     params = request.GET.dict()
-    url = params['params[url]']
-    bullet = params['params[bullet]']
-    thumb = params['params[thumb]']
     
     options = {}
     options['is_extern'] = False
-    options['marc21xml'] = import_marc21xml(url) if url else ''
-    options['bullet'] = bullet
-    options['thumb'] = thumb == 'true'
+    options['url'] = params['params[url]']
+    options['bullet'] = params['params[bullet]']
+    options['thumb'] = params['params[thumb]'] == 'true'
+    options['link_title'] = params['params[link_title]'] == 'true'
+    options['link_authors'] = params['params[link_authors]'] == 'true'
+    options['link_print'] = params['params[link_print]'] == 'true'
+    options['link_detailed'] = params['params[link_detailed]'] == 'true'
+    options['link_fulltext'] = params['params[link_fulltext]'] == 'true'
+    options['link_publisher'] = params['params[link_publisher]'] == 'true'
+    options['groupsby_all'] = params['params[groupsby_all]']
+    options['groupsby_year'] = params['params[groupsby_year]']
+    options['groupsby_doc'] = params['params[groupsby_doc]']
+
+    options = get_notices(options)
     c = { 'options': options }
 
     t = loader.get_template('exports/export.html')
