@@ -51,13 +51,11 @@ build:
 	sed -i "s/# -e git/-e git/g" requirements.txt
 	sed -i -r "s/--hash=[^ ]+//g" requirements.txt
 	sed -i -r "s/--hash=[^ ]+//g" requirements-dev.txt
-	# collectstatic
-	python infoscience_exports/manage.py collectstatic
 	# build docker image
 	docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml build
 
-init-docker:
+init-docker: build
 	docker-compose -f docker-compose-dev.yml up -d
 	docker-compose -f docker-compose-dev.yml logs
 
@@ -82,16 +80,6 @@ init-db:
 		python infoscience_exports/manage.py createsuperuser --username=${SUPER_ADMIN_USERNAME} --email=${SUPER_ADMIN_EMAIL} --noinput
 	@echo "  -> All set up! You can connect with your tequilla acount or the admin (${SUPER_ADMIN_EMAIL})"
 
-test: check-env
-	flake8 infoscience_exports/exports --max-line-length=120
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --noinput --failfast --keepdb
-
-coverage: check-env
-	flake8 infoscience_exports/exports --max-line-length=120
-	docker-compose -f docker-compose-dev.yml exec web infoscience_exports/manage.py test exports --noinput
-	coverage html
-	open htmlcov/index.html
-
 reset: build init-docker
 	@echo ''
 	@echo "! sleeping 3secs, time for postgres container to be available"
@@ -107,6 +95,10 @@ restart:
 restart-web:
 	docker-compose -f docker-compose-dev.yml stop web
 	docker-compose -f docker-compose-dev.yml start web
+
+collectstatic:
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py collectstatic --noinput
 
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
@@ -136,6 +128,7 @@ release: build
 	# git merge master
 
 deploy: dump
+	git pull
 	# update docker image
 	docker-compose -f docker-compose-dev.yml build web
 	# update DB
@@ -143,6 +136,16 @@ deploy: dump
 		python infoscience_exports/manage.py migrate
 	# restart web container
 	make restart-web
+
+test: check-env
+	flake8 infoscience_exports/exports --max-line-length=120
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --noinput --failfast --keepdb
+
+coverage: check-env
+	flake8 infoscience_exports/exports --max-line-length=120
+	docker-compose -f docker-compose-dev.yml exec web infoscience_exports/manage.py test exports --noinput
+	coverage html
+	open htmlcov/index.html
 
 check-env:
 ifeq ($(wildcard .env),)
