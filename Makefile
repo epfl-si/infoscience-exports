@@ -2,7 +2,7 @@
 # Default values, can be overridden either on the command line of make
 # or in .env
 
-.PHONY: version vars init-venv init-docker init-db test coverage reset deploy release
+.PHONY: version vars init-venv build init-db reset up down restart deploy release test coverage
 
 version:
 	docker-compose -f docker-compose-dev.yml exec web \
@@ -40,7 +40,7 @@ ifeq ($(wildcard .env),)
 	@echo "! Set up your .env file before running"
 endif
 	@echo "! If you want a clean state from a docker standpoint, run"
-	@echo "!   $$ make init-docker"
+	@echo "!   $$ make reset"
 
 build:
 	# udpating requirements
@@ -51,15 +51,14 @@ build:
 	sed -i "s/# -e git/-e git/g" requirements.txt
 	sed -i -r "s/--hash=[^ ]+//g" requirements.txt
 	sed -i -r "s/--hash=[^ ]+//g" requirements-dev.txt
-	# collectstatic
-	python infoscience_exports/manage.py collectstatic
 	# build docker image
 	docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml build
 
-init-docker:
+build-travis:
+	docker-compose -f docker-compose-dev.yml build
 	docker-compose -f docker-compose-dev.yml up -d
-	docker-compose -f docker-compose-dev.yml logs
+	sleep 2
 
 init-db:
 	# create DB
@@ -82,21 +81,21 @@ init-db:
 		python infoscience_exports/manage.py createsuperuser --username=${SUPER_ADMIN_USERNAME} --email=${SUPER_ADMIN_EMAIL} --noinput
 	@echo "  -> All set up! You can connect with your tequilla acount or the admin (${SUPER_ADMIN_EMAIL})"
 
-test: check-env
-	flake8 infoscience_exports/exports --max-line-length=120
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --noinput --failfast --keepdb
-
-coverage: check-env
-	flake8 infoscience_exports/exports --max-line-length=120
-	docker-compose -f docker-compose-dev.yml exec web infoscience_exports/manage.py test exports --noinput
-	coverage html
-	open htmlcov/index.html
-
-reset: build init-docker
+reset: build up
 	@echo ''
 	@echo "! sleeping 3secs, time for postgres container to be available"
 	@echo ''
+	sleep 3
 	make init-db
+
+up:
+	docker-compose -f docker-compose-dev.yml up -d
+
+down:
+	docker-compose -f docker-compose-dev.yml down
+
+logs:
+	docker-compose -f docker-compose-dev.yml logs -f
 
 restart:
 	# FIXME: OperationalError at / FATAL: role "django" does not exist
@@ -107,6 +106,10 @@ restart:
 restart-web:
 	docker-compose -f docker-compose-dev.yml stop web
 	docker-compose -f docker-compose-dev.yml start web
+
+collectstatic:
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py collectstatic --noinput
 
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
@@ -136,6 +139,7 @@ release: build
 	# git merge master
 
 deploy: dump
+	git pull
 	# update docker image
 	docker-compose -f docker-compose-dev.yml build web
 	# update DB
@@ -143,6 +147,16 @@ deploy: dump
 		python infoscience_exports/manage.py migrate
 	# restart web container
 	make restart-web
+
+test: check-env
+	flake8 infoscience_exports/exports --max-line-length=120
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --noinput --failfast --keepdb
+
+coverage: check-env
+	flake8 infoscience_exports/exports --max-line-length=120
+	docker-compose -f docker-compose-dev.yml exec web infoscience_exports/manage.py test exports --noinput
+	coverage html
+	open htmlcov/index.html
 
 check-env:
 ifeq ($(wildcard .env),)
