@@ -1,6 +1,29 @@
 jQuery(function($) {
 
+	function check_url() {
+		var value = $("#id_url").val();
+		if (value.indexOf("of=xm") == -1) {
+			var options = value.split("&");
+			var optiontoreplace = ""
+			for (var i = 0; i < options.length; i++)
+			{
+				if (options[i].match("^of=")) {
+					optiontoreplace = options[i];
+					break;
+				}
+			}
+			value = value.replace(optiontoreplace, "of=xm");
+			$("#id_url").val(value)
+		}
+	}
+
+	$('#btn-submit').click(function () {
+		check_url();
+		$('#export_form').submit();
+    });
+
 	$('#btn-preview').click(function () {
+		check_url();
 		var params = {};
         params['url'] = $("#id_url").val();
 		params['bullet'] = $("#id_bullets_type").find(":selected").val();
