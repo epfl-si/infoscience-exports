@@ -138,7 +138,7 @@ release: build
 	git checkout -b $(shell update_release.py -v)
 	git add .
 	git commit -m "Prepared release $(shell update_release.py -v)"
-	git push
+	git push --set-upstream origin $(shell update_release.py -v)
 
 	git tag $(shell update_release.py -v)
 	git push --tags
@@ -147,6 +147,7 @@ release: build
 	github_changelog_generator
 
 	# commit master
+	git add CHANGELOG
 
 	# git checkout release
 	# git merge master
