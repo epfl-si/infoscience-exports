@@ -31,10 +31,12 @@ app_patterns += django_tequila_urlpatterns
 # FIXME: to remove once nginx is intalled on TIND infrastructure
 app_patterns += staticfiles_urlpatterns()
 
-
-urlpatterns = [
-    url(
-        r'^%s/' % settings.SITE_PATH,
-        include(app_patterns)
-    ),
-]
+if settings.SITE_PATH:
+    urlpatterns = [
+        url(
+            r'^%s/' % settings.SITE_PATH.strip('/'),
+            include(app_patterns)
+        ),
+    ]
+else:
+    urlpatterns = app_patterns

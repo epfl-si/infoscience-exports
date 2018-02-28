@@ -21,7 +21,7 @@ def get_env_variable(var_name):
 
 parsed_url = parse.urlparse(get_env_variable('SITE_URL'))
 SITE_DOMAIN = "{0}://{1}".format(parsed_url.scheme, parsed_url.netloc)
-SITE_PATH = parsed_url.path.strip('/')
+SITE_PATH = parsed_url.path.rstrip('/')
 
 # Django Tequila
 AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
@@ -29,12 +29,11 @@ TEQUILA_SERVICE_NAME = "Infoscience exports"
 AUTH_USER_MODEL = 'exports.User'
 
 # override django-tequila urls if we are serving the application from a folder path
-if SITE_PATH:
-    LOGIN_URL = "/{}/login".format(SITE_PATH)
-    LOGIN_REDIRECT_URL = "/".format(SITE_PATH)
-    LOGOUT_URL = "/".format(SITE_PATH)
-    LOGIN_REDIRECT_IF_NOT_ALLOWED = "/not_allowed".format(SITE_PATH)
-    LOGIN_REDIRECT_TEXT_IF_NOT_ALLOWED = "Not allowed"
+LOGIN_URL = "{}/login".format(SITE_PATH)
+LOGIN_REDIRECT_URL = "{}".format(SITE_PATH)
+LOGOUT_URL = "https://infoscience.epfl.ch"
+LOGIN_REDIRECT_IF_NOT_ALLOWED = "{}/not_allowed".format(SITE_PATH)
+LOGIN_REDIRECT_TEXT_IF_NOT_ALLOWED = "Not allowed"
 
 # Site
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
