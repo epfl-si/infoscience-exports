@@ -7,9 +7,10 @@
 	collectstatic deploy dump restore release \
 	test coverage
 
+VERSION = $(shell python update_release.py -v)
+
 version:
-	docker-compose -f docker-compose-dev.yml exec web \
-		python infoscience_exports/manage.py appversion all
+	python update_release.py
 
 vars:
 	@echo 'Used by App:'
@@ -129,15 +130,24 @@ restore:
 	make restart-web
 
 release: build
+	# update versions and ask for confirmation
+	python update_release.py
+	python update_release.py confirm
+
+	# create branch and tag
+	git checkout -b $(shell update_release.py -v)
+	git add .
+	git commit -m "Prepared release $(shell update_release.py -v)"
+	git push
+
+	git tag $(shell update_release.py -v)
+	git push --tags
+
 	# updating CHANGELOG
 	github_changelog_generator
-	# confirm version number
-	# see https://stackoverflow.com/questions/39272954/how-to-prompt-user-for-y-n-in-my-makefile-with-pure-make-syntaxis
-	# docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py appversion version
+
 	# commit master
 
-	# git tag ADD-$-TO-(sell command) (shell docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py appversion version)
-	# git push --tags
 	# git checkout release
 	# git merge master
 

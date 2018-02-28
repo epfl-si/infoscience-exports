@@ -13,4 +13,4 @@ psycopg2-binary==2.7.4
 pymarc==3.1.7 
 pytz==2018.3                 
 six==1.11.0   
--e git+https://github.com/epfl-idevelop/django-tequila.git#egg=django-tequila
+-e git+https://github.com/epfl-idevelop/django-tequila.git@787b0af52142aad08fe739e821eff3c543991f61#egg=django-tequila

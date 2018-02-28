@@ -6,6 +6,10 @@
 
 **Merged pull requests:**
 
+- Improve collectstatic [\#24](https://github.com/epfl-idevelop/infoscience-exports/pull/24) ([ebreton](https://github.com/ebreton))
+- Options : groupby, clipboard, links: detailed-fulltext-publisher [\#23](https://github.com/epfl-idevelop/infoscience-exports/pull/23) ([dragonleman](https://github.com/dragonleman))
+- Feature serve from domain or path [\#22](https://github.com/epfl-idevelop/infoscience-exports/pull/22) ([ebreton](https://github.com/ebreton))
+- Refactoring pipvenv [\#21](https://github.com/epfl-idevelop/infoscience-exports/pull/21) ([ebreton](https://github.com/ebreton))
 - Feature version [\#20](https://github.com/epfl-idevelop/infoscience-exports/pull/20) ([ebreton](https://github.com/ebreton))
 - Fix travis [\#19](https://github.com/epfl-idevelop/infoscience-exports/pull/19) ([ebreton](https://github.com/ebreton))
 - serve static files if no nginx in charge [\#18](https://github.com/epfl-idevelop/infoscience-exports/pull/18) ([ebreton](https://github.com/ebreton))

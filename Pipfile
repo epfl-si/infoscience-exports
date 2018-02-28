@@ -22,6 +22,7 @@ markdown = "*"
 pymarc = "*"
 pytz = "*"
 
+
 [dev-packages]
 
 "autopep8" = "*"
@@ -42,6 +43,7 @@ mkdocs = "*"
 mock = "*"
 nose-progressive = "*"
 selenium = "*"
+docopt = "*"
 
 
 [requires]
