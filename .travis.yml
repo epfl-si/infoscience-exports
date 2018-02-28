@@ -11,7 +11,7 @@ python:
 
 install:
 - make init-venv
-- docker-compose -f docker-compose-dev.yml up -d
+- make start
 - make init-db
 
 script:

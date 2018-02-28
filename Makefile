@@ -2,7 +2,7 @@
 # Default values, can be overridden either on the command line of make
 # or in .env
 
-.PHONY: version vars init-venv init-docker init-db test coverage reset deploy release
+.PHONY: version vars init-venv init-db test coverage reset deploy release
 
 version:
 	docker-compose -f docker-compose-dev.yml exec web \
@@ -40,7 +40,7 @@ ifeq ($(wildcard .env),)
 	@echo "! Set up your .env file before running"
 endif
 	@echo "! If you want a clean state from a docker standpoint, run"
-	@echo "!   $$ make init-docker"
+	@echo "!   $$ make reset"
 
 build:
 	# udpating requirements
@@ -54,10 +54,6 @@ build:
 	# build docker image
 	docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml build
-
-init-docker: build
-	docker-compose -f docker-compose-dev.yml up -d
-	docker-compose -f docker-compose-dev.yml logs
 
 init-db:
 	# create DB
@@ -80,11 +76,17 @@ init-db:
 		python infoscience_exports/manage.py createsuperuser --username=${SUPER_ADMIN_USERNAME} --email=${SUPER_ADMIN_EMAIL} --noinput
 	@echo "  -> All set up! You can connect with your tequilla acount or the admin (${SUPER_ADMIN_EMAIL})"
 
-reset: build init-docker
+reset: build up
 	@echo ''
 	@echo "! sleeping 3secs, time for postgres container to be available"
 	@echo ''
 	make init-db
+
+up:
+	docker-compose -f docker-compose-dev.yml up -d
+
+down:
+	docker-compose -f docker-compose-dev.yml down
 
 restart:
 	# FIXME: OperationalError at / FATAL: role "django" does not exist
