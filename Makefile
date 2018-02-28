@@ -55,6 +55,11 @@ build:
 	docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml build
 
+build-travis:
+	docker-compose -f docker-compose-dev.yml build
+	docker-compose -f docker-compose-dev.yml up -d
+	sleep 2
+
 init-db:
 	# create DB
 	docker-compose -f docker-compose-dev.yml exec postgres \
@@ -80,6 +85,7 @@ reset: build up
 	@echo ''
 	@echo "! sleeping 3secs, time for postgres container to be available"
 	@echo ''
+	sleep 3
 	make init-db
 
 up:
