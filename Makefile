@@ -2,7 +2,7 @@
 # Default values, can be overridden either on the command line of make
 # or in .env
 
-.PHONY: version vars init-venv init-db test coverage reset deploy release
+.PHONY: version vars init-venv build init-db reset up down restart deploy release test coverage
 
 version:
 	docker-compose -f docker-compose-dev.yml exec web \
@@ -87,6 +87,9 @@ up:
 
 down:
 	docker-compose -f docker-compose-dev.yml down
+
+logs:
+	docker-compose -f docker-compose-dev.yml logs -f
 
 restart:
 	# FIXME: OperationalError at / FATAL: role "django" does not exist
