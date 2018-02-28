@@ -2,7 +2,10 @@
 # Default values, can be overridden either on the command line of make
 # or in .env
 
-.PHONY: version vars init-venv build init-db reset up down restart deploy release test coverage
+.PHONY: version vars init-venv build build-travis init-db reset \
+	up down logs restart restart-web \
+	collectstatic deploy dump restore release \
+	test coverage
 
 version:
 	docker-compose -f docker-compose-dev.yml exec web \
