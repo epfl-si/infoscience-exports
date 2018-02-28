@@ -147,10 +147,13 @@ release: build
 	github_changelog_generator
 
 	# commit master
-	git add CHANGELOG
+	git add CHANGELOG.md
+	git commit -m "updated CHANGELOG"
+	git push
 
-	# git checkout release
 	# git merge master
+	git checkout master
+	git merge $(shell update_release.py -v)
 
 deploy: dump
 	git pull
