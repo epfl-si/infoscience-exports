@@ -1,11 +1,28 @@
 #!/usr/bin/python
-# this file should be used as post-commit in .git/hooks
-# it can be run with both python 2.7 and 3.6
+"""Release manager script
+
+This file should be used as post-commit in .git/hooks
+It can be run with both python 2.7 and 3.6
+
+Usage:
+    commands.py [-q | -d]
+    commands.py confirm [-q | -d]
+    commands.py -h
+    commands.py -v
+
+Options:
+    -h, --help       display this message and exit
+    -v, --version    display version
+    -q, --quiet      set log level to WARNING (instead of INFO)
+    -d, --debug      set log level to DEBUG (instead of INFO)
+"""
 import os
 import logging
 import subprocess
 import sys
 import shutil
+
+from docopt import docopt
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -20,13 +37,34 @@ from versions import _release, _build, _version  # noqa
 COPY_PATH = os.path.sep.join([BASE_DIR, 'infoscience_exports', 'exports', 'versions.py'])
 
 
-def main():
+def set_logging_config(kwargs):
+    """
+    Set logging with the 'good' level
+
+    Arguments keywords:
+    kwargs -- list containing parameters passed to script
+    """
+    # set up level of logging
+    level = logging.INFO
+    if kwargs['--quiet']:
+        level = logging.WARNING
+    elif kwargs['--debug']:
+        level = logging.DEBUG
+
+    # set up logging to console
+    logging.basicConfig(format='%(levelname)s - %(funcName)s - %(message)s')
+    logger = logging.getLogger()
+    logger.setLevel(level)
+
+
+def compute(**kwargs):
+    logging.debug("Updating versions...")
 
     # compute version from release
     try:
         # get last release & version
-        release_version = map(int, _release.split('-')[0].split('.'))
-        candidate_version = map(int, _version.split('-')[0].split('.'))
+        release_version = list(map(int, _release.split('-')[0].split('.')))
+        candidate_version = list(map(int, _version.split('-')[0].split('.')))
         # nothing to do if candidate_version is already more than release
         if candidate_version > release_version:
             logging.debug("version already set to %s. not changing it", candidate_version)
@@ -78,7 +116,24 @@ _build = '{2}'""".format(release, version, build)
         output.write(content)
 
 
+try: input = raw_input
+except: pass
+
+
+def confirm(**kwargs):
+    print("version currently set to {}".format(_version))
+    answer = ""
+    while answer not in ["y", "n"]:
+        answer = input("OK to push to continue [Y/N]? ").lower()
+    return answer == "y"
+
+
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
-    logging.debug("updating versions")
-    main()
+    kwargs = docopt(__doc__, version=_version)
+    set_logging_config(kwargs)
+    logging.debug(kwargs)
+    if kwargs['confirm']:
+        if not confirm(**kwargs):
+            raise SystemExit("Please confirm version number to continue")
+    else:
+        compute(**kwargs)
