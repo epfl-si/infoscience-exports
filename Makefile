@@ -142,10 +142,10 @@ release: build
 	python update_release.py confirm
 
 	# create branch and tag
-	git checkout -b $(VERSION)
+	git checkout -b release-$(VERSION)
 	git add .
 	git commit -m "Prepared release $(VERSION)"
-	git push --set-upstream origin $(VERSION)
+	git push --set-upstream origin release-$(VERSION)
 
 	git tag $(VERSION)
 	git push --tags
@@ -163,7 +163,7 @@ release: build
 
 	# git merge master
 	git checkout master
-	git merge $(VERSION)
+	git merge release-$(VERSION)
 	git push
 
 deploy: dump
