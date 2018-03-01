@@ -161,6 +161,9 @@ release: build
 	# create github release
 	python update_release.py publish
 
+	# cancel pre-update of versions
+	git checkout infoscience_exports/exports/versions.py
+
 	# git merge master
 	git checkout master
 	git merge $(VERSION)
