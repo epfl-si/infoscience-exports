@@ -20,6 +20,7 @@ Options:
     -d, --debug      set log level to DEBUG (instead of INFO)
 """
 import os
+import json
 import logging
 import subprocess
 import sys
@@ -157,7 +158,7 @@ def publish(**kwargs):
     logging.debug("POST %s with data: %s", url, post_args)
 
     # make request and raise exception if we had an issue
-    response = requests.post(url, data=post_args, auth=(github_user, github_key))
+    response = requests.post(url, data=json.dumps(post_args), auth=(github_user, github_key))
     response.raise_for_status()
 
 
