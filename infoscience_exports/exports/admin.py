@@ -13,7 +13,8 @@ admin.site.__class__ = TequilaAdminSite
 
 
 class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
-    pass
+    list_display = ('name', 'user', 'url')
+
 
 admin.site.register(Export, ExportLoggedModelAdmin)
 admin.site.register(User, UserAdmin)
