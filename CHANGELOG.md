@@ -1,5 +1,15 @@
 # Change Log
 
+## [0.2.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.2.4) (2018-03-01)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.2.3...0.2.4)
+
+**Merged pull requests:**
+
+- prefix branch with 'release-' [\#32](https://github.com/epfl-idevelop/infoscience-exports/pull/32) ([ebreton](https://github.com/ebreton))
+- include 0.2.3 last commits [\#31](https://github.com/epfl-idevelop/infoscience-exports/pull/31) ([ebreton](https://github.com/ebreton))
+- tooltip message for preview button [\#28](https://github.com/epfl-idevelop/infoscience-exports/pull/28) ([dragonleman](https://github.com/dragonleman))
+- Pending publications [\#27](https://github.com/epfl-idevelop/infoscience-exports/pull/27) ([dragonleman](https://github.com/dragonleman))
+
 ## [0.2.3](https://github.com/epfl-idevelop/infoscience-exports/tree/0.2.3) (2018-03-01)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.2.2...0.2.3)
 
