@@ -8,12 +8,14 @@ Usage:
     commands.py [-q | -d]
     commands.py confirm [-q | -d]
     commands.py publish [-q | -d]
+    commands.py check [--branch=BRANCH] [-q | -d]
     commands.py -h
     commands.py -v
 
 Options:
     -h, --help       display this message and exit
     -v, --version    display version
+    --branch=BRANCH  branch name to check for (default to master)
     -q, --quiet      set log level to WARNING (instead of INFO)
     -d, --debug      set log level to DEBUG (instead of INFO)
 """
@@ -159,6 +161,19 @@ def publish(**kwargs):
     response.raise_for_status()
 
 
+def check_branch(**kwargs):
+    try:
+        expected = kwargs['--branch'] or 'master'
+        current = subprocess.check_output(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=BASE_DIR).decode('utf-8').strip()
+        if current != expected:
+            raise SystemExit("You are in {}, whereas expected branch is {}".format(current, expected))
+        logging.info("You are in {}".format(current))
+    except Exception as err:
+        logging.warning("Git does not seem available: %s", err)
+        raise SystemExit("This command requires git")
+
+
 if __name__ == '__main__':
     kwargs = docopt(__doc__, version=_version)
     set_logging_config(kwargs)
@@ -166,6 +181,8 @@ if __name__ == '__main__':
     if kwargs['confirm']:
         if not confirm(**kwargs):
             raise SystemExit("Please confirm version number to continue")
+    elif kwargs['check']:
+        check_branch(**kwargs)
     elif kwargs['publish']:
         publish(**kwargs)
     else:

@@ -134,6 +134,9 @@ restore:
 	make restart-web
 
 release: build
+	# make sure we are in master
+	python update_release.py check --branch=master
+
 	# update versions and ask for confirmation
 	python update_release.py
 	python update_release.py confirm
