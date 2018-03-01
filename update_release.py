@@ -148,10 +148,11 @@ def publish(**kwargs):
 
     # build request
     url = "https://api.github.com/repos/{}/{}/releases".format(github_owner, github_repo)
+    changelog_url = "/{}/{}/blob/release-{}/CHANGELOG.md".format(github_owner, github_repo, _version)
     post_args = {
         "tag_name": _version,
         "name": "Release {}".format(_version),
-        "body": "See [CHANGELOG.md](./CHANGELOG.md) for all details",
+        "body": "See [CHANGELOG.md]({}) for all details".format(changelog_url),
         "draft": False,
         "prerelease": False
         }
