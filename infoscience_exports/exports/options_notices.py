@@ -90,7 +90,7 @@ def setbullets(notices, bullet_choice, notices_length):
                      index += 1 
                 elif bullet_choice == 'NUMBER_DESC':
                      notice['bulleting'] = '[' + str(notices_length - index + 1) + ']'
-                     index += 1   
+                     index += 1
                 
 
 def get_notices(options):
@@ -101,13 +101,12 @@ def get_notices(options):
     options['group_title'] = 'TITLE' in groupsby_all
     options['subgroup_title'] = 'TITLE' in groupsby_year or 'TITLE' in groupsby_doc
 
-    notices = import_marc21xml(options['url']) if options['url'] else ''
+    # remove pending publications if not needed
+    can_display_pending_publications = 'PUBL' in groupsby_all or 'PUBL' in groupsby_year
+
+    notices = import_marc21xml(options['url'], can_display_pending_publications) if options['url'] else ''
 
     notices_length = len(notices)
-
-    # remove pending publications if not needed
-    if 'PUBL' not in groupsby_all and 'PUBL' not in groupsby_year and 'PUBL' not in groupsby_doc:
-        pass
 
     # second groupby firstly
     if 'YEAR' in groupsby_year:

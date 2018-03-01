@@ -6,7 +6,14 @@ Parse a marc-21-xml file
 
 from urllib.request import urlopen
 from pymarc import marcxml
-#import sys
+
+
+def get_attributes(subfields):
+    res_value = {}
+    for element1 in subfields:
+        for key1, value1 in element1.items():
+            res_value[key1] = value1
+    return res_value
 
 
 def get_list(fields, code, subcode='', subcode2=''):
@@ -16,56 +23,42 @@ def get_list(fields, code, subcode='', subcode2=''):
             value_to_append = value
             if key == code:
                 if code == '013':
-                    subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
+                    res_value = get_attributes(value['subfields'])
                     value_to_append = res_value['a'] if 'a' in res_value else ''
                     value_to_append += '(' + res_value['c'] + ')' if 'c' in res_value else ''
                 elif code == '024':
-                    subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
-                    if len(subfields) == 2 and subcode in res_value and '2' in res_value and res_value['2'] == subcode2:
+                    res_value = get_attributes(value['subfields'])
+                    if value['ind1'] == '7' and subcode in res_value and '2' in res_value and res_value['2'] == subcode2:
                         value_to_append = "http://dx.doi.org/" + res_value['a']
                     else:
                         value_to_append = ''
                 elif code == '520':
-                    subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
+                    res_value = get_attributes(value['subfields'])
                     value_to_append = res_value['a'] if 'a' in res_value else ''
                 elif code == '700':
-                    subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
+                    res_value = get_attributes(value['subfields'])
                     value_to_append = res_value['a'] if 'a' in res_value else ''
                 elif code == '856':
-                    subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
+                    res_value = get_attributes(value['subfields'])
                     value_to_append = res_value['u'] if 'u' in res_value and 'x' in res_value and res_value['x'] == subcode else ''
+                elif code == '909':
+                    if value['ind1'] == 'C' and value['ind2'] == '0':
+                        res_value = get_attributes(value['subfields'])
+                        value_to_append = res_value['p'] if 'p' else ''
                 elif code == '980':
                     subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
+                    res_value = get_attributes(subfields)
                     value_to_append = res_value['a'] if 'a' in res_value else ''
+                elif code == '999':
+                    if value['ind1'] == 'C' and value['ind2'] == '0':
+                        res_value = get_attributes(value['subfields'])
+                        value_to_append = res_value['p'] if 'p' else ''
                   
                 result.append(value_to_append)
 
     result = list(filter(None, result))
     return result
+
   
 def parse_dict(record):
     result = {}
@@ -78,10 +71,14 @@ def parse_dict(record):
     result['ela_icon'] = get_list(fields, '856', 'ICON')
     result['ela_url'] = get_list(fields, '856', 'PUBLIC')
     result['doc_type'] = get_list(fields, '980')
+    pending_909 = get_list(fields, '909')
+    pending_999 = get_list(fields, '999')
+    pending_909.extend(pending_999) 
+    result['pending_publications'] = pending_909
     return result
 
 
-# Authors is a list of a dictionary of authors: full name, initial name, url in infoscience
+# Authors is a list of a dictionary of author: full name, initial name, url in infoscience
 def set_authors(authors):
     n = len(authors)
     n1 = n - 1
@@ -121,7 +118,7 @@ def set_authors(authors):
     return result
 
 
-def import_marc21xml(url):
+def import_marc21xml(url, can_display_pending_publications):
     reader = marcxml.parse_xml_to_array(urlopen(url))
     result = []
     for record in reader:
@@ -139,11 +136,15 @@ def import_marc21xml(url):
         dict_result['Patents'] = dict_record['patent_control_information']
         dict_result['Publisher'] = record.publisher() if record.publisher() else ''
         dict_result['Publisher_Date'] = record.pubyear() if record.pubyear() else ''
+        dict_result['Pending_Publications'] = dict_record['pending_publications']
         dict_result['Doc_Type'] = dict_record['doc_type']
         dict_result['ISBN'] = record.isbn()
         dict_result['Description'] = [entry.format_field() for entry in record.physicaldescription()]
         dict_result['Summary'] = dict_record['summary'] #[entry.format_field() for entry in record.notes()]
         dict_result['Subjects'] = [entry.format_field() for entry in record.subjects()]
-        result.append(dict_result)
+
+        if not dict_result['Pending_Publications'] or can_display_pending_publications:
+            result.append(dict_result)
+
     return result
 
