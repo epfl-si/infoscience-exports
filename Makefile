@@ -10,7 +10,7 @@
 VERSION = $(shell python update_release.py -v)
 
 version:
-	python update_release.py
+	@echo $(VERSION)
 
 vars:
 	@echo 'Used by App:'
@@ -142,12 +142,12 @@ release: build
 	python update_release.py confirm
 
 	# create branch and tag
-	git checkout -b $(shell update_release.py -v)
+	git checkout -b $(VERSION)
 	git add .
-	git commit -m "Prepared release $(shell update_release.py -v)"
-	git push --set-upstream origin $(shell update_release.py -v)
+	git commit -m "Prepared release $(VERSION)"
+	git push --set-upstream origin $(VERSION)
 
-	git tag $(shell update_release.py -v)
+	git tag $(VERSION)
 	git push --tags
 
 	# updating CHANGELOG
@@ -163,7 +163,7 @@ release: build
 
 	# git merge master
 	git checkout master
-	git merge $(shell update_release.py -v)
+	git merge $(VERSION)
 	git push
 
 deploy: dump
