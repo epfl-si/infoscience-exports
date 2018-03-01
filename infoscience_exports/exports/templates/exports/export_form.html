@@ -77,7 +77,7 @@
 
 		{% buttons %}
 		<a class="btn btn-primary" href="{% url 'crud:export-list' %}" role="button">{% trans "Cancel" %}</a>
-		<button id="btn-preview" type="button" class="btn btn-primary">{% trans "Preview" %}</button>
+		<button id="btn-preview" type="button" class="btn btn-primary" title="{% trans 'Defined by www.epfl.ch/css/epfl.css' %}">{% trans "Preview" %}</button>
 		<button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
 		{% endbuttons %}
 	</form>
