@@ -71,10 +71,8 @@ def parse_dict(record):
     result['ela_icon'] = get_list(fields, '856', 'ICON')
     result['ela_url'] = get_list(fields, '856', 'PUBLIC')
     result['doc_type'] = get_list(fields, '980')
-    pending_909 = get_list(fields, '909')
-    pending_999 = get_list(fields, '999')
-    pending_909.extend(pending_999) 
-    result['pending_publications'] = pending_909
+    result['approved_publications'] = get_list(fields, '909')
+    result['pending_publications'] = get_list(fields, '999')
     return result
 
 
@@ -136,6 +134,7 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result['Patents'] = dict_record['patent_control_information']
         dict_result['Publisher'] = record.publisher() if record.publisher() else ''
         dict_result['Publisher_Date'] = record.pubyear() if record.pubyear() else ''
+        dict_result['Approved_Publications'] = dict_record['approved_publications']
         dict_result['Pending_Publications'] = dict_record['pending_publications']
         dict_result['Doc_Type'] = dict_record['doc_type']
         dict_result['ISBN'] = record.isbn()
@@ -143,7 +142,8 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result['Summary'] = dict_record['summary'] #[entry.format_field() for entry in record.notes()]
         dict_result['Subjects'] = [entry.format_field() for entry in record.subjects()]
 
-        if not dict_result['Pending_Publications'] or can_display_pending_publications:
+        is_pending = dict_result['Pending_Publications'] and not dict_result['Approved_Publications']
+        if not is_pending or can_display_pending_publications:
             result.append(dict_result)
 
     return result
