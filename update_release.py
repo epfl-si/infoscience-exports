@@ -7,6 +7,7 @@ It can be run with both python 2.7 and 3.6
 Usage:
     commands.py [-q | -d]
     commands.py confirm [-q | -d]
+    commands.py publish [-q | -d]
     commands.py -h
     commands.py -v
 
@@ -128,6 +129,36 @@ def confirm(**kwargs):
     return answer == "y"
 
 
+def publish(**kwargs):
+    """ POST /repos/:owner/:repo/releases
+        
+        https://developer.github.com/v3/repos/releases/#create-a-release
+    """
+    # dynamic import to allow the other commands to run without requests
+    import requests
+
+    # get gihub config. If not set -> POST will fail, developer will understand
+    github_owner = os.environ.get('GITHUB_OWNER')
+    github_repo = os.environ.get('GITHUB_REPO')
+    github_user = os.environ.get('GITHUB_USER')
+    github_key = os.environ.get('GITHUB_KEY')
+
+    # build request
+    url = "https://api.github.com/repos/{}/{}/releases".format(github_owner, github_repo)
+    post_args = {
+        "tag_name": _version,
+        "name": "Release {}".format(_version),
+        "body": "See [CHANGELOG.md](./CHANGELOG.md) for all details",
+        "draft": False,
+        "prerelease": False
+        }
+    logging.debug("POST %s with data: %s", url, post_args)
+
+    # make request and raise exception if we had an issue
+    response = requests.post(url, data=post_args, auth=(github_user, github_key))
+    response.raise_for_status()
+
+
 if __name__ == '__main__':
     kwargs = docopt(__doc__, version=_version)
     set_logging_config(kwargs)
@@ -135,5 +166,7 @@ if __name__ == '__main__':
     if kwargs['confirm']:
         if not confirm(**kwargs):
             raise SystemExit("Please confirm version number to continue")
+    elif kwargs['publish']:
+        publish(**kwargs)
     else:
         compute(**kwargs)

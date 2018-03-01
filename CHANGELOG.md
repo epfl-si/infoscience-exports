@@ -1,5 +1,13 @@
 # Change Log
 
+## [Unreleased](https://github.com/epfl-idevelop/infoscience-exports/tree/HEAD)
+
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.2.2...HEAD)
+
+**Merged pull requests:**
+
+- 0.2.2 [\#26](https://github.com/epfl-idevelop/infoscience-exports/pull/26) ([ebreton](https://github.com/ebreton))
+
 ## [0.2.2](https://github.com/epfl-idevelop/infoscience-exports/tree/0.2.2) (2018-02-28)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.1.0...0.2.2)
 

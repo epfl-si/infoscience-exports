@@ -28,6 +28,10 @@ vars:
 	@echo 'Used by Makefile'
 	@echo '  SUPER_ADMIN_USERNAME=${SUPER_ADMIN_USERNAME}'
 	@echo '  SUPER_ADMIN_EMAIL=${SUPER_ADMIN_EMAIL}'
+	@echo '  GITHUB_OWNER=${GITHUB_OWNER}'
+	@echo '  GITHUB_REPO=${GITHUB_REPO}'
+	@echo '  GITHUB_USER=${GITHUB_USER}'
+	@echo '  GITHUB_KEY=${GITHUB_KEY}'
 	@echo '  DATABASE_USER=${DATABASE_USER}'
 	@echo '  DATABASE_PASSWORD=xxx'
 	@echo '  DB_NAME=${DB_NAME}'
@@ -151,9 +155,13 @@ release: build
 	git commit -m "updated CHANGELOG"
 	git push
 
+	# create github release
+	python update_release.py publish
+
 	# git merge master
 	git checkout master
 	git merge $(shell update_release.py -v)
+	git push
 
 deploy: dump
 	git pull
