@@ -10,6 +10,9 @@ class User(AbstractUser):
     classe = models.CharField(max_length=100, null=True, blank=True)
     statut = models.CharField(max_length=100, null=True, blank=True)
 
+    def __str__(self):
+        return self.email
+
     def __unicode__(self):
         return """  Sciper:    %s
                         where:     %s
