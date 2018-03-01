@@ -9,6 +9,7 @@ Express set-up
 
 - git repo checked out (`git clone git@github.com:epfl-idevelop/infoscience-exports.git`)
 - sudo gem install github_changelog_generator in order to generate automatically the CHANGELOG file
+- sudo pip install docopt in order to install post-commit
 
 1. initialize a fresh .env file
 ...............................
@@ -68,6 +69,7 @@ If ciscovpn services are inside "Chain FORWAR (policy DROP)", you should ::
     
 The first thing to do is enable a post-commit git hook in order to have the versions taken care of ::
 
+    $ pip install docopt
     $ cp update_releases.py .git/hooks/post-commit
 
     $ which python
@@ -90,6 +92,9 @@ You can access, with the default configuration :
   * or with a gaspar account which has received admin rights
   * https://127.0.0.1:8000/admin
 
+To release a new version (i.e version, branch, tag, github release)
+
+    $ make release
 
 To deploy a new version of your code (without losing data) ::
 
