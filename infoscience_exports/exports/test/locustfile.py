@@ -4,6 +4,8 @@ from locust import HttpLocust, TaskSet, task
 def increment():
     increment.i += 1
     return increment.i
+
+
 increment.i = 0
 
 

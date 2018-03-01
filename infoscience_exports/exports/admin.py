@@ -11,6 +11,7 @@ from .models import Export, User
 admin.autodiscover()
 admin.site.__class__ = TequilaAdminSite
 
+
 class EPFLUserModelAdmin(UserAdmin):
     list_display = ('username', 'email', 'sciper', 'last_login', 'is_superuser')
 
