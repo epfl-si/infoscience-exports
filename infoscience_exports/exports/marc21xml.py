@@ -6,7 +6,14 @@ Parse a marc-21-xml file
 
 from urllib.request import urlopen
 from pymarc import marcxml
-#import sys
+
+
+def get_attributes(subfields):
+    res_value = {}
+    for element1 in subfields:
+        for key1, value1 in element1.items():
+            res_value[key1] = value1
+    return res_value
 
 
 def get_list(fields, code, subcode='', subcode2=''):
@@ -16,72 +23,42 @@ def get_list(fields, code, subcode='', subcode2=''):
             value_to_append = value
             if key == code:
                 if code == '013':
-                    subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
+                    res_value = get_attributes(value['subfields'])
                     value_to_append = res_value['a'] if 'a' in res_value else ''
                     value_to_append += '(' + res_value['c'] + ')' if 'c' in res_value else ''
                 elif code == '024':
-                    subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
-                    if len(subfields) == 2 and subcode in res_value and '2' in res_value and res_value['2'] == subcode2:
+                    res_value = get_attributes(value['subfields'])
+                    if value['ind1'] == '7' and subcode in res_value and '2' in res_value and res_value['2'] == subcode2:
                         value_to_append = "http://dx.doi.org/" + res_value['a']
                     else:
                         value_to_append = ''
                 elif code == '520':
-                    subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
+                    res_value = get_attributes(value['subfields'])
                     value_to_append = res_value['a'] if 'a' in res_value else ''
                 elif code == '700':
-                    subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
+                    res_value = get_attributes(value['subfields'])
                     value_to_append = res_value['a'] if 'a' in res_value else ''
                 elif code == '856':
-                    subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
+                    res_value = get_attributes(value['subfields'])
                     value_to_append = res_value['u'] if 'u' in res_value and 'x' in res_value and res_value['x'] == subcode else ''
                 elif code == '909':
                     if value['ind1'] == 'C' and value['ind2'] == '0':
-                        subfields = value['subfields']
-                        res_value = {}
-                        for element1 in subfields:
-                            for key1, value1 in element1.items():
-                                res_value[key1] = value1
-                    value_to_append = res_value['p'] if 'p' else ''
+                        res_value = get_attributes(value['subfields'])
+                        value_to_append = res_value['p'] if 'p' else ''
                 elif code == '980':
                     subfields = value['subfields']
-                    res_value = {}
-                    for element1 in subfields:
-                        for key1, value1 in element1.items():
-                            res_value[key1] = value1
+                    res_value = get_attributes(subfields)
                     value_to_append = res_value['a'] if 'a' in res_value else ''
                 elif code == '999':
                     if value['ind1'] == 'C' and value['ind2'] == '0':
-                        subfields = value['subfields']
-                        res_value = {}
-                        for element1 in subfields:
-                            for key1, value1 in element1.items():
-                                res_value[key1] = value1
-                    value_to_append = res_value['p'] if 'p' else ''
+                        res_value = get_attributes(value['subfields'])
+                        value_to_append = res_value['p'] if 'p' else ''
                   
                 result.append(value_to_append)
 
     result = list(filter(None, result))
     return result
+
   
 def parse_dict(record):
     result = {}
@@ -101,7 +78,7 @@ def parse_dict(record):
     return result
 
 
-# Authors is a list of a dictionary of authors: full name, initial name, url in infoscience
+# Authors is a list of a dictionary of author: full name, initial name, url in infoscience
 def set_authors(authors):
     n = len(authors)
     n1 = n - 1
