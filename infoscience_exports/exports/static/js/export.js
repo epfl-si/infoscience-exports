@@ -22,7 +22,7 @@ jQuery(function($) {
 	$('.fa-clipboard').click(function () {
 		var $temp = $('<input>');
 		$('body').append($temp);
-		$temp.val($(this).parent().siblings('input').val()).select();
+		$temp.val(INFOSCIENCE_DOMAIN+$(this).parent().siblings('input').val()).select();
 		document.execCommand("copy");
 		$temp.remove();
     });
