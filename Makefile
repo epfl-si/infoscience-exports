@@ -133,7 +133,7 @@ restore:
 		postgres sh -c 'exec pg_restore -c -hpostgres -U${DATABASE_USER} -Ox -Ft -d${DB_NAME} `ls -t /backup/*.sql.tar | head -1`'
 	make restart-web
 
-release: build
+release:
 	# make sure we are in master
 	python update_release.py check --branch=master
 
