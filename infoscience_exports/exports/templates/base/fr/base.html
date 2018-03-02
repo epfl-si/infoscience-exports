@@ -34,7 +34,7 @@
   <link rel="alternate" hreflang="en" href="https://infoscience.epfl.ch/search?em=H&amp;ln=en" />
 
     <link rel="alternate" type="application/rss+xml" title="Infoscience RSS"
-          href="/rss?ln=fr"/>
+          href="//infoscience.epfl.ch/rss?ln=fr"/>
     <link rel="search" type="application/opensearchdescription+xml"
           href="https://infoscience.epfl.ch/opensearchdescription"
           title="Infoscience"/>
@@ -55,7 +55,7 @@
     <script src="{% static "js/export.js" %}" type="text/javascript"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/static/css/export.css" rel="stylesheet">
+    <link href="{{ SITE_PATH }}/static/css/export.css" rel="stylesheet">
 
     {% block headjs %}{% endblock %}
 
@@ -68,7 +68,7 @@
     <div class="headerbox headerlogo">
         <div class="topleftmenu-wrapper">
             <ul class="menu neutrallist">
-                <li class="topleftmenu headermoduleboxbody"><div class="hassubmenu"><span class="langinfo headerspan">Français</span><ul class="subsubmenu"><li><a href="/?ln=en">English</a></li></ul></div></li>
+                <li class="topleftmenu headermoduleboxbody"><div class="hassubmenu"><span class="langinfo headerspan">Français</span><ul class="subsubmenu"><li><a href="{{ SITE_PATH }}/?ln=en">English</a></li></ul></div></li>
             </ul>
         </div>
 
@@ -78,7 +78,7 @@
         <ul class="menu topmenu neutrallist" style="display:none;">
             <li class="headermoduleboxbody">
                 <a class="header"
-                   href="/?ln=fr">Recherche</a>
+                   href="//infoscience.epfl.ch/search?ln=fr">Recherche</a>
             </li>
 
             <li class="headermoduleboxbody">
@@ -92,7 +92,7 @@
 
 
                     <li class="headermoduleboxbody">
-                        <a class="header" href="https://infoscience.epfl.ch/collections/?c=Infoscience%2FResearch">
+                        <a class="header" href="https://infoscience.epfl.ch/collections/?c=Infoscience%2FResearch?ln=fr">
                             Browse Collections
                         </a>
                     </li>
@@ -110,10 +110,10 @@
         <div class="userinfoboxbody">
             {% if user.is_authenticated %}
             <i class="user-icon"></i><span class="account">{{ user.first_name }}&nbsp;{{ user.last_name }}</span><span class="separator"> :: </span>
-                   <a class="userinfo logout" href="/logout">logout</a>
+                   <a class="userinfo logout" href="{{ SITE_PATH }}/logout">logout</a>
             {% else %}
             <i class="user-icon"></i><span class="account">guest</span><span class="separator"> :: </span>
-                   <a class="userinfo logout" href="/login">login</a>
+                   <a class="userinfo logout" href="{{ SITE_PATH }}/login">login</a>
 
             {% endif %}
         </div>
@@ -121,7 +121,7 @@
     <table class="navtrailbox">
         <tr>
             <td class="navtrailboxbody">
-                <a href="/?ln=fr" class="navtrail">Accueil</a> &gt; Résultats de la recherche
+                <a href="//infoscience.epfl.ch/?ln=fr" class="navtrail">Accueil</a> &gt; Résultats de la recherche
             </td>
         </tr>
     </table>
