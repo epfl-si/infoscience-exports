@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy as django_reverse_lazy
 from django.db import transaction
 from django.http import HttpResponse
-from django.template import Context, loader
+from django.template import loader
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.translation import gettext as _
@@ -37,13 +37,14 @@ class IsTheUserAccessTest(UserPassesTestMixin):
         return super().post(request, *args, **kwargs)
 
 
-class ExportViewSet(UserPassesTestMixin,
-                  mixins.ListModelMixin,
-                  mixins.RetrieveModelMixin,
-                  mixins.CreateModelMixin,
-                  mixins.UpdateModelMixin,
-                  mixins.DestroyModelMixin,
-                  viewsets.GenericViewSet):
+class ExportViewSet(
+        UserPassesTestMixin,
+        mixins.ListModelMixin,
+        mixins.RetrieveModelMixin,
+        mixins.CreateModelMixin,
+        mixins.UpdateModelMixin,
+        mixins.DestroyModelMixin,
+        viewsets.GenericViewSet):
 
     queryset = Export.objects.all()
     serializer_class = ExportSerializer
@@ -154,7 +155,7 @@ class ExportView(DetailView):
 
 def preview(request):
     params = request.GET.dict()
-    
+
     options = {}
     options['is_extern'] = False
     options['url'] = params['params[url]']
@@ -171,7 +172,7 @@ def preview(request):
     options['groupsby_doc'] = params['params[groupsby_doc]']
 
     options = get_notices(options)
-    c = { 'options': options }
+    c = {'options': options}
 
     t = loader.get_template('exports/export.html')
     return HttpResponse(t.render(c))

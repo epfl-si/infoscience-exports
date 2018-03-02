@@ -28,10 +28,11 @@ class BulletsSettings(BaseSettings):
         ('NUMBER_DESC', '..., 3, 2, 1'),
     )
 
-    bullets_type = models.CharField(max_length=255,
-                                    choices=BULLETS_TYPE_CHOICE,
-                                    default='NONE'
-                                    )
+    bullets_type = models.CharField(
+        max_length=255,
+        choices=BULLETS_TYPE_CHOICE,
+        default='NONE'
+    )
 
     class Meta:
         abstract = True
@@ -72,20 +73,23 @@ class GroupBySettings(BaseSettings):
         ('DOC_TITLE', _('document type, document type as title')),
     )
 
-    groupsby_type = models.CharField(max_length=255,
-                                    choices=GROUPSBY_ALL_CHOICE,
-                                    default='NONE'
-                                    )
+    groupsby_type = models.CharField(
+        max_length=255,
+        choices=GROUPSBY_ALL_CHOICE,
+        default='NONE'
+    )
 
-    groupsby_year = models.CharField(max_length=255,
-                                    choices=GROUPSBY_YEAR_CHOICE,
-                                    default='NONE'
-                                    )
+    groupsby_year = models.CharField(
+        max_length=255,
+        choices=GROUPSBY_YEAR_CHOICE,
+        default='NONE'
+    )
 
-    groupsby_doc = models.CharField(max_length=255,
-                                    choices=GROUPSBY_DOC_CHOICE,
-                                    default='NONE'
-                                    )
+    groupsby_doc = models.CharField(
+        max_length=255,
+        choices=GROUPSBY_DOC_CHOICE,
+        default='NONE'
+    )
 
     class Meta:
         abstract = True
@@ -98,11 +102,11 @@ class FormatsSettings(BaseSettings):
         ('DETAILED_WITH_ABSTRACT', _('detailed with abstract')),
     )
 
-    formats_type = models.CharField(max_length=255,
-                                    choices=FORMATS_TYPE_CHOICE,
-                                    default='SHORT'
-                                    )
+    formats_type = models.CharField(
+        max_length=255,
+        choices=FORMATS_TYPE_CHOICE,
+        default='SHORT'
+    )
 
     class Meta:
         abstract = True
-

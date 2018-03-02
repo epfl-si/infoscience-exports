@@ -28,7 +28,10 @@ def get_list(fields, code, subcode='', subcode2=''):
                     value_to_append += '(' + res_value['c'] + ')' if 'c' in res_value else ''
                 elif code == '024':
                     res_value = get_attributes(value['subfields'])
-                    if value['ind1'] == '7' and subcode in res_value and '2' in res_value and res_value['2'] == subcode2:
+                    if value['ind1'] == '7' \
+                            and subcode in res_value \
+                            and '2' in res_value \
+                            and res_value['2'] == subcode2:
                         value_to_append = "http://dx.doi.org/" + res_value['a']
                     else:
                         value_to_append = ''
@@ -40,7 +43,9 @@ def get_list(fields, code, subcode='', subcode2=''):
                     value_to_append = res_value['a'] if 'a' in res_value else ''
                 elif code == '856':
                     res_value = get_attributes(value['subfields'])
-                    value_to_append = res_value['u'] if 'u' in res_value and 'x' in res_value and res_value['x'] == subcode else ''
+                    value_to_append = res_value['u'] if 'u' in res_value \
+                        and 'x' in res_value \
+                        and res_value['x'] == subcode else ''
                 elif code == '909':
                     if value['ind1'] == 'C' and value['ind2'] == '0':
                         res_value = get_attributes(value['subfields'])
@@ -53,13 +58,13 @@ def get_list(fields, code, subcode='', subcode2=''):
                     if value['ind1'] == 'C' and value['ind2'] == '0':
                         res_value = get_attributes(value['subfields'])
                         value_to_append = res_value['p'] if 'p' in res_value else ''
-                  
+
                 result.append(value_to_append)
 
     result = list(filter(None, result))
     return result
 
-  
+
 def parse_dict(record):
     result = {}
     fields = record['fields']
@@ -78,9 +83,6 @@ def parse_dict(record):
 
 # Authors is a list of a dictionary of author: full name, initial name, url in infoscience
 def set_authors(authors):
-    n = len(authors)
-    n1 = n - 1
-    i = 0
     result = []
     for author in authors:
         author_record = {}
@@ -103,9 +105,9 @@ def set_authors(authors):
                     initname += "-"
                 if len(snames[1]) > 1:
                     initname += snames[1][0] + ". "
-            else:   
+            else:
                 fname = fname.strip()
-                if len(fname) > 0:  
+                if len(fname) > 0:
                     initname += fname.strip()[0] + ". "
         if family:
             initname += family
@@ -135,14 +137,14 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result = {}
         dict_record = parse_dict(record.as_dict())
         dict_result['Id'] = dict_record['control_number']
-        dict_result['ELA_Icon'] = dict_record['ela_icon'] # Electronic Location and Access
-        dict_result['ELA_URL'] = dict_record['ela_url'] # Electronic Location and Access   
-        dict_result['View_Publisher'] = dict_record['osi_doi'] # Other Standard Identifier - Digital Object Identifier   
+        dict_result['ELA_Icon'] = dict_record['ela_icon']  # Electronic Location and Access
+        dict_result['ELA_URL'] = dict_record['ela_url']  # Electronic Location and Access
+        dict_result['View_Publisher'] = dict_record['osi_doi']  # Other Standard Identifier - Digital Object Identifier
         dict_result['Title'] = record.uniformtitle()
         dict_result['Title_All'] = record.title()
         dict_result['Author'] = record.author() if record.author() else ''
-        authors = dict_record['added_entry_personal_name'] #[entry.format_field() for entry in record.addedentries()]
-        dict_result['Authors'] = set_authors(authors) 
+        authors = dict_record['added_entry_personal_name']  # [entry.format_field() for entry in record.addedentries()]
+        dict_result['Authors'] = set_authors(authors)
         dict_result['Patents'] = dict_record['patent_control_information']
         dict_result['Publisher'] = record.publisher() if record.publisher() else ''
         dict_result['Publisher_Date'] = record.pubyear() if record.pubyear() else ''
@@ -152,7 +154,7 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result['Doc_Type'] = dict_record['doc_type']
         dict_result['ISBN'] = record.isbn()
         dict_result['Description'] = [entry.format_field() for entry in record.physicaldescription()]
-        dict_result['Summary'] = dict_record['summary'] #[entry.format_field() for entry in record.notes()]
+        dict_result['Summary'] = dict_record['summary']  # [entry.format_field() for entry in record.notes()]
         dict_result['Subjects'] = [entry.format_field() for entry in record.subjects()]
 
         is_pending = dict_result['Pending_Publications'] and not dict_result['Approved_Publications']
@@ -160,4 +162,3 @@ def import_marc21xml(url, can_display_pending_publications):
             result.append(dict_result)
 
     return result
-

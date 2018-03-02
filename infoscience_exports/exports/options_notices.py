@@ -59,12 +59,12 @@ def get_sorted_by_doc_types(notices):
         groups_head.append(key)
     groups_list_ordered = []
     for doc_type in DOC_TYPE_ORDERED:
-        index = 0 
+        index = 0
         for head in groups_head:
             if head[0] == doc_type[0]:
-                 groups_list_ordered.extend(groups_list[index])
+                groups_list_ordered.extend(groups_list[index])
             index += 1
-    return groups_list_ordered   
+    return groups_list_ordered
 
 
 def setbullets(notices, bullet_choice, notices_length):
@@ -76,25 +76,25 @@ def setbullets(notices, bullet_choice, notices_length):
                 continue
             for notice in notices:
                 if is_first:
-                     is_first = False
+                    is_first = False
                 elif bullet_choice == 'CHARACTER_STAR':
-                     notice['bulleting'] = '*'
+                    notice['bulleting'] = '*'
                 elif bullet_choice == 'CHARACTER_MINUS':
-                     notice['bulleting'] = '-'
+                    notice['bulleting'] = '-'
                 elif bullet_choice == 'NUMBER_ASC':
-                     notice['bulleting'] = '[' + str(index) + ']'
-                     index += 1 
+                    notice['bulleting'] = '[' + str(index) + ']'
+                    index += 1
                 elif bullet_choice == 'NUMBER_DESC':
-                     notice['bulleting'] = '[' + str(notices_length - index + 1) + ']'
-                     index += 1
+                    notice['bulleting'] = '[' + str(notices_length - index + 1) + ']'
+                    index += 1
 
 
 def modify_url(url, queries, option, default, force_default):
     result = url
     if option in queries:
         if force_default:
-        	value = option + "=" + queries[option][0]
-        	result = url.replace(value, option + "=" + default)
+            value = option + "=" + queries[option][0]
+            result = url.replace(value, option + "=" + default)
     else:
         # empty option
         value = "?" + option + "=&"
@@ -120,9 +120,9 @@ def validate_url(url):
         url = url.replace("rg=10", "rg=" + str(settings.RANGE_DISPLAY))
     elif '&rg=' not in url:
         url = url + "&rg=50"
-   
+
     return url
-                
+
 
 def get_notices(options):
     groupsby_all = options['groupsby_all']
@@ -138,7 +138,7 @@ def get_notices(options):
     # validate url
     url = validate_url(options['url'])
 
-    # get notices 
+    # get notices
     notices = import_marc21xml(url, can_display_pending_publications) if url else ''
 
     notices_length = len(notices)
@@ -159,8 +159,8 @@ def get_notices(options):
 
     # add counter (for bullet numbering)
     setbullets(notices, options['bullet'], notices_length)
-      
-    # ordered records   
+
+    # ordered records
     options['marc21xml'] = notices
 
     return options
