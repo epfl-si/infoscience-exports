@@ -13,7 +13,7 @@ admin.site.__class__ = TequilaAdminSite
 
 
 class EPFLUserModelAdmin(UserAdmin):
-    list_display = ('username', 'email', 'sciper', 'last_login', 'is_superuser')
+    list_display = ('username', 'email', 'last_login', 'is_superuser')
 
 
 class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
