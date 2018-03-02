@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.admin.options import ModelAdmin
-
+from django.conf import settings
 from django_tequila.admin import TequilaAdminSite
 
 from log_utils import LoggedModelAdminMixin
@@ -9,6 +9,9 @@ from .models import Export, User
 
 
 admin.autodiscover()
+admin.site.site_url = settings.SITE_PATH
+admin.site.site_header = "Infoscience-Exporter Admin"
+admin.site.site_title = "Publication lists exporter"
 admin.site.__class__ = TequilaAdminSite
 
 
