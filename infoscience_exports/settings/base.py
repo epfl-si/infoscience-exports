@@ -35,6 +35,9 @@ LOGOUT_URL = "https://infoscience.epfl.ch"
 LOGIN_REDIRECT_IF_NOT_ALLOWED = "{}/not_allowed".format(SITE_PATH)
 LOGIN_REDIRECT_TEXT_IF_NOT_ALLOWED = "Not allowed"
 
+# Default values for url infoscience
+RANGE_DISPLAY = 50
+
 # Site
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [get_env_variable('ALLOWED_HOST')]

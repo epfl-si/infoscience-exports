@@ -52,14 +52,9 @@ class LinksSettings(BaseSettings):
 class GroupBySettings(BaseSettings):
     GROUPSBY_YEAR_CHOICE = (
         ('NONE', ''),
-        ('YEAR_DESC', _('year: descending')),
-        ('YEAR_DESC_TITLE', _('year: descending, year as title')),
-        ('YEAR_DESC_PUBL', _('year: descending, with pending publications')),
-        ('YEAR_DESC_TITLE_PUBL', _('year: descending, year as title, with pending publications')),
-        ('YEAR_ASC', _('year: ascending')),
-        ('YEAR_ASC_TITLE', _('year: ascending, year as title')),
-        ('YEAR_ASC_PUBL', _('year: ascending, with pending publications')),
-        ('YEAR_ASC_TITLE_PUBL', _('year: descending, year as title, with pending publications')),
+        ('YEAR_TITLE', _('year: year as title')),
+        ('YEAR_PUBL', _('year: with pending publications')),
+        ('YEAR_TITLE_PUBL', _('year: year as title, with pending publications')),
     )
 
     GROUPSBY_DOC_CHOICE = (
@@ -69,21 +64,17 @@ class GroupBySettings(BaseSettings):
     )
 
     GROUPSBY_ALL_CHOICE = (
-        ('YEAR_DESC', _('year: descending')),
-        ('YEAR_DESC_TITLE', _('year: descending, year as title')),
-        ('YEAR_DESC_PUBL', _('year: descending, with pending publications')),
-        ('YEAR_DESC_TITLE_PUBL', _('year: descending, year as title, with pending publications')),
-        ('YEAR_ASC', _('year: ascending')),
-        ('YEAR_ASC_TITLE', _('year: ascending, year as title')),
-        ('YEAR_ASC_PUBL', _('year: ascending, with pending publications')),
-        ('YEAR_ASC_TITLE_PUBL', _('year: descending, year as title, with pending publications')),
+        ('NONE', ''),
+        ('YEAR_TITLE', _('year: year as title')),
+        ('YEAR_PUBL', _('year: with pending publications')),
+        ('YEAR_TITLE_PUBL', _('year: year as title, with pending publications')),
         ('DOC', _('document type')),
         ('DOC_TITLE', _('document type, document type as title')),
     )
 
     groupsby_type = models.CharField(max_length=255,
                                     choices=GROUPSBY_ALL_CHOICE,
-                                    default='YEAR_DESC'
+                                    default='NONE'
                                     )
 
     groupsby_year = models.CharField(max_length=255,

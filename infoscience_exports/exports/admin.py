@@ -20,9 +20,9 @@ class EPFLUserModelAdmin(UserAdmin):
 
 
 class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
-    list_display = ('name', 'user', 'updated_at')
+    list_display = ('name', 'user', 'get_absolute_url', 'updated_at')
     list_filter = ('updated_at', )
 
-
+    
 admin.site.register(Export, ExportLoggedModelAdmin)
 admin.site.register(User, EPFLUserModelAdmin)

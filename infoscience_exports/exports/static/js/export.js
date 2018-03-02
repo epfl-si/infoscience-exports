@@ -1,5 +1,11 @@
 jQuery(function($) {
 
+	$('#btn-submit').click(function () {
+		$('#id_groupsby_year').prop('disabled', false);
+		$('#id_groupsby_doc').prop('disabled', false);
+		$('#export_form').submit();
+    });
+
 	$('#btn-preview').click(function () {
 		var params = {};
         params['url'] = $("#id_url").val();
@@ -22,7 +28,7 @@ jQuery(function($) {
 	$('.fa-clipboard').click(function () {
 		var $temp = $('<input>');
 		$('body').append($temp);
-		$temp.val($(this).parent().siblings('input').val()).select();
+		$temp.val(INFOSCIENCE_DOMAIN+$(this).parent().siblings('input').val()).select();
 		document.execCommand("copy");
 		$temp.remove();
     });
@@ -32,7 +38,11 @@ jQuery(function($) {
 		var selected = $('#id_groupsby_type').find(':selected').val();
 		if (selected.indexOf('YEAR') != -1){
 			$('#id_groupsby_year').hide();
+		} else if (selected.indexOf('DOC') != -1) {
+			$('#id_groupsby_doc').hide();
 		} else {
+			$('#id_groupsby_year').prop('disabled', true);
+ 			$('#groupby2-label').css("color", 'grey');
 			$('#id_groupsby_doc').hide();
 		}
 	});
@@ -43,12 +53,22 @@ jQuery(function($) {
 			$('#id_groupsby_year option:eq(0)').prop('selected', true);
 			$('#id_groupsby_year').hide();
 			$('#id_groupsby_doc').show();
+			$('#id_groupsby_doc').prop('disabled', false);
+ 			$('#groupby2-label').css("color", 'black');
 			$('#id_groupsby_doc option:eq(0)').prop('selected', true);
-		} else {
+		} else  if (selected.indexOf('DOC') != -1) {
 			$('#id_groupsby_doc option:eq(0)').prop('selected', true);
 			$('#id_groupsby_doc').hide();
 			$('#id_groupsby_year').show();
+			$('#id_groupsby_year').prop('disabled', false);
+ 			$('#groupby2-label').css("color", 'black');
 			$('#id_groupsby_year option:eq(0)').prop('selected', true);
+		} else {
+			$('#id_groupsby_year option:eq(0)').prop('selected', true);
+			$('#id_groupsby_year').show();
+			$('#id_groupsby_year').prop('disabled', true);
+ 			$('#groupby2-label').css("color", 'grey');
+			$('#id_groupsby_doc').hide();
 		}
     });
 

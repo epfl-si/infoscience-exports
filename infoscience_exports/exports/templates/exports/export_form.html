@@ -9,8 +9,24 @@
 <script type="text/javascript" src="/static/js/export.js"></script>
 {% endblock %}
 
-
 {% block content %}
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ field.name }}: {{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
     <h1>{% trans "Create/Update" %}</h1>
     <form id="export_form" method="post" action="." class="form">
 		{% csrf_token %}
@@ -44,7 +60,7 @@
 				{{ form.groupsby_type }}
 				<br />
 				<br />
-				<label>{% trans "Group by" %} (2)</label>
+				<label id="groupby2-label">{% trans "Group by" %} (2)</label>
 				{{ form.groupsby_year }}
 				{{ form.groupsby_doc }}
 			</div>
@@ -78,7 +94,7 @@
 		{% buttons %}
 		<a class="btn btn-primary" href="{% url 'crud:export-list' %}" role="button">{% trans "Cancel" %}</a>
 		<button id="btn-preview" type="button" class="btn btn-primary" title="{% trans 'Defined by www.epfl.ch/css/epfl.css' %}">{% trans "Preview" %}</button>
-		<button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+		<button id="btn-submit" type="button" class="btn btn-primary">{% trans "Submit" %}</button>
 		{% endbuttons %}
 	</form>
 
