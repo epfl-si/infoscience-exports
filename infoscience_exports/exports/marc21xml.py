@@ -44,7 +44,7 @@ def get_list(fields, code, subcode='', subcode2=''):
                 elif code == '909':
                     if value['ind1'] == 'C' and value['ind2'] == '0':
                         res_value = get_attributes(value['subfields'])
-                        value_to_append = res_value['p'] if 'p' else ''
+                        value_to_append = res_value['p'] if 'p' in res_value else ''
                 elif code == '980':
                     subfields = value['subfields']
                     res_value = get_attributes(subfields)
@@ -52,7 +52,7 @@ def get_list(fields, code, subcode='', subcode2=''):
                 elif code == '999':
                     if value['ind1'] == 'C' and value['ind2'] == '0':
                         res_value = get_attributes(value['subfields'])
-                        value_to_append = res_value['p'] if 'p' else ''
+                        value_to_append = res_value['p'] if 'p' in res_value else ''
                   
                 result.append(value_to_append)
 
@@ -116,6 +116,18 @@ def set_authors(authors):
     return result
 
 
+def set_year(date):
+    if len(date) == 4:
+        return date
+    dates = date.split("-")
+    year = date
+    for val in dates:
+        if len(val) == 4:
+            year = val
+            break
+    return year
+
+
 def import_marc21xml(url, can_display_pending_publications):
     reader = marcxml.parse_xml_to_array(urlopen(url))
     result = []
@@ -134,6 +146,7 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result['Patents'] = dict_record['patent_control_information']
         dict_result['Publisher'] = record.publisher() if record.publisher() else ''
         dict_result['Publisher_Date'] = record.pubyear() if record.pubyear() else ''
+        dict_result['Publisher_Year'] = set_year(dict_result['Publisher_Date'])
         dict_result['Approved_Publications'] = dict_record['approved_publications']
         dict_result['Pending_Publications'] = dict_record['pending_publications']
         dict_result['Doc_Type'] = dict_record['doc_type']

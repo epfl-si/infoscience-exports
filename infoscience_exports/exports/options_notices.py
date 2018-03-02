@@ -1,5 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
+from urllib.parse import parse_qs, urlsplit
 from itertools import groupby
 from operator import itemgetter
 
@@ -23,6 +25,8 @@ DOC_TYPE_ORDERED = (
     ('PATENT', _("Patents")),
     ('STUDENT', _("Student works")),
     ('POLY', _("Teaching Documents")),
+    ('POST_TALK', _("Poster Presentation")),   # not in test-infoscience
+    ('BOOK_CHAP', _("Book Chapter")),   # not in test-infoscience
     ('FILM', _("")),
     ('MAP', _("")),
     ('PHOTO', _("")),
@@ -44,14 +48,6 @@ def get_groups(options, notices, attr, subattr):
         list1.extend(list(subgroups_list))
         groups_list.append(list1)
     return groups_list
-
-
-def get_sorted_by_year(notices, groups):
-    if 'ASC' in groups:
-        notices = sorted(notices, key=lambda k: k['Publisher_Date'])
-    elif 'DESC' in groups:
-        notices = sorted(notices, key=lambda k: k['Publisher_Date'], reverse=True)
-    return notices
 
 
 def get_sorted_by_doc_types(notices):
@@ -91,6 +87,41 @@ def setbullets(notices, bullet_choice, notices_length):
                 elif bullet_choice == 'NUMBER_DESC':
                      notice['bulleting'] = '[' + str(notices_length - index + 1) + ']'
                      index += 1
+
+
+def modify_url(url, queries, option, default, force_default):
+    result = url
+    if option in queries:
+        if force_default:
+        	value = option + "=" + queries[option][0]
+        	result = url.replace(value, option + "=" + default)
+    else:
+        # empty option
+        value = "?" + option + "=&"
+        if value in url:
+            result = url.replace(value, "?" + option + "=" + default + "&")
+        else:
+            value = "&" + option + "="
+            if value in url:
+                result = url.replace(value, "&" + option + "=" + default)
+            else:
+                result = url + "&" + option + "=" + default
+    return result
+
+
+def validate_url(url):
+    queries = parse_qs(urlsplit(url).query)
+
+    url = modify_url(url, queries, "of", "xm", True)
+    url = modify_url(url, queries, "sf", "year", True)
+    url = modify_url(url, queries, "so", "d", False)
+
+    if 'rg' in queries and queries['rg'][0] == '10':
+        url = url.replace("rg=10", "rg=" + str(settings.RANGE_DISPLAY))
+    elif '&rg=' not in url:
+        url = url + "&rg=50"
+   
+    return url
                 
 
 def get_notices(options):
@@ -104,32 +135,32 @@ def get_notices(options):
     # remove pending publications if not needed
     can_display_pending_publications = 'PUBL' in groupsby_all or 'PUBL' in groupsby_year
 
-    notices = import_marc21xml(options['url'], can_display_pending_publications) if options['url'] else ''
+    # validate url
+    url = validate_url(options['url'])
+
+    # get notices 
+    notices = import_marc21xml(url, can_display_pending_publications) if url else ''
 
     notices_length = len(notices)
 
     # second groupby firstly
-    if 'YEAR' in groupsby_year:
-        notices = get_sorted_by_year(notices, groupsby_year)
-    elif 'DOC' in groupsby_doc:
+    if 'DOC' in groupsby_doc:
         notices = get_sorted_by_doc_types(notices)
 
     # first groupby secondly
-    if 'YEAR' in groupsby_all:
-        notices = get_sorted_by_year(notices, groupsby_all)
-    elif 'DOC' in groupsby_all:
+    if 'DOC' in groupsby_all:
         notices = get_sorted_by_doc_types(notices)
 
     # set groups
-    if 'YEAR' in groupsby_all:
-        notices = get_groups(options, notices, 'Publisher_Date', 'Doc_Type')
-    elif 'DOC' in groupsby_all:
-        notices = get_groups(options, notices, 'Doc_Type', 'Publisher_Date')
+    if 'DOC' in groupsby_all:
+        notices = get_groups(options, notices, 'Doc_Type', 'Publisher_Year')
+    else:
+        notices = get_groups(options, notices, 'Publisher_Year', 'Doc_Type')
 
     # add counter (for bullet numbering)
     setbullets(notices, options['bullet'], notices_length)
-        
-
+      
+    # ordered records   
     options['marc21xml'] = notices
 
     return options
