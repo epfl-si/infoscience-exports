@@ -1,5 +1,17 @@
 # Change Log
 
+## [0.3.0](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.0) (2018-03-02)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.2.4...0.3.0)
+
+**Merged pull requests:**
+
+- fix flake8 [\#38](https://github.com/epfl-idevelop/infoscience-exports/pull/38) ([ebreton](https://github.com/ebreton))
+- Force url parameters with default values [\#37](https://github.com/epfl-idevelop/infoscience-exports/pull/37) ([dragonleman](https://github.com/dragonleman))
+- replace docopt with argparse \(native\) [\#36](https://github.com/epfl-idevelop/infoscience-exports/pull/36) ([ebreton](https://github.com/ebreton))
+- Fix language links [\#35](https://github.com/epfl-idevelop/infoscience-exports/pull/35) ([ebreton](https://github.com/ebreton))
+- Improve restore db [\#34](https://github.com/epfl-idevelop/infoscience-exports/pull/34) ([ebreton](https://github.com/ebreton))
+- Improve admin columns [\#33](https://github.com/epfl-idevelop/infoscience-exports/pull/33) ([ebreton](https://github.com/ebreton))
+
 ## [0.2.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.2.4) (2018-03-01)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.2.3...0.2.4)
 
