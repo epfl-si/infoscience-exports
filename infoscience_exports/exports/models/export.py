@@ -12,7 +12,7 @@ class Export(BulletsSettings,
              ThumbnailSettings,
              LinksSettings,
              GroupBySettings,
-             FormatsSettings,             
+             FormatsSettings,
              models.Model,
              DirtyFieldsMixin,
              ):
