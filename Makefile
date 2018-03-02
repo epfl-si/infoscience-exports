@@ -128,9 +128,15 @@ dump:
 
 restore:
 	@echo restoring DB from file `ls -t backup/*.sql.tar | head -1`
+	# retrieve commit number and checkout
+	git checkout $(shell ls -t backup/*.sql.tar | head -1 | cut -d'-' -f4 | cut -d '.' -f1)
+
+	# restore DB
 	docker-compose -f docker-compose-dev.yml run --rm \
 		-v $(shell pwd)/backup/:/backup \
 		postgres sh -c 'exec pg_restore -c -hpostgres -U${DATABASE_USER} -Ox -Ft -d${DB_NAME} `ls -t /backup/*.sql.tar | head -1`'
+
+	# restart web container
 	make restart-web
 
 release:
