@@ -25,8 +25,8 @@ import logging
 import subprocess
 import sys
 import shutil
-
-from docopt import docopt
+import argparse
+from pprint import pprint
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -41,7 +41,7 @@ from versions import _release, _build, _version  # noqa
 COPY_PATH = os.path.sep.join([BASE_DIR, 'infoscience_exports', 'exports', 'versions.py'])
 
 
-def set_logging_config(kwargs):
+def set_logging_config(quiet=False, debug=False):
     """
     Set logging with the 'good' level
 
@@ -50,9 +50,9 @@ def set_logging_config(kwargs):
     """
     # set up level of logging
     level = logging.INFO
-    if kwargs['--quiet']:
+    if quiet:
         level = logging.WARNING
-    elif kwargs['--debug']:
+    elif debug:
         level = logging.DEBUG
 
     # set up logging to console
@@ -61,7 +61,7 @@ def set_logging_config(kwargs):
     logger.setLevel(level)
 
 
-def compute(**kwargs):
+def compute():
     logging.debug("Updating versions...")
 
     # compute version from release
@@ -124,7 +124,7 @@ try: input = raw_input
 except: pass
 
 
-def confirm(**kwargs):
+def confirm():
     print("version currently set to {}".format(_version))
     answer = ""
     while answer not in ["y", "n"]:
@@ -132,7 +132,7 @@ def confirm(**kwargs):
     return answer == "y"
 
 
-def publish(**kwargs):
+def publish(dry_run=False):
     """ POST /repos/:owner/:repo/releases
         
         https://developer.github.com/v3/repos/releases/#create-a-release
@@ -159,13 +159,18 @@ def publish(**kwargs):
     logging.debug("POST %s with data: %s", url, post_args)
 
     # make request and raise exception if we had an issue
-    response = requests.post(url, data=json.dumps(post_args), auth=(github_user, github_key))
-    response.raise_for_status()
+    if not dry_run:
+        response = requests.post(url, data=json.dumps(post_args), auth=(github_user, github_key))
+        response.raise_for_status()
+    else:
+        print("POST {}".format(url))
+        print("auth({}, xxx)".format(github_user))
+        pprint(post_args)
 
 
-def check_branch(**kwargs):
+
+def check_branch(expected='master'):
     try:
-        expected = kwargs['--branch'] or 'master'
         current = subprocess.check_output(
             ["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=BASE_DIR).decode('utf-8').strip()
         if current != expected:
@@ -177,15 +182,28 @@ def check_branch(**kwargs):
 
 
 if __name__ == '__main__':
-    kwargs = docopt(__doc__, version=_version)
-    set_logging_config(kwargs)
-    logging.debug(kwargs)
-    if kwargs['confirm']:
-        if not confirm(**kwargs):
+    parser = argparse.ArgumentParser(
+        usage="""Release manager script
+
+This file should be used as post-commit in .git/hooks
+It can be run with both python 2.7 and 3.6""")
+    parser.add_argument("command", nargs='?', help="[confirm|public|check]")
+    parser.add_argument('--branch', help="used with command check_branch")
+    parser.add_argument('--dry-run', action='store_true', help="used with command publish")
+    parser.add_argument('-v', '--version', action='version', version=_version)
+    parser.add_argument('-d', '--debug', action='store_true')
+    parser.add_argument('-q', '--quiet', action='store_true')
+    args = parser.parse_args()
+
+    set_logging_config(quiet=args.quiet, debug=args.debug)
+    logging.debug(args)
+
+    if args.command == 'confirm':
+        if not confirm():
             raise SystemExit("Please confirm version number to continue")
-    elif kwargs['check']:
-        check_branch(**kwargs)
-    elif kwargs['publish']:
-        publish(**kwargs)
+    elif args.command == 'check':
+        check_branch(expected=args.branch)
+    elif args.command == 'publish':
+        publish(dry_run=args.dry_run)
     else:
-        compute(**kwargs)
+        compute()
