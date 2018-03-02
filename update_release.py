@@ -148,7 +148,7 @@ def publish(dry_run=False):
 
     # build request
     url = "https://api.github.com/repos/{}/{}/releases".format(github_owner, github_repo)
-    changelog_url = "/{}/{}/blob/release-{}/CHANGELOG.md".format(github_owner, github_repo, _version)
+    changelog_url = "https://github.com/{}/{}/blob/release-{}/CHANGELOG.md".format(github_owner, github_repo, _version)
     post_args = {
         "tag_name": _version,
         "name": "Release {}".format(_version),
