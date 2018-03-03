@@ -26,6 +26,7 @@ SITE_PATH = parsed_url.path.rstrip('/')
 # Django Tequila
 AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
 TEQUILA_SERVICE_NAME = "Infoscience Exports"
+TEQUILA_SERVER_URL = "https://tequila.epfl.ch"
 AUTH_USER_MODEL = 'exports.User'
 
 # override django-tequila urls if we are serving the application from a folder path

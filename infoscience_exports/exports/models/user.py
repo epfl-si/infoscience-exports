@@ -20,11 +20,9 @@ class User(AbstractUser):
                         group:     %s
                         classe:    %s
                         statut:    %s
-                        memberof:  %s
                     """ % (self.sciper,
                            self.where,
                            self.units,
                            self.group,
                            self.classe,
-                           self.statut,
-                           self.memberof)
+                           self.statut)
