@@ -87,7 +87,7 @@ init-db:
 	# create super admin in app
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py createsuperuser --username=${SUPER_ADMIN_USERNAME} --email=${SUPER_ADMIN_EMAIL} --noinput
-	@echo "  -> All set up! You can connect with your tequilla acount or the admin (${SUPER_ADMIN_EMAIL})"
+	@echo "  -> All set up! You can connect with your tequila acount or the admin (${SUPER_ADMIN_EMAIL})"
 
 reset: build up
 	@echo ''
