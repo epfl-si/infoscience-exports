@@ -3,6 +3,8 @@ from .test import *
 
 DEBUG = True
 
+TEQUILA_SERVER_URL = "https://test-tequila.epfl.ch"
+
 for config in TEMPLATES:
     config['OPTIONS']['debug'] = DEBUG
 
