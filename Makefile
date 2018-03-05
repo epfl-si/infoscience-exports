@@ -176,7 +176,11 @@ release:
 	git merge release-$(VERSION)
 	git push
 
-git push-prod:
+push-prod:
+	@# confirm push to production
+	@python update_release.py confirm --prod
+
+	# update tags
 	git tag -f prod-release
 	git push --tags
 
