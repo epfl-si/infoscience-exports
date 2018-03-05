@@ -1,10 +1,18 @@
 # Change Log
 
-## [0.3.2](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.2) (2018-03-05)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.3.2)
+## [0.3.3](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.3) (2018-03-05)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.3.3)
 
 ## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-05)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...qa-release)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.2...qa-release)
+
+**Merged pull requests:**
+
+- Fix static url [\#44](https://github.com/epfl-idevelop/infoscience-exports/pull/44) ([ebreton](https://github.com/ebreton))
+- Feature more make commands, and doc converted to markdown [\#43](https://github.com/epfl-idevelop/infoscience-exports/pull/43) ([ebreton](https://github.com/ebreton))
+
+## [0.3.2](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.2) (2018-03-05)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.3.2)
 
 **Merged pull requests:**
 
