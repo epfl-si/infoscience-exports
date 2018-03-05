@@ -4,7 +4,8 @@
 
 .PHONY: version vars init-venv build build-travis init-db reset \
 	up down logs restart restart-web \
-	collectstatic deploy dump restore release \
+	superadmin collectstatic migrations migrate \
+	dump restore release push-prod deploy \
 	test coverage
 
 VERSION = $(shell python update_release.py -v)
@@ -81,12 +82,13 @@ init-db:
 		psql ${DB_NAME} -c "ALTER ROLE ${DATABASE_USER} WITH CREATEDB;" -U postgres
 	# initialize DBs executing migration scripts
 	docker-compose -f docker-compose-dev.yml exec web \
+		python src/manage.py makemigrations
+	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate --database=mock
 	# create super admin in app
-	docker-compose -f docker-compose-dev.yml exec web \
-		python infoscience_exports/manage.py createsuperuser --username=${SUPER_ADMIN_USERNAME} --email=${SUPER_ADMIN_EMAIL} --noinput
+	make superadmin
 	@echo "  -> All set up! You can connect with your tequila acount or the admin (${SUPER_ADMIN_EMAIL})"
 
 reset: build up
@@ -95,6 +97,7 @@ reset: build up
 	@echo ''
 	sleep 3
 	make init-db
+	make collectstatic
 
 up:
 	docker-compose -f docker-compose-dev.yml up -d
@@ -115,9 +118,24 @@ restart-web:
 	docker-compose -f docker-compose-dev.yml stop web
 	docker-compose -f docker-compose-dev.yml start web
 
-collectstatic:
+superadmin: up
 	docker-compose -f docker-compose-dev.yml exec web \
-		python infoscience_exports/manage.py collectstatic --noinput
+	python src/manage.py shell -c "from django.contrib.auth import get_user_model; \
+		User = get_user_model(); \
+		User.objects.filter(email='${SUPER_ADMIN_EMAIL}').delete(); \
+		User.objects.create_superuser('${SUPER_ADMIN_USERNAME}', '${SUPER_ADMIN_EMAIL}', '${SUPER_ADMIN_PASSWORD}');"
+
+collectstatic: up
+	docker-compose -f docker-compose-dev.yml exec web \
+		python src/manage.py collectstatic --noinput
+
+migrations: up
+	docker-compose -f docker-compose-dev.yml exec web \
+		python src/manage.py makemigrations
+
+migrate: up
+	docker-compose -f docker-compose-dev.yml exec web \
+		python src/manage.py migrate
 
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
