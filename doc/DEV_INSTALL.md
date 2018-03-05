@@ -1,12 +1,8 @@
-======================
-Getting up and running
-======================
+# Getting up and running
 
-First, choose if you want to run your application with Docker. If this is the case, go to DOCKER_INSTALL.rst. Otherwise, continue here.
+First, choose if you want to run your application with Docker. If this is the case, go to INSTALL.rst. Otherwise, continue here.
 
-
-Prerequistes
-------------
+## Prerequistes
 
 The steps below will get you up and running with a local development environment. We assume you have the following installed:
 
@@ -14,88 +10,80 @@ The steps below will get you up and running with a local development environment
 * virtualenv / virtualwrapper
 * PostgreSQL
 
-Requirements
-------------
+## Requirements
 
 In your virtualenv (activate), run::
 
-    $ pip install -r ./requirements.txt
+    pip install -r ./requirements.txt
 
-
-Postgres install
-----------------
+## Postgres install
 
 Install PostgreSQL and some libraries::
 
-    $ sudo apt-get install postgresql postgresql-client postgresql-server-dev-all libjpeg-dev
+    sudo apt-get install postgresql postgresql-client postgresql-server-dev-all libjpeg-dev
 
-Postgres config
----------------
+## Postgres config
 
 Move to su::
-    $ su
+    su
 
 Be the postgres user::
 
-    $ su - postgres
+    su - postgres
 
 Create the user django, with django as password::
 
-    $ createuser -SR -P django
+    createuser -SR -P django
 
-    $ psql -c 'ALTER ROLE django WITH CREATEDB' -U postgres
+    psql -c 'ALTER ROLE django WITH CREATEDB' -U postgres
 
 create the db::
 
-    $ createdb -O django infoscience_exports
+    createdb -O django infoscience_exports
 
-    $ createdb -O django mock_infoscience_exports
+    createdb -O django mock_infoscience_exports
 
-
-Django config
--------------
+## Django config
 
 Do the first migration::
 
-    $ fab migrate
-    $ fab migrate_mock
-    
+    fab migrate
+    fab migrate_mock
+
 It may be the good timing to set your environment variable::
 
-    $ export DATABASE_PASSWORD='django'
+    export DATABASE_PASSWORD='django'
 
 Load mock data::
 
-    $ python ./infoscience_exports/manage.py loaddata --app exports --database mock initial_data
+    python ./infoscience_exports/manage.py loaddata --app exports --database mock initial_data
 
 Create your user::
 
-    $ python ./infoscience_exports/manage.py createsuperuser
+    python ./infoscience_exports/manage.py createsuperuser
 
 Verify with the tests::
 
-    $ fab test
+    fab test
 
 See by yourself live::
 
-    $ fab serve
+    fab serve
 
 And go to `http://127.0.0.1:${DEV_PORT}/exports <http://127.0.0.1:8000/exports/>`_.
 
-====================================
-How to start the development process
-====================================
+## How to start the development process
 
 Here is the standard config to have a nice synchronisation with the different repositories. Let's suppose you have not any existing repository.
 
 Don't forget to set tequila_user_name to the right value::
 
-    $ git clone git@github.com:epfl-idevelop/infoscience-exports.git
-    $ git remote add github git@github.com:epfl-idevelop/infoscience-exports.git
-    $ git remote add gitlab git@gitlab.epfl.ch:infoscience/infoscience-exports.git
-    $ git remote add epfl https://tequila_user_name@git.epfl.ch/repo/infoscience-exports.git
-    $ git remote set-url --add origin git@gitlab.epfl.ch:infoscience/infoscience-exports.git
-    $ git remote set-url --add origin https://tequila_user_name@git.epfl.ch/repo/infoscience-exports.git
+    git clone git@github.com:epfl-idevelop/infoscience-exports.git
+    git remote add github git@github.com:epfl-idevelop/infoscience-exports.git
+    git remote add gitlab git@gitlab.epfl.ch:infoscience/infoscience-exports.git
+    git remote add epfl https://tequila_user_name@git.epfl.ch/repo/infoscience-exports.git
+    git remote set-url --add origin git@gitlab.epfl.ch:infoscience/infoscience-exports.git
+    git remote set-url --add origin https://tequila_user_name@git.epfl.ch/repo/infoscience-exports.git
 
 This will work flawlessly with git push.
 
