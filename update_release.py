@@ -90,7 +90,7 @@ def compute():
             ["git", "rev-parse", "HEAD"], cwd=BASE_DIR).decode('utf-8').strip()
 
         release = subprocess.check_output(
-            ["git", "describe", "--tags"], cwd=BASE_DIR).decode('utf-8').strip()
+            ["git", "describe", "--tags", "--match", "[0-9]*"], cwd=BASE_DIR).decode('utf-8').strip()
     except Exception as err:
         logging.warning("Using previous build & release, since git does not seem available: %s", err)
         release = _release
