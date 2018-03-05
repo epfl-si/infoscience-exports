@@ -3,28 +3,30 @@ from django.db import models
 
 
 class User(AbstractUser):
-    sciper = models.PositiveIntegerField(null=True, blank=True)
+
+    # sciper not necessarily an integer, could contain letters for a service account
+    sciper = models.CharField(max_length=100, null=True, blank=True)
     where = models.CharField(max_length=100, null=True, blank=True)
     units = models.CharField(max_length=300, null=True, blank=True)
-    group = models.CharField(max_length=150, null=True, blank=True)
+    group = models.CharField(max_length=4096, null=True, blank=True)
     classe = models.CharField(max_length=100, null=True, blank=True)
     statut = models.CharField(max_length=100, null=True, blank=True)
+    memberof = models.CharField(max_length=1024, null=True, blank=True)
+
+    @property
+    def profile(self):
+        """ Work around current implementation of DjangoTequilla which expects to have all Tequila
+            attributes in a profile object"""
+        return self
 
     def __str__(self):
         return self.email
 
     def __unicode__(self):
-        return """  Sciper:    %s
-                        where:     %s
-                        units:     %s
-                        group:     %s
-                        classe:    %s
-                        statut:    %s
-                        memberof:  %s
-                    """ % (self.sciper,
-                           self.where,
-                           self.units,
-                           self.group,
-                           self.classe,
-                           self.statut,
-                           self.memberof)
+        return ("<Profile Sciper:{0.sciper} - "
+                "where: {0.where} - "
+                "units: {0.units} - "
+                "group: {0.group} - "
+                "classe:{0.class} - "
+                "statut:{0.statut} - "
+                "statut:{0.memberof}>").format(self)

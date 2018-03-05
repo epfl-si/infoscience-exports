@@ -25,13 +25,14 @@ SITE_PATH = parsed_url.path.rstrip('/')
 
 # Django Tequila
 AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
-TEQUILA_SERVICE_NAME = "Infoscience exports"
+TEQUILA_SERVICE_NAME = "Infoscience Exports"
+TEQUILA_SERVER_URL = "https://tequila.epfl.ch"
 AUTH_USER_MODEL = 'exports.User'
 
 # override django-tequila urls if we are serving the application from a folder path
 LOGIN_URL = "{}/login".format(SITE_PATH)
 LOGIN_REDIRECT_URL = "{}".format(SITE_PATH)
-LOGOUT_URL = "https://infoscience.epfl.ch"
+LOGOUT_URL = "/youraccount/logout"
 LOGIN_REDIRECT_IF_NOT_ALLOWED = "{}/not_allowed".format(SITE_PATH)
 LOGIN_REDIRECT_TEXT_IF_NOT_ALLOWED = "Not allowed"
 
