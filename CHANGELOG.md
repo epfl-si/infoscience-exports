@@ -1,5 +1,16 @@
 # Change Log
 
+## [0.3.1](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.1) (2018-03-05)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.3.1)
+
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-05)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.0...qa-release)
+
+**Merged pull requests:**
+
+- Added push commands [\#41](https://github.com/epfl-idevelop/infoscience-exports/pull/41) ([ebreton](https://github.com/ebreton))
+- Improve tequila integration [\#39](https://github.com/epfl-idevelop/infoscience-exports/pull/39) ([ebreton](https://github.com/ebreton))
+
 ## [0.3.0](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.0) (2018-03-02)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.2.4...0.3.0)
 
