@@ -155,7 +155,7 @@ release:
 
 	git tag $(VERSION)
 	git tag -f qa-release
-	git push --tags
+	git push --tags --force
 
 	# updating CHANGELOG
 	github_changelog_generator
@@ -182,7 +182,7 @@ push-prod:
 
 	# update tags
 	git tag -f prod-release
-	git push --tags
+	git push --tags --force
 
 deploy: dump
 	git pull
