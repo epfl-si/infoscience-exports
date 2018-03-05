@@ -1,10 +1,8 @@
-Setup of a new CentOS 7 VM
-==========================
+<!-- markdownlint-disable MD034 -->
 
-1. Install Docker
------------------
+# Setup of a new CentOS 7 VM
 
-.. code-block:: bash
+## 1. Install Docker
 
     yum install -y yum-utils
     yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
@@ -14,15 +12,10 @@ Setup of a new CentOS 7 VM
 
 You can check the correct intallation with
 
-.. code-block:: bash
-
     $ docker --version
     Docker version 17.12.0-ce, build xxx
 
-2. Install docker-compose (requires Python)
--------------------------------------------
-
-.. code-block:: bash
+## 2. Install docker-compose (requires Python)
 
     yum groupinstall -y development
     yum install -y https://centos7.iuscommunity.org/ius-release.rpm
@@ -30,11 +23,9 @@ You can check the correct intallation with
     yum install -y python36u-pip
     yum install -y python36u-devel
 
-    pip3.6 install docker-compose 
+    pip3.6 install docker-compose
 
 You can check the correct intallation with
-
-.. code-block:: bash
 
     $ python3.6 --version
     Python 3.6.4
@@ -44,22 +35,17 @@ You can check the correct intallation with
     $ docker-compose --version
     docker-compose version 1.19.0, build xxx
 
-3. Install sysadmin account
----------------------------
+## 3. Install sysadmin account
 
-.. code-block:: bash
-
-    adduser infoscience-exports
-    passwd infoscience-exports
-    usermod -aG wheel infoscience-exports
-    usermod -aG docker infoscience-exports
+    adduser myapp-user
+    passwd myapp-user
+    usermod -aG wheel myapp-user
+    usermod -aG docker myapp-user
 
     mkdir .ssh
     chmod 700 .ssh/
 
 You can check the correct intallation with
-
-.. code-block:: bash
 
     $ ls -laG /home/infoscience-exports/
     total 16
@@ -71,29 +57,18 @@ You can check the correct intallation with
     -rw-r--r--. 1 infoscience-exports 231 Sep  6 18:25 .bashrc
     drwx------. 2 infoscience-exports  28 Feb 21 13:14 .ssh
 
-4. Do not forget to add your public key
----------------------------------------
-
-.. code-block:: bash
+## 4. Do not forget to add your public key
 
     echo "your key" >> .ssh/authorized_keys
     chmod 600 .ssh/authorized_keys
 
 You can check the correct intallation from your host
 
-.. code-block:: bash
-
     $ ssh infoscience-exports@vm
     not prompting password
 
-5. Checkout code and run
-------------------------
-
-.. code-block:: bash
+## 5. Checkout code and run
 
     git clone git@github.com:epfl-idevelop/infoscience-exports.git
 
-and continue the reading with DOCKER_INSTALL_
-
-
-.. _DOCKER_INSTALL: https://github.com/epfl-idevelop/infoscience-exports/blob/master/DOCKER_INSTALL.rst
+and continue the reading with INSTALL.md

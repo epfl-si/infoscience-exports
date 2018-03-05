@@ -150,11 +150,10 @@ SITE_ID = 1
 USE_I18N = False
 USE_L10N = True
 USE_TZ = True
-LOGIN_REDIRECT_URL = '/'
 
 # Static Files
 STATIC_ROOT = join(os.path.dirname(BASE_DIR), 'staticfiles')
-STATIC_URL = '/static/'
+STATIC_URL = '{}/static/'.format(SITE_PATH)
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -162,7 +161,7 @@ STATICFILES_FINDERS = (
 
 # Media files
 MEDIA_ROOT = join(os.path.dirname(BASE_DIR), 'media')
-MEDIA_URL = '/media/'
+MEDIA_URL = '{}/media/'.format(SITE_PATH)
 
 # Logging
 LOGGING = {

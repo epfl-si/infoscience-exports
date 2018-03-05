@@ -29,6 +29,7 @@ import argparse
 from pprint import pprint
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+COPY_PATH = os.path.sep.join([BASE_DIR, 'infoscience_exports', 'exports', 'versions.py'])
 
 if BASE_DIR.endswith('hooks'):
     BASE_DIR = os.path.abspath(os.path.sep.join(
@@ -37,8 +38,6 @@ if BASE_DIR.endswith('hooks'):
 
 from versions import __file__ as RELEASE_FILE  # noqa
 from versions import _release, _build, _version  # noqa
-
-COPY_PATH = os.path.sep.join([BASE_DIR, 'infoscience_exports', 'exports', 'versions.py'])
 
 
 def set_logging_config(quiet=False, debug=False):
