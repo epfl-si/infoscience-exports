@@ -1,10 +1,20 @@
 # Change Log
 
-## [0.3.1](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.1) (2018-03-05)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.3.1)
+## [0.3.2](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.2) (2018-03-05)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.3.2)
 
 ## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-05)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.0...qa-release)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...qa-release)
+
+**Merged pull requests:**
+
+- Enhanced prod release process [\#42](https://github.com/epfl-idevelop/infoscience-exports/pull/42) ([ebreton](https://github.com/ebreton))
+
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-05)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.1...prod-release)
+
+## [0.3.1](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.1) (2018-03-05)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.0...0.3.1)
 
 **Merged pull requests:**
 
