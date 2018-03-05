@@ -24,7 +24,7 @@ def get_list(fields, code, subcode='', subcode2=''):
             if key == code:
                 if code == '013':
                     res_value = get_attributes(value['subfields'])
-                    value_to_append = res_value['a'] if 'a' in res_value else ''
+                    value_to_append = res_value.get('a', '')
                     value_to_append += '(' + res_value['c'] + ')' if 'c' in res_value else ''
                 elif code == '024':
                     res_value = get_attributes(value['subfields'])
@@ -37,10 +37,10 @@ def get_list(fields, code, subcode='', subcode2=''):
                         value_to_append = ''
                 elif code == '520':
                     res_value = get_attributes(value['subfields'])
-                    value_to_append = res_value['a'] if 'a' in res_value else ''
+                    value_to_append = res_value.get('a', '')
                 elif code == '700':
                     res_value = get_attributes(value['subfields'])
-                    value_to_append = res_value['a'] if 'a' in res_value else ''
+                    value_to_append = res_value.get('a', '')
                 elif code == '856':
                     res_value = get_attributes(value['subfields'])
                     value_to_append = res_value['u'] if 'u' in res_value \
@@ -49,15 +49,15 @@ def get_list(fields, code, subcode='', subcode2=''):
                 elif code == '909':
                     if value['ind1'] == 'C' and value['ind2'] == '0':
                         res_value = get_attributes(value['subfields'])
-                        value_to_append = res_value['p'] if 'p' in res_value else ''
+                        value_to_append = res_value.get('p', '')
                 elif code == '980':
                     subfields = value['subfields']
                     res_value = get_attributes(subfields)
-                    value_to_append = res_value['a'] if 'a' in res_value else ''
+                    value_to_append = res_value.get('a', '')
                 elif code == '999':
                     if value['ind1'] == 'C' and value['ind2'] == '0':
                         res_value = get_attributes(value['subfields'])
-                        value_to_append = res_value['p'] if 'p' in res_value else ''
+                        value_to_append = res_value.get('p', '')
 
                 result.append(value_to_append)
 
@@ -154,7 +154,7 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result['Doc_Type'] = dict_record['doc_type']
         dict_result['ISBN'] = record.isbn()
         dict_result['Description'] = [entry.format_field() for entry in record.physicaldescription()]
-        dict_result['Summary'] = dict_record['summary']  # [entry.format_field() for entry in record.notes()]
+        dict_result['Summary'] = dict_record['summary'][0] if dict_record['summary'] else ''  # [entry.format_field() for entry in record.notes()]
         dict_result['Subjects'] = [entry.format_field() for entry in record.subjects()]
 
         is_pending = dict_result['Pending_Publications'] and not dict_result['Approved_Publications']

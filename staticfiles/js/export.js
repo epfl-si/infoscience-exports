@@ -9,6 +9,7 @@ jQuery(function($) {
 	$('#btn-preview').click(function () {
 		var params = {};
         params['url'] = $("#id_url").val();
+		params['format'] = $("#id_formats_type").find(":selected").val();
 		params['bullet'] = $("#id_bullets_type").find(":selected").val();
 		params['thumb'] = $("#id_show_thumbnail").is(':checked');
 		params['groupsby_all'] = $("#id_groupsby_type").find(":selected").val();

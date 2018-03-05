@@ -4,113 +4,11 @@
 
 <div class="infoscience_export">
 
-{% for titles in options.marc21xml %}
-	{% for groups in titles %}
-	{% if forloop.first %}
-		{% if options.group_title %}
-		<h1 class="infoscience_header1">{{ groups.title }}</h4>
-		{% endif %}
-	{% else %}
-		{% for article in groups %}
-		{% if forloop.first %}
-			{% if options.subgroup_title %}
-			<h2 class="infoscience_header2">{{ article.title }}</h5>
-			{% endif %}
-		{% else %}
-			{% if options.bullet != 'NONE' %}
-			<div class="infoscience_record infoscience_record_bulleted">
-				<span class="infoscience_bullet">{{ article.bulleting }}</span>
-			{% else %}
-			<div class="infoscience_record">
-			{% endif %}
-				<div class="infoscience_data">
-					<div class="record-content">
-						{% if article.Authors %}
-						<span class="infoscience_authors">
-                        {% for author in article.Authors %}
-							{% if not forloop.first %}
-								{% if forloop.last %}
-       								{% trans " and " %}
-								{% else %}
-									,	
-								{% endif %}
-							{% endif %}
-							{% if options.link_authors %}<a href="https://infoscience.epfl.ch/search?p={{author.url}}" target="_blank">{%endif %}
-  							{{ author.initname }}
-							{% if options.link_authors %}</a>{% endif %}
-							{% if forloop.last %}
-       						.
-							{% endif %}
-						{% endfor %}
-						</span>
-						{% endif %}			
-
-						{% if article.Title_All %}
-						<span class="infoscience_title">
-						{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL.0 }}" target="_blank">{% endif %}
-						{{ article.Title_All }}
-						{% if options.link_title and article.ELA_URL %}</a>{% endif %}.
-						</span>
-						{% endif %}
-
-						{% if article.Publisher %}<span class="infoscience_host">{{ article.Publisher }}</span>{% endif %}
-						{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
-					</div>
-					{% if options.thumb and article.ELA_Icon %}
-					<img class="record-illustration" src="{{ article.ELA_Icon.0 }}" class="record-illustration" alt="n/a">
-					{% endif %}
-					<ul class="record-metadata">
-						<p></p>
-						<p class="infoscience_links">
-						{% if options.link_print %}
-						
-							{% if options.link_detailed %}
-							{% trans "Detailed record" %}: http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en
-							<br />
-							{% endif %}
-
-							{% if options.link_fulltext %}
-							{% for fulltext in article.ELA_URL %}
-							 	{% trans "Full text" %}: {{ fulltext }}
-								<br />
-							{% endfor %}
-							{% endif %}
-
-							{% if options.link_publisher %}
-							{% for view_publisher in article.View_Publisher %}
-							 	{% trans "View at publisher" %}: {{ view_publisher }}
-								<br />
-							{% endfor %}
-							{% endif %}
-
-						{% else %}
-							
-							{% if options.link_detailed %}
-							<a class="infoscience_link_detailed" href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en" target="_blank">{% trans "Detailed record" %}</a>
-							{% endif %}
-							{% if options.link_fulltext %}
-							{% for fulltext in article.ELA_URL %}
-							 	{% if forloop.first and options.link_detailed %} - {% endif %}<a class="infoscience_link_fulltext" href="{{ fulltext }}" target="_blank">{% trans "Full text" %}</a>
-							{% endfor %}
-							{% endif %}
-							{% if options.link_publisher %}
-							{% for view_publisher in article.View_Publisher %}
-							 	{% if forloop.first and options.link_fulltext or article.ELA_URL %} - {% endif %}<a class="infoscience_link_official" href="{{ view_publisher }}" target="_blank">{% trans "View at publisher" %}</a>
-							{% endfor %}
-							{% endif %}
-						
-						{% endif %}
-						</p>
-					</ul>
-				</div>
-			</div>
-		{% endif %}
-		{% endfor %}
-	{% endif %}
-	{% endfor %}
-{% empty %}
-<p>{% trans "No items" %}.</p>
-{% endfor %}
+{% if options.format == 'DETAILED' %}
+{% include "exports/export_detailed.html"%}
+{% else %}
+{% include "exports/export_short.html"%}
+{% endif %}
 
 </div>
 

@@ -99,7 +99,6 @@ class FormatsSettings(BaseSettings):
     FORMATS_TYPE_CHOICE = (
         ('SHORT', _('short')),
         ('DETAILED', _('detailed')),
-        ('DETAILED_WITH_ABSTRACT', _('detailed with abstract')),
     )
 
     formats_type = models.CharField(

@@ -1,3 +1,5 @@
+import logging
+
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
@@ -6,6 +8,8 @@ from itertools import groupby
 from operator import itemgetter
 
 from .marc21xml import import_marc21xml
+
+logger = logging.getLogger(__name__)
 
 
 DOC_TYPE_ORDERED = (
@@ -25,8 +29,6 @@ DOC_TYPE_ORDERED = (
     ('PATENT', _("Patents")),
     ('STUDENT', _("Student works")),
     ('POLY', _("Teaching Documents")),
-    ('POST_TALK', _("Poster Presentation")),   # not in test-infoscience
-    ('BOOK_CHAP', _("Book Chapter")),   # not in test-infoscience
     ('FILM', _("")),
     ('MAP', _("")),
     ('PHOTO', _("")),
@@ -41,10 +43,24 @@ def get_groups(options, notices, attr, subattr):
     for key, items in groupby(notices, itemgetter(attr)):
         subgroups_list = []
         for subkey, subitems in groupby(items, itemgetter(subattr)):
-            list2 = [{'title': doc_type[subkey[0]]}] if subattr == 'Doc_Type' else [{'title': subkey}]
+            if subattr == 'Doc_Type':
+                if subkey[0] in doc_type: 
+                    list2 = [{'title': doc_type[subkey[0]]}]
+                else:
+                    logger.error('Doc Type not recognized: ' + subkey[0])
+                    list2 = [{'title': subkey[0]}]
+            else:
+                list2 = [{'title': subkey}]
             list2.extend(list(subitems))
             subgroups_list.append(list2)
-        list1 = [{'title': doc_type[key[0]]}] if attr == 'Doc_Type' else [{'title': key}]
+        if attr == 'Doc_Type':
+            if key[0] in doc_type: 
+                list1 = [{'title': doc_type[key[0]]}]
+            else:
+                logger.error('Doc Type not recognized: ' + key[0])
+                list1 = [{'title': key[0]}]
+        else:
+            list1 = [{'title': key}]
         list1.extend(list(subgroups_list))
         groups_list.append(list1)
     return groups_list

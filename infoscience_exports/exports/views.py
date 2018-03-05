@@ -133,9 +133,9 @@ class ExportView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         options = {}
-        options['object'] = self.object
         options['is_extern'] = True
         options['url'] = self.object.url
+        options['format'] = self.object.formats_type
         options['bullet'] = self.object.bullets_type
         options['thumb'] = self.object.show_thumbnail
         options['link_title'] = self.object.show_linkable_titles
@@ -159,6 +159,7 @@ def preview(request):
     options = {}
     options['is_extern'] = False
     options['url'] = params['params[url]']
+    options['format'] = params['params[format]']
     options['bullet'] = params['params[bullet]']
     options['thumb'] = params['params[thumb]'] == 'true'
     options['link_title'] = params['params[link_title]'] == 'true'
