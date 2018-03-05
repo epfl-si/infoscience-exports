@@ -124,7 +124,7 @@ try: input = raw_input
 except: pass
 
 
-def confirm():
+def confirm_release():
     print("version currently set to {}".format(_version))
     answer = ""
     while answer not in ["y", "n"]:
@@ -199,7 +199,7 @@ It can be run with both python 2.7 and 3.6""")
     logging.debug(args)
 
     if args.command == 'confirm':
-        if not confirm():
+        if not confirm_release():
             raise SystemExit("Please confirm version number to continue")
     elif args.command == 'check':
         check_branch(expected=args.branch)
