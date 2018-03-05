@@ -82,7 +82,7 @@ init-db:
 		psql ${DB_NAME} -c "ALTER ROLE ${DATABASE_USER} WITH CREATEDB;" -U postgres
 	# initialize DBs executing migration scripts
 	docker-compose -f docker-compose-dev.yml exec web \
-		python src/manage.py makemigrations
+		python infoscience_exports/manage.py makemigrations
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
 	docker-compose -f docker-compose-dev.yml exec web \
@@ -120,22 +120,22 @@ restart-web:
 
 superadmin: up
 	docker-compose -f docker-compose-dev.yml exec web \
-	python src/manage.py shell -c "from django.contrib.auth import get_user_model; \
+	python infoscience_exports/manage.py shell -c "from django.contrib.auth import get_user_model; \
 		User = get_user_model(); \
 		User.objects.filter(email='${SUPER_ADMIN_EMAIL}').delete(); \
 		User.objects.create_superuser('${SUPER_ADMIN_USERNAME}', '${SUPER_ADMIN_EMAIL}', '${SUPER_ADMIN_PASSWORD}');"
 
 collectstatic: up
 	docker-compose -f docker-compose-dev.yml exec web \
-		python src/manage.py collectstatic --noinput
+		python infoscience_exports/manage.py collectstatic --noinput
 
 migrations: up
 	docker-compose -f docker-compose-dev.yml exec web \
-		python src/manage.py makemigrations
+		python infoscience_exports/manage.py makemigrations
 
 migrate: up
 	docker-compose -f docker-compose-dev.yml exec web \
-		python src/manage.py migrate
+		python infoscience_exports/manage.py migrate
 
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
