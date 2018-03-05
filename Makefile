@@ -153,6 +153,7 @@ release:
 	git commit -m "Prepared release $(VERSION)"
 	git push --set-upstream origin release-$(VERSION)
 
+	git tag -f qa-release
 	git tag $(VERSION)
 	git push --tags
 
@@ -174,6 +175,10 @@ release:
 	git checkout master
 	git merge release-$(VERSION)
 	git push
+
+git push-prod:
+	git tag -f prod-release
+	git push --tags
 
 deploy: dump
 	git pull
