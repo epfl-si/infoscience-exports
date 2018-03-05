@@ -153,8 +153,8 @@ release:
 	git commit -m "Prepared release $(VERSION)"
 	git push --set-upstream origin release-$(VERSION)
 
-	git tag -f qa-release
 	git tag $(VERSION)
+	git tag -f qa-release
 	git push --tags
 
 	# updating CHANGELOG
