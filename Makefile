@@ -119,6 +119,13 @@ collectstatic:
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py collectstatic --noinput
 
+makemessages:
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py makemessages
+
+compilemessages:
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py compilemessages
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
 	docker-compose -f docker-compose-dev.yml run --rm \

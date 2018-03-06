@@ -1,4 +1,4 @@
-{% extends "base/en/base.html" %}
+{% extends "base/base.html" %}
 
 {% load i18n %}
 {% load staticfiles %}
@@ -6,6 +6,9 @@
 {% block headline %}{% trans "Configurations" %}{% endblock %}
 
 {% block content %}
+
+{{ LANGUAGE_CODE }}
+
 	<p><a class="btn btn-primary" href="{% url 'crud:export-create' %}" role="button">{% trans "Create" %}</a></p>
 
 	<ul class="list-group">

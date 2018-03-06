@@ -1,5 +1,11 @@
 FROM python:3
 
+# install gettext
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		gettext \
+		tree \
+	&& rm -rf /var/lib/apt/lists/*
+
 # create directories
 RUN mkdir -p /usr/src/app && \
 	mkdir -p /usr/src/app/staticfiles && \

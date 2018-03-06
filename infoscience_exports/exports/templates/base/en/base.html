@@ -82,15 +82,25 @@
 <body class="Infoscience search">
 <div class="pageheader">
 
+	<form style="display:none" class="change_lang_form" action="/i18n/setlang/" method="post">
+		<input class="selected_lang" type="hidden" name="language" value="{{ LANGUAGE_CODE }}"/>{% csrf_token %}
+	</form>
+
     <!-- replaced page header -->
     <div class="headerbox headerlogo">
-         {% comment %}
+
         <div class="topleftmenu-wrapper">
             <ul class="menu neutrallist">
-                <li class="topleftmenu headermoduleboxbody"><div class="hassubmenu"><span class="langinfo headerspan">English</span><ul class="subsubmenu"><li><a href="{{ SITE_PATH }}/?ln=fr">Français</a></li></ul></div></li>
+                <li class="topleftmenu headermoduleboxbody">
+					<div class="hassubmenu">
+						<span class="langinfo headerspan">English</span>
+						<ul class="subsubmenu">
+							<li><a class="change_lang_fr" href="{{ SITE_PATH }}/?ln=fr">Français</a></li>
+						</ul>
+					</div>
+				</li>
             </ul>
         </div>
-         {% endcomment %}
 
         <a class="menu-toggle">
             <span class="menu-icon"><i class="fa fa-fw fa-bars"></i></span>

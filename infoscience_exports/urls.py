@@ -15,6 +15,7 @@ router = DefaultRouter()
 
 app_patterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 
     url(r'^', include('exports.urls')),
 

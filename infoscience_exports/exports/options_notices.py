@@ -27,11 +27,11 @@ DOC_TYPE_ORDERED = (
     ('POLY', _("Teaching Documents")),
     ('POST_TALK', _("Poster Presentation")),   # not in test-infoscience
     ('BOOK_CHAP', _("Book Chapter")),   # not in test-infoscience
-    ('FILM', _("")),
-    ('MAP', _("")),
-    ('PHOTO', _("")),
-    ('DIGIT', _("")),
-    ('UNKOWN', _("")),
+    ('FILM', _("Movie")),
+    ('MAP', _("Map")),
+    ('PHOTO', _("Picture")),
+    ('DIGIT', _("Digit")),
+    ('UNKOWN', _("Unkonwn")),
 )
 
 

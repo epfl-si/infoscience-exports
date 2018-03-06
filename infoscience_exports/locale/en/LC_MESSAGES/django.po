@@ -1,0 +1,324 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-05 14:15+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: infoscience_exports/exports/models/settings.py:56
+#: infoscience_exports/exports/models/settings.py:69
+msgid "year: year as title"
+msgstr ""
+
+#: infoscience_exports/exports/models/settings.py:57
+#: infoscience_exports/exports/models/settings.py:70
+msgid "year: with pending publications"
+msgstr ""
+
+#: infoscience_exports/exports/models/settings.py:58
+#: infoscience_exports/exports/models/settings.py:71
+msgid "year: year as title, with pending publications"
+msgstr ""
+
+#: infoscience_exports/exports/models/settings.py:63
+#: infoscience_exports/exports/models/settings.py:72
+msgid "document type"
+msgstr ""
+
+#: infoscience_exports/exports/models/settings.py:64
+#: infoscience_exports/exports/models/settings.py:73
+msgid "document type, document type as title"
+msgstr ""
+
+#: infoscience_exports/exports/models/settings.py:100
+msgid "short"
+msgstr ""
+
+#: infoscience_exports/exports/models/settings.py:101
+msgid "detailed"
+msgstr ""
+
+#: infoscience_exports/exports/models/settings.py:102
+msgid "detailed with abstract"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:12
+msgid "Journal Articles"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:13
+msgid "Conference Papers"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:14
+msgid "Reviews"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:15
+msgid "Books"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:16
+msgid "PhD Theses"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:17
+msgid "EPFL PhD Theses"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:18
+msgid "Book Chapters"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:19
+msgid "Conference Proceedings"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:20
+msgid "Working Papers"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:21
+msgid "Technical Reports"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:22
+msgid "Posters"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:23
+msgid "Presentations"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:24
+msgid "Standards"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:25
+msgid "Patents"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:26
+msgid "Student works"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:27
+msgid "Teaching Documents"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:28
+msgid "Poster Presentation"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:29
+msgid "Book Chapter"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:30
+msgid "Movie"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:31
+msgid "Map"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:32
+msgid "Picture"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:33
+msgid "Digit"
+msgstr ""
+
+#: infoscience_exports/exports/options_notices.py:34
+msgid "Unkonwn"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export.html:33
+msgid " and "
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export.html:68
+#: infoscience_exports/exports/templates/exports/export.html:89
+#: infoscience_exports/exports/templates/exports/export_form.html:88
+msgid "Detailed record"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export.html:74
+#: infoscience_exports/exports/templates/exports/export.html:93
+msgid "Full text"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export.html:81
+#: infoscience_exports/exports/templates/exports/export.html:98
+#: infoscience_exports/exports/templates/exports/export_form.html:90
+msgid "View at publisher"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export.html:112
+msgid "No items"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_detail.html:6
+msgid "Details"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_detail.html:7
+msgid "User"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_detail.html:8
+#: infoscience_exports/exports/templates/exports/export_form.html:36
+msgid "Name"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_detail.html:9
+msgid "url"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_detail.html:10
+msgid "Created at"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_detail.html:11
+msgid "Updated at"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_detail.html:12
+msgid "List"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:30
+msgid "Create/Update"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:42
+msgid "Url"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:56
+#: infoscience_exports/exports/templates/exports/export_form.html:59
+#: infoscience_exports/exports/templates/exports/export_form.html:63
+msgid "Group by"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:68
+msgid "Bullets and Numbering"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:74
+msgid "Thumbnail"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:77
+msgid "Show illustration"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:80
+msgid "Links"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:83
+msgid "Clickable titles"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:84
+msgid "Clickable authors"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:85
+msgid "Format links for printing"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:89
+msgid "Full Text"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:95
+msgid "Cancel"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:96
+msgid "Defined by www.epfl.ch/css/epfl.css"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:96
+msgid "Preview"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_form.html:97
+msgid "Submit"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_list.html:6
+msgid "Configurations"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_list.html:9
+msgid "Create"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_list.html:17
+msgid "Export url"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_list.html:22
+msgid "Remove"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_list.html:23
+msgid "Copy to clipboard"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_list.html:28
+msgid "You currently have no export configured"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_list.html:36
+msgid "previous"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_list.html:39
+msgid "Page"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_list.html:39
+msgid "of"
+msgstr ""
+
+#: infoscience_exports/exports/templates/exports/export_list.html:42
+msgid "next"
+msgstr ""
+
+#: infoscience_exports/exports/templates/log_out.html:6
+msgid "You have successfully logged out from the infoscience exports"
+msgstr ""
+
+#: infoscience_exports/exports/views.py:111
+msgid "Only the creator can edit the publication"
+msgstr ""
+
+#: infoscience_exports/exports/views.py:123
+msgid "Only the creator can delete the publication"
+msgstr ""
+
+#: infoscience_exports/settings/base.py:175
+msgid "French"
+msgstr ""
+
+#: infoscience_exports/settings/base.py:176
+msgid "English"
+msgstr ""
