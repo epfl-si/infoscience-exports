@@ -194,6 +194,11 @@ release:
 	git merge release-$(VERSION)
 	git push
 
+push-qa:
+	# update tags
+	git tag -f qa-release
+	git push --tags --force
+
 push-prod:
 	@# confirm push to production
 	@python update_release.py confirm --prod
