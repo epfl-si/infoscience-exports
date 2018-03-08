@@ -44,7 +44,7 @@ def get_groups(options, notices, attr, subattr):
         subgroups_list = []
         for subkey, subitems in groupby(items, itemgetter(subattr)):
             if subattr == 'Doc_Type':
-                if subkey[0] in doc_type: 
+                if subkey[0] in doc_type:
                     list2 = [{'title': doc_type[subkey[0]]}]
                 else:
                     logger.error('Doc Type not recognized: ' + subkey[0])
@@ -54,7 +54,7 @@ def get_groups(options, notices, attr, subattr):
             list2.extend(list(subitems))
             subgroups_list.append(list2)
         if attr == 'Doc_Type':
-            if key[0] in doc_type: 
+            if key[0] in doc_type:
                 list1 = [{'title': doc_type[key[0]]}]
             else:
                 logger.error('Doc Type not recognized: ' + key[0])

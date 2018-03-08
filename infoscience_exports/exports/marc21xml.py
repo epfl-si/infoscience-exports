@@ -5,8 +5,8 @@ Parse a marc-21-xml file
 """
 
 from django.utils.translation import gettext as _
-from django.conf import settings
-from urllib.parse import urlparse
+# from django.conf import settings
+# from urllib.parse import urlparse
 from urllib.request import urlopen
 from pymarc import marcxml
 
@@ -136,7 +136,7 @@ def set_year(date):
 def import_marc21xml(url, can_display_pending_publications):
     result = []
 
-    o = urlparse(url)
+#    o = urlparse(url)
 #    if o.netloc not in settings.ALLOWED_HOST:
 #        result.append({'error': _('The domain is not allowed')})
 #        return result
@@ -149,7 +149,7 @@ def import_marc21xml(url, can_display_pending_publications):
         result.append({'error': str(e)})
     if result:
         return result
-    
+
     pending_counter = 0
     for record in reader:
         dict_result = {}
@@ -172,7 +172,7 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result['Doc_Type'] = dict_record['doc_type']
         dict_result['ISBN'] = record.isbn()
         dict_result['Description'] = [entry.format_field() for entry in record.physicaldescription()]
-        dict_result['Summary'] = dict_record['summary'][0] if dict_record['summary'] else ''  # [entry.format_field() for entry in record.notes()]
+        dict_result['Summary'] = dict_record['summary'][0] if dict_record['summary'] else ''  # [... record.notes()]
         dict_result['Subjects'] = [entry.format_field() for entry in record.subjects()]
 
         is_pending = dict_result['Pending_Publications'] and not dict_result['Approved_Publications']
