@@ -27,15 +27,28 @@ jQuery(function($) {
     });
 
 	$('.fa-clipboard').click(function () {
+		var copyText = INFOSCIENCE_DOMAIN+$(this).parent().siblings('input').val();
 		var $temp = $('<input>');
 		$('body').append($temp);
-		$temp.val(INFOSCIENCE_DOMAIN+$(this).parent().siblings('input').val()).select();
-		document.execCommand("copy");
+		$temp.val(copyText).select();
+		document.execCommand("copy");		
 		$temp.remove();
+		$(this).parent().tooltip('hide');
+        $(this).parent().attr('data-original-title', copyText);
+        $(this).parent().tooltip('fixTitle');
+        $(this).parent().tooltip('show');
     });
 
+	$('.fa-clipboard').mouseenter(function () {
+	  	$(this).parent().tooltip('hide');
+        $(this).parent().attr('data-original-title', $(this).parent().attr('data-tip'));
+        $(this).parent().tooltip('fixTitle');
+        $(this).parent().tooltip('show');
+	});
 
 	$(document).ready(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+
 		var selected = $('#id_groupsby_type').find(':selected').val();
 		if (selected.indexOf('YEAR') != -1){
 			$('#id_groupsby_year').hide();
