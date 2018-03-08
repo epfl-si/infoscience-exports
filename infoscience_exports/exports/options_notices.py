@@ -155,7 +155,14 @@ def get_notices(options):
     url = validate_url(options['url'])
 
     # get notices
-    notices = import_marc21xml(url, can_display_pending_publications) if url else ''
+    notices = import_marc21xml(url, can_display_pending_publications)
+
+    # check errors
+    if notices and 'error' in notices[0]:
+        options['error'] = notices[0]['error']
+        notices = ''
+    else:
+        options['error'] = ''
 
     notices_length = len(notices)
 

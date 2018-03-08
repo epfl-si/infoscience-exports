@@ -4,6 +4,9 @@
 Parse a marc-21-xml file
 """
 
+from django.utils.translation import gettext as _
+from django.conf import settings
+from urllib.parse import urlparse
 from urllib.request import urlopen
 from pymarc import marcxml
 
@@ -131,8 +134,23 @@ def set_year(date):
 
 
 def import_marc21xml(url, can_display_pending_publications):
-    reader = marcxml.parse_xml_to_array(urlopen(url))
     result = []
+
+    o = urlparse(url)
+#    if o.netloc not in settings.ALLOWED_HOST:
+#        result.append({'error': _('The domain is not allowed')})
+#        return result
+
+    try:
+        reader = marcxml.parse_xml_to_array(urlopen(url))
+    except IOError as e:
+        result.append({'error': str(e)})
+    except Exception as e:
+        result.append({'error': str(e)})
+    if result:
+        return result
+    
+    pending_counter = 0
     for record in reader:
         dict_result = {}
         dict_record = parse_dict(record.as_dict())
@@ -160,5 +178,10 @@ def import_marc21xml(url, can_display_pending_publications):
         is_pending = dict_result['Pending_Publications'] and not dict_result['Approved_Publications']
         if not is_pending or can_display_pending_publications:
             result.append(dict_result)
+        else:
+            pending_counter += 1
+
+    if pending_counter == len(reader):
+        result.append({'error': _('Only pending publications')})
 
     return result

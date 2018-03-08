@@ -7,6 +7,7 @@ jQuery(function($) {
     });
 
 	$('#btn-preview').click(function () {
+		$("#display-mrc21xml").html('<span>'+$("#display-mrc21xml").attr('data-progress')+'</span>');
 		var params = {};
         params['url'] = $("#id_url").val();
 		/*params['format'] = $("#id_formats_type").find(":selected").val();*/

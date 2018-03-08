@@ -4,7 +4,9 @@
 
 <div class="infoscience_export">
 
-{% if options.format == 'DETAILED' %}
+{% if options.error %}
+<span>{{ options.error }}</span>
+{% elif options.format == 'DETAILED' %}
 {% include "exports/export_detailed.html"%}
 {% else %}
 {% include "exports/export_short.html"%}
