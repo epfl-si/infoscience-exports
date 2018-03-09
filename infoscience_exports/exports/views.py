@@ -147,6 +147,7 @@ class ExportView(DetailView):
         options['groupsby_all'] = self.object.groupsby_type
         options['groupsby_year'] = self.object.groupsby_year
         options['groupsby_doc'] = self.object.groupsby_doc
+        options['pending_publications'] = self.object.show_pending_publications
 
         options = get_notices(options)
         context['options'] = options
@@ -171,6 +172,7 @@ def preview(request):
     options['groupsby_all'] = params['params[groupsby_all]']
     options['groupsby_year'] = params['params[groupsby_year]']
     options['groupsby_doc'] = params['params[groupsby_doc]']
+    options['pending_publications'] = params['params[pending_publications]'] == 'true'
 
     options = get_notices(options)
     c = {'options': options}

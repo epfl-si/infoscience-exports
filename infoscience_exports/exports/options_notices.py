@@ -149,7 +149,7 @@ def get_notices(options):
     options['subgroup_title'] = 'TITLE' in groupsby_year or 'TITLE' in groupsby_doc
 
     # remove pending publications if not needed
-    can_display_pending_publications = 'PUBL' in groupsby_all or 'PUBL' in groupsby_year
+    can_display_pending_publications = options['pending_publications']
 
     # validate url
     url = validate_url(options['url'])

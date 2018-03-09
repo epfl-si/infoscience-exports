@@ -16,6 +16,7 @@ jQuery(function($) {
 		params['groupsby_all'] = $("#id_groupsby_type").find(":selected").val();
 		params['groupsby_year'] = $("#id_groupsby_year").find(":selected").val();
 		params['groupsby_doc'] = $("#id_groupsby_doc").find(":selected").val();
+		params['pending_publications'] = $("#id_show_pending_publications").is(':checked');
 		params['link_title'] = $("#id_show_linkable_titles").is(':checked');
 		params['link_authors'] = $("#id_show_linkable_authors").is(':checked');
 		params['link_print'] = $("#id_show_links_for_printing").is(':checked');
@@ -40,7 +41,7 @@ jQuery(function($) {
         $(this).parent().tooltip('show');
     });
 
-	$('.fa-clipboard').mouseenter(function () {
+	$('.fa-clipboard').mouseout(function () {
 	  	$(this).parent().tooltip('hide');
         $(this).parent().attr('data-original-title', $(this).parent().attr('data-tip'));
         $(this).parent().tooltip('fixTitle');
