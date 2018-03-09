@@ -17,7 +17,7 @@ server {
     ssl_buffer_size                 8k;
 
 
-    location /static {
+    location ${SITE_PATH}/static {
         alias /usr/src/app/staticfiles;
     }
 
