@@ -150,7 +150,6 @@ def import_marc21xml(url, can_display_pending_publications):
     if result:
         return result
 
-    pending_counter = 0
     for record in reader:
         dict_result = {}
         dict_record = parse_dict(record.as_dict())
@@ -178,10 +177,8 @@ def import_marc21xml(url, can_display_pending_publications):
         is_pending = dict_result['Pending_Publications'] and not dict_result['Approved_Publications']
         if not is_pending or can_display_pending_publications:
             result.append(dict_result)
-        else:
-            pending_counter += 1
 
-    if pending_counter == len(reader):
-        result.append({'error': _('Only pending publications')})
+    if len(result) == 0 and len(reader) > 0:
+        result.append({'error': _('There are only pending publications')})
 
     return result
