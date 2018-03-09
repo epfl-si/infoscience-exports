@@ -11,6 +11,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "idevelopsrv25.epfl.ch",
     "test-infoscience.epfl.ch",
+    "infoscience.epfl.ch",
 ]
 
 for config in TEMPLATES:
