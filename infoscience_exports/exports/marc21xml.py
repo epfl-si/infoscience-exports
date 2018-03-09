@@ -5,8 +5,8 @@ Parse a marc-21-xml file
 """
 
 from django.utils.translation import gettext as _
-# from django.conf import settings
-# from urllib.parse import urlparse
+from django.conf import settings
+from urllib.parse import urlparse
 from urllib.request import urlopen
 from pymarc import marcxml
 
@@ -136,10 +136,10 @@ def set_year(date):
 def import_marc21xml(url, can_display_pending_publications):
     result = []
 
-#    o = urlparse(url)
-#    if o.netloc not in settings.ALLOWED_HOST:
-#        result.append({'error': _('The domain is not allowed')})
-#        return result
+    o = urlparse(url)
+    if o.netloc not in settings.ALLOWED_HOSTS:
+        result.append({'error': _('The domain is not allowed')})
+        return result
 
     try:
         reader = marcxml.parse_xml_to_array(urlopen(url))
