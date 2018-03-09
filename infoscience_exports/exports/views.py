@@ -133,9 +133,9 @@ class ExportView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         options = {}
-        options['object'] = self.object
         options['is_extern'] = True
         options['url'] = self.object.url
+        options['format'] = 'SHORT'  # self.object.formats_type
         options['bullet'] = self.object.bullets_type
         options['thumb'] = self.object.show_thumbnail
         options['link_title'] = self.object.show_linkable_titles
@@ -147,6 +147,7 @@ class ExportView(DetailView):
         options['groupsby_all'] = self.object.groupsby_type
         options['groupsby_year'] = self.object.groupsby_year
         options['groupsby_doc'] = self.object.groupsby_doc
+        options['pending_publications'] = self.object.show_pending_publications
 
         options = get_notices(options)
         context['options'] = options
@@ -159,6 +160,7 @@ def preview(request):
     options = {}
     options['is_extern'] = False
     options['url'] = params['params[url]']
+    options['format'] = 'SHORT'  # params['params[format]']
     options['bullet'] = params['params[bullet]']
     options['thumb'] = params['params[thumb]'] == 'true'
     options['link_title'] = params['params[link_title]'] == 'true'
@@ -170,6 +172,7 @@ def preview(request):
     options['groupsby_all'] = params['params[groupsby_all]']
     options['groupsby_year'] = params['params[groupsby_year]']
     options['groupsby_doc'] = params['params[groupsby_doc]']
+    options['pending_publications'] = params['params[pending_publications]'] == 'true'
 
     options = get_notices(options)
     c = {'options': options}
