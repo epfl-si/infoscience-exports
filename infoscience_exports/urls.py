@@ -25,11 +25,7 @@ app_patterns = [
     url(r'^mock/v1/', include('exports.mock')),
 ]
 
-app_patterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 app_patterns += django_tequila_urlpatterns
-
-# FIXME: to remove once nginx is intalled on TIND infrastructure
-app_patterns += staticfiles_urlpatterns()
 
 if settings.SITE_PATH:
     urlpatterns = [
@@ -40,3 +36,7 @@ if settings.SITE_PATH:
     ]
 else:
     urlpatterns = app_patterns
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# FIXME: to remove once nginx is intalled on TIND infrastructure
+urlpatterns += staticfiles_urlpatterns()
