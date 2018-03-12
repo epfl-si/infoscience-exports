@@ -14,5 +14,4 @@ export_patterns = ([
 
 urlpatterns = [
     url(r'^', include(export_patterns, namespace='crud')),
-    url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
