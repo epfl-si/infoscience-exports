@@ -83,6 +83,15 @@ def get_sorted_by_doc_types(notices):
     return groups_list_ordered
 
 
+def get_sorted_by_year(notices, url):
+    queries = parse_qs(urlsplit(url).query)
+    if queries['so'][0] == "a":		
+        notices = sorted(notices, key=lambda k: k['Publisher_Date'])		
+    else:		
+        notices = sorted(notices, key=lambda k: k['Publisher_Date'], reverse=True)		
+    return notices
+
+
 def setbullets(notices, bullet_choice, notices_length):
     index = 1
     for groups in notices:
@@ -173,6 +182,8 @@ def get_notices(options):
     # first groupby secondly
     if 'DOC' in groupsby_all:
         notices = get_sorted_by_doc_types(notices)
+    else:
+        notices = get_sorted_by_year(notices, url)
 
     # set groups
     if 'DOC' in groupsby_all:
