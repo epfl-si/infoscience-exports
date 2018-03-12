@@ -1,3 +1,5 @@
+from logging import getLogger
+
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
@@ -7,7 +9,7 @@ from operator import itemgetter
 
 from .marc21xml import import_marc21xml
 
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
 
 
 DOC_TYPE_ORDERED = (
