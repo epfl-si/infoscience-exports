@@ -144,6 +144,16 @@ def set_fulltext(fulltexts):
         return ""
     if len(fulltexts) == 1:
         return fulltexts[0]
+    result = ""
+    pdf_counter = 0
+    for ft in fulltexts:
+        o = urlparse(ft)
+        file_extension = splitext(o.path)[1]
+        if file_extension == "pdf":
+            result = ft
+            pdf_counter += 1
+    if pdf_counter < 2:
+        return result
     o_first = urlparse(fulltexts[0])
     path_first = dirname(o_first.path)
     is_same_path = True
@@ -163,12 +173,6 @@ def set_fulltext(fulltexts):
             result += o_first.netloc
         result += path_first        
         return result
-    for ft in fulltexts:
-        o = urlparse(ft)
-        file_extention = splitext(o.path)[1]
-        if file_extention == "pdf":
-            result = ft
-            break
     return result
 
 
