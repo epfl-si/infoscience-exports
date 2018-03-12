@@ -64,7 +64,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    'exports.middleware.InvenioLocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -147,6 +147,7 @@ MANAGERS = (
 # General
 TIME_ZONE = 'Europe/Zurich'
 LANGUAGE_CODE = 'en'
+LANGUAGE_SESSION_KEY = 'language_session_key'
 SITE_ID = 1
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.

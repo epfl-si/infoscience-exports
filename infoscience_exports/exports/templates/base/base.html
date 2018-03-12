@@ -74,10 +74,6 @@
 <body class="Infoscience search">
 	<div class="pageheader">
 
-		<form style="display:none" id="change_lang_form" action="/i18n/setlang/" method="post">
-			<input id="selected_lang" type="hidden" name="language" value="{{ LANGUAGE_CODE }}"/>{% csrf_token %}
-		</form>
-
 		<!-- replaced page header -->
 		<div class="headerbox headerlogo">
 
@@ -88,12 +84,12 @@
 							{% if LANGUAGE_CODE == 'fr' %}
 							<span class="langinfo headerspan">Français</span>
 							<ul class="subsubmenu">
-								<li><a class="change_lang_en" href="{{ SITE_PATH }}/?ln=en">English</a></li>
+								<li><a class="change_lang_en" href="{{ request.path }}?ln=en">English</a></li>
 							</ul>
 							{% else %}
 							<span class="langinfo headerspan">English</span>
 							<ul class="subsubmenu">
-								<li><a class="change_lang_fr" href="{{ SITE_PATH }}/?ln=fr">Français</a></li>
+								<li><a class="change_lang_fr" href="{{ request.path }}?ln=fr">Français</a></li>
 							</ul>
 							{% endif %}
 						</div>
