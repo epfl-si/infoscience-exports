@@ -6,6 +6,7 @@ Parse a marc-21-xml file
 
 from django.utils.translation import gettext as _
 from django.conf import settings
+from os.path import dirname, basename, splitext
 from urllib.parse import urlparse
 from urllib.request import urlopen
 from pymarc import marcxml
@@ -46,9 +47,11 @@ def get_list(fields, code, subcode='', subcode2=''):
                     value_to_append = res_value.get('a', '')
                 elif code == '856':
                     res_value = get_attributes(value['subfields'])
-                    value_to_append = res_value['u'] if 'u' in res_value \
-                        and 'x' in res_value \
-                        and res_value['x'] == subcode else ''
+                    check_subcode = res_value.get('x', '')
+                    if check_subcode == subcode:
+                        value_to_append = res_value.get('u', '')
+                    else:
+                        value_to_append = ''
                 elif code == '909':
                     if value['ind1'] == 'C' and value['ind2'] == '0':
                         res_value = get_attributes(value['subfields'])
@@ -62,7 +65,8 @@ def get_list(fields, code, subcode='', subcode2=''):
                         res_value = get_attributes(value['subfields'])
                         value_to_append = res_value.get('p', '')
 
-                result.append(value_to_append)
+                if value_to_append:
+                    result.append(value_to_append)
 
     result = list(filter(None, result))
     return result
@@ -121,6 +125,7 @@ def set_authors(authors):
     return result
 
 
+# get only the year in a date-string
 def set_year(date):
     if len(date) == 4:
         return date
@@ -131,6 +136,44 @@ def set_year(date):
             year = val
             break
     return year
+
+
+# get fulltext: link to pdf or link to repository if several links
+def set_fulltext(fulltexts):
+    if len(fulltexts) == 0:
+        return ""
+    if len(fulltexts) == 1:
+        return fulltexts[0]
+    result = ""
+    pdf_counter = 0
+    for ft in fulltexts:
+        o = urlparse(ft)
+        file_extension = splitext(o.path)[1]
+        if file_extension == "pdf":
+            result = ft
+            pdf_counter += 1
+    if pdf_counter < 2:
+        return result
+    o_first = urlparse(fulltexts[0])
+    path_first = dirname(o_first.path)
+    is_same_path = True
+    for ft in fulltexts:
+        o = urlparse(ft)
+        path = dirname(o.path)
+        if o.scheme != o_first.scheme or \
+           o.netloc != o_first.netloc or \
+           path != path_first:
+            is_same_path = False
+            break
+    result = ""
+    if is_same_path:
+        if o_first.scheme:
+            result += o_first.scheme + "://"
+        if o_first.netloc:
+            result += o_first.netloc
+        result += path_first        
+        return result
+    return result
 
 
 def import_marc21xml(url, can_display_pending_publications):
@@ -155,7 +198,8 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_record = parse_dict(record.as_dict())
         dict_result['Id'] = dict_record['control_number']
         dict_result['ELA_Icon'] = dict_record['ela_icon']  # Electronic Location and Access
-        dict_result['ELA_URL'] = dict_record['ela_url']  # Electronic Location and Access
+        fulltexts = dict_record['ela_url']  # Electronic Location and Access
+        dict_result['ELA_URL'] = set_fulltext(fulltexts)
         dict_result['View_Publisher'] = dict_record['osi_doi']  # Other Standard Identifier - Digital Object Identifier
         dict_result['Title'] = record.uniformtitle()
         dict_result['Title_All'] = record.title()
