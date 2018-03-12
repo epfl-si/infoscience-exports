@@ -7,7 +7,7 @@ name = "pypi"
 
 [packages]
 
-Django = "*"
+django = "*"
 dj-database-url = "*"
 django-dirtyfields = "*"
 django-filter = "*"
@@ -17,7 +17,7 @@ django-tequila = {git = "https://github.com/epfl-idevelop/django-tequila.git", e
 djangorestframework = "*"
 gevent = "*"
 gunicorn = "*"
-Markdown = "*"
+markdown = "*"
 "psycopg2-binary" = "*"
 pymarc = "*"
 pytz = "*"
@@ -32,9 +32,9 @@ codecov = "*"
 django-debug-toolbar = "*"
 django-extensions = "*"
 django-nose = "*"
-"Fabric3" = "*"
-factory_boy = "*"
-Faker = "*"
+"fabric3" = "*"
+factory-boy = "*"
+faker = "*"
 "flake8" = "*"
 graypy = "*"
 ipdb = "*"
@@ -44,6 +44,7 @@ mock = "*"
 nose-progressive = "*"
 selenium = "*"
 requests = "*"
+rope = "*"
 
 
 [requires]

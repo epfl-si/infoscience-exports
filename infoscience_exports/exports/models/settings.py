@@ -53,24 +53,20 @@ class LinksSettings(BaseSettings):
 class GroupBySettings(BaseSettings):
     GROUPSBY_YEAR_CHOICE = (
         ('NONE', ''),
-        ('YEAR_TITLE', _('year: year as title')),
-        ('YEAR_PUBL', _('year: with pending publications')),
-        ('YEAR_TITLE_PUBL', _('year: year as title, with pending publications')),
+        ('YEAR_TITLE', _('year as title')),
     )
 
     GROUPSBY_DOC_CHOICE = (
         ('NONE', ''),
         ('DOC', _('document type')),
-        ('DOC_TITLE', _('document type, document type as title')),
+        ('DOC_TITLE', _('document type as title')),
     )
 
     GROUPSBY_ALL_CHOICE = (
         ('NONE', ''),
-        ('YEAR_TITLE', _('year: year as title')),
-        ('YEAR_PUBL', _('year: with pending publications')),
-        ('YEAR_TITLE_PUBL', _('year: year as title, with pending publications')),
+        ('YEAR_TITLE', _('year as title')),
         ('DOC', _('document type')),
-        ('DOC_TITLE', _('document type, document type as title')),
+        ('DOC_TITLE', _('document type as title')),
     )
 
     groupsby_type = models.CharField(
@@ -95,11 +91,17 @@ class GroupBySettings(BaseSettings):
         abstract = True
 
 
+class PendingPublicationsSettings(BaseSettings):
+    show_pending_publications = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+
 class FormatsSettings(BaseSettings):
     FORMATS_TYPE_CHOICE = (
         ('SHORT', _('short')),
         ('DETAILED', _('detailed')),
-        ('DETAILED_WITH_ABSTRACT', _('detailed with abstract')),
     )
 
     formats_type = models.CharField(

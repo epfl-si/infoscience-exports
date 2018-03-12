@@ -29,6 +29,7 @@ import argparse
 from pprint import pprint
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+COPY_PATH = os.path.sep.join([BASE_DIR, 'infoscience_exports', 'exports', 'versions.py'])
 
 if BASE_DIR.endswith('hooks'):
     BASE_DIR = os.path.abspath(os.path.sep.join(
@@ -37,8 +38,6 @@ if BASE_DIR.endswith('hooks'):
 
 from versions import __file__ as RELEASE_FILE  # noqa
 from versions import _release, _build, _version  # noqa
-
-COPY_PATH = os.path.sep.join([BASE_DIR, 'infoscience_exports', 'exports', 'versions.py'])
 
 
 def set_logging_config(quiet=False, debug=False):
@@ -90,7 +89,7 @@ def compute():
             ["git", "rev-parse", "HEAD"], cwd=BASE_DIR).decode('utf-8').strip()
 
         release = subprocess.check_output(
-            ["git", "describe", "--tags"], cwd=BASE_DIR).decode('utf-8').strip()
+            ["git", "describe", "--tags", "--match", "[0-9]*"], cwd=BASE_DIR).decode('utf-8').strip()
     except Exception as err:
         logging.warning("Using previous build & release, since git does not seem available: %s", err)
         release = _release
@@ -124,12 +123,28 @@ try: input = raw_input
 except: pass
 
 
-def confirm():
+def confirm_release():
     print("version currently set to {}".format(_version))
     answer = ""
     while answer not in ["y", "n"]:
         answer = input("OK to push to continue [Y/N]? ").lower()
-    return answer == "y"
+    if answer != "y":
+        raise SystemExit("Please confirm version number to continue")
+
+
+def confirm_push():
+    try:
+        branch = subprocess.check_output(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=BASE_DIR).decode('utf-8').strip()
+        print("\nYou are on branch '{}'".format(branch))
+        print("on version        '{}'".format(_version))
+        print("\nType [y] to comfirm push".format(branch))
+        answer = input("or any other key to abort:").lower()
+        if answer != "y":
+            raise SystemExit("Push aborted...")
+    except Exception as err:
+        logging.warning("Git does not seem available: %s", err)
+        raise SystemExit("This command requires git")
 
 
 def publish(dry_run=False):
@@ -148,7 +163,7 @@ def publish(dry_run=False):
 
     # build request
     url = "https://api.github.com/repos/{}/{}/releases".format(github_owner, github_repo)
-    changelog_url = "/{}/{}/blob/release-{}/CHANGELOG.md".format(github_owner, github_repo, _version)
+    changelog_url = "https://github.com/{}/{}/blob/release-{}/CHANGELOG.md".format(github_owner, github_repo, _version)
     post_args = {
         "tag_name": _version,
         "name": "Release {}".format(_version),
@@ -187,9 +202,10 @@ if __name__ == '__main__':
 
 This file should be used as post-commit in .git/hooks
 It can be run with both python 2.7 and 3.6""")
-    parser.add_argument("command", nargs='?', help="[confirm|public|check]")
-    parser.add_argument('--branch', help="used with command check_branch")
+    parser.add_argument("command", nargs='?', help="[confirm|publish|check]")
+    parser.add_argument('--prod', action='store_true', help="used with command confirm")
     parser.add_argument('--dry-run', action='store_true', help="used with command publish")
+    parser.add_argument('--branch', help="used with command check_branch")
     parser.add_argument('-v', '--version', action='version', version=_version)
     parser.add_argument('-d', '--debug', action='store_true')
     parser.add_argument('-q', '--quiet', action='store_true')
@@ -199,8 +215,10 @@ It can be run with both python 2.7 and 3.6""")
     logging.debug(args)
 
     if args.command == 'confirm':
-        if not confirm():
-            raise SystemExit("Please confirm version number to continue")
+        if args.prod:
+            confirm_push()
+        else:
+            confirm_release()
     elif args.command == 'check':
         check_branch(expected=args.branch)
     elif args.command == 'publish':

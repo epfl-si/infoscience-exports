@@ -6,7 +6,7 @@
 
 
 {% block headjs %}
-<script type="text/javascript" src="/static/js/export.js"></script>
+<script type="text/javascript" src="{% static "js/export.js" %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -65,6 +65,12 @@
 				{{ form.groupsby_doc }}
 			</div>
 			<div class="col-12">
+				<h4>{% trans "Show pending publications" %}</h4>
+			</div>
+			<div class="col-12">
+				<div>{{ form.show_pending_publications }}   {% trans "Show pending publications" %}</div>
+			</div>
+			<div class="col-12">
 				<h4>{% trans "Bullets and Numbering" %}</h4>
 			</div>
 			<div class="col-12">
@@ -98,6 +104,6 @@
 		{% endbuttons %}
 	</form>
 
-	<div id="display-mrc21xml" class="modal-content">
+	<div id="display-mrc21xml" class="modal-content" data-progress="{% trans 'In progress' %}">
     </div>
 {% endblock %}

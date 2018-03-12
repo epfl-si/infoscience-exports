@@ -14,6 +14,7 @@ web:
   environment:
     # the following vars need to be overridden because the directive env_file
     # does not compute their value from the other variables
+    - SITE_URL=${SITE_URL}
     - DATABASE_URL=${DATABASE_URL}
     - MOCKS_DATABASE_URL=${MOCKS_DATABASE_URL}
   command: gunicorn --reload -w 4 -b :${DEV_PORT} --chdir /usr/src/app/infoscience_exports wsgi:application
@@ -33,6 +34,7 @@ nginx:
     - web
   environment:
     - ALLOWED_HOST=${ALLOWED_HOST}
+    - SITE_PATH=${SITE_PATH}
     - DEV_PORT=${DEV_PORT}
     - DOLLAR=$$
   command: /bin/bash -c "envsubst < /etc/nginx/conf.d/web.template > /etc/nginx/conf.d/web.conf && nginx -g 'daemon off;'" 

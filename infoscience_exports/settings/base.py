@@ -27,13 +27,14 @@ SITE_PATH = parsed_url.path.rstrip('/')
 
 # Django Tequila
 AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
-TEQUILA_SERVICE_NAME = "Infoscience exports"
+TEQUILA_SERVICE_NAME = "Infoscience Exports"
+TEQUILA_SERVER_URL = "https://tequila.epfl.ch"
 AUTH_USER_MODEL = 'exports.User'
 
 # override django-tequila urls if we are serving the application from a folder path
 LOGIN_URL = "{}/login".format(SITE_PATH)
 LOGIN_REDIRECT_URL = "{}".format(SITE_PATH)
-LOGOUT_URL = "https://infoscience.epfl.ch"
+LOGOUT_URL = "/youraccount/logout"
 LOGIN_REDIRECT_IF_NOT_ALLOWED = "{}/not_allowed".format(SITE_PATH)
 LOGIN_REDIRECT_TEXT_IF_NOT_ALLOWED = "Not allowed"
 
@@ -154,11 +155,10 @@ SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-LOGIN_REDIRECT_URL = '/'
 
 # Static Files
 STATIC_ROOT = join(os.path.dirname(BASE_DIR), 'staticfiles')
-STATIC_URL = '/static/'
+STATIC_URL = '{}/static/'.format(SITE_PATH)
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -166,7 +166,7 @@ STATICFILES_FINDERS = (
 
 # Media files
 MEDIA_ROOT = join(os.path.dirname(BASE_DIR), 'media')
-MEDIA_URL = '/media/'
+MEDIA_URL = '{}/media/'.format(SITE_PATH)
 
 # Languages
 LOCALE_PATHS = (

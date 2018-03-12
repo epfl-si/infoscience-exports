@@ -23,13 +23,16 @@ jQuery(function($) {
     });
 
 	$('#btn-preview').click(function () {
+		$("#display-mrc21xml").html('<span>'+$("#display-mrc21xml").attr('data-progress')+'</span>');
 		var params = {};
         params['url'] = $("#id_url").val();
+		/*params['format'] = $("#id_formats_type").find(":selected").val();*/
 		params['bullet'] = $("#id_bullets_type").find(":selected").val();
 		params['thumb'] = $("#id_show_thumbnail").is(':checked');
 		params['groupsby_all'] = $("#id_groupsby_type").find(":selected").val();
 		params['groupsby_year'] = $("#id_groupsby_year").find(":selected").val();
 		params['groupsby_doc'] = $("#id_groupsby_doc").find(":selected").val();
+		params['pending_publications'] = $("#id_show_pending_publications").is(':checked');
 		params['link_title'] = $("#id_show_linkable_titles").is(':checked');
 		params['link_authors'] = $("#id_show_linkable_authors").is(':checked');
 		params['link_print'] = $("#id_show_links_for_printing").is(':checked');
@@ -42,15 +45,28 @@ jQuery(function($) {
     });
 
 	$('.fa-clipboard').click(function () {
+		var copyText = INFOSCIENCE_DOMAIN+$(this).parent().siblings('input').val();
 		var $temp = $('<input>');
 		$('body').append($temp);
-		$temp.val(INFOSCIENCE_DOMAIN+$(this).parent().siblings('input').val()).select();
-		document.execCommand("copy");
+		$temp.val(copyText).select();
+		document.execCommand("copy");		
 		$temp.remove();
+		$(this).parent().tooltip('hide');
+        $(this).parent().attr('data-original-title', copyText);
+        $(this).parent().tooltip('fixTitle');
+        $(this).parent().tooltip('show');
     });
 
+	$('.fa-clipboard').mouseout(function () {
+	  	$(this).parent().tooltip('hide');
+        $(this).parent().attr('data-original-title', $(this).parent().attr('data-tip'));
+        $(this).parent().tooltip('fixTitle');
+        $(this).parent().tooltip('show');
+	});
 
 	$(document).ready(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+
 		var selected = $('#id_groupsby_type').find(':selected').val();
 		if (selected.indexOf('YEAR') != -1){
 			$('#id_groupsby_year').hide();

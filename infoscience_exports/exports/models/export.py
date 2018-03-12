@@ -5,13 +5,14 @@ from django.conf import settings
 from dirtyfields import DirtyFieldsMixin
 
 from .settings import BulletsSettings, ThumbnailSettings, LinksSettings, \
-    GroupBySettings, FormatsSettings
+    GroupBySettings, PendingPublicationsSettings, FormatsSettings
 
 
 class Export(BulletsSettings,
              ThumbnailSettings,
              LinksSettings,
              GroupBySettings,
+             PendingPublicationsSettings,
              FormatsSettings,
              models.Model,
              DirtyFieldsMixin,

@@ -1,7 +1,7 @@
 Infoscience-Exports
 ===============================================================================
 
-Configurable exports from Infoscience for your list of publications
+Configurable exports from Infoscience for your list of records
 
 .. list-table::
     :stub-columns: 1
