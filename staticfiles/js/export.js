@@ -1,5 +1,4 @@
 jQuery(function($) {
-
 	$('#btn-submit').click(function () {
 		$('#id_groupsby_year').prop('disabled', false);
 		$('#id_groupsby_doc').prop('disabled', false);
