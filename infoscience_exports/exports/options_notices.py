@@ -87,7 +87,8 @@ def get_sorted_by_doc_types(notices):
 
 def get_sorted_by_year(notices, url):
     queries = parse_qs(urlsplit(url).query)
-    if queries['so'][0] == "a":		
+    is_ascending = queries.get('so', ['d'])[0] == "a" 
+    if is_ascending:		
         notices = sorted(notices, key=lambda k: k['Publisher_Date'])		
     else:		
         notices = sorted(notices, key=lambda k: k['Publisher_Date'], reverse=True)		
@@ -152,6 +153,10 @@ def validate_url(url):
 
 
 def get_notices(options):
+    if options['url'] == "":
+        options['error'] = _("Url field is empty")
+        return options
+
     groupsby_all = options['groupsby_all']
     groupsby_year = options['groupsby_year']
     groupsby_doc = options['groupsby_doc']
