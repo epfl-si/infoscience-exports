@@ -35,7 +35,7 @@ def test():
     """
     with shell_env(DATABASE_PASSWORD='django'):
         local('flake8 {}'.format(env.project_name))
-        print cyan('flake8 passed!', bold=True)
+        print(cyan('flake8 passed!', bold=True))
         local('python {}/manage.py test'.format(env.project_name))
 
 
