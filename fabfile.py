@@ -19,11 +19,6 @@ def migrate():
         local('python {}/manage.py migrate'.format(env.project_name))
 
 
-def migrate_mock():
-    with shell_env(DATABASE_PASSWORD='django'):
-        local('python {}/manage.py migrate --database=mock'.format(env.project_name))
-
-
 def serve():
     with shell_env(DATABASE_PASSWORD='django'):
         local('python {}/manage.py runserver'.format(env.project_name))

@@ -77,7 +77,6 @@ ROOT_URLCONF = 'urls'
 # Postgres
 parse.uses_netloc.append("postgres")
 database_url = parse.urlparse(get_env_variable("DATABASE_URL"))
-mocks_url = parse.urlparse(get_env_variable("MOCKS_DATABASE_URL"))
 
 DATABASES = {
     'default': {
@@ -87,14 +86,6 @@ DATABASES = {
         'PASSWORD': database_url.password,
         'HOST': database_url.hostname,
         'PORT': database_url.port,
-    },
-    'mock': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': mocks_url.path[1:],
-        'USER': mocks_url.username,
-        'PASSWORD': mocks_url.password,
-        'HOST': mocks_url.hostname,
-        'PORT': mocks_url.port,
     }
 }
 
@@ -106,7 +97,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.i18n', 
+                'django.template.context_processors.i18n',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',

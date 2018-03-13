@@ -10,7 +10,6 @@ The static files needed for production are included in the Docker image. They ar
         ALLOWED_HOST="not needed to collectstaticfiles" \
         SITE_URL="not needed to collectstaticfiles" \
         DATABASE_URL="not needed to collectstaticfiles" \
-        MOCKS_DATABASE_URL="not needed to collectstaticfiles" \
         python infoscience_exports/manage.py collectstatic
 
 ## Developement
