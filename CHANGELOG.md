@@ -1,6 +1,6 @@
 # Change Log
 
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-13)
+## [qa-release - 0.3.5](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-13)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...qa-release)
 
 **Merged pull requests:**
