@@ -1,17 +1,24 @@
 # Change Log
 
-## [0.3.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.4) (2018-03-09)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.3.4)
-
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-09)
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-13)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...qa-release)
 
 **Merged pull requests:**
 
-- Limitation to 5 authors max, copy to clipboard confirmation, pending validations in its own field [\#40](https://github.com/epfl-idevelop/infoscience-exports/pull/40) ([dragonleman](https://github.com/dragonleman))
+- Fix configuration \(environment vars & static files\) [\#48](https://github.com/epfl-idevelop/infoscience-exports/pull/48) ([ebreton](https://github.com/ebreton))
+- FullText: only one link to redirect to a pdf or a directory with several media [\#47](https://github.com/epfl-idevelop/infoscience-exports/pull/47) ([dragonleman](https://github.com/dragonleman))
+- Corrected group\_by year [\#46](https://github.com/epfl-idevelop/infoscience-exports/pull/46) ([dragonleman](https://github.com/dragonleman))
+- Translations: locale folders [\#45](https://github.com/epfl-idevelop/infoscience-exports/pull/45) ([dragonleman](https://github.com/dragonleman))
 
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-06)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...prod-release)
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-09)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.4...prod-release)
+
+## [0.3.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.4) (2018-03-09)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...0.3.4)
+
+**Merged pull requests:**
+
+- Limitation to 5 authors max, copy to clipboard confirmation, pending validations in its own field [\#40](https://github.com/epfl-idevelop/infoscience-exports/pull/40) ([dragonleman](https://github.com/dragonleman))
 
 ## [0.3.3](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.3) (2018-03-05)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.2...0.3.3)
