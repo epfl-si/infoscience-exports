@@ -8,7 +8,7 @@ _release = '0.3.4-5-g086e59f'
 # you can set the next version number manually
 # if you do not, the system will make sure that version > release
 # => read-write, >_release
-_version = '0.3.5'
+_version = '0.3.5-rc'
 
 # the build number will generate conflicts on each PR merge
 # just keep yours every time

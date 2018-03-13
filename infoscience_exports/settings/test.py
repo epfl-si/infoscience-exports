@@ -17,3 +17,6 @@ NOSE_ARGS = [
     '--with-progressive',
     '--cover-package={}'.format(BASE_DIR)
 ]
+
+# no auth for tests
+AUTHENTICATION_BACKENDS = ('exports.test.auth_backends.TestcaseUserBackend', )
