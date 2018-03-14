@@ -8,10 +8,10 @@
 	dump restore release push-prod deploy \
 	test coverage
 
-VERSION = $(shell python update_release.py -v)
+VERSION:=$(shell python update_release.py -v)
 
 version:
-	@echo $(VERSION)
+	@echo VERSION set to $(VERSION)
 
 vars:
 	@echo 'Used by App:'

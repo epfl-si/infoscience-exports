@@ -206,13 +206,18 @@ It can be run with both python 2.7 and 3.6""")
     parser.add_argument('--prod', action='store_true', help="used with command confirm")
     parser.add_argument('--dry-run', action='store_true', help="used with command publish")
     parser.add_argument('--branch', help="used with command check_branch")
-    parser.add_argument('-v', '--version', action='version', version=_version)
+    parser.add_argument('-v', '--version', action='store_true')
     parser.add_argument('-d', '--debug', action='store_true')
     parser.add_argument('-q', '--quiet', action='store_true')
     args = parser.parse_args()
 
     set_logging_config(quiet=args.quiet, debug=args.debug)
     logging.debug(args)
+
+    # version needs to be print to output in order to be retrieved by Makefile
+    if args.version:
+        print(_version)
+        raise SystemExit()
 
     if args.command == 'confirm':
         if args.prod:
