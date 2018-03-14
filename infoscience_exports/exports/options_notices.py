@@ -46,21 +46,23 @@ def get_groups(options, notices, attr, subattr):
         subgroups_list = []
         for subkey, subitems in groupby(items, itemgetter(subattr)):
             if subattr == 'Doc_Type':
-                if subkey[0] in doc_type:
-                    list2 = [{'title': doc_type[subkey[0]]}]
+                title = subkey[0] if len(subkey) > 0 else ''
+                if title in doc_type:
+                    list2 = [{'title': doc_type[title]}]
                 else:
-                    logger.error('Doc Type not recognized: ' + subkey[0])
-                    list2 = [{'title': subkey[0]}]
+                    logger.error('Doc Type not recognized: ' + title)
+                    list2 = [{'title': title}]
             else:
                 list2 = [{'title': subkey}]
             list2.extend(list(subitems))
             subgroups_list.append(list2)
         if attr == 'Doc_Type':
-            if key[0] in doc_type:
-                list1 = [{'title': doc_type[key[0]]}]
+            title = key[0] if len(key) > 0 else ''
+            if title in doc_type:
+                list1 = [{'title': doc_type[title]}]
             else:
-                logger.error('Doc Type not recognized: ' + key[0])
-                list1 = [{'title': key[0]}]
+                logger.error('Doc Type not recognized: ' + title)
+                list1 = [{'title': title}]
         else:
             list1 = [{'title': key}]
         list1.extend(list(subgroups_list))
@@ -79,7 +81,7 @@ def get_sorted_by_doc_types(notices):
     for doc_type in DOC_TYPE_ORDERED:
         index = 0
         for head in groups_head:
-            if head[0] == doc_type[0]:
+            if head and head[0] == doc_type[0]:
                 groups_list_ordered.extend(groups_list[index])
             index += 1
     return groups_list_ordered
