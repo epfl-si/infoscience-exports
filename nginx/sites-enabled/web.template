@@ -1,7 +1,7 @@
 server {
     listen ${DEV_PORT} ssl http2;
 
-    server_name ${ALLOWED_HOST};
+    server_name ${SERVER_HOST};
     charset utf-8;
 
     ssl                             on;

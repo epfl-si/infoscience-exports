@@ -41,22 +41,15 @@ create the db::
 
     createdb -O django infoscience_exports
 
-    createdb -O django mock_infoscience_exports
-
 ## Django config
 
 Do the first migration::
 
     fab migrate
-    fab migrate_mock
 
 It may be the good timing to set your environment variable::
 
     export DATABASE_PASSWORD='django'
-
-Load mock data::
-
-    python ./infoscience_exports/manage.py loaddata --app exports --database mock initial_data
 
 Create your user::
 

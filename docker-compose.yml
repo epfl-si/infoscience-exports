@@ -12,7 +12,6 @@ web:
     # does not compute their value from the other variables
     - SITE_URL=${SITE_URL}
     - DATABASE_URL=${DATABASE_URL}
-    - MOCKS_DATABASE_URL=${MOCKS_DATABASE_URL}
   command: gunicorn --reload -w 4 -b :80 --chdir /usr/src/app/infoscience_exports wsgi:application
 
 postgres:
