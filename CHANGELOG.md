@@ -1,7 +1,19 @@
 # Change Log
 
-## [qa-release - 0.3.5](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-13)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...qa-release)
+## [0.3.6](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.6) (2018-03-14)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.3.6)
+
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-14)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.5...qa-release)
+
+**Merged pull requests:**
+
+- Improve allowed host config [\#51](https://github.com/epfl-idevelop/infoscience-exports/pull/51) ([ebreton](https://github.com/ebreton))
+- Removed mock db, updated requirements from pipfile [\#50](https://github.com/epfl-idevelop/infoscience-exports/pull/50) ([ebreton](https://github.com/ebreton))
+- Remove any usages or dependencies on Django Rest Framework [\#49](https://github.com/epfl-idevelop/infoscience-exports/pull/49) ([jdelasoie](https://github.com/jdelasoie))
+
+## [0.3.5](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.5) (2018-03-13)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.3.5)
 
 **Merged pull requests:**
 
