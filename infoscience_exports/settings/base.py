@@ -43,7 +43,7 @@ RANGE_DISPLAY = 50
 
 # Site
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [get_env_variable('ALLOWED_HOST')]
+ALLOWED_HOSTS = get_env_variable('ALLOWED_HOSTS').split(',')
 
 INSTALLED_APPS = (
     'django.contrib.admin',

@@ -32,7 +32,7 @@ nginx:
     # used in nginx/sites-enabled/web.conf
     - web
   environment:
-    - ALLOWED_HOST=${ALLOWED_HOST}
+    - SERVER_HOST=${SERVER_HOST}
     - SITE_PATH=${SITE_PATH}
     - DEV_PORT=${DEV_PORT}
     - DOLLAR=$$
