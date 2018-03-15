@@ -1,10 +1,19 @@
 # Change Log
 
-## [0.3.6](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.6) (2018-03-14)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.3.6)
+## [0.3.7](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.7) (2018-03-15)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.3.7)
 
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-14)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.5...qa-release)
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-15)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.6...qa-release)
+
+**Merged pull requests:**
+
+- Display notices also for unknown doc\_types [\#56](https://github.com/epfl-idevelop/infoscience-exports/pull/56) ([dragonleman](https://github.com/dragonleman))
+- Display doc\_type following Bibliotheque document [\#54](https://github.com/epfl-idevelop/infoscience-exports/pull/54) ([dragonleman](https://github.com/dragonleman))
+- Added debug information in html [\#52](https://github.com/epfl-idevelop/infoscience-exports/pull/52) ([ebreton](https://github.com/ebreton))
+
+## [0.3.6](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.6) (2018-03-14)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.5...0.3.6)
 
 **Merged pull requests:**
 
