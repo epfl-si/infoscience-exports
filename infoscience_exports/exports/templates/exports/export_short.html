@@ -55,7 +55,7 @@
 
 							{% if article.Title %}
 								<span>
-									{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
+									{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL.0 }}" target="_blank">{% endif %}
 									<strong>{{ article.Title }}</strong>
 									{% if options.link_title and article.ELA_URL %}</a>{% endif %}
 									.
@@ -83,7 +83,7 @@
 							{% endif %}
 
 							{% if options.link_fulltext and article.ELA_URL %}
-							{% trans "Full text" %}: {{ article.ELA_URL }}
+							{% trans "Full text" %}: {{ article.ELA_URL.0 }}
 							<br />
 							{% endif %}
 
@@ -101,7 +101,7 @@
 								{% if options.link_fulltext and article.ELA_URL or options.link_publisher and article.DOI %} - {% endif %}
 							{% endif %}
 							{% if options.link_fulltext and article.ELA_URL %}
-								<a class="infoscience_link_fulltext" href="{{ article.ELA_URL }}" target="_blank">{% trans "Full text" %}</a>
+								<a class="infoscience_link_fulltext" href="{{ article.ELA_URL.0 }}" target="_blank">{% trans "Full text" %}</a>
 								{% if options.link_publisher and article.DOI %} - {% endif %}
 							{% endif %}
 							{% if options.link_publisher and article.DOI %}
