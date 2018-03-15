@@ -14,10 +14,6 @@ jQuery(function($) {
         return change_lang('fr');
     });
 
-	$('.navbar-nav>li>a').on('click', function(){
-		$('.navbar-collapse').collapse('hide');
-	});
-
 	$('#btn-submit').click(function () {
 		$('#id_groupsby_year').prop('disabled', false);
 		$('#id_groupsby_doc').prop('disabled', false);
