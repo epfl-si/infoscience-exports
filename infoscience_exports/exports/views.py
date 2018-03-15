@@ -148,6 +148,20 @@ class ExportView(DetailView):
         options['groupsby_year'] = self.object.groupsby_year
         options['groupsby_doc'] = self.object.groupsby_doc
         options['pending_publications'] = self.object.show_pending_publications
+        options['adv_article_volume'] = self.object.show_article_volume
+        options['adv_article_volume_number'] = self.object.show_article_volume_number
+        options['adv_article_volume_pages'] = self.object.show_article_volume_pages
+        options['adv_thesis_directors'] = self.object.show_thesis_directors
+        options['adv_thesis_pages'] = self.object.show_thesis_pages
+        options['adv_report_working_papers_pages'] = self.object.show_report_working_papers_pages
+        options['adv_conf_proceed_place'] = self.object.show_conf_proceed_place
+        options['adv_conf_proceed_date'] = self.object.show_conf_proceed_date
+        options['adv_conf_paper_journal_name'] = self.object.show_conf_paper_journal_name
+        options['adv_book_isbn'] = self.object.show_book_isbn
+        options['adv_book_doi'] = self.object.show_book_doi
+        options['adv_book_chapter_isbn'] = self.object.show_book_chapter_isbn
+        options['adv_book_chapter_doi'] = self.object.show_book_chapter_doi
+        options['adv_patent_status'] = self.object.show_patent_status
 
         options = get_notices(options)
         context['options'] = options
@@ -173,6 +187,20 @@ def preview(request):
     options['groupsby_year'] = params['params[groupsby_year]']
     options['groupsby_doc'] = params['params[groupsby_doc]']
     options['pending_publications'] = params['params[pending_publications]'] == 'true'
+    options['adv_article_volume'] = params['params[adv_article_volume]'] == 'true'
+    options['adv_article_volume_number'] = params['params[adv_article_volume_number]'] == 'true'
+    options['adv_article_volume_pages'] = params['params[adv_article_volume_pages]'] == 'true'
+    options['adv_thesis_directors'] = params['params[adv_thesis_directors]'] == 'true'
+    options['adv_thesis_pages'] = params['params[adv_thesis_pages]'] == 'true'
+    options['adv_report_working_papers_pages'] = params['params[adv_report_working_papers_pages]'] == 'true'
+    options['adv_conf_proceed_place'] = params['params[adv_conf_proceed_place]'] == 'true'
+    options['adv_conf_proceed_date'] = params['params[adv_conf_proceed_date]'] == 'true'
+    options['adv_conf_paper_journal_name'] = params['params[adv_conf_paper_journal_name]'] == 'true'
+    options['adv_book_isbn'] = params['params[adv_book_isbn]'] == 'true'
+    options['adv_book_doi'] = params['params[adv_book_doi]'] == 'true'
+    options['adv_book_chapter_isbn'] = params['params[adv_book_chapter_isbn]'] == 'true'
+    options['adv_book_chapter_doi'] = params['params[adv_book_chapter_doi]'] == 'true'
+    options['adv_patent_status'] = params['params[adv_patent_status]'] == 'true'
 
     options = get_notices(options)
     c = {'options': options}

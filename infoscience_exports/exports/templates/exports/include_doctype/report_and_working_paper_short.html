@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load staticfiles %}
+
+
+{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}
+
+{% if article.Authors %}
+	<span> : </span>
+{% endif %}
+
+{% if article.Title %}
+	<span>
+		{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
+		<strong>{{ article.Title }}</strong>.
+		{% if options.link_title and article.ELA_URL %}</a>{% endif %}
+	</span>
+{% endif %}
+
+{% if article.Publication_Date %}
+	<span>{{ article.Publication_Date }}.</span>
+{% endif %}
+
+{% if options.adv_report_working_papers_pages and article.Publication_Pages %}
+	<span>{% trans "p." %} {{ article.Publication_Pages }}.</span>
+{% endif %}
+
+{% if article.Local_Url_Link %}
+	<span><a href="{{ article.Local_Url_Link }}" target="_blank">{{ article.Local_Url_Link }}</a>.</span>
+{% endif %}
+
+

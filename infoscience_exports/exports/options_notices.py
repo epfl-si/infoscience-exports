@@ -13,12 +13,13 @@ logger = getLogger(__name__)
 
 
 DOC_TYPE_ORDERED = (
-    ('ARTICLE', _("Journal Articles")),
+    #('ARTICLE', _("Journal Articles")),
+    ('ARTICLE', _("Articles & Reviews")),
     ('CONF', _("Conference Papers")),
     ('REVIEW', _("Reviews")),
     ('BOOK', _("Books")),
-    ('THESIS', _("PhD Theses")),
-    ('EPFLTHESIS', _("EPFL PhD Theses")),
+    ('THESIS_LIB', _("PhD Theses")),
+    ('THESIS', _("EPFL PhD Theses")),
     ('CHAPTER', _("Book Chapters")),
     ('PROC', _("Conference Proceedings")),
     ('WORKING', _("Working Papers")),
@@ -29,13 +30,14 @@ DOC_TYPE_ORDERED = (
     ('PATENT', _("Patents")),
     ('STUDENT', _("Student works")),
     ('POLY', _("Teaching Documents")),
-    ('POST_TALK', _("Poster Presentation")),   # not in test-infoscience
-    ('BOOK_CHAP', _("Book Chapter")),   # not in test-infoscience
-    ('FILM', _("Movie")),
-    ('MAP', _("Map")),
-    ('PHOTO', _("Picture")),
-    ('DIGIT', _("Digit")),
-    ('UNKOWN', _("Unkonwn")),
+    ('REP_WORK', _("Report & Working papers")),
+    ('POST_TALK', _("Posters & Talks")),
+    ('BOOK_CHAP', _("Book chapters")),
+    ('FILM', _("Movies")),
+    ('MAP', _("Maps")),
+    ('PHOTO', _("Pictures")),
+    ('DIGIT', _("Digits")),
+    ('UNKOWN', _("Unkonwns")),
 )
 
 
@@ -46,21 +48,21 @@ def get_groups(options, notices, attr, subattr):
         subgroups_list = []
         for subkey, subitems in groupby(items, itemgetter(subattr)):
             if subattr == 'Doc_Type':
-                if subkey[0] in doc_type:
-                    list2 = [{'title': doc_type[subkey[0]]}]
+                if subkey in doc_type:
+                    list2 = [{'title': doc_type[subkey]}]
                 else:
-                    logger.error('Doc Type not recognized: ' + subkey[0])
-                    list2 = [{'title': subkey[0]}]
+                    logger.error('Doc Type not recognized: ' + subkey)
+                    list2 = [{'title': subkey}]
             else:
                 list2 = [{'title': subkey}]
             list2.extend(list(subitems))
             subgroups_list.append(list2)
         if attr == 'Doc_Type':
-            if key[0] in doc_type:
-                list1 = [{'title': doc_type[key[0]]}]
+            if key in doc_type:
+                list1 = [{'title': doc_type[key]}]
             else:
-                logger.error('Doc Type not recognized: ' + key[0])
-                list1 = [{'title': key[0]}]
+                logger.error('Doc Type not recognized: ' + key)
+                list1 = [{'title': key}]
         else:
             list1 = [{'title': key}]
         list1.extend(list(subgroups_list))
@@ -79,7 +81,7 @@ def get_sorted_by_doc_types(notices):
     for doc_type in DOC_TYPE_ORDERED:
         index = 0
         for head in groups_head:
-            if head[0] == doc_type[0]:
+            if head == doc_type[0]:
                 groups_list_ordered.extend(groups_list[index])
             index += 1
     return groups_list_ordered
@@ -89,9 +91,9 @@ def get_sorted_by_year(notices, url):
     queries = parse_qs(urlsplit(url).query)
     is_ascending = queries.get('so', ['d'])[0] == "a" 
     if is_ascending:		
-        notices = sorted(notices, key=lambda k: k['Publisher_Date'])		
+        notices = sorted(notices, key=lambda k: k['Publication_Year'])		
     else:		
-        notices = sorted(notices, key=lambda k: k['Publisher_Date'], reverse=True)		
+        notices = sorted(notices, key=lambda k: k['Publication_Year'], reverse=True)		
     return notices
 
 
@@ -194,9 +196,9 @@ def get_notices(options):
 
     # set groups
     if 'DOC' in groupsby_all:
-        notices = get_groups(options, notices, 'Doc_Type', 'Publisher_Year')
+        notices = get_groups(options, notices, 'Doc_Type', 'Publication_Year')
     else:
-        notices = get_groups(options, notices, 'Publisher_Year', 'Doc_Type')
+        notices = get_groups(options, notices, 'Publication_Year', 'Doc_Type')
 
     # add counter (for bullet numbering)
     setbullets(notices, options['bullet'], notices_length)

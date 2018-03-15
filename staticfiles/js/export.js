@@ -1,4 +1,23 @@
 jQuery(function($) {
+
+    function change_lang(ln) {
+        $('#selected_lang').val(ln);
+        $('#change_lang_form').submit();
+        return true;
+    }
+
+    $('.change_lang_en').click(function() {
+        return change_lang('en');
+    });
+
+    $('.change_lang_fr').click(function() {
+        return change_lang('fr');
+    });
+
+	$('.navbar-nav>li>a').on('click', function(){
+		$('.navbar-collapse').collapse('hide');
+	});
+
 	$('#btn-submit').click(function () {
 		$('#id_groupsby_year').prop('disabled', false);
 		$('#id_groupsby_doc').prop('disabled', false);
