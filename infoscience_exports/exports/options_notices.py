@@ -69,17 +69,13 @@ def get_sorted_by_doc_types(notices):
     groups_list_ordered = []
     doc_type_keys = DOC_TYPE_ORDERED.keys()
     for key in doc_type_keys:
-        index = 0
-        for head in groups_head:
+        for index, head in enumerate(groups_head):
             if head == key:
                 groups_list_ordered.extend(groups_list[index])
-            index += 1
     # add doc_types not listed in DOC_TYPE_ORDERED
-    index = 0
-    for head in groups_head:
+    for index, head in enumerate(groups_head):
         if head not in doc_type_keys:
-            groups_list_ordered.extend(groups_list[index])
-        index += 1    
+            groups_list_ordered.extend(groups_list[index])  
     return groups_list_ordered
 
 
