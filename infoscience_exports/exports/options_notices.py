@@ -12,59 +12,48 @@ from .marc21xml import import_marc21xml
 logger = getLogger(__name__)
 
 
-DOC_TYPE_ORDERED = (
+DOC_TYPE_ORDERED = {
     #('ARTICLE', _("Journal Articles")),
-    ('ARTICLE', _("Articles & Reviews")),
-    ('CONF', _("Conference Papers")),
-    ('REVIEW', _("Reviews")),
-    ('BOOK', _("Books")),
-    ('THESIS_LIB', _("PhD Theses")),
-    ('THESIS', _("EPFL PhD Theses")),
-    ('CHAPTER', _("Book Chapters")),
-    ('PROC', _("Conference Proceedings")),
-    ('WORKING', _("Working Papers")),
-    ('REPORT', _("Technical Reports")),
-    ('POSTER', _("Posters")),
-    ('TALK', _("Presentations")),
-    ('STANDARD', _("Standards")),
-    ('PATENT', _("Patents")),
-    ('STUDENT', _("Student works")),
-    ('POLY', _("Teaching Documents")),
-    ('REP_WORK', _("Report & Working papers")),
-    ('POST_TALK', _("Posters & Talks")),
-    ('BOOK_CHAP', _("Book chapters")),
-    ('FILM', _("Movies")),
-    ('MAP', _("Maps")),
-    ('PHOTO', _("Pictures")),
-    ('DIGIT', _("Digits")),
-    ('UNKOWN', _("Unkonwns")),
-)
+    'ARTICLE': _("Articles & Reviews"),
+    'CONF': _("Conference Papers"),
+    'REVIEW': _("Reviews"),
+    'BOOK': _("Books"),
+    'THESIS_LIB': _("PhD Theses"),
+    'THESIS': _("EPFL PhD Theses"),
+    'CHAPTER': _("Book Chapters"),
+    'PROC': _("Conference Proceedings"),
+    'WORKING': _("Working Papers"),
+    'REPORT': _("Technical Reports"),
+    'POSTER': _("Posters"),
+    'TALK': _("Presentations"),
+    'STANDARD': _("Standards"),
+    'PATENT': _("Patents"),
+    'STUDENT': _("Student works"),
+    'POLY': _("Teaching Documents"),
+    'REP_WORK': _("Report & Working papers"),
+    'POST_TALK': _("Posters & Talks"),
+    'BOOK_CHAP': _("Book chapters"),
+    'FILM': _("Movies"),
+    'MAP': _("Maps"),
+    'PHOTO': _("Pictures"),
+    'DIGIT': _("Digits"),
+    'UNKOWN': _("Unkonwns"),
+}
 
 
 def get_groups(options, notices, attr, subattr):
-    doc_type = dict(DOC_TYPE_ORDERED)
     groups_list = []
     for key, items in groupby(notices, itemgetter(attr)):
         subgroups_list = []
         for subkey, subitems in groupby(items, itemgetter(subattr)):
-            if subattr == 'Doc_Type':
-                if subkey in doc_type:
-                    list2 = [{'title': doc_type[subkey]}]
-                else:
-                    logger.error('Doc Type not recognized: ' + subkey)
-                    list2 = [{'title': subkey}]
-            else:
-                list2 = [{'title': subkey}]
+            if subattr == 'Doc_Type' and subkey not in DOC_TYPE_ORDERED:
+                logger.error('Doc Type not recognized: ' + subkey)
+            list2 = [{'title': DOC_TYPE_ORDERED.get(subkey, subkey)}]  # for year and doc_type
             list2.extend(list(subitems))
             subgroups_list.append(list2)
-        if attr == 'Doc_Type':
-            if key in doc_type:
-                list1 = [{'title': doc_type[key]}]
-            else:
-                logger.error('Doc Type not recognized: ' + key)
-                list1 = [{'title': key}]
-        else:
-            list1 = [{'title': key}]
+        if attr == 'Doc_Type' and key not in DOC_TYPE_ORDERED:
+            logger.error('Doc Type not recognized: ' + key)
+        list1 = [{'title': DOC_TYPE_ORDERED.get(key, key)}]  # for year and doc_type
         list1.extend(list(subgroups_list))
         groups_list.append(list1)
     return groups_list
@@ -78,12 +67,19 @@ def get_sorted_by_doc_types(notices):
         groups_list.append(list(items))
         groups_head.append(key)
     groups_list_ordered = []
-    for doc_type in DOC_TYPE_ORDERED:
+    doc_type_keys = DOC_TYPE_ORDERED.keys()
+    for key in doc_type_keys:
         index = 0
         for head in groups_head:
-            if head == doc_type[0]:
+            if head == key:
                 groups_list_ordered.extend(groups_list[index])
             index += 1
+    # add doc_types not listed in DOC_TYPE_ORDERED
+    index = 0
+    for head in groups_head:
+        if head not in doc_type_keys:
+            groups_list_ordered.extend(groups_list[index])
+        index += 1    
     return groups_list_ordered
 
 

@@ -206,8 +206,8 @@ def parse_dict(record):
     result['added_entry_corporate_name'] = get_values(added_entry_corporate_name, 'a')
 
     # '711', ' ', ' ', ['a', 'c', 'd']
-    added_entry_meeting_name = get_list(fields, '711', ' ', ' ', ['a', 'c', 'd'])
-    result['added_entry_meeting_name'] = get_dict(added_entry_meeting_name)
+    added_entry_meeting = get_list(fields, '711', ' ', ' ', ['a', 'c', 'd'])
+    result['added_entry_meeting'] = get_dict(added_entry_meeting)
 
     # '720', ' ', '2', ['a']
     added_entry_uncontrolled_name_person = get_list(fields, '720', ' ', '2', ['a'])
@@ -279,9 +279,9 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result['Publisher_Volume_Number'] = dict_record['host_item_entry'].get('k', '')
         dict_result['Publisher_Volume_Pages'] = dict_record['host_item_entry'].get('q', '')
         dict_result['Local_Url_Link'] = dict_record['local_added_entry_url_link']
-        dict_result['Conference_Meeting_Name'] = dict_record['added_entry_meeting_name'].get('a', '')
-        dict_result['Conference_Meeting_Location'] = dict_record['added_entry_meeting_name'].get('c', '')
-        dict_result['Conference_Meeting_Date'] = dict_record['added_entry_meeting_name'].get('d', '')
+        dict_result['Conference_Meeting_Name'] = dict_record['added_entry_meeting'].get('a', '')
+        dict_result['Conference_Meeting_Location'] = dict_record['added_entry_meeting'].get('c', '')
+        dict_result['Conference_Meeting_Date'] = dict_record['added_entry_meeting'].get('d', '')
         dict_result['Corporate_Name'] = dict_record['added_entry_corporate_name']
         dict_result['Company_Name'] = dict_record['added_entry_uncontrolled_name_company']
         dict_result['Approved_Publications'] = dict_record['approved_publications']
