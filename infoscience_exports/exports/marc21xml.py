@@ -6,7 +6,7 @@ Parse a marc-21-xml file
 
 from django.utils.translation import gettext as _
 from django.conf import settings
-from os.path import dirname, basename, splitext
+from os.path import dirname, splitext
 from urllib.parse import urlparse
 from urllib.request import urlopen
 from pymarc import marcxml
@@ -26,7 +26,8 @@ def set_authors(authors):
     for author in authors:
         author_record = {}
         author_record['fullname'] = author
-        author_record['url'] = author.replace(",", "+").replace(" ", "+")
+        author_record['search_url'] = "{}/search?p={}".format(
+            settings.SITE_DOMAIN, author.replace(",", "+").replace(" ", "+"))
 
         names = author.split(',')
         family = names[0].strip() if len(names) > 0 else ''
@@ -103,7 +104,7 @@ def set_fulltext(fulltexts):
             result += o_first.scheme + "://"
         if o_first.netloc:
             result += o_first.netloc
-        result += path_first        
+        result += path_first
         return result
     return result
 
@@ -113,13 +114,13 @@ def get_ELA_fields(field):
     ela_fulltexts = []
     ela_icon = ''
     for ela in field:
-         ELA_type = ela.get('x', '').lower()
-         if ELA_type == 'icon':
-             ela_icon = ela.get('u', '')
-         elif ELA_type == 'public':
-             ela_fulltexts.append(ela.get('u', ''))
+        ELA_type = ela.get('x', '').lower()
+        if ELA_type == 'icon':
+            ela_icon = ela.get('u', '')
+        elif ELA_type == 'public':
+            ela_fulltexts.append(ela.get('u', ''))
     ela_fulltexts = list(filter(None, ela_fulltexts))
-    return {'icon': ela_icon, 'fulltexts': ela_fulltexts} 
+    return {'icon': ela_icon, 'fulltexts': ela_fulltexts}
 
 
 # parser for xml file
@@ -134,14 +135,14 @@ def get_list(fields, code, ind1, ind2, subcodes):
                     res_value = get_attributes(value['subfields'])
                     value_to_append = {}
                     for subcode in subcodes:
-                        value_to_append[subcode] = res_value.get(subcode, '')               
+                        value_to_append[subcode] = res_value.get(subcode, '')
                     result.append(value_to_append)
     result = list(filter(None, result))
     return result
 
 
 def get_dict(field):
-    return field[0] if field else {} 
+    return field[0] if field else {}
 
 
 def get_values(field_list, subcode):
@@ -263,6 +264,8 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result = {}
         dict_record = parse_dict(record.as_dict())
         dict_result['Id'] = dict_record['control_number']
+        dict_result['Infoscience_URL'] = "{}/record/{}".format(
+            settings.SITE_DOMAIN, dict_record['control_number'])
         dict_result['ELA_Icon'] = dict_record['electronic_location_access']['icon']
         dict_result['ELA_URL'] = dict_record['electronic_location_access']['fulltexts']
         dict_result['DOI'] = dict_record['other_standard_identification_doi']
