@@ -9,14 +9,13 @@ TEQUILA_SERVER_URL = "https://test-tequila.epfl.ch"
 AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
 
 
-ALLOWED_HOSTS = [
-    get_env_variable('ALLOWED_HOST'),
-    "127.0.0.1",
-    "localhost",
-    "idevelopsrv25.epfl.ch",
-    "test-infoscience.epfl.ch",
-    "infoscience.epfl.ch",
-]
+ALLOWED_HOSTS = get_env_variable('ALLOWED_HOSTS').split(',') \
+    + [ "127.0.0.1",
+        "localhost",
+        "idevelopsrv25.epfl.ch",
+        "test-infoscience.epfl.ch",
+        "infoscience.epfl.ch",
+    ]
 
 for config in TEMPLATES:
     config['OPTIONS']['debug'] = DEBUG

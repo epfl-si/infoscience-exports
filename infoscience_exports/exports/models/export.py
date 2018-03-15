@@ -5,7 +5,8 @@ from django.conf import settings
 from dirtyfields import DirtyFieldsMixin
 
 from .settings import BulletsSettings, ThumbnailSettings, LinksSettings, \
-    GroupBySettings, PendingPublicationsSettings, FormatsSettings
+    GroupBySettings, PendingPublicationsSettings, FormatsSettings, \
+    AdvancedOptionsSettings
 
 
 class Export(BulletsSettings,
@@ -14,6 +15,7 @@ class Export(BulletsSettings,
              GroupBySettings,
              PendingPublicationsSettings,
              FormatsSettings,
+             AdvancedOptionsSettings,
              models.Model,
              DirtyFieldsMixin,
              ):

@@ -19,7 +19,7 @@
 						{{ SITE_DOMAIN }}{{ object.get_absolute_url }}</a></p>
 				</div>
 				<div class="category-tools">
-					<input type="hidden" value="{{ SITE_URL }}{{ object.get_absolute_url }}">
+					<input type="hidden" value="{{ SITE_DOMAIN }}{{ object.get_absolute_url }}">
 					<a class="btn btn-primary" href="{% url 'crud:export-delete' object.pk %}" role="button" data-placement="top" data-toggle="tooltip" title="{% trans 'Remove' %}">
 						<span class="fa fa-trash fa-lg"></span>
 					</a>

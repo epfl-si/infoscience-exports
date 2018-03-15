@@ -6,15 +6,17 @@ jQuery(function($) {
         return true;
     }
 
-    $('.change_lang_en').click(
-        function() {
-            return change_lang('en');
-        });
+    $('.change_lang_en').click(function() {
+        return change_lang('en');
+    });
 
-    $('.change_lang_fr').click(
-        function() {
-            return change_lang('fr');
-        });
+    $('.change_lang_fr').click(function() {
+        return change_lang('fr');
+    });
+
+	$('.navbar-nav>li>a').on('click', function(){
+		$('.navbar-collapse').collapse('hide');
+	});
 
 	$('#btn-submit').click(function () {
 		$('#id_groupsby_year').prop('disabled', false);
@@ -39,6 +41,21 @@ jQuery(function($) {
 		params['link_detailed'] = $("#id_show_detailed").is(':checked');
 		params['link_fulltext'] = $("#id_show_fulltext").is(':checked');
 		params['link_publisher'] = $("#id_show_viewpublisher").is(':checked');
+		params['adv_article_volume'] = $("#id_show_article_volume").is(':checked');
+		params['adv_article_volume_number'] = $("#id_show_article_volume_number").is(':checked');
+		params['adv_article_volume_pages'] = $("#id_show_article_volume_pages").is(':checked');
+		params['adv_thesis_directors'] = $("#id_show_thesis_directors").is(':checked');
+		params['adv_thesis_pages'] = $("#id_show_thesis_pages").is(':checked');
+		params['adv_report_working_papers_pages'] = $("#id_show_report_working_papers_pages").is(':checked');
+		params['adv_conf_proceed_place'] = $("#id_show_conf_proceed_place").is(':checked');
+		params['adv_conf_proceed_date'] = $("#id_show_conf_proceed_date").is(':checked');
+		params['adv_conf_paper_journal_name'] = $("#id_show_conf_paper_journal_name").is(':checked');
+		params['adv_book_isbn'] = $("#id_show_book_isbn").is(':checked');
+		params['adv_book_doi'] = $("#id_show_book_doi").is(':checked');
+		params['adv_book_chapter_isbn'] = $("#id_show_book_chapter_isbn").is(':checked');
+		params['adv_book_chapter_doi'] = $("#id_show_book_chapter_doi").is(':checked');
+		params['adv_patent_status'] = $("#id_show_patent_status").is(':checked');
+
         $.get(INFOSCIENCE_PATH+'/preview/', {params: params}, function (data) {
             ($("#display-mrc21xml").html(data));
         });

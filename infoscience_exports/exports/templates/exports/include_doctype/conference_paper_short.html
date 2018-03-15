@@ -1,0 +1,57 @@
+{% load i18n %}
+{% load staticfiles %}
+
+
+{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
+
+{% if article.Authors %}
+	<span> : </span>
+{% endif %}
+
+{% if article.Title %}
+	<span>
+		{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
+		<strong>{{ article.Title }}</strong>
+		{% if options.link_title and article.ELA_URL %}</a>{% endif %}
+		{% if options.adv_conf_paper_journal_name and article.Publisher %} ; {% else %} . {% endif %}
+	</span>
+{% endif %}
+
+{% if options.adv_conf_paper_journal_name and article.Publisher %}
+	<span><i>{{ article.Publisher }}.</i></span>
+{% endif %}
+
+{% if article.Publication_Date %}
+	<span>{{ article.Publication_Date }}.</span>
+{% endif %}
+
+{% if article.Conference_Meeting_Name %}
+	<span>
+		{{ article.Conference_Meeting_Name }}
+		{% if article.Conference_Meeting_Location or article.Conference_Meeting_Date %}, {% else %}. {% endif %}
+	</span>
+{% endif %}
+
+{% if article.Conference_Meeting_Location %}
+	<span>
+		{{ article.Conference_Meeting_Location }}
+		{% if article.Conference_Meeting_Date %}, {% else %}. {% endif %}
+	</span>
+{% endif %}
+
+{% if article.Conference_Meeting_Date %}
+	<span>
+		{{ article.Conference_Meeting_Date }}.
+	</span>
+{% endif %}
+
+{% if article.Publisher_Volume_Pages %}
+	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}.</span>
+{% endif %}
+
+{% if article.DOI %}
+	<span>{% trans "DOI" %} : {{ article.DOI }}.</span>
+{% endif %}
+
+
+

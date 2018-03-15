@@ -7,10 +7,9 @@ The static files needed for production are included in the Docker image. They ar
     # Dockerfile
     RUN DJANGO_SETTINGS_MODULE=settings.prod \
         SECRET_KEY="not needed to collectstaticfiles" \
-        ALLOWED_HOST="not needed to collectstaticfiles" \
+        ALLOWED_HOSTS="not needed to collectstaticfiles" \
         SITE_URL="not needed to collectstaticfiles" \
         DATABASE_URL="not needed to collectstaticfiles" \
-        MOCKS_DATABASE_URL="not needed to collectstaticfiles" \
         python infoscience_exports/manage.py collectstatic
 
 ## Developement
