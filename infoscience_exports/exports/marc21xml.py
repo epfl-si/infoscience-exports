@@ -26,7 +26,8 @@ def set_authors(authors):
     for author in authors:
         author_record = {}
         author_record['fullname'] = author
-        author_record['url'] = author.replace(",", "+").replace(" ", "+")
+        author_record['search_url'] = "{}/search?p={}".format(
+            settings.SITE_DOMAIN, author.replace(",", "+").replace(" ", "+"))
 
         names = author.split(',')
         family = names[0].strip() if len(names) > 0 else ''
@@ -263,6 +264,8 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result = {}
         dict_record = parse_dict(record.as_dict())
         dict_result['Id'] = dict_record['control_number']
+        dict_result['Infoscience_URL'] = "{}/record/{}".format(
+            settings.SITE_DOMAIN, dict_record['control_number'])
         dict_result['ELA_Icon'] = dict_record['electronic_location_access']['icon']
         dict_result['ELA_URL'] = dict_record['electronic_location_access']['fulltexts']
         dict_result['DOI'] = dict_record['other_standard_identification_doi']

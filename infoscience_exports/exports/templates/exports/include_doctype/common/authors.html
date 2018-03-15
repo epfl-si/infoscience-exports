@@ -15,7 +15,7 @@
 				;	
 			{% endif %}
 		{% endif %}
-		{% if options.link_authors %}<a href="https://infoscience.epfl.ch/search?p={{author.url}}" target="_blank">{%endif %}
+		{% if options.link_authors %}<a href="{{ author.search_url }}" target="_blank">{%endif %}
 		{{ author.initname }}
 		{% if options.link_authors %}</a>{% endif %}
 	{% endif %}

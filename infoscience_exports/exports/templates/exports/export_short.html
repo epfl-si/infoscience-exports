@@ -78,7 +78,7 @@
 						{% if options.link_print %}
 						
 							{% if options.link_detailed %}
-							{% trans "Detailed record" %}: http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en
+							{% trans "Detailed record" %}: {{ article.Infoscience_URL }}?ln=en
 							<br />
 							{% endif %}
 
@@ -97,7 +97,7 @@
 						{% else %}
 							
 							{% if options.link_detailed %}
-								<a class="infoscience_link_detailed" href="http://infoscience.epfl.ch/record/{{ article.Id }}?ln=en" target="_blank">{% trans "Detailed record" %}</a>
+								<a class="infoscience_link_detailed" href="{{ article.Infoscience_URL }}?ln=en" target="_blank">{% trans "Detailed record" %}</a>
 								{% if options.link_fulltext and article.ELA_URL or options.link_publisher and article.DOI %} - {% endif %}
 							{% endif %}
 							{% if options.link_fulltext and article.ELA_URL %}
