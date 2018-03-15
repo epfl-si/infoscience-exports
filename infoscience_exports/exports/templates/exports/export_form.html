@@ -6,7 +6,6 @@
 
 
 {% block headjs %}
-<script type="text/javascript" src="{% static "js/export.js" %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -94,6 +93,44 @@
 				<div>{{ form.show_detailed }}   {% trans "Detailed record" %}</div>
 				<div>{{ form.show_fulltext }}   {% trans "Full Text" %}</div>
 				<div>{{ form.show_viewpublisher }}   {% trans "View at publisher" %}</div> 
+			</div>
+			<div class="col-12">
+				<a id="advancedOptionsToggle" class="btn btn-primary" data-toggle="collapse" href="#advancedOptions" role="button" aria-expanded="false" aria-controls="advancedOptions">
+					{% trans "Advanced options" %}
+				</a>
+ 				<div id="advancedOptions" class="collapse">
+					<div class="card card-body">
+						<h4>{% trans "Article & Review" %}</h4>
+						<div>{{ form.show_article_volume }}   {% trans "Volume" %}</div>
+						<div>{{ form.show_article_volume_number }}   {% trans "Number" %}</div>
+						<div>{{ form.show_article_volume_pages }}   {% trans "Pages" %}</div>
+
+						<h4>{% trans "PhD Thesis" %}</h4>
+						<div>{{ form.show_thesis_directors }}   {% trans "Directors" %}</div>
+						<div>{{ form.show_thesis_pages }}   {% trans "Pages" %}</div>
+
+						<h4>{% trans "Report & Working papers" %}</h4>
+						<div>{{ form.show_report_working_papers_pages }}   {% trans "Pages" %}</div>
+
+						<h4>{% trans "Conference Proceeding" %}</h4>
+						<div>{{ form.show_conf_proceed_place }}   {% trans "Place" %}</div>
+						<div>{{ form.show_conf_proceed_date }}   {% trans "Date" %}</div>
+
+						<h4>{% trans "Conference Paper" %}</h4>
+						<div>{{ form.show_conf_paper_journal_name }}   {% trans "Journal" %}</div>
+
+						<h4>{% trans "Book" %}</h4>
+						<div>{{ form.show_book_isbn }}   {% trans "ISBN" %}</div>
+						<div>{{ form.show_book_doi }}   {% trans "DOI" %}</div>
+
+						<h4>{% trans "Book chapter" %}</h4>
+						<div>{{ form.show_book_chapter_isbn }}   {% trans "ISBN" %}</div>
+						<div>{{ form.show_book_chapter_doi }}   {% trans "DOI" %}</div>
+
+						<h4>{% trans "Patent" %}</h4>
+						<div>{{ form.show_patent_status }}   {% trans "Status" %}</div>
+					</div>
+				</div>
 			</div>
 		</div>
 

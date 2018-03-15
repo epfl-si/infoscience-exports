@@ -112,3 +112,24 @@ class FormatsSettings(BaseSettings):
 
     class Meta:
         abstract = True
+
+
+class AdvancedOptionsSettings(BaseSettings):
+    show_article_volume = models.BooleanField(default=False)
+    show_article_volume_number = models.BooleanField(default=False)
+    show_article_volume_pages = models.BooleanField(default=False)
+    show_thesis_directors = models.BooleanField(default=False)
+    show_thesis_pages = models.BooleanField(default=False)
+    show_report_working_papers_pages = models.BooleanField(default=False)
+    show_conf_proceed_place = models.BooleanField(default=False)
+    show_conf_proceed_date = models.BooleanField(default=False)
+    show_conf_paper_journal_name = models.BooleanField(default=False)
+    show_book_isbn = models.BooleanField(default=False)
+    show_book_doi = models.BooleanField(default=False)
+    show_book_chapter_isbn = models.BooleanField(default=False)
+    show_book_chapter_doi = models.BooleanField(default=False)
+    show_patent_status = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+

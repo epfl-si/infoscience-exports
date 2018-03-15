@@ -1,0 +1,47 @@
+{% load i18n %}
+{% load staticfiles %}
+
+
+{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
+
+{% if article.Authors %}
+	<span> : </span>
+{% endif %}
+
+{% if article.Title %}
+	<span>
+		{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
+		<strong>{{ article.Title }}</strong>
+		{% if options.link_title and article.ELA_URL %}</a>{% endif %}
+		{% if article.Publication_Location or article.Publication_Institution %} ; {% else %} . {% endif %}
+	</span>
+{% endif %}
+
+{% if article.Publication_Location %}
+	<span>{{ article.Publication_Location }}</span>
+{% endif %}
+
+{% if article.Publication_Location and article.Publication_Institution %}
+	<span> : </span>
+{% endif %}
+
+{% if article.Publication_Institution %}
+	<span>{{ article.Publication_Institution }},</span>
+{% endif %}
+
+{% if options.article.Publication_Date %}
+	<span>{{ article.Publication_Date }}</span>
+	{% if options.adv_book_isbn and article.ISBN %}
+		<span> - </span>
+	{% endif %}
+{% endif %}
+
+{% if options.adv_book_isbn and article.ISBN %}
+	<span>{{ article.ISBN }}.</span>
+{% endif %}
+
+{% if options.adv_book_doi and article.DOI %}
+	<span>{% trans "DOI" %} : {{ article.DOI }}.</span>
+{% endif %}
+
+

@@ -50,6 +50,10 @@ select:focus {
 	margin-top: 4rem;
 }
 
+#advancedOptionsToggle {
+    margin: 30px 0 12px 0;
+}
+
 /*
  * Export List
 */ 

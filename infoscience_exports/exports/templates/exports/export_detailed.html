@@ -23,10 +23,10 @@
 			{% endif %}
 				<div class="infoscience_data">
 					<div class="record-content">
-						{% if article.Title_All %}
+						{% if article.Title %}
 						<h3 class="infoscience_title">
 						{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL.0 }}" target="_blank">{% endif %}
-						{{ article.Title_All }}
+						{{ article.Title }}
 						{% if options.link_title and article.ELA_URL %}</a>{% endif %}
 						</h3>
 						{% endif %}
