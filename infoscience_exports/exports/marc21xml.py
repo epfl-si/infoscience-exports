@@ -193,6 +193,7 @@ def parse_dict(record):
     physical_description_extent = get_list(fields, '300', ' ', ' ', ['a'])
     result['physical_description_extent'] = get_value(physical_description_extent, 'a')
 
+    # '520', ' ', ' ', ['a']
     summary = get_list(fields, '520', ' ', ' ', ['a'])
     result['summary'] = get_value(summary, 'a')
 
