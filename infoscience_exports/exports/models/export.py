@@ -37,6 +37,3 @@ class Export(BulletsSettings,
 
     class Meta:
         ordering = ['-id']
-
-
-Export.mock_objects = Export.objects.db_manager('mock')

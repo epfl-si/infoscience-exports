@@ -8,23 +8,21 @@
 	dump restore release push-prod deploy \
 	test coverage
 
-VERSION = $(shell python update_release.py -v)
+VERSION:=$(shell python update_release.py -v)
 
 version:
-	@echo $(VERSION)
+	@echo VERSION set to $(VERSION)
 
 vars:
 	@echo 'Used by App:'
 	@echo '  SECRET_KEY=${SECRET_KEY}'
 	@echo '  DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}'
-	@echo '  ALLOWED_HOST=${ALLOWED_HOST}'
-	@echo '  SITE_URL=${SITE_URL}'
-	@echo '  DATABASE_URL=${DATABASE_URL}'
-	@echo '  MOCKS_DATABASE_URL=${MOCKS_DATABASE_URL}'
-	@echo ''
-	@echo 'Used by docker-compose and Nginx'
+	@echo '  SERVER_HOST=${SERVER_HOST}'
 	@echo '  DEV_PORT=${DEV_PORT}'
-	@echo '  ALLOWED_HOST=${ALLOWED_HOST}'
+	@echo '  SITE_PATH=${SITE_PATH}'
+	@echo '  SITE_URL=${SITE_URL}'
+	@echo '  ALLOWED_HOSTS=${ALLOWED_HOSTS}'
+	@echo '  DATABASE_URL=${DATABASE_URL}'
 	@echo ''
 	@echo 'Used by Makefile'
 	@echo '  SUPER_ADMIN_USERNAME=${SUPER_ADMIN_USERNAME}'
@@ -36,7 +34,6 @@ vars:
 	@echo '  DATABASE_USER=${DATABASE_USER}'
 	@echo '  DATABASE_PASSWORD=xxx'
 	@echo '  DB_NAME=${DB_NAME}'
-	@echo '  MOCKS_DB_NAME=${MOCKS_DB_NAME}'
 	@echo ''
 	@echo 'Defined as helpers'
 	@echo '  DB_URL=${DB_URL}'
@@ -73,8 +70,6 @@ init-db:
 	# create DB
 	docker-compose -f docker-compose-dev.yml exec postgres \
 		psql -c 'CREATE DATABASE "${DB_NAME}";' -U postgres
-	docker-compose -f docker-compose-dev.yml exec postgres \
-		psql -c 'CREATE DATABASE "${MOCKS_DB_NAME}";' -U postgres
 	# create DB user for app
 	docker-compose -f docker-compose-dev.yml exec postgres \
 		psql ${DB_NAME} -c "CREATE USER ${DATABASE_USER} WITH PASSWORD '${DATABASE_PASSWORD}';" -U postgres
@@ -85,8 +80,6 @@ init-db:
 		python infoscience_exports/manage.py makemigrations
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
-	docker-compose -f docker-compose-dev.yml exec web \
-		python infoscience_exports/manage.py migrate --database=mock
 	# create super admin in app
 	make superadmin
 	@echo "  -> All set up! You can connect with your tequila acount or the admin (${SUPER_ADMIN_EMAIL})"

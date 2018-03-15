@@ -19,11 +19,6 @@ def migrate():
         local('python {}/manage.py migrate'.format(env.project_name))
 
 
-def migrate_mock():
-    with shell_env(DATABASE_PASSWORD='django'):
-        local('python {}/manage.py migrate --database=mock'.format(env.project_name))
-
-
 def serve():
     with shell_env(DATABASE_PASSWORD='django'):
         local('python {}/manage.py runserver'.format(env.project_name))
@@ -35,7 +30,7 @@ def test():
     """
     with shell_env(DATABASE_PASSWORD='django'):
         local('flake8 {}'.format(env.project_name))
-        print cyan('flake8 passed!', bold=True)
+        print(cyan('flake8 passed!', bold=True))
         local('python {}/manage.py test'.format(env.project_name))
 
 

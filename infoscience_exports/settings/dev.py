@@ -5,14 +5,13 @@ DEBUG = True
 
 TEQUILA_SERVER_URL = "https://test-tequila.epfl.ch"
 
-ALLOWED_HOSTS = [
-    get_env_variable('ALLOWED_HOST'),
-    "127.0.0.1",
-    "localhost",
-    "idevelopsrv25.epfl.ch",
-    "test-infoscience.epfl.ch",
-    "infoscience.epfl.ch",
-]
+ALLOWED_HOSTS = get_env_variable('ALLOWED_HOSTS').split(',') \
+    + [ "127.0.0.1",
+        "localhost",
+        "idevelopsrv25.epfl.ch",
+        "test-infoscience.epfl.ch",
+        "infoscience.epfl.ch",
+    ]
 
 for config in TEMPLATES:
     config['OPTIONS']['debug'] = DEBUG
@@ -55,4 +54,12 @@ LOGGING['loggers'] = {
         'level': 'DEBUG',
         'propagate': True
     }
+}
+
+
+def show_toolbar(request):
+    return True
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
 }

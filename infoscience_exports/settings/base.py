@@ -43,7 +43,7 @@ RANGE_DISPLAY = 50
 
 # Site
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [get_env_variable('ALLOWED_HOST')]
+ALLOWED_HOSTS = get_env_variable('ALLOWED_HOSTS').split(',')
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -54,8 +54,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # Third party apps
-    'rest_framework',            # utilities for rest apis
-    'rest_framework.authtoken',  # token authentication
     'bootstrap4',
     'django_tequila',
 
@@ -79,7 +77,6 @@ ROOT_URLCONF = 'urls'
 # Postgres
 parse.uses_netloc.append("postgres")
 database_url = parse.urlparse(get_env_variable("DATABASE_URL"))
-mocks_url = parse.urlparse(get_env_variable("MOCKS_DATABASE_URL"))
 
 DATABASES = {
     'default': {
@@ -89,14 +86,6 @@ DATABASES = {
         'PASSWORD': database_url.password,
         'HOST': database_url.hostname,
         'PORT': database_url.port,
-    },
-    'mock': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': mocks_url.path[1:],
-        'USER': mocks_url.username,
-        'PASSWORD': mocks_url.password,
-        'HOST': mocks_url.hostname,
-        'PORT': mocks_url.port,
     }
 }
 
@@ -108,7 +97,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.i18n', 
+                'django.template.context_processors.i18n',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -211,22 +200,4 @@ LOGGING = {
             'class': 'logging.NullHandler',
         },
     }
-}
-
-# Django Rest Framework
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 100,
-    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-    )
 }
