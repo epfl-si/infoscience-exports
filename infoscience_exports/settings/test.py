@@ -20,3 +20,11 @@ NOSE_ARGS = [
 
 # no auth for tests
 AUTHENTICATION_BACKENDS = ('exports.test.auth_backends.TestcaseUserBackend', )
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    },
+}
+
+REMOTE_SELENIUM_SERVER = 'http://selenium:4444/wd/hub'
