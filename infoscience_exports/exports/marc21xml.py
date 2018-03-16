@@ -13,14 +13,6 @@ from pymarc import marcxml
 import unicodedata
 
 
-def get_attributes(subfields):
-    res_value = {}
-    for element1 in subfields:
-        for key1, value1 in element1.items():
-            res_value[key1] = value1
-    return res_value
-
-
 class Author:
 
     def __init__(self, author):
@@ -111,6 +103,14 @@ def set_fulltext(fulltexts):
         result += path_first
         return result
     return result
+
+
+def get_attributes(subfields):
+    res_value = {}
+    for element1 in subfields:
+        for key1, value1 in element1.items():
+            res_value[key1] = value1
+    return res_value
 
 
 # get dictionary (icon, fulltexts) of ELA
