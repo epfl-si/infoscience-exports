@@ -3,7 +3,7 @@
 """
 Parse a marc-21-xml file
 """
-
+from logging import getLogger
 from django.utils.translation import gettext as _
 from django.conf import settings
 from os.path import dirname, splitext
@@ -11,6 +11,8 @@ from urllib.parse import urlparse
 from urllib.request import urlopen
 from pymarc import marcxml
 import unicodedata
+
+logger = getLogger(__name__)
 
 
 class Author:
@@ -56,15 +58,12 @@ def set_authors(authors):
 
 # get only the year in a date-string
 def set_year(date):
-    if len(date) == 4:
-        return date
-    dates = date.split("-")
-    year = date
-    for val in dates:
-        if len(val) == 4:
-            year = val
-            break
-    return year
+    dates = [val for val in date.split("-") if len(val) == 4]
+    if len(dates) == 1:
+        return dates[0]
+    else:
+        logger.warning("Year not found in %s, decomposed as %s", date, dates)
+        return ''
 
 
 # get fulltext: link to pdf or link to repository if several links
