@@ -23,15 +23,6 @@ class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
     """
     host = '0.0.0.0'  # Bind to 0.0.0.0 to allow external access
 
-    @classproperty
-    def live_server_url(cls):
-        # add site path if needed
-        if settings.SITE_PATH:
-            return 'http://%s%s/:%s' % (cls.host, settings.SITE_PATH.strip('/'), cls.server_thread.port)
-        else:
-            return 'http://%s:%s' % (cls.host, cls.server_thread.port)
-
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -70,8 +61,8 @@ class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
                                         is_active=True)[0]
 
         # # generate a cookie place, or get the cookie setting error from Chrome
-        self.selenium.get('%s/not_allowed' % (self.live_server_url,
-                                      ))
+        self.selenium.get('%s%s' % (self.live_server_url,
+                                     reverse('not_allowed')))
 
         # bypass external Tequila auth
         self.client.force_login(test_user)
