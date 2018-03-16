@@ -6,13 +6,13 @@
 	{% for groups in titles %}
 	{% if forloop.first %}
 		{% if options.group_title %}
-		<h1 class="infoscience_header1">{{ groups.title }}</h1>
+		<h1>{{ groups.title }}</h1>
 		{% endif %}
 	{% else %}
 		{% for article in groups %}
 		{% if forloop.first %}
 			{% if options.subgroup_title %}
-			<h2 class="infoscience_header2">{{ article.title }}</h2>
+			<h2>{{ article.title }}</h2>
 			{% endif %}
 		{% else %}
 			{% if options.bullet != 'NONE' %}
@@ -24,8 +24,8 @@
 				<div class="infoscience_data">
 					<div class="record-content">
 						{% if article.Title %}
-						<h3 class="infoscience_title">
-						{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL.0 }}" target="_blank">{% endif %}
+						<h3>
+						{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
 						{{ article.Title }}
 						{% if options.link_title and article.ELA_URL %}</a>{% endif %}
 						</h3>
@@ -61,7 +61,7 @@
 						{% endif %}
 					</div>
 					{% if options.thumb and article.ELA_Icon %}
-					<img class="record-illustration" src="{{ article.ELA_Icon.0 }}" class="record-illustration" alt="n/a">
+					<img class="record-illustration" src="{{ article.ELA_Icon }}" class="record-illustration" alt="n/a">
 					{% endif %}
 					<ul class="record-metadata">
 						<p></p>
@@ -74,7 +74,7 @@
 							{% endif %}
 
 							{% if options.link_fulltext and article.ELA_URL %}
-							{% trans "Full text" %}: {{ article.ELA_URL.0 }}
+							{% trans "Full text" %}: {{ article.ELA_URL }}
 							<br />
 							{% endif %}
 
@@ -91,7 +91,7 @@
 							<a class="infoscience_link_detailed" href="{{ article.Infoscience_URL }}?ln=en" target="_blank">{% trans "Detailed record" %}</a>
 							{% endif %}
 							{% if options.link_fulltext and article.ELA_URL %}
-							{% if options.link_detailed %} - {% endif %}<a class="infoscience_link_fulltext" href="{{ article.ELA_URL.0 }}" target="_blank">{% trans "Full text" %}</a>
+							{% if options.link_detailed %} - {% endif %}<a class="infoscience_link_fulltext" href="{{ article.ELA_URL }}" target="_blank">{% trans "Full text" %}</a>
 							{% endif %}
 							{% if options.link_publisher %}
 							{% for view_publisher in article.View_Publisher %}
