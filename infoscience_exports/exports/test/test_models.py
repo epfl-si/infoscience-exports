@@ -10,7 +10,7 @@ class ExportsTestCase(TransactionTestCase):
         (self.mpl, self.mi) = ExportFactory.create_batch(2)
 
     def test_unicode_representation(self):
-        self.assertEqual(self.mpl.name, 'Name1')
+        self.assertIn(self.mpl.name, ['Name1', 'Name2'])
 
     def test_export_creation(self):
         ExportFactory(name='This is a test')

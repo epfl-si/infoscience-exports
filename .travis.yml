@@ -16,6 +16,7 @@ install:
 
 script:
 - make vars
+- make fast-test
 # FIXME launch coverage tests once fixed
 # - make coverage
 

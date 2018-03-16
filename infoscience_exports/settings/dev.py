@@ -3,7 +3,11 @@ from .test import *
 
 DEBUG = True
 
+# Django Tequila
 TEQUILA_SERVER_URL = "https://test-tequila.epfl.ch"
+# reset backend from test to dev
+AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
+
 
 ALLOWED_HOSTS = get_env_variable('ALLOWED_HOSTS').split(',') \
     + [ "127.0.0.1",
