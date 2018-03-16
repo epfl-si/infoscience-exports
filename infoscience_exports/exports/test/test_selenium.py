@@ -4,6 +4,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings, tag, modify_settings
+from django.utils.decorators import classproperty
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
@@ -21,6 +22,15 @@ class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
     to get a view of the process
     """
     host = '0.0.0.0'  # Bind to 0.0.0.0 to allow external access
+
+    @classproperty
+    def live_server_url(cls):
+        # add site path if needed
+        if settings.SITE_PATH:
+            return 'http://%s%s/:%s' % (cls.host, settings.SITE_PATH.strip('/'), cls.server_thread.port)
+        else:
+            return 'http://%s:%s' % (cls.host, cls.server_thread.port)
+
 
     @classmethod
     def setUpClass(cls):
