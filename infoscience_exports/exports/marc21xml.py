@@ -6,10 +6,11 @@ Parse a marc-21-xml file
 
 from django.utils.translation import gettext as _
 from django.conf import settings
-from os.path import dirname, basename, splitext
+from os.path import dirname, splitext
 from urllib.parse import urlparse
 from urllib.request import urlopen
 from pymarc import marcxml
+import unicodedata
 
 
 def get_attributes(subfields):
@@ -26,7 +27,8 @@ def set_authors(authors):
     for author in authors:
         author_record = {}
         author_record['fullname'] = author
-        author_record['url'] = author.replace(",", "+").replace(" ", "+")
+        author_record['search_url'] = "{}/search?p={}".format(
+            settings.SITE_DOMAIN, author.replace(",", "+").replace(" ", "+"))
 
         names = author.split(',')
         family = names[0].strip() if len(names) > 0 else ''
@@ -103,7 +105,7 @@ def set_fulltext(fulltexts):
             result += o_first.scheme + "://"
         if o_first.netloc:
             result += o_first.netloc
-        result += path_first        
+        result += path_first
         return result
     return result
 
@@ -113,13 +115,13 @@ def get_ELA_fields(field):
     ela_fulltexts = []
     ela_icon = ''
     for ela in field:
-         ELA_type = ela.get('x', '').lower()
-         if ELA_type == 'icon':
-             ela_icon = ela.get('u', '')
-         elif ELA_type == 'public':
-             ela_fulltexts.append(ela.get('u', ''))
+        ELA_type = ela.get('x', '').lower()
+        if ELA_type == 'icon':
+            ela_icon = ela.get('u', '')
+        elif ELA_type == 'public':
+            ela_fulltexts.append(ela.get('u', ''))
     ela_fulltexts = list(filter(None, ela_fulltexts))
-    return {'icon': ela_icon, 'fulltexts': ela_fulltexts} 
+    return {'icon': ela_icon, 'fulltexts': ela_fulltexts}
 
 
 # parser for xml file
@@ -134,14 +136,14 @@ def get_list(fields, code, ind1, ind2, subcodes):
                     res_value = get_attributes(value['subfields'])
                     value_to_append = {}
                     for subcode in subcodes:
-                        value_to_append[subcode] = res_value.get(subcode, '')               
+                        value_to_append[subcode] = res_value.get(subcode, '')
                     result.append(value_to_append)
     result = list(filter(None, result))
     return result
 
 
 def get_dict(field):
-    return field[0] if field else {} 
+    return field[0] if field else {}
 
 
 def get_values(field_list, subcode):
@@ -193,6 +195,7 @@ def parse_dict(record):
     physical_description_extent = get_list(fields, '300', ' ', ' ', ['a'])
     result['physical_description_extent'] = get_value(physical_description_extent, 'a')
 
+    # '520', ' ', ' ', ['a']
     summary = get_list(fields, '520', ' ', ' ', ['a'])
     result['summary'] = get_value(summary, 'a')
 
@@ -206,8 +209,8 @@ def parse_dict(record):
     result['added_entry_corporate_name'] = get_values(added_entry_corporate_name, 'a')
 
     # '711', ' ', ' ', ['a', 'c', 'd']
-    added_entry_meeting_name = get_list(fields, '711', ' ', ' ', ['a', 'c', 'd'])
-    result['added_entry_meeting_name'] = get_dict(added_entry_meeting_name)
+    added_entry_meeting = get_list(fields, '711', ' ', ' ', ['a', 'c', 'd'])
+    result['added_entry_meeting'] = get_dict(added_entry_meeting)
 
     # '720', ' ', '2', ['a']
     added_entry_uncontrolled_name_person = get_list(fields, '720', ' ', '2', ['a'])
@@ -250,6 +253,7 @@ def import_marc21xml(url, can_display_pending_publications):
         return result
 
     try:
+        url = ''.join(c for c in unicodedata.normalize('NFD', url) if unicodedata.category(c) != 'Mn')
         reader = marcxml.parse_xml_to_array(urlopen(url))
     except IOError as e:
         result.append({'error': str(e)})
@@ -262,6 +266,8 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result = {}
         dict_record = parse_dict(record.as_dict())
         dict_result['Id'] = dict_record['control_number']
+        dict_result['Infoscience_URL'] = "{}/record/{}".format(
+            settings.SITE_DOMAIN, dict_record['control_number'])
         dict_result['ELA_Icon'] = dict_record['electronic_location_access']['icon']
         dict_result['ELA_URL'] = dict_record['electronic_location_access']['fulltexts']
         dict_result['DOI'] = dict_record['other_standard_identification_doi']
@@ -279,9 +285,9 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result['Publisher_Volume_Number'] = dict_record['host_item_entry'].get('k', '')
         dict_result['Publisher_Volume_Pages'] = dict_record['host_item_entry'].get('q', '')
         dict_result['Local_Url_Link'] = dict_record['local_added_entry_url_link']
-        dict_result['Conference_Meeting_Name'] = dict_record['added_entry_meeting_name'].get('a', '')
-        dict_result['Conference_Meeting_Location'] = dict_record['added_entry_meeting_name'].get('c', '')
-        dict_result['Conference_Meeting_Date'] = dict_record['added_entry_meeting_name'].get('d', '')
+        dict_result['Conference_Meeting_Name'] = dict_record['added_entry_meeting'].get('a', '')
+        dict_result['Conference_Meeting_Location'] = dict_record['added_entry_meeting'].get('c', '')
+        dict_result['Conference_Meeting_Date'] = dict_record['added_entry_meeting'].get('d', '')
         dict_result['Corporate_Name'] = dict_record['added_entry_corporate_name']
         dict_result['Company_Name'] = dict_record['added_entry_uncontrolled_name_company']
         dict_result['Approved_Publications'] = dict_record['approved_publications']

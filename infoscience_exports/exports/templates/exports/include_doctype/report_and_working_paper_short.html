@@ -10,7 +10,7 @@
 
 {% if article.Title %}
 	<span>
-		{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
+		{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL.0 }}" target="_blank">{% endif %}
 		<strong>{{ article.Title }}</strong>.
 		{% if options.link_title and article.ELA_URL %}</a>{% endif %}
 	</span>

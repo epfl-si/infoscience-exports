@@ -30,8 +30,14 @@ else:
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+
+    if settings.SITE_PATH and settings.SITE_PATH.strip('/'):
+        urlpatterns = [
+            url(r'^%s/__debug__/' % settings.SITE_PATH.strip('/'), include(debug_toolbar.urls)),
+        ] + urlpatterns
+    else:
+        urlpatterns = [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        ] + urlpatterns
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
