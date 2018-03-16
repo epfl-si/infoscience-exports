@@ -10,6 +10,7 @@ from os.path import dirname, splitext
 from urllib.parse import urlparse
 from urllib.request import urlopen
 from pymarc import marcxml
+import unicodedata
 
 
 def get_attributes(subfields):
@@ -252,6 +253,7 @@ def import_marc21xml(url, can_display_pending_publications):
         return result
 
     try:
+        url = ''.join(c for c in unicodedata.normalize('NFD', url) if unicodedata.category(c) != 'Mn')
         reader = marcxml.parse_xml_to_array(urlopen(url))
     except IOError as e:
         result.append({'error': str(e)})
