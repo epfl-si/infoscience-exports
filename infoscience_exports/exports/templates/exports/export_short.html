@@ -6,13 +6,13 @@
 	{% for groups in titles %}
 	{% if forloop.first %}
 		{% if options.group_title %}
-		<h1 class="infoscience_header1">{{ groups.title }}</h1>
+		<h1>{{ groups.title }}</h1>
 		{% endif %}
 	{% else %}
 		{% for article in groups %}
 		{% if forloop.first %}
 			{% if options.subgroup_title %}
-			<h2 class="infoscience_header2">{{ article.title }}</h2>
+			<h2>{{ article.title }}</h2>
 			{% endif %}
 		{% else %}
 			{% if options.bullet != 'NONE' %}

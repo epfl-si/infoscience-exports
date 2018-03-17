@@ -1,10 +1,10 @@
-body {
+.infoscience_publication_exports {
 	background-color: rgb(245, 245, 245);
 }
 
-textarea:focus,
-input:focus,
-select:focus {   
+.infoscience_publication_exports textarea:focus,
+.infoscience_publication_exports input:focus,
+.infoscience_publication_exports select:focus {   
   border-color: rgba(0, 123, 255, 0.8);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 123, 255, 0.6);
   outline: 0 none;
@@ -14,17 +14,13 @@ select:focus {
  * Export Edit
 */
 
-#export_form h4 {
-    margin: 30px 0 12px 0;
-}
-
-#export_form input[type="text"], 
-#export_form select {
+.infoscience_publication_exports #export_form input[type="text"], 
+.infoscience_publication_exports #export_form select {
 	width: 100%;
 }
 
-#export_form input, 
-#export_form select {
+.infoscience_publication_exports #export_form input, 
+.infoscience_publication_exports #export_form select {
     color: #000;
     background: #fff;
     background-color: rgb(255, 255, 255);
@@ -35,22 +31,22 @@ select:focus {
 	padding: 5px 35px 5px 5px;
 }
 
-.bloc_checkboxes {
+.infoscience_publication_exports .bloc_checkboxes {
 	margin-top: 10px;
 }
 
-.span_checkbox {
+.infoscience_publication_exports .span_checkbox {
 }
 
-.span_checkbox_label {
+.infoscience_publication_exports .span_checkbox_label {
 	margin-left: 10px;
 }
 
-.form-group {
+.infoscience_publication_exports .form-group {
 	margin-top: 4rem;
 }
 
-#advancedOptionsToggle {
+.infoscience_publication_exports #advancedOptionsToggle {
     margin: 30px 0 12px 0;
 }
 
@@ -58,15 +54,17 @@ select:focus {
  * Export List
 */ 
 
-.category-content {
-	float: left;
+.infoscience_publication_exports .list-group-item {
+	padding: 0 0 0 1.25rem;
 }
 
-.category-tools {
-	float: right;
+.infoscience_publication_exports .list-group-item .category-tools {
+	position: absolute;
+    right: 20px;
+    top: 40px;
 }
 
-.category-tools .btn {
+.infoscience_publication_exports .list-group-item .category-tools .btn {
 	float: right;
 	width: 40px;
 	margin-left: 20px;
@@ -76,7 +74,7 @@ select:focus {
  * Export
 */ 
 
-h1 {
+.infoscience_publication_exports h1 {
 	font-family: "Arial Black", Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 27px;
@@ -89,14 +87,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-ul {
-	margin: 5px 35px 0 0;
-    display: block; 
-	list-style-type: none;
-    padding: 0 3px 0 0;
-}
-
-.infoscience_header2 {
+.infoscience_publication_exports h2 {
     color: #000;
     font-family: Arial,Helvetica,sans-serif;
     font-weight: 700;
@@ -109,36 +100,7 @@ ul {
     background-color: #F5F5F5;
 }
 
-.infoscience_record {
-	padding-top: 4px;
-	border-bottom: 1px dotted #000;
-    margin-top: 8px;
-    padding-bottom: 7px;
-}
-
-.infoscience_record p {
-    margin-top: 9px;
-    margin-bottom: 0;
-}
-
-.infoscience_export img.record-illustration {
-    order: 4;
-    align-self: flex-start;
-    height: 200px;
-	max-width: 100%;
-}
-
-.infoscience_bullet {
-    float: left;
-    text-align: right;
-    width: 3em;
-}
-
-.infoscience_record_bulleted .infoscience_data {
-    margin-left: 4em;
-}
-
-h3 .infoscience_title {
+.infoscience_publication_exports h3 {
 	color: #000;
     font-family: Arial,Helvetica,sans-serif;
     letter-spacing: 0;
@@ -151,11 +113,47 @@ h3 .infoscience_title {
     border: none;
 }
 
-span .infoscience_title {
-    font-style: italic;
+.infoscience_publication_exports h4 {
+    margin: 30px 0 12px 0;
 }
 
-.infoscience_links {
+.infoscience_publication_exports ul {
+	margin: 5px 35px 0 0;
+    display: block; 
+	list-style-type: none;
+    padding: 0 3px 0 0;
+}
+
+.infoscience_publication_exports .infoscience_record {
+	padding-top: 4px;
+	border-bottom: 1px dotted #000;
+    margin-top: 8px;
+    padding-bottom: 7px;
+}
+
+.infoscience_publication_exports .infoscience_record p {
+    margin-top: 9px;
+    margin-bottom: 0;
+}
+
+.infoscience_publication_exports img.record-illustration {
+    order: 4;
+    align-self: flex-start;
+    height: 200px;
+	max-width: 100%;
+}
+
+.infoscience_publication_exports .infoscience_bullet {
+    float: left;
+    text-align: right;
+    width: 3em;
+}
+
+.infoscience_publication_exports .infoscience_record_bulleted .infoscience_data {
+    margin-left: 4em;
+}
+
+.infoscience_publication_exports .infoscience_links {
     padding-top: 0px;
     font-size: 11px;
     letter-spacing: 1px;
