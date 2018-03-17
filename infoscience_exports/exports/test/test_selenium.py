@@ -3,8 +3,7 @@ import socket
 from django.conf import settings
 from django.urls import reverse
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test import override_settings, tag, modify_settings
-from django.utils.decorators import classproperty
+from django.test import override_settings
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
@@ -53,16 +52,16 @@ class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
         """Open a new browser for each test."""
         super(SeleniumStaticLiveServerTestCase, self).setUp()
 
-        test_user = User.objects.get_or_create(username='test',
-                                        first_name='test',
-                                        last_name='test',
-                                        email='test@localhost',
-                                        is_staff=True,
-                                        is_active=True)[0]
+        test_user = User.objects.get_or_create(
+            username='test',
+            first_name='test',
+            last_name='test',
+            email='test@localhost',
+            is_staff=True,
+            is_active=True)[0]
 
         # # generate a cookie place, or get the cookie setting error from Chrome
-        self.selenium.get('%s%s' % (self.live_server_url,
-                                     reverse('not_allowed')))
+        self.selenium.get('%s%s' % (self.live_server_url, reverse('not_allowed')))
 
         # bypass external Tequila auth
         self.client.force_login(test_user)

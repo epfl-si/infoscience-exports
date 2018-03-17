@@ -132,4 +132,3 @@ class AdvancedOptionsSettings(BaseSettings):
 
     class Meta:
         abstract = True
-

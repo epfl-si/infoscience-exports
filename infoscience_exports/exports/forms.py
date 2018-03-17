@@ -8,7 +8,7 @@ class ExportForm(FormLoggingMixin, forms.ModelForm):
 
     class Meta:
         model = Export
-      
+
         exclude = ['user', 'formats_type']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': ""}),
