@@ -52,4 +52,4 @@ selenium:
   image: selenium/standalone-chrome-debug:3.11
   ports:
     - "4444:4444"   # Selenium
-    - "5900:5900"   # VNC server, pass is "secret"
+    - "${VNC_PORT}:5900"   # VNC server, pass is "secret"

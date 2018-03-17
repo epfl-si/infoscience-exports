@@ -13,7 +13,7 @@ logger = getLogger(__name__)
 
 
 DOC_TYPE_ORDERED = {
-    #('ARTICLE', _("Journal Articles")),
+    # ('ARTICLE', _("Journal Articles")),
     'ARTICLE': _("Articles & Reviews"),
     'CONF': _("Conference Papers"),
     'REVIEW': _("Reviews"),
@@ -75,17 +75,17 @@ def get_sorted_by_doc_types(notices):
     # add doc_types not listed in DOC_TYPE_ORDERED
     for index, head in enumerate(groups_head):
         if head not in doc_type_keys:
-            groups_list_ordered.extend(groups_list[index])  
+            groups_list_ordered.extend(groups_list[index])
     return groups_list_ordered
 
 
 def get_sorted_by_year(notices, url):
     queries = parse_qs(urlsplit(url).query)
-    is_ascending = queries.get('so', ['d'])[0] == "a" 
-    if is_ascending:		
-        notices = sorted(notices, key=lambda k: k['Publication_Year'])		
-    else:		
-        notices = sorted(notices, key=lambda k: k['Publication_Year'], reverse=True)		
+    is_ascending = queries.get('so', ['d'])[0] == "a"
+    if is_ascending:
+        notices = sorted(notices, key=lambda k: k['Publication_Year'])
+    else:
+        notices = sorted(notices, key=lambda k: k['Publication_Year'], reverse=True)
     return notices
 
 

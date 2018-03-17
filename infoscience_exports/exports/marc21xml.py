@@ -13,26 +13,19 @@ from pymarc import marcxml
 import unicodedata
 
 
-def get_attributes(subfields):
-    res_value = {}
-    for element1 in subfields:
-        for key1, value1 in element1.items():
-            res_value[key1] = value1
-    return res_value
+class Author:
 
-
-# Authors is a list of a dictionary of author: full name, initial name, url in infoscience
-def set_authors(authors):
-    result = []
-    for author in authors:
-        author_record = {}
-        author_record['fullname'] = author
-        author_record['search_url'] = "{}/search?p={}".format(
+    def __init__(self, author):
+        self.fullname = author
+        self.search_url = "{}/search?p={}".format(
             settings.SITE_DOMAIN, author.replace(",", "+").replace(" ", "+"))
+        self.initname = self.compute_name()
 
-        names = author.split(',')
+    def compute_name(self):
+        names = self.fullname.split(',')
         family = names[0].strip() if len(names) > 0 else ''
         fnames = names[1].split(' ') if len(names) > 1 else ''
+
         initname = ""
         for fname in fnames:
             if not fname:
@@ -53,10 +46,12 @@ def set_authors(authors):
         if family:
             initname += family
 
-        author_record['initname'] = initname
-        result.append(author_record)
+        return initname
 
-    return result
+
+# Authors is a list of Author instance: full name, initial name, url in infoscience
+def set_authors(authors):
+    return [Author(author) for author in authors]
 
 
 # get only the year in a date-string
@@ -108,6 +103,14 @@ def set_fulltext(fulltexts):
         result += path_first
         return result
     return result
+
+
+def get_attributes(subfields):
+    res_value = {}
+    for element1 in subfields:
+        for key1, value1 in element1.items():
+            res_value[key1] = value1
+    return res_value
 
 
 # get dictionary (icon, fulltexts) of ELA
