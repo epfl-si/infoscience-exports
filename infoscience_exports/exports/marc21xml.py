@@ -111,6 +111,7 @@ def get_ELA_fields(field):
         elif ELA_type == 'public':
             ela_fulltexts.append(ela.get('u', ''))
     ela_fulltexts = list(filter(None, ela_fulltexts))
+    ela_fulltexts = set_fulltext(ela_fulltexts)
     return {'icon': ela_icon, 'fulltexts': ela_fulltexts}
 
 
