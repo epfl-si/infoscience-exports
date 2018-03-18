@@ -3,6 +3,7 @@
 """
 Parse a marc-21-xml file
 """
+import re
 from logging import getLogger
 from django.utils.translation import gettext as _
 from django.conf import settings
@@ -66,42 +67,29 @@ def set_year(date):
         return ''
 
 
-# get fulltext: link to pdf or link to repository if several links
 def set_fulltext(fulltexts):
-    if len(fulltexts) == 0:
-        return ""
-    if len(fulltexts) == 1:
-        return fulltexts[0]
-    result = ""
-    pdf_counter = 0
-    for ft in fulltexts:
-        o = urlparse(ft)
-        file_extension = splitext(o.path)[1]
-        if file_extension == "pdf":
-            result = ft
-            pdf_counter += 1
-    if pdf_counter < 2:
-        return result
-    o_first = urlparse(fulltexts[0])
-    path_first = dirname(o_first.path)
-    is_same_path = True
-    for ft in fulltexts:
-        o = urlparse(ft)
-        path = dirname(o.path)
-        if o.scheme != o_first.scheme or \
-           o.netloc != o_first.netloc or \
-           path != path_first:
-            is_same_path = False
-            break
-    result = ""
-    if is_same_path:
-        if o_first.scheme:
-            result += o_first.scheme + "://"
-        if o_first.netloc:
-            result += o_first.netloc
-        result += path_first
-        return result
-    return result
+    """ get fulltext: link to pdf or link to repository if several links """
+    # only keep pdfs and remove duplicates
+    file_paths = ['{}://{}{}'.format(*urlparse(fulltext)[:3]) for fulltext in fulltexts]
+    pdfs = [pdf for pdf in file_paths if splitext(pdf)[1] == '.pdf']
+    unic_pdfs = list(set(pdfs))
+
+    # return empty string if no pdf found
+    if len(unic_pdfs) == 0:
+        return ''
+
+    # return element if only one found
+    if len(unic_pdfs) == 1:
+        return unic_pdfs[0]
+
+    # multiple pdfs found... return first folder that matchs infoscience/record/xxx/files
+    for dir_path in map(dirname, unic_pdfs):
+        if re.search("infoscience.epfl.ch/record/\d+/files", dir_path):
+            return dir_path
+
+    # no infoscience folder found... log a warning and return first match
+    logger.warning("Multiple pdfs found (%s), but none appear to be on regular infoscience path", unic_pdfs)
+    return dirname(unic_pdfs[0])
 
 
 def get_attributes(subfields):
@@ -123,6 +111,7 @@ def get_ELA_fields(field):
         elif ELA_type == 'public':
             ela_fulltexts.append(ela.get('u', ''))
     ela_fulltexts = list(filter(None, ela_fulltexts))
+    ela_fulltexts = set_fulltext(ela_fulltexts)
     return {'icon': ela_icon, 'fulltexts': ela_fulltexts}
 
 
