@@ -12,6 +12,7 @@ dj-database-url = "*"
 django-dirtyfields = "*"
 django-filter = "*"
 django-model-utils = "*"
+django-auditlog = {git = "https://github.com/jdelasoie/django-auditlog.git", editable = true}
 django-tequila = {git = "https://github.com/epfl-idevelop/django-tequila.git", editable = true}
 "django-bootstrap4" = "*"
 gevent = "*"

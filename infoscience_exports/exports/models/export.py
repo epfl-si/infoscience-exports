@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.db import models
 from django.conf import settings
 
+from auditlog.registry import auditlog
 from dirtyfields import DirtyFieldsMixin
 
 from .settings import BulletsSettings, ThumbnailSettings, LinksSettings, \
@@ -37,3 +38,5 @@ class Export(BulletsSettings,
 
     class Meta:
         ordering = ['-id']
+
+auditlog.register(Export)
