@@ -25,7 +25,7 @@
 					<div class="record-content">
 						{% if article.Title %}
 						<h3 class="infoscience_title">
-						{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL.0 }}" target="_blank">{% endif %}
+						{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
 						{{ article.Title }}
 						{% if options.link_title and article.ELA_URL %}</a>{% endif %}
 						</h3>
@@ -74,7 +74,7 @@
 							{% endif %}
 
 							{% if options.link_fulltext and article.ELA_URL %}
-							{% trans "Full text" %}: {{ article.ELA_URL.0 }}
+							{% trans "Full text" %}: {{ article.ELA_URL }}
 							<br />
 							{% endif %}
 
@@ -91,7 +91,7 @@
 							<a class="infoscience_link_detailed" href="{{ article.Infoscience_URL }}?ln=en" target="_blank">{% trans "Detailed record" %}</a>
 							{% endif %}
 							{% if options.link_fulltext and article.ELA_URL %}
-							{% if options.link_detailed %} - {% endif %}<a class="infoscience_link_fulltext" href="{{ article.ELA_URL.0 }}" target="_blank">{% trans "Full text" %}</a>
+							{% if options.link_detailed %} - {% endif %}<a class="infoscience_link_fulltext" href="{{ article.ELA_URL }}" target="_blank">{% trans "Full text" %}</a>
 							{% endif %}
 							{% if options.link_publisher %}
 							{% for view_publisher in article.View_Publisher %}
