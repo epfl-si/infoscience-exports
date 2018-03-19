@@ -6,7 +6,7 @@
 	up down logs restart restart-web \
 	superadmin collectstatic migrations migrate \
 	dump restore release push-prod deploy \
-	fast-test test coverage
+	fast-test test codecov
 
 VERSION:=$(shell python update_release.py -v)
 
@@ -217,9 +217,12 @@ test: check-env
 	flake8 infoscience_exports/exports --max-line-length=120
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --settings=settings.test --noinput
 
-coverage: check-env test
+codecov: check-env
+	flake8 infoscience_exports/exports --max-line-length=120
+	docker-compose -f docker-compose-dev.yml exec web pytest --cov=infoscience_exports infoscience_exports/exports/pytests
 	coverage html
-	open htmlcov/index.html
+	codecov
+	echo @open htmlcov/index.html
 
 check-env:
 ifeq ($(wildcard .env),)

@@ -1,4 +1,4 @@
--e git+https://github.com/epfl-idevelop/django-auditlog.git#egg=django-auditlog
+-e git+https://github.com/epfl-idevelop/django-auditlog.git@3410ca60abc20ceb9a8766a3f961b056b428df46#egg=django-auditlog
 -e git+https://github.com/epfl-idevelop/django-tequila.git@787b0af52142aad08fe739e821eff3c543991f61#egg=django-tequila
 dj-database-url==0.5.0
 django-bootstrap4==0.0.6

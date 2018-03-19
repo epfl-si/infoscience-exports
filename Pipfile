@@ -46,6 +46,8 @@ selenium = "*"
 requests = "*"
 rope = "*"
 pytest = "*"
+pytest-django = "*"
+pytest-cov = "*"
 
 
 [requires]
