@@ -201,6 +201,8 @@ def parse_dict(record):
 
     # '711', ' ', ' ', ['a', 'c', 'd']
     added_entry_meeting = get_list(fields, '711', ' ', ' ', ['a', 'c', 'd'])
+    if not added_entry_meeting:
+        added_entry_meeting = get_list(fields, '711', '2', ' ', ['a', 'c', 'd'])
     result['added_entry_meeting'] = get_dict(added_entry_meeting)
 
     # '720', ' ', '2', ['a']
