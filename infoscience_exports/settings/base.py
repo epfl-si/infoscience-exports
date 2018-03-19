@@ -56,6 +56,7 @@ INSTALLED_APPS = (
     # Third party apps
     'bootstrap4',
     'django_tequila',
+    'auditlog',
 
     # Your apps
     'exports',
@@ -70,6 +71,7 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_tequila.middleware.TequilaMiddleware',
+    'auditlog.middleware.AuditlogMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
