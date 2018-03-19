@@ -162,10 +162,6 @@ def parse_dict(record):
     isbn = get_list(fields, '020', ' ', ' ', ['a'])
     result['isbn'] = get_value(isbn, 'a')
 
-    # '037', ' ', ' ', ['a']
-    source_of_acquisition = get_list(fields, '037', ' ', ' ', ['a'])
-    result['source_of_acquisition'] = get_value(source_of_acquisition, 'a')
-
     # '024', '7', ' ', ['a']      => Other Standard Identifier: Digital Object Identifier
     other_standard_identification_doi = get_list(fields, '024', '7', ' ', ['a'])
     result['other_standard_identification_doi'] = get_value(other_standard_identification_doi, 'a')
@@ -185,6 +181,10 @@ def parse_dict(record):
     # '300', ' ', ' ', ['a']
     physical_description_extent = get_list(fields, '300', ' ', ' ', ['a'])
     result['physical_description_extent'] = get_value(physical_description_extent, 'a')
+
+    # '336', ' ', ' ', ['a']
+    source_of_acquisition = get_list(fields, '336', ' ', ' ', ['a'])
+    result['source_of_acquisition'] = get_value(source_of_acquisition, 'a')
 
     # '520', ' ', ' ', ['a']
     summary = get_list(fields, '520', ' ', ' ', ['a'])
