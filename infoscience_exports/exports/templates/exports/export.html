@@ -7,7 +7,7 @@
 <!-- VERSION:{{ VERSION }} BUILD:{{ BUILD }} -->
 
 {% if options.error %}
-<div class="infoscience_alert infoscience_alert-{{options.error.alert}}">
+<div class="alert alert-{{options.error.alert}}" role="alert">
 	<span><strong>
 		{% if options.error.alert == 'success' %}{% trans "Success" %}
 		{% elif options.error.alert == 'info' %}{% trans "Information" %}
