@@ -39,4 +39,5 @@ class Export(BulletsSettings,
     class Meta:
         ordering = ['-id']
 
+
 auditlog.register(Export)
