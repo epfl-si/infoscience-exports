@@ -1,82 +1,8 @@
-body {
+.Infoscience {
 	background-color: rgb(245, 245, 245);
 }
 
-textarea:focus,
-input:focus,
-select:focus {   
-  border-color: rgba(0, 123, 255, 0.8);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 123, 255, 0.6);
-  outline: 0 none;
-}
-
-/*
- * Export Edit
-*/
-
-#export_form h4 {
-    margin: 30px 0 12px 0;
-}
-
-#export_form input[type="text"], 
-#export_form select {
-	width: 100%;
-}
-
-#export_form input, 
-#export_form select {
-    color: #000;
-    background: #fff;
-    background-color: rgb(255, 255, 255);
-    background-clip: border-box;
-    border: 1px solid #555;
-	border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-	padding: 5px 35px 5px 5px;
-}
-
-.bloc_checkboxes {
-	margin-top: 10px;
-}
-
-.span_checkbox {
-}
-
-.span_checkbox_label {
-	margin-left: 10px;
-}
-
-.form-group {
-	margin-top: 4rem;
-}
-
-#advancedOptionsToggle {
-    margin: 30px 0 12px 0;
-}
-
-/*
- * Export List
-*/ 
-
-.category-content {
-	float: left;
-}
-
-.category-tools {
-	float: right;
-}
-
-.category-tools .btn {
-	float: right;
-	width: 40px;
-	margin-left: 20px;
-}
-
-/*
- * Export
-*/ 
-
-h1 {
+.Infoscience h1 {
 	font-family: "Arial Black", Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 27px;
@@ -89,11 +15,103 @@ h1 {
     margin-bottom: 20px;
 }
 
-ul {
-	margin: 5px 35px 0 0;
-    display: block; 
-	list-style-type: none;
-    padding: 0 3px 0 0;
+.Infoscience .list-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.Infoscience textarea:focus,
+.Infoscience input:focus,
+.Infoscience select:focus {   
+  border-color: rgba(0, 123, 255, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 123, 255, 0.6);
+  outline: 0 none;
+}
+
+/*
+ * Export Edit
+*/
+
+.Infoscience #export_form h4 {
+    margin: 30px 0 12px 0;
+}
+
+.Infoscience #export_form input[type="text"], 
+.Infoscience #export_form select {
+	width: 100%;
+}
+
+.Infoscience #export_form input, 
+.Infoscience #export_form select {
+    color: #000;
+    background: #fff;
+    background-color: rgb(255, 255, 255);
+    background-clip: border-box;
+    border: 1px solid #555;
+	border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	padding: 5px 35px 5px 5px;
+}
+
+.Infoscience .bloc_checkboxes {
+	margin-top: 10px;
+}
+
+.Infoscience .span_checkbox {
+}
+
+.Infoscience .span_checkbox_label {
+	margin-left: 10px;
+}
+
+.Infoscience .form-group {
+	margin-top: 4rem;
+}
+
+.Infoscience #advancedOptionsToggle {
+    margin: 30px 0 12px 0;
+}
+
+/*
+ * Export List
+*/ 
+
+.Infoscience .category-content {
+	float: left;
+}
+
+.Infoscience .category-tools {
+	float: right;
+}
+
+.Infoscience .category-tools .btn {
+	float: right;
+	width: 40px;
+	margin-left: 20px;
+}
+
+/*
+ * Export
+*/ 
+
+.infoscience_header1 {
+	font-family: "Arial Black", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 27px;
+    color: #000;
+    letter-spacing: 0;
+    line-height: 38px;
+    padding-top: 0;
+    margin-top: 0;
+    text-transform: none;
+    margin-bottom: 20px;
 }
 
 .infoscience_header2 {
@@ -121,14 +139,7 @@ ul {
     margin-bottom: 0;
 }
 
-.infoscience_export img.record-illustration {
-    order: 4;
-    align-self: flex-start;
-    height: 200px;
-	max-width: 100%;
-}
-
-.infoscience_bullet {
+.infoscience_record_bulleted .infoscience_bullet {
     float: left;
     text-align: right;
     width: 3em;
@@ -138,7 +149,7 @@ ul {
     margin-left: 4em;
 }
 
-h3 .infoscience_title {
+.infoscience_record h3.infoscience_title {
 	color: #000;
     font-family: Arial,Helvetica,sans-serif;
     letter-spacing: 0;
@@ -151,11 +162,23 @@ h3 .infoscience_title {
     border: none;
 }
 
-span .infoscience_title {
+.infoscience_record span.infoscience_title {
     font-style: italic;
 }
 
-.infoscience_links {
+.infoscience_record img.record-illustration {
+    order: 4;
+    align-self: flex-start;
+    height: 200px;
+	max-width: 100%;
+    margin: 15px 0px;
+}
+
+.infoscience_record ul.record-metadata {
+    padding-left: 0px;
+}
+
+.infoscience_record .infoscience_links {
     padding-top: 0px;
     font-size: 11px;
     letter-spacing: 1px;
