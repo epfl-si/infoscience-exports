@@ -3,8 +3,7 @@ import socket
 from django.conf import settings
 from django.urls import reverse
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test import override_settings, tag, modify_settings
-from django.utils.decorators import classproperty
+from django.test import override_settings
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
@@ -39,7 +38,6 @@ class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
             command_executor=cls.remote_selenium_address,
             # Set to CHROME since we are using the Chrome container
             desired_capabilities=DesiredCapabilities.CHROME,
-
         )
         cls.selenium.implicitly_wait(5)
 
@@ -54,15 +52,15 @@ class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
         super(SeleniumStaticLiveServerTestCase, self).setUp()
 
         test_user = User.objects.get_or_create(username='test',
-                                        first_name='test',
-                                        last_name='test',
-                                        email='test@localhost',
-                                        is_staff=True,
-                                        is_active=True)[0]
+                                               first_name='test',
+                                               last_name='test',
+                                               email='test@localhost',
+                                               is_staff=True,
+                                               is_active=True)[0]
 
         # # generate a cookie place, or get the cookie setting error from Chrome
         self.selenium.get('%s%s' % (self.live_server_url,
-                                     reverse('not_allowed')))
+                                    reverse('not_allowed')))
 
         # bypass external Tequila auth
         self.client.force_login(test_user)

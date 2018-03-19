@@ -7,17 +7,17 @@ name = "pypi"
 
 [packages]
 
-Django = "*"
+django = "*"
 dj-database-url = "*"
 django-dirtyfields = "*"
 django-filter = "*"
 django-model-utils = "*"
-django-auditlog = {git = "https://github.com/jdelasoie/django-auditlog.git", editable = true}
+django-auditlog = {git = "https://github.com/epfl-idevelop/django-auditlog.git", editable = true}
 django-tequila = {git = "https://github.com/epfl-idevelop/django-tequila.git", editable = true}
 "django-bootstrap4" = "*"
 gevent = "*"
 gunicorn = "*"
-Markdown = "*"
+markdown = "*"
 "psycopg2-binary" = "*"
 pymarc = "*"
 pytz = "*"
@@ -32,9 +32,9 @@ codecov = "*"
 django-debug-toolbar = "*"
 django-extensions = "*"
 django-nose = "*"
-"Fabric3" = "*"
-factory_boy = "*"
-Faker = "*"
+"fabric3" = "*"
+factory-boy = "*"
+faker = "*"
 "flake8" = "*"
 graypy = "*"
 ipdb = "*"
@@ -45,6 +45,7 @@ nose-progressive = "*"
 selenium = "*"
 requests = "*"
 rope = "*"
+pytest = "*"
 
 
 [requires]
