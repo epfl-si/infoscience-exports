@@ -38,7 +38,6 @@ class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
             command_executor=cls.remote_selenium_address,
             # Set to CHROME since we are using the Chrome container
             desired_capabilities=DesiredCapabilities.CHROME,
-
         )
         cls.selenium.implicitly_wait(5)
 
@@ -52,16 +51,16 @@ class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
         """Open a new browser for each test."""
         super(SeleniumStaticLiveServerTestCase, self).setUp()
 
-        test_user = User.objects.get_or_create(
-            username='test',
-            first_name='test',
-            last_name='test',
-            email='test@localhost',
-            is_staff=True,
-            is_active=True)[0]
+        test_user = User.objects.get_or_create(username='test',
+                                               first_name='test',
+                                               last_name='test',
+                                               email='test@localhost',
+                                               is_staff=True,
+                                               is_active=True)[0]
 
         # # generate a cookie place, or get the cookie setting error from Chrome
-        self.selenium.get('%s%s' % (self.live_server_url, reverse('not_allowed')))
+        self.selenium.get('%s%s' % (self.live_server_url,
+                                    reverse('not_allowed')))
 
         # bypass external Tequila auth
         self.client.force_login(test_user)
