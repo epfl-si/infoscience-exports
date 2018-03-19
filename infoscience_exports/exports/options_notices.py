@@ -169,6 +169,7 @@ def get_notices(options):
     notices = import_marc21xml(url, can_display_pending_publications)
 
     # check errors
+    # FIXME: use exception to manage errors
     if notices and notices[0].get('message', '') != '':
         options['error'] = notices[0]
         notices = ''
