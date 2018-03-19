@@ -1,6 +1,8 @@
 web:
   image: epflidevelop/infoscience-exports
   restart: always
+  stdin_open: true
+  tty: true
   expose:
     - "80"
   links:
