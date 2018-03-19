@@ -20,7 +20,7 @@ script:
 - make codecov
 
 after_success:
-- codecov
+- docker-compose -f docker-compose-dev.yml exec web codecov --commit=$TRAVIS_COMMIT
 
 matrix:
   fast_finish: true

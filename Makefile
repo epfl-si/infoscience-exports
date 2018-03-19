@@ -218,9 +218,12 @@ test: check-env
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --settings=settings.test --noinput
 
 codecov: check-env
-	flake8 infoscience_exports/exports --max-line-length=120
-	docker-compose -f docker-compose-dev.yml exec web pytest --cov=infoscience_exports infoscience_exports/exports/pytests
-	coverage html
+	docker-compose -f docker-compose-dev.yml exec web \
+		flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
+	docker-compose -f docker-compose-dev.yml exec web \
+		pytest --cov=infoscience_exports infoscience_exports/exports/pytests
+	docker-compose -f docker-compose-dev.yml exec web \
+		coverage html
 	@echo Feel free to run one of the following
 	@echo  "$$ open htmlcov/index.html"
 	@echo  "$$ codecov"
