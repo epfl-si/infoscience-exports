@@ -17,7 +17,7 @@ install:
 script:
 - make vars
 - make fast-test
-- make coverage
+- make codecov
 
 after_success:
 - codecov
