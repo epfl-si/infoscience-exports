@@ -149,7 +149,7 @@ def validate_url(url):
 
 def get_notices(options):
     if options['url'] == "":
-        options['error'] = set_message('danger', _("Url field is empty"))
+        options['error'] = get_message('danger', _("Url field is empty"))
         return options
 
     groupsby_all = options['groupsby_all']
