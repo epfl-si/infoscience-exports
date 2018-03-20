@@ -168,8 +168,8 @@ release:
 	git tag -f qa-release
 	git push --tags --force
 
-    # updating CHANGELOG
-    make update-changelog
+	# updating CHANGELOG
+	make update-changelog
 
 	# create github release
 	python update_release.py publish
@@ -187,8 +187,8 @@ push-qa:
 	git tag -f qa-release
 	git push --tags --force
 
-    # updating CHANGELOG
-    make update-changelog
+	# updating CHANGELOG
+	make update-changelog
 
 push-prod:
 	@# confirm push to production
@@ -198,8 +198,8 @@ push-prod:
 	git tag -f prod-release
 	git push --tags --force
 
-    # updating CHANGELOG
-    make update-changelog
+	# updating CHANGELOG
+	make update-changelog
 
 update-changelog:
 	# updating CHANGELOG
