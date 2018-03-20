@@ -1,4 +1,5 @@
 import socket
+from urllib.parse import quote
 
 from django.conf import settings
 from django.urls import reverse
@@ -11,7 +12,7 @@ from exports.test.factories import ExportInMemoryFactory
 from exports.models import User, Export
 
 
-@override_settings(ALLOWED_HOSTS=['*'])  # Disable ALLOW_HOSTS
+@override_settings(ALLOWED_HOSTS=['*'])  # Open ALLOW_HOSTS
 @override_settings(DEBUG=True)
 class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
     """
@@ -88,3 +89,34 @@ class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
 
         self.selenium.find_element_by_id("btn-submit").click()
         self.assertGreater(Export.objects.count(), before_count)
+
+    def test_url_as_paramter_will_autofill_form(self):
+        full_url = '%s%s' % (self.live_server_url,
+                             reverse('crud:export-create'))
+        infoscience_url = 'https://infoscience.epfl.ch/search?ln=en&p=vetterli' \
+                          '&f=&c=Infoscience%2FArticle&c=Infoscience%2FReview&c=Infoscience%2FThesis' \
+                          '&c=Infoscience%2FWorking+papers&c=Infoscience%2FProceedings' \
+                          '&c=Infoscience%2FPresentation&c=Infoscience%2FPatent&c=Infoscience%2FStudent' \
+                          '&c=Media&c=Other+doctypes&c=Infoscience%2FConference&c=Infoscience%2FReport' \
+                          '&c=Infoscience%2FBook&c=Infoscience%2FChapter&c=Infoscience%2FPoster&c=Infoscience%2FStandard' \
+                          '&c=Infoscience%2FLectures&c=Infoscience%2FDataset' \
+                          '&c=Infoscience%2FPhysical+objects&c=Work+done+outside+EPFL' \
+                          '&sf=&so=d&rg=10'
+
+        awaited_result_url = 'https://infoscience.epfl.ch/search?ln=en&p=vetterli' \
+                          '&f=&c=Infoscience/Article&c=Infoscience/Review&c=Infoscience/Thesis' \
+                          '&c=Infoscience/Working+papers&c=Infoscience/Proceedings' \
+                          '&c=Infoscience/Presentation&c=Infoscience/Patent&c=Infoscience/Student' \
+                          '&c=Media&c=Other+doctypes&c=Infoscience/Conference&c=Infoscience/Report' \
+                          '&c=Infoscience/Book&c=Infoscience/Chapter&c=Infoscience/Poster&c=Infoscience/Standard' \
+                          '&c=Infoscience/Lectures&c=Infoscience/Dataset' \
+                          '&c=Infoscience/Physical+objects&c=Work+done+outside+EPFL' \
+                          '&sf=&so=d&rg=10'
+
+        full_url = '{}?url={}'.format(full_url, quote(infoscience_url, safe=''))
+
+        self.selenium.get(full_url)
+
+        url_input = self.selenium.find_element_by_id("id_url").get_attribute("value")
+        msg_on_fail = "Url is not the one we want : {}".format(url_input)
+        self.assertEqual(url_input, awaited_result_url, msg=msg_on_fail)
