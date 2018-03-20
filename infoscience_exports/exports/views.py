@@ -1,3 +1,5 @@
+from urllib.parse import unquote
+
 from django.urls import reverse_lazy as django_reverse_lazy
 from django.http import HttpResponse
 from django.template import loader
@@ -49,6 +51,15 @@ class ExportCreate(LoginRequiredMixin, CreateView):
     model = Export
     form_class = ExportForm
     success_url = django_reverse_lazy('crud:export-list')
+
+    def get(self, request, *args, **kwargs):
+        # url in parameter is a form initial
+        if request.GET.get('url'):
+            self.initial.update({
+                'url': unquote(request.GET['url'])
+            })
+
+        return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
