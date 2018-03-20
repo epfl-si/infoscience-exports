@@ -18,6 +18,9 @@ NOSE_ARGS = [
     '--cover-package={}'.format(BASE_DIR)
 ]
 
+# for test verification at the moment
+INFOSCIENCE_SITE_URL = 'https://infoscience.epfl.ch'
+
 # no auth for tests
 AUTHENTICATION_BACKENDS = ('exports.test.auth_backends.TestcaseUserBackend', )
 
