@@ -1,7 +1,7 @@
 # Change Log
 
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-20)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.1...qa-release)
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-20)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.1...prod-release)
 
 ## [0.4.1](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.1) (2018-03-20)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.0...0.4.1)
@@ -11,7 +11,7 @@
 - Add github changelog after push-prod and push-qa [\#70](https://github.com/epfl-idevelop/infoscience-exports/pull/70) ([jdelasoie](https://github.com/jdelasoie))
 
 ## [0.4.0](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.0) (2018-03-20)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.7...0.4.0)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.4.0)
 
 **Merged pull requests:**
 
@@ -27,6 +27,9 @@
 - remove accents from url [\#58](https://github.com/epfl-idevelop/infoscience-exports/pull/58) ([dragonleman](https://github.com/dragonleman))
 - Fix urls to infoscience [\#57](https://github.com/epfl-idevelop/infoscience-exports/pull/57) ([ebreton](https://github.com/ebreton))
 - Tests reactivation [\#55](https://github.com/epfl-idevelop/infoscience-exports/pull/55) ([jdelasoie](https://github.com/jdelasoie))
+
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-15)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.7...qa-release)
 
 ## [0.3.7](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.7) (2018-03-15)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.6...0.3.7)
@@ -57,14 +60,11 @@
 - Translations: locale folders [\#45](https://github.com/epfl-idevelop/infoscience-exports/pull/45) ([dragonleman](https://github.com/dragonleman))
 
 ## [0.3.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.4) (2018-03-09)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.3.4)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...0.3.4)
 
 **Merged pull requests:**
 
 - Limitation to 5 authors max, copy to clipboard confirmation, pending validations in its own field [\#40](https://github.com/epfl-idevelop/infoscience-exports/pull/40) ([dragonleman](https://github.com/dragonleman))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-06)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...prod-release)
 
 ## [0.3.3](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.3) (2018-03-05)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.2...0.3.3)
