@@ -7,7 +7,17 @@
 <!-- VERSION:{{ VERSION }} BUILD:{{ BUILD }} -->
 
 {% if options.error %}
-<span>{{ options.error }}</span>
+<div class="alert alert-{{options.error.alert}}" role="alert">
+	<span><strong>
+		{% if options.error.alert == 'success' %}{% trans "Success" %}
+		{% elif options.error.alert == 'info' %}{% trans "Information" %}
+		{% elif options.error.alert == 'warning' %}{% trans "Warning" %}
+		{% elif options.error.alert == 'danger' %}{% trans "Error" %}
+		{% endif %}
+	</strong></span>
+	<br/>
+	<span>{{ options.error.message }}</span>
+</div>
 {% elif options.format == 'DETAILED' %}
 {% include "exports/export_detailed.html"%}
 {% else %}
