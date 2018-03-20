@@ -16,8 +16,8 @@ install:
 
 script:
 - make vars
-- make fast-test
 - make codecov
+- make fast-test
 
 after_success:
 - docker-compose -f docker-compose-dev.yml exec web codecov --commit=$TRAVIS_COMMIT
