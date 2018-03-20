@@ -8,6 +8,7 @@ from itertools import groupby
 from operator import itemgetter
 
 from .marc21xml import import_marc21xml
+from .messages import get_message
 
 logger = getLogger(__name__)
 
@@ -140,7 +141,7 @@ def validate_url(url):
 
 def get_notices(options):
     if options['url'] == "":
-        options['error'] = _("Url field is empty")
+        options['error'] = get_message('danger', _("Url field is empty"))
         return options
 
     groupsby_all = options['groupsby_all']
@@ -160,8 +161,9 @@ def get_notices(options):
     notices = import_marc21xml(url, can_display_pending_publications)
 
     # check errors
-    if notices and 'error' in notices[0]:
-        options['error'] = notices[0]['error']
+    # FIXME: use exception to manage errors
+    if notices and notices[0].get('message', '') != '':
+        options['error'] = notices[0]
         notices = ''
     else:
         options['error'] = ''
