@@ -39,7 +39,6 @@ class BulletsSettings(BaseSettings):
 
 
 class LinksSettings(BaseSettings):
-    show_linkable_titles = models.BooleanField(default=False)
     show_linkable_authors = models.BooleanField(default=False)
     show_links_for_printing = models.BooleanField(default=False)
     show_detailed = models.BooleanField(default=True)
@@ -58,14 +57,12 @@ class GroupBySettings(BaseSettings):
 
     GROUPSBY_DOC_CHOICE = (
         ('NONE', ''),
-        ('DOC', _('document type')),
         ('DOC_TITLE', _('document type as title')),
     )
 
     GROUPSBY_ALL_CHOICE = (
         ('NONE', ''),
         ('YEAR_TITLE', _('year as title')),
-        ('DOC', _('document type')),
         ('DOC_TITLE', _('document type as title')),
     )
 

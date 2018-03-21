@@ -1,10 +1,38 @@
 # Change Log
 
-## [0.3.7](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.7) (2018-03-15)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.3.7)
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-20)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.1...prod-release)
+
+## [0.4.1](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.1) (2018-03-20)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.0...0.4.1)
+
+**Merged pull requests:**
+
+- Add github changelog after push-prod and push-qa [\#70](https://github.com/epfl-idevelop/infoscience-exports/pull/70) ([jdelasoie](https://github.com/jdelasoie))
+
+## [0.4.0](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.0) (2018-03-20)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.4.0)
+
+**Merged pull requests:**
+
+- Add url fetcher from parameter when creating an export [\#69](https://github.com/epfl-idevelop/infoscience-exports/pull/69) ([jdelasoie](https://github.com/jdelasoie))
+- Messages bootstrap like [\#67](https://github.com/epfl-idevelop/infoscience-exports/pull/67) ([dragonleman](https://github.com/dragonleman))
+- doc\_types from tind and 037\_\_a =\> 336\_\_a [\#66](https://github.com/epfl-idevelop/infoscience-exports/pull/66) ([dragonleman](https://github.com/dragonleman))
+- Added ind1=2 for 711\_\_acd [\#65](https://github.com/epfl-idevelop/infoscience-exports/pull/65) ([dragonleman](https://github.com/dragonleman))
+- CSS classes with infoscience namespace [\#64](https://github.com/epfl-idevelop/infoscience-exports/pull/64) ([dragonleman](https://github.com/dragonleman))
+- Consolidation des logs [\#63](https://github.com/epfl-idevelop/infoscience-exports/pull/63) ([jdelasoie](https://github.com/jdelasoie))
+- Refactored set fulltexts [\#62](https://github.com/epfl-idevelop/infoscience-exports/pull/62) ([ebreton](https://github.com/ebreton))
+- Refactored set year [\#61](https://github.com/epfl-idevelop/infoscience-exports/pull/61) ([ebreton](https://github.com/ebreton))
+- Authors as objects [\#60](https://github.com/epfl-idevelop/infoscience-exports/pull/60) ([ebreton](https://github.com/ebreton))
+- remove accents from url [\#58](https://github.com/epfl-idevelop/infoscience-exports/pull/58) ([dragonleman](https://github.com/dragonleman))
+- Fix urls to infoscience [\#57](https://github.com/epfl-idevelop/infoscience-exports/pull/57) ([ebreton](https://github.com/ebreton))
+- Tests reactivation [\#55](https://github.com/epfl-idevelop/infoscience-exports/pull/55) ([jdelasoie](https://github.com/jdelasoie))
 
 ## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-15)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.6...qa-release)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.7...qa-release)
+
+## [0.3.7](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.7) (2018-03-15)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.6...0.3.7)
 
 **Merged pull requests:**
 
@@ -22,7 +50,7 @@
 - Remove any usages or dependencies on Django Rest Framework [\#49](https://github.com/epfl-idevelop/infoscience-exports/pull/49) ([jdelasoie](https://github.com/jdelasoie))
 
 ## [0.3.5](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.5) (2018-03-13)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.3.5)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.4...0.3.5)
 
 **Merged pull requests:**
 
@@ -30,9 +58,6 @@
 - FullText: only one link to redirect to a pdf or a directory with several media [\#47](https://github.com/epfl-idevelop/infoscience-exports/pull/47) ([dragonleman](https://github.com/dragonleman))
 - Corrected group\_by year [\#46](https://github.com/epfl-idevelop/infoscience-exports/pull/46) ([dragonleman](https://github.com/dragonleman))
 - Translations: locale folders [\#45](https://github.com/epfl-idevelop/infoscience-exports/pull/45) ([dragonleman](https://github.com/dragonleman))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-09)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.4...prod-release)
 
 ## [0.3.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.4) (2018-03-09)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...0.3.4)

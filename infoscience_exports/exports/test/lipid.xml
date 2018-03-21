@@ -1,0 +1,868 @@
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<!--  Search-Engine-Total-Number-Of-Results: 367  -->
+<collection xmlns="http://ead.nb.admin.ch/web/standards/slb/MARC21/MARC21slim.xsd">
+<record>
+<controlfield tag="001">234529</controlfield>
+<datafield tag="024" ind1="8" ind2=" ">
+<subfield code="a">oai:infoscience.epfl.ch:234529</subfield>
+<subfield code="p">ENAC</subfield>
+<subfield code="p">fulltext</subfield>
+<subfield code="p">fulltext-public</subfield>
+<subfield code="p">driver</subfield>
+<subfield code="p">conf</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">ICON</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234529/files/Devices.JPG
+</subfield>
+<subfield code="z">n/a</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">PUBLIC</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234529/files/W160147.pdf
+</subfield>
+</datafield>
+<datafield tag="973" ind1=" " ind2=" ">
+<subfield code="a">EPFL</subfield>
+<subfield code="s">PUBLISHED</subfield>
+<subfield code="r">REVIEWED</subfield>
+</datafield>
+<datafield tag="773" ind1=" " ind2=" ">
+<subfield code="p">
+Proceedings of the 9th Windsor Conference: Making Comfort Relevant
+</subfield>
+</datafield>
+<datafield tag="980" ind1=" " ind2=" ">
+<subfield code="a">CONF</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LIPID</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Chinazzo, Giorgia</subfield>
+<subfield code="g">242737</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Wienold, Jan</subfield>
+<subfield code="g">243582</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Andersen, Marilyne</subfield>
+<subfield code="g">103938</subfield>
+</datafield>
+<datafield tag="711" ind1="2" ind2=" ">
+<subfield code="a">9th Windsor Conference: Making Comfort Relevant</subfield>
+<subfield code="c">Cumberland Lodge, Windsor, UK</subfield>
+<subfield code="d">7-10 April 2016</subfield>
+</datafield>
+<datafield tag="245" ind1=" " ind2=" ">
+<subfield code="a">
+A preliminary study on the sensitivity of people to visual and thermal parameters in office environments
+</subfield>
+</datafield>
+<datafield tag="260" ind1=" " ind2=" ">
+<subfield code="c">2016</subfield>
+</datafield>
+<datafield tag="520" ind1=" " ind2=" ">
+<subfield code="a">
+The evaluation of indoor comfort requires a thorough understanding of how human occupants perceive four indoor environmental factors: visual conditions, air quality, acoustic ambience and thermal conditions. Recent studies have found that overall comfort is more than the average effects of these four parameters. Beside their main effects, their mutual interactions play an equally important role in the perception of comfort. Thus, to progress regarding our understanding of global comfort, more effort is needed to further investigate the interactions between indoor environmental factors. For this kind of perceptual evaluation, it is necessary to conduct user studies. In these, subjects’ evaluations need to be recorded in addition to the physical parameters that provoke them. Therefore, the sensitivity of people to their environment is the principal parameter around which the studies should be designed. This paper presents a first evaluation of the sensitivity of people to visual and thermal parameters in real office environments to establish a groundwork for future investigations. From this cross-sectional observational study, we concluded that possible effects of interactions between factors are difficult to see when the conditions are more or less comfortable. In that case people are not enough sensitive to environmental changes.
+</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">cross-sectional study</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">interactions</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">comfort</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">perception</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">visual sensation</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">thermal sensation</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">questionnaire</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">253580</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">253580</subfield>
+</datafield>
+<datafield tag="037" ind1=" " ind2=" ">
+<subfield code="a">EPFL-CONF-234529</subfield>
+</datafield>
+</record>
+<record>
+<controlfield tag="001">234499</controlfield>
+<datafield tag="024" ind1="7" ind2=" ">
+<subfield code="a">10.1080/15502724.2017.1404918</subfield>
+<subfield code="2">doi</subfield>
+</datafield>
+<datafield tag="024" ind1="8" ind2=" ">
+<subfield code="a">oai:infoscience.epfl.ch:234499</subfield>
+<subfield code="p">ENAC</subfield>
+<subfield code="p">fulltext</subfield>
+<subfield code="p">fulltext-public</subfield>
+<subfield code="p">driver</subfield>
+<subfield code="p">article</subfield>
+</datafield>
+<datafield tag="037" ind1=" " ind2=" ">
+<subfield code="a">EPFL-ARTICLE-234499</subfield>
+</datafield>
+<datafield tag="245" ind1=" " ind2=" ">
+<subfield code="a">
+Adequacy of Immersive Virtual Reality for the Perception of Daylit Spaces: Comparison of Real and Virtual Environments
+</subfield>
+</datafield>
+<datafield tag="260" ind1=" " ind2=" ">
+<subfield code="c">2018</subfield>
+</datafield>
+<datafield tag="520" ind1=" " ind2=" ">
+<subfield code="a">
+This article presents a novel experimental method that uses a virtual reality (VR) headset, aiming to provide an alternative environment for the conduction of subjective assessments of daylit spaces. This method can overcome the difficulty of controlling the variation of luminous conditions, one of the main challenges in experimental studies using daylight, and its novelty lies in the implementation of physically based renderings into an immersive virtual environment. The present work investigates the adequacy of the proposed method to evaluate five aspects of subjective perception of daylit spaces: the perceived pleasantness, interest, excitement, complexity, and satisfaction with the amount of view in the space. To this end, experiments with 29 participants were conducted to compare users’ perceptions of a real daylit environment and its equivalent representation in VR and test the effect of the display method on the participants’ perceptual evaluations, reported physical symptoms, and perceived presence in the virtual space. The results indicate a high level of perceptual accuracy, showing no significant differences between the real and virtual environments on the studied evaluations. In addition, there was a high level of perceived presence in the virtual environment and no significant effects on the participants’ physical symptoms after the use of the VR headset. Following these findings, the presented experimental method in VR seems very promising for use as a surrogate to real environments in investigating the aforementioned five dimensions of perception in daylit spaces.
+</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">perception</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">virtual reality</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">subjective experiments</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">daylight</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">lighting</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Chamilothori, Kynthia</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Wienold, Jan</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Andersen, Marilyne</subfield>
+</datafield>
+<datafield tag="773" ind1=" " ind2=" ">
+<subfield code="c">1-24</subfield>
+<subfield code="p">LEUKOS</subfield>
+<subfield code="x">1550-2716</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="z">URL</subfield>
+<subfield code="u">
+http://www.tandfonline.com/doi/ref/10.1080/15502724.2017.1404918?scroll=top
+</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">PUBLIC</subfield>
+<subfield code="z">Preprint</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234499/files/Chamilothori_et_al_2017_Adequacy of Immersive Virtual Reality for the perception of daylit spaces.pdf
+</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">ICON</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234499/files/real_virtual-small_1.png
+</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LIPID</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">239103</subfield>
+</datafield>
+<datafield tag="973" ind1=" " ind2=" ">
+<subfield code="a">EPFL</subfield>
+<subfield code="s">PUBLISHED</subfield>
+<subfield code="r">REVIEWED</subfield>
+</datafield>
+<datafield tag="980" ind1=" " ind2=" ">
+<subfield code="a">ARTICLE</subfield>
+</datafield>
+</record>
+<record>
+<controlfield tag="001">234411</controlfield>
+<datafield tag="024" ind1="8" ind2=" ">
+<subfield code="a">oai:infoscience.epfl.ch:234411</subfield>
+<subfield code="p">chapter</subfield>
+<subfield code="p">ENAC</subfield>
+</datafield>
+<datafield tag="037" ind1=" " ind2=" ">
+<subfield code="a">EPFL-CHAPTER-234411</subfield>
+</datafield>
+<datafield tag="245" ind1=" " ind2=" ">
+<subfield code="a">
+Robustesse de l'évaluation du potentiel solaire de formes urbaines différenciées
+</subfield>
+</datafield>
+<datafield tag="260" ind1=" " ind2=" ">
+<subfield code="a">Lausannes</subfield>
+<subfield code="c">2017</subfield>
+<subfield code="b">
+Presses Polytechniques et Universitaires Romandes (PPUR)
+</subfield>
+</datafield>
+<datafield tag="440" ind1=" " ind2=" ">
+<subfield code="a">Architecture albums</subfield>
+</datafield>
+<datafield tag="520" ind1=" " ind2=" ">
+<subfield code="a">
+Le potentiel solaire a une importance primordiale dans la performance énergétique des bâtiments, car le soleil est normalement la principale source d’énergie renouvelable à disposition en milieu urbain. Pourtant, le potentiel solaire n’a pas une définition univoque. Comme nous l’avons déjà vu dans les précédents ouvrages de cette série, il est possible d’opérer une première distinction entre potentiel solaire actif et passif. Le premier se décline en potentiel solaire actif pour systèmes thermiques (production d’eau chaude) et pour systèmes photovoltaïques (production d’électricité). Dans le deuxième, on peut distinguer le potentiel solaire passif pour le chauffage de l’espace intérieur à travers les gains solaires, et l’éclairage à travers la lumière naturelle. Dans la présente étude, nous allons examiner l’irradiation annuelle sur les surfaces des bâtiments, que l’on peut considérer comme un premier indicateur du potentiel solaire actif, sans compter les pertes dues à la transformation en chaleur ou en électricité. Une évaluation du potentiel solaire dès les premières phases du projet, c’est-à-dire lorsque l’on aborde la question de la forme urbaine, permet une intégration plus efficace des critères de performance énergétique. En effet, très souvent, ces questions ne sont abordées que dans les phases avancées du projet, lorsqu’il est plus difficile d’effectuer des changements significatifs sur le projet. Cette étude s’inscrit donc dans une démarche d’évaluation précoce du potentiel solaire de différentes formes urbaines. Les visions urbaines développées par les étudiants de l’atelier du Prof. Emmanuel Rey pour le site de Crissier et présentées dans cet ouvrage se prêtent particulièrement bien à cet exercice d’analyse comparative, car elles présentent des formes urbaines très différenciées. Nous allons donc essayer de vérifier si certaines d’entre elles ont une meilleure exposition au soleil.
+</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">solar potential</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">energy</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Rey, Emmanuel</subfield>
+<subfield code="e">ed.</subfield>
+<subfield code="g">103324</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Peronato, Giuseppe</subfield>
+<subfield code="g">225904</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Rastogi, Parag</subfield>
+<subfield code="g">218422</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Andersen, Marilyne</subfield>
+<subfield code="g">103938</subfield>
+</datafield>
+<datafield tag="773" ind1=" " ind2=" ">
+<subfield code="c">141-150</subfield>
+<subfield code="p">Suburban polarity</subfield>
+<subfield code="z">978-2-88915-215-5</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">ICON</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234411/files/ranking.png
+</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LAST</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LIPID</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">225904</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">225904</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">225904</subfield>
+</datafield>
+<datafield tag="973" ind1=" " ind2=" ">
+<subfield code="a">EPFL</subfield>
+<subfield code="s">PUBLISHED</subfield>
+</datafield>
+<datafield tag="980" ind1=" " ind2=" ">
+<subfield code="a">CHAPTER</subfield>
+</datafield>
+</record>
+<record>
+<controlfield tag="001">234294</controlfield>
+<datafield tag="024" ind1="8" ind2=" ">
+<subfield code="a">oai:infoscience.epfl.ch:234294</subfield>
+<subfield code="p">ENAC</subfield>
+<subfield code="p">fulltext</subfield>
+<subfield code="p">fulltext-public</subfield>
+<subfield code="p">driver</subfield>
+<subfield code="p">poster</subfield>
+</datafield>
+<datafield tag="037" ind1=" " ind2=" ">
+<subfield code="a">EPFL-POSTER-234294</subfield>
+</datafield>
+<datafield tag="245" ind1=" " ind2=" ">
+<subfield code="a">
+Contrast Glare and visual comfort in response to daylight
+</subfield>
+</datafield>
+<datafield tag="260" ind1=" " ind2=" ">
+<subfield code="c">2017</subfield>
+</datafield>
+<datafield tag="520" ind1=" " ind2=" ">
+<subfield code="a">
+There are uncertainties in the current daylight glare prediction models as they do not accurately predict the glare sensation that people experience. The objective of this research project is to investigate daylight glare stemming from contrast between task area and its immediate surroundings. In order to control for bias, several of the main factors that are suspected of influencing individuals’ glare ratings will also be investigated, among others self-reported glare sensitivity, gaze direction and eye contrast sensitivity. The expected research outcome is an improvement of the current daylight glare prediction models.
+</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Hansen, Peter</subfield>
+<subfield code="g">257438</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Wienold, Jan</subfield>
+<subfield code="g">243582</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Andersen, Marilyne</subfield>
+<subfield code="g">103938</subfield>
+</datafield>
+<datafield tag="711" ind1="2" ind2=" ">
+<subfield code="a">7th VELUX Daylight Symposium</subfield>
+<subfield code="c">Berlin, Germany</subfield>
+<subfield code="d">3-4 May 2017</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">ICON</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234294/files/0944_Velux_poster_A0_PH_Thumpnail.jpg
+</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">PUBLIC</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234294/files/0944_Velux_poster_A0_PH_r8.pdf
+</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LIPID</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">257438</subfield>
+</datafield>
+<datafield tag="973" ind1=" " ind2=" ">
+<subfield code="a">EPFL</subfield>
+</datafield>
+<datafield tag="980" ind1=" " ind2=" ">
+<subfield code="a">POSTER</subfield>
+</datafield>
+</record>
+<record>
+<controlfield tag="001">234291</controlfield>
+<datafield tag="024" ind1="8" ind2=" ">
+<subfield code="a">oai:infoscience.epfl.ch:234291</subfield>
+<subfield code="p">ENAC</subfield>
+<subfield code="p">fulltext</subfield>
+<subfield code="p">fulltext-public</subfield>
+<subfield code="p">driver</subfield>
+<subfield code="p">poster</subfield>
+</datafield>
+<datafield tag="037" ind1=" " ind2=" ">
+<subfield code="a">EPFL-POSTER-234291</subfield>
+</datafield>
+<datafield tag="245" ind1=" " ind2=" ">
+<subfield code="a">
+HDR Images for Glare Evaluation: Comparison Between DSLR Cameras, an Absolute Calibrated Luminance Camera and a Spot Luminance Meter
+</subfield>
+</datafield>
+<datafield tag="260" ind1=" " ind2=" ">
+<subfield code="c">2017</subfield>
+</datafield>
+<datafield tag="520" ind1=" " ind2=" ">
+<subfield code="a">
+User calibrated digital single-lens reflex (DSLR) cameras, utilizing an automated image calibration algorithm, are being used for glare evaluations as affordable alternatives to high-end luminance cameras calibrated by manufacturers. This study investigates the accuracy of luminance maps derived from HDR images captured with auto-calibrated DSLR cameras. More specifically, to compare the luminance values obtained with an auto-calibrated DSLR camera with a commercially available camera (that benefited from an absolute calibration) and a handheld luminance meter, considered as the reference. It was found that there are only small differences when luminance values estimated with auto-calibrated DSLR cameras are compared with those obtained for the commercially calibrated camera for low to mid-range luminance values (50 – 5000 cd/m 2 ). However, for higher luminance values (>5000 cd/m2 ), HDR images from the auto-calibrated camera show differences of up to 20 %, which could be problematic for glare investigations. More studies specifically focusing on high luminances are needed to determine more conclusively whether certain limitations should apply to the use of automatically calibrated DSLR cameras for glare evaluations.
+</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">Photometry</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">HDR imaging</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">Camera calibration</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Hansen, Peter</subfield>
+<subfield code="g">257438</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Wienold, Jan</subfield>
+<subfield code="g">243582</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Andersen, Marilyne</subfield>
+<subfield code="g">103938</subfield>
+</datafield>
+<datafield tag="711" ind1="2" ind2=" ">
+<subfield code="a">
+“Smarter Lighting for Better Life” at the CIE Midterm Meeting 2017
+</subfield>
+<subfield code="c">Jeju, South Korea</subfield>
+<subfield code="d">October 23 - 25, 2017</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">PUBLIC</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234291/files/Poster_PH_2017.pdf
+</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">ICON</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234291/files/Poster_PH_2017_thumpnail.jpg
+</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LIPID</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">257438</subfield>
+</datafield>
+<datafield tag="973" ind1=" " ind2=" ">
+<subfield code="a">EPFL</subfield>
+</datafield>
+<datafield tag="980" ind1=" " ind2=" ">
+<subfield code="a">POSTER</subfield>
+</datafield>
+</record>
+<record>
+<controlfield tag="001">234290</controlfield>
+<datafield tag="024" ind1="8" ind2=" ">
+<subfield code="a">oai:infoscience.epfl.ch:234290</subfield>
+<subfield code="p">ENAC</subfield>
+<subfield code="p">fulltext</subfield>
+<subfield code="p">fulltext-public</subfield>
+<subfield code="p">driver</subfield>
+<subfield code="p">presentation</subfield>
+</datafield>
+<datafield tag="037" ind1=" " ind2=" ">
+<subfield code="a">EPFL-TALK-234290</subfield>
+</datafield>
+<datafield tag="245" ind1=" " ind2=" ">
+<subfield code="a">
+WORKSHOP - Measurement of luminance distributions in the field of view for glare evaluations
+</subfield>
+</datafield>
+<datafield tag="260" ind1=" " ind2=" ">
+<subfield code="c">2017</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">Luminance camera calibration</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Hansen, Peter</subfield>
+<subfield code="g">257438</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Wienold, Jan</subfield>
+<subfield code="g">243582</subfield>
+</datafield>
+<datafield tag="711" ind1="2" ind2=" ">
+<subfield code="a">
+“Smarter Lighting for Better Life” at the CIE Midterm Meeting 2017 - in Discomfort Glare Evaluation for Daylight and Artificial Light workshop
+</subfield>
+<subfield code="c">Jeju, South Korea</subfield>
+<subfield code="d">October 23 - 25, 2017</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">PUBLIC</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234290/files/Workshop_presentation_PH_23_10_17.pdf
+</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">ICON</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/234290/files/Workshop_presentation_PH_23_10_17 - thumpnail.jpg
+</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LIPID</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">257438</subfield>
+</datafield>
+<datafield tag="973" ind1=" " ind2=" ">
+<subfield code="a">EPFL</subfield>
+</datafield>
+<datafield tag="980" ind1=" " ind2=" ">
+<subfield code="a">TALK</subfield>
+</datafield>
+</record>
+<record>
+<controlfield tag="001">233840</controlfield>
+<datafield tag="024" ind1="8" ind2=" ">
+<subfield code="a">oai:infoscience.epfl.ch:233840</subfield>
+<subfield code="p">ENAC</subfield>
+<subfield code="p">fulltext</subfield>
+<subfield code="p">fulltext-public</subfield>
+<subfield code="p">driver</subfield>
+<subfield code="p">conf</subfield>
+</datafield>
+<datafield tag="037" ind1=" " ind2=" ">
+<subfield code="a">EPFL-CONF-233840</subfield>
+</datafield>
+<datafield tag="245" ind1=" " ind2=" ">
+<subfield code="a">
+Suitability of neighborhood-scale massing models for daylight performance evaluation.
+</subfield>
+</datafield>
+<datafield tag="260" ind1=" " ind2=" ">
+<subfield code="c">2017</subfield>
+</datafield>
+<datafield tag="520" ind1=" " ind2=" ">
+<subfield code="a">
+Access to daylight in buildings is the combined effect of a building’s own physical attributes along with its surrounding physical context. There is thus growing interest among researchers to extend the use of building performance simulation (BPS) tools for daylight performance evaluation, not just for an individual building, but to the neighborhood scale and beyond. In the design process of neighborhoods, massing models are often utilized and are a pivotal early design-stage work-product. These models are typically simple and delineate broad geometric dimensions of built enclosures. They are thus attractive for fast early design stage assessment using BPS tools and maybe used to determine daylight access potential. However, at this stage, the designer may have limited and imprecise information regarding the building façade, the vital element for daylight intake and distribution in the building interior. In this study, we assess the dependability of simple massing models for comparative indoor daylight assessments of neighborhood forms. Useful Daylight Illuminance (UDI) metric based performance values were calculated for five neighborhood design options using common practice for façade related inputs in early design stage simulation models and then ranked in decreasing order of performance. A virtual progression of the design-process was then carried out to develop multiple plausible façade design solutions for all proposed massing schemes. The main finding of this study is that significant changes can be observed in neighbourhood rankings when increasing the degree of detail in the façade design solutions. While the highest performing designs were found to maintain their ranks, the rankings of other projects shifted considerably when façade related information was supplied. This work informs on the possibility of erroneous design decisions resulting from simplified façade inputs in early design stage models and fosters the growing discussion on appropriate utilization of BPS tools for informing design decisions.
+</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">BPS best practice</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">design process</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">daylight</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">façade details</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Agarwal, Minu</subfield>
+<subfield code="g">261624</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Pastore, Luisa</subfield>
+<subfield code="g">253134</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Andersen, Marilyne</subfield>
+<subfield code="g">103938</subfield>
+</datafield>
+<datafield tag="711" ind1="2" ind2=" ">
+<subfield code="a">
+International Conference on Sustainable Design of the Built Environment (SDBE) 2017
+</subfield>
+<subfield code="c">London, UK</subfield>
+<subfield code="d">December 20-21, 2017</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">ICON</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/233840/files/Figure_6.jpg
+</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">PUBLIC</subfield>
+<subfield code="z">Preprint</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/233840/files/SDBE_2017_Submission91.pdf
+</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LIPID</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">261624</subfield>
+</datafield>
+<datafield tag="973" ind1=" " ind2=" ">
+<subfield code="a">EPFL</subfield>
+<subfield code="s">PUBLISHED</subfield>
+<subfield code="r">REVIEWED</subfield>
+</datafield>
+<datafield tag="980" ind1=" " ind2=" ">
+<subfield code="a">CONF</subfield>
+</datafield>
+</record>
+<record>
+<controlfield tag="001">233839</controlfield>
+<datafield tag="020" ind1=" " ind2=" ">
+<subfield code="a">ISBN #: 978- 1-365 -28915 -6</subfield>
+</datafield>
+<datafield tag="024" ind1="8" ind2=" ">
+<subfield code="a">oai:infoscience.epfl.ch:233839</subfield>
+<subfield code="p">ENAC</subfield>
+<subfield code="p">fulltext</subfield>
+<subfield code="p">fulltext-public</subfield>
+<subfield code="p">driver</subfield>
+<subfield code="p">conf</subfield>
+</datafield>
+<datafield tag="037" ind1=" " ind2=" ">
+<subfield code="a">EPFL-CONF-233839</subfield>
+</datafield>
+<datafield tag="245" ind1=" " ind2=" ">
+<subfield code="a">
+Examining Building Design Decisions Under Long Term Weather Variability and Microclimatic Effects: A case-based exploratory study
+</subfield>
+</datafield>
+<datafield tag="260" ind1=" " ind2=" ">
+<subfield code="c">2016</subfield>
+</datafield>
+<datafield tag="520" ind1=" " ind2=" ">
+<subfield code="a">
+Thermal building simulation currently uses Typical Meteorological Year (TMY) data to guide the design decision-making process or for compliance with energy standards. TMY data usually excludes extremes and in many cases are gathered from microclimatic contexts that are not sufficiently representative of the project sites (e.g., airports), adding uncertainty in the analyses. To enable a quantification of uncertainty due to weather by exploring a wide variety of atypical weather conditions, the authors have previously proposed synthetic weather data for building simulation. This is a suite of weather time series, generated from typical weather data that includes heat waves and atypical peak temperatures. In this paper, we used this synthetic weather to examine the effect of considering atypical conditions on design decisions. We also compared the impact of including ‘city-modified’ weather data on retrofit decisions using urban microclimate simulation. We found that it may not be viable to pre-select a subset of weather data for all buildings at a given location. Rather, multiple weather data sets may be simulated based on the design strategies and performance criteria of importance. In other words, an extreme condition/year for one building isn’t necessarily the same for another. For example, in the case study presented, heat island effect was found to be a likely hindrance to night time cooling. This paper informs the debate on the necessity of expanding the current energy building analyses to a broader consideration of weather variability and more realistic urban microclimate characterization.
+</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">overheating</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">stochastic weather inputs</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">design decision making</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">building simulation</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Agarwal, Minu</subfield>
+<subfield code="g">261624</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Rastogi, Parag</subfield>
+<subfield code="g">218422</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Peltier, Margaux Marie Valérie</subfield>
+<subfield code="g">218347</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Pastore, Luisa</subfield>
+<subfield code="g">253134</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Andersen, Marilyne</subfield>
+<subfield code="g">103938</subfield>
+</datafield>
+<datafield tag="711" ind1="2" ind2=" ">
+<subfield code="a">PLEA</subfield>
+<subfield code="c">Los Angeles, USA</subfield>
+<subfield code="d">July 11-13, 2016</subfield>
+</datafield>
+<datafield tag="773" ind1=" " ind2=" ">
+<subfield code="c">1504</subfield>
+<subfield code="p">
+Proceedings of the 32nd International Conference on Passive and Low Energy Architecture
+</subfield>
+<subfield code="v">1</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">ICON</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/233839/files/Flow Chart.JPG
+</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">PUBLIC</subfield>
+<subfield code="z">Preprint</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/233839/files/Preprint.pdf
+</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LIPID</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">261624</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">261624</subfield>
+</datafield>
+<datafield tag="973" ind1=" " ind2=" ">
+<subfield code="a">OTHER</subfield>
+<subfield code="s">PUBLISHED</subfield>
+<subfield code="r">REVIEWED</subfield>
+</datafield>
+<datafield tag="980" ind1=" " ind2=" ">
+<subfield code="a">CONF</subfield>
+</datafield>
+</record>
+<record>
+<controlfield tag="001">233834</controlfield>
+<datafield tag="024" ind1="7" ind2=" ">
+<subfield code="a">10.1159/000477426</subfield>
+<subfield code="2">doi</subfield>
+</datafield>
+<datafield tag="024" ind1="8" ind2=" ">
+<subfield code="a">oai:infoscience.epfl.ch:233834</subfield>
+<subfield code="p">ENAC</subfield>
+<subfield code="p">article</subfield>
+</datafield>
+<datafield tag="037" ind1=" " ind2=" ">
+<subfield code="a">EPFL-ARTICLE-233834</subfield>
+</datafield>
+<datafield tag="245" ind1=" " ind2=" ">
+<subfield code="a">
+Towards Human-Centric Lighting for Office Buildings: Pilot Study on the Interactions of Visual, Perceptual and Non-Visual Effects of Workplace (Day) Lighting
+</subfield>
+</datafield>
+<datafield tag="260" ind1=" " ind2=" ">
+<subfield code="c">2017</subfield>
+</datafield>
+<datafield tag="520" ind1=" " ind2=" ">
+<subfield code="a">
+Objectives: Although knowledge about the impact of light on individuals beyond vision is becoming substantial and less and less controversial, there is still a gap on how to properly address what type of lighting quality one should seek in an indoor space. What constitutes good lighting conditions from a truly holistic, human-centered perspective, i.e. encompassing both visual and non-visual aspects? Very few models are currently available to embed non-visual lighting in a design decision-making process beyond the ability to compare how effective different sources are expected to be in generating non-visual effects. One model has been proposed that attempts to address non-visual lighting in a design context, called the non-visual Direct Response model (nvRD), developed alongside another novel model for visual interest of daylight composition, named modified Spatial Contrast model (mSC). The aim of this study is to make a first attempt to test whether the non-visual system may constitute a dominant driver for determining the quality of lighting conditions in a working context and how it seems to interact with visual factors. Methods: A cross-sequential study was conducted in 31 single and double-occupied offices within a research building at EPFL, Switzerland. Occupants from East and West facades were recruited on a volunteer basis. According to baseline questionnaires that were initially distributed, only healthy participants-without psychological or sleep disorders-were selected for a 9-day monitored study. Two reference rooms-empty offices-on each facade were in parallel equipped with cameras, spectrophotometers and luxmeters to monitor variations in daylight patterns simultaneously, while limiting intrusions within the researchers’ work environment. Daily pointin-time surveys were distributed among participants, twice a day, to measure subjective responses for alertness, discomfort glare, workplane illuminance and perceptual interest, together with a tickbox table to observe their behaviour regarding shading and lighting control within their offices. Objective data were computed according to existing metrics for visual lighting, such as Daylight Glare Probability, to analyse visual performance and visual comfort, while the two novel approaches cited above were explored: the modified Spatial Contrast model mSC, to assess visual interest, and the non-visual Direct Response model nvRD, to assess alertness. Results: Initial findings show that the temporal variations of these different metrics are correlated to specific characteristics of the objective lighting data gathered for the different offices over the days, and are noticeably influenced by orientation, time of day and weather. Future steps of development will include correlational analyses to estimate the association between objective and subjective measures, and multivariate regression analyses to determine the relative weight of each (instantaneous) visual factor compared to the (cumulated) non-visual component, depending on the lighting conditions simultaneously measured inside the offices. Conclusions: This pilot study allows to reveal relationships between lighting performance metrics that have until now only been addressed separately, if at all, and to confront objective lighting monitoring with subjective self-evaluation and novel models for perceptual aspects of light, both visual and non-visual, in office buildings.
+</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Soto Magan, Victoria Eugenia</subfield>
+<subfield code="g">274395</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Andersen, Marilyne</subfield>
+<subfield code="g">103938</subfield>
+</datafield>
+<datafield tag="773" ind1=" " ind2=" ">
+<subfield code="c">251-252</subfield>
+<subfield code="n">4</subfield>
+<subfield code="p">Neuropsychobiology</subfield>
+<subfield code="v">74</subfield>
+<subfield code="x">1423-0224</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">PRIVATE</subfield>
+<subfield code="z">Publisher's version</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/233834/files/477426.pdf
+</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">ICON</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/233834/files/IMG_8746.JPG
+</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LIPID</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">274395</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">274395</subfield>
+</datafield>
+<datafield tag="973" ind1=" " ind2=" ">
+<subfield code="a">EPFL</subfield>
+<subfield code="s">PUBLISHED</subfield>
+<subfield code="r">REVIEWED</subfield>
+</datafield>
+<datafield tag="980" ind1=" " ind2=" ">
+<subfield code="a">ARTICLE</subfield>
+</datafield>
+</record>
+<record>
+<controlfield tag="001">233832</controlfield>
+<datafield tag="024" ind1="8" ind2=" ">
+<subfield code="a">oai:infoscience.epfl.ch:233832</subfield>
+<subfield code="p">ENAC</subfield>
+<subfield code="p">fulltext</subfield>
+<subfield code="p">fulltext-public</subfield>
+<subfield code="p">driver</subfield>
+<subfield code="p">poster</subfield>
+</datafield>
+<datafield tag="037" ind1=" " ind2=" ">
+<subfield code="a">EPFL-POSTER-233832</subfield>
+</datafield>
+<datafield tag="245" ind1=" " ind2=" ">
+<subfield code="a">
+Towards human-centric lighting for office buildings. Pilot study on the interactions of visual, perceptual and non-visual effects of workplace (day)lighting
+</subfield>
+</datafield>
+<datafield tag="520" ind1=" " ind2=" ">
+<subfield code="a">
+Although knowledge about the impact of light on individuals beyond vision is becoming substantial and less and less controversial, there is still a gap on how to properly address what type of lighting quality one should seek in an indoor space. What constitutes good lighting conditions from a truly holistic, human-centered perspective, i.e. encompassing both visual and non-visual aspects? Very few models are currently available to embed non-visual lighting in a design decision-making process beyond the ability to compare how effective different sources are expected to be in generating non-visual effects. The aim of this study is to make a first attempt to test whether the non-visual system may constitute a dominant driver for determining the quality of lighting conditions in a working context and how it seems to interact with visual factors.
+</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">human-centric light</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">visual performance</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">visual comfort</subfield>
+</datafield>
+<datafield tag="653" ind1="1" ind2=" ">
+<subfield code="a">non-visual responses</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Soto Magan, Victoria Eugenia</subfield>
+<subfield code="g">274395</subfield>
+</datafield>
+<datafield tag="700" ind1=" " ind2=" ">
+<subfield code="a">Andersen, Marilyne</subfield>
+<subfield code="g">103938</subfield>
+</datafield>
+<datafield tag="711" ind1="2" ind2=" ">
+<subfield code="a">
+Society for Light Treatment and Biological Rhythms Annual Meeting
+</subfield>
+<subfield code="c">Berlin, Germany</subfield>
+<subfield code="d">June 23-25, 2017</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">ICON</subfield>
+<subfield code="z">n/a</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/233832/files/IMG_8741_1.JPG
+</subfield>
+</datafield>
+<datafield tag="856" ind1="4" ind2=" ">
+<subfield code="i">INTERNAL</subfield>
+<subfield code="x">PUBLIC</subfield>
+<subfield code="z">Preprint</subfield>
+<subfield code="u">
+https://infoscience.epfl.ch/record/233832/files/SLTBRPoster-VESM.pdf
+</subfield>
+</datafield>
+<datafield tag="909" ind1="C" ind2="0">
+<subfield code="p">LIPID</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">274395</subfield>
+</datafield>
+<datafield tag="917" ind1="Z" ind2="8">
+<subfield code="x">274395</subfield>
+</datafield>
+<datafield tag="973" ind1=" " ind2=" ">
+<subfield code="a">EPFL</subfield>
+</datafield>
+<datafield tag="980" ind1=" " ind2=" ">
+<subfield code="a">POSTER</subfield>
+</datafield>
+</record>
+</collection>

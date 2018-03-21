@@ -18,11 +18,7 @@
 {% endif %}
 
 {% if article.Title %}
-	<span>
-		{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
-		<strong>{{ article.Title }}</strong>.
-		{% if options.link_title and article.ELA_URL %}</a>{% endif %}
-	</span>
+	<span><strong>{{ article.Title }}</strong>.</span>
 {% endif %}
 
 {% if article.Publication_Location %}

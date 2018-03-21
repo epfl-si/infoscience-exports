@@ -23,27 +23,31 @@
 			{% endif %}
 				<div class="infoscience_data">
 					<div class="record-content">
-                        {% if article.Doc_Type == 'ARTICLE' %}
+                        {% if article.Doc_Type == 'Journal Articles' %}
 							{% include "exports/include_doctype/article_short.html" with article=article %}
-                        {% elif article.Doc_Type == 'THESIS' %}
+                        {% elif article.Doc_Type == 'Reviews' %}
+							{% include "exports/include_doctype/article_short.html" with article=article %}
+                        {% elif article.Doc_Type == 'Theses' %}
 							{% include "exports/include_doctype/thesis_short.html" with article=article %}
-                        {% elif article.Doc_Type == 'THESIS_LIB' %}
-							{% include "exports/include_doctype/thesis_short.html" with article=article %}
-                        {% elif article.Doc_Type == 'REP_WORK' %}
+                        {% elif article.Doc_Type == 'Working Papers' %}
 							{% include "exports/include_doctype/report_and_working_paper_short.html" with article=article %}
-                        {% elif article.Doc_Type == 'PROC' %}
+                        {% elif article.Doc_Type == 'Reports' %}
+							{% include "exports/include_doctype/report_and_working_paper_short.html" with article=article %}
+                        {% elif article.Doc_Type == 'Conference Proceedings' %}
 							{% include "exports/include_doctype/conference_proceeding_short.html" with article=article %}
-                        {% elif article.Doc_Type == 'CONF' %}
+                        {% elif article.Doc_Type == 'Conference Papers' %}
 							{% include "exports/include_doctype/conference_paper_short.html" with article=article %}
-                        {% elif article.Doc_Type == 'POST_TALK' %}
+                        {% elif article.Doc_Type == 'Posters' %}
 							{% include "exports/include_doctype/poster_and_talks_short.html" with article=article %}
-                        {% elif article.Doc_Type == 'STUDENT' %}
+                        {% elif article.Doc_Type == 'Talks' %}
+							{% include "exports/include_doctype/poster_and_talks_short.html" with article=article %}
+                        {% elif article.Doc_Type == 'Student Projects' %}
 							{% include "exports/include_doctype/student_project_short.html" with article=article %}
-                        {% elif article.Doc_Type == 'BOOK' %}
+                        {% elif article.Doc_Type == 'Books' %}
 							{% include "exports/include_doctype/book_short.html" with article=article %}
-                        {% elif article.Doc_Type == 'BOOK_CHAP' %}
+                        {% elif article.Doc_Type == 'Book Chapters' %}
 							{% include "exports/include_doctype/book_chapter_short.html" with article=article %}
-                        {% elif article.Doc_Type == 'PATENT' %}
+                        {% elif article.Doc_Type == 'Patents' %}
 							{% include "exports/include_doctype/patent_short.html" with article=article %}
 						{% else %}
 
@@ -54,12 +58,7 @@
 							{% endif %}
 
 							{% if article.Title %}
-								<span>
-									{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
-									<strong>{{ article.Title }}</strong>
-									{% if options.link_title and article.ELA_URL %}</a>{% endif %}
-									.
-								</span>
+								<span><strong>{{ article.Title }}</strong> .</span>
 							{% endif %}
 
 							{% if article.Publication_Date %}

@@ -1,3 +1,5 @@
+from urllib.parse import unquote
+
 from django.urls import reverse_lazy as django_reverse_lazy
 from django.http import HttpResponse
 from django.template import loader
@@ -50,6 +52,15 @@ class ExportCreate(LoginRequiredMixin, CreateView):
     form_class = ExportForm
     success_url = django_reverse_lazy('crud:export-list')
 
+    def get(self, request, *args, **kwargs):
+        # url in parameter is a form initial
+        if request.GET.get('url'):
+            self.initial.update({
+                'url': unquote(request.GET['url'])
+            })
+
+        return super().get(request, *args, **kwargs)
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(ExportCreate, self).form_valid(form)
@@ -92,7 +103,6 @@ class ExportView(DetailView):
         options['format'] = 'SHORT'  # self.object.formats_type
         options['bullet'] = self.object.bullets_type
         options['thumb'] = self.object.show_thumbnail
-        options['link_title'] = self.object.show_linkable_titles
         options['link_authors'] = self.object.show_linkable_authors
         options['link_print'] = self.object.show_links_for_printing
         options['link_detailed'] = self.object.show_detailed
@@ -131,7 +141,6 @@ def preview(request):
     options['format'] = 'SHORT'  # params['params[format]']
     options['bullet'] = params['params[bullet]']
     options['thumb'] = params['params[thumb]'] == 'true'
-    options['link_title'] = params['params[link_title]'] == 'true'
     options['link_authors'] = params['params[link_authors]'] == 'true'
     options['link_print'] = params['params[link_print]'] == 'true'
     options['link_detailed'] = params['params[link_detailed]'] == 'true'
