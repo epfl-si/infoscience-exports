@@ -11,7 +11,8 @@ python:
 
 install:
 - make init-venv
-- make reset
+- make build-travis
+- make init-db
 
 script:
 # see https://docs.codecov.io/docs/testing-with-docker for documentation
