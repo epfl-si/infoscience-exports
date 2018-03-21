@@ -94,26 +94,28 @@ class SeleniumStaticLiveServerTestCase(StaticLiveServerTestCase):
         full_url = '%s%s' % (self.live_server_url,
                              reverse('crud:export-create'))
 
-        infoscience_url = '{}/search%3Fln%3Den%26p%3Dvetterli%26f%3D%26c%3DInfoscience%252FArticle' \
-                          '%26c%3DInfoscience%252FReview%26c%3DInfoscience%252FThesis' \
-                          '%26c%3DInfoscience%252FWorking%2Bpapers%26c%3DInfoscience%252FProceedings' \
-                          '%26c%3DInfoscience%252FPresentation%26c%3DInfoscience%252FPatent' \
-                          '%26c%3DInfoscience%252FStudent%26c%3DMedia%26c%3DOther%2Bdoctypes' \
-                          '%26c%3DInfoscience%252FConference%26c%3DInfoscience%252FReport%26c%3DInfoscience%252FBook' \
-                          '%26c%3DInfoscience%252FChapter%26c%3DInfoscience%252FPoster%26c%3DInfoscience%252FStandard' \
-                          '%26c%3DInfoscience%252FLectures%26c%3DInfoscience%252FDataset' \
-                          '%26c%3DInfoscience%252FPhysical%2Bobjects%26c%3DWork%2Bdone%2Boutside%2BEPFL' \
-                          '%26sf%3D%26so%3Dd%26rg%3D10'.format(quote(settings.INFOSCIENCE_SITE_URL, safe=''))
+        infoscience_url = \
+            '{}/search%3Fln%3Den%26p%3Dvetterli%26f%3D%26c%3DInfoscience%252FArticle' \
+            '%26c%3DInfoscience%252FReview%26c%3DInfoscience%252FThesis' \
+            '%26c%3DInfoscience%252FWorking%2Bpapers%26c%3DInfoscience%252FProceedings' \
+            '%26c%3DInfoscience%252FPresentation%26c%3DInfoscience%252FPatent' \
+            '%26c%3DInfoscience%252FStudent%26c%3DMedia%26c%3DOther%2Bdoctypes' \
+            '%26c%3DInfoscience%252FConference%26c%3DInfoscience%252FReport%26c%3DInfoscience%252FBook' \
+            '%26c%3DInfoscience%252FChapter%26c%3DInfoscience%252FPoster%26c%3DInfoscience%252FStandard' \
+            '%26c%3DInfoscience%252FLectures%26c%3DInfoscience%252FDataset' \
+            '%26c%3DInfoscience%252FPhysical%2Bobjects%26c%3DWork%2Bdone%2Boutside%2BEPFL' \
+            '%26sf%3D%26so%3Dd%26rg%3D10'.format(quote(settings.INFOSCIENCE_SITE_URL, safe=''))
 
-        awaited_result_url = '{}/search?ln=en&p=vetterli' \
-                          '&f=&c=Infoscience%2FArticle&c=Infoscience%2FReview&c=Infoscience%2FThesis' \
-                          '&c=Infoscience%2FWorking+papers&c=Infoscience%2FProceedings' \
-                          '&c=Infoscience%2FPresentation&c=Infoscience%2FPatent&c=Infoscience%2FStudent' \
-                          '&c=Media&c=Other+doctypes&c=Infoscience%2FConference&c=Infoscience%2FReport' \
-                          '&c=Infoscience%2FBook&c=Infoscience%2FChapter&c=Infoscience%2FPoster&c=Infoscience%2FStandard' \
-                          '&c=Infoscience%2FLectures&c=Infoscience%2FDataset' \
-                          '&c=Infoscience%2FPhysical+objects&c=Work+done+outside+EPFL' \
-                          '&sf=&so=d&rg=10'.format(settings.INFOSCIENCE_SITE_URL)
+        awaited_result_url = \
+            '{}/search?ln=en&p=vetterli' \
+            '&f=&c=Infoscience%2FArticle&c=Infoscience%2FReview&c=Infoscience%2FThesis' \
+            '&c=Infoscience%2FWorking+papers&c=Infoscience%2FProceedings' \
+            '&c=Infoscience%2FPresentation&c=Infoscience%2FPatent&c=Infoscience%2FStudent' \
+            '&c=Media&c=Other+doctypes&c=Infoscience%2FConference&c=Infoscience%2FReport' \
+            '&c=Infoscience%2FBook&c=Infoscience%2FChapter&c=Infoscience%2FPoster&c=Infoscience%2FStandard' \
+            '&c=Infoscience%2FLectures&c=Infoscience%2FDataset' \
+            '&c=Infoscience%2FPhysical+objects&c=Work+done+outside+EPFL' \
+            '&sf=&so=d&rg=10'.format(settings.INFOSCIENCE_SITE_URL)
 
         full_url = '{}?url={}'.format(full_url, quote(infoscience_url, safe=''))
 
