@@ -25,7 +25,7 @@
 					<div class="record-content">
                         {% if article.Doc_Type == 'Journal Articles' %}
 							{% include "exports/include_doctype/article_short.html" with article=article %}
-                        {% if article.Doc_Type == 'Reviews' %}
+                        {% elif article.Doc_Type == 'Reviews' %}
 							{% include "exports/include_doctype/article_short.html" with article=article %}
                         {% elif article.Doc_Type == 'Theses' %}
 							{% include "exports/include_doctype/thesis_short.html" with article=article %}
