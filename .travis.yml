@@ -20,7 +20,8 @@ script:
 - make fast-test
 
 after_success:
-- docker-compose -f docker-compose-dev.yml exec web codecov --commit=$TRAVIS_COMMIT
+- ci_env=`bash <(curl -s https://codecov.io/env)`
+- docker-compose -f docker-compose-dev.yml exec web bash -c 'bash <(curl -s https://codecov.io/bash)'
 
 matrix:
   fast_finish: true
