@@ -57,14 +57,12 @@ class GroupBySettings(BaseSettings):
 
     GROUPSBY_DOC_CHOICE = (
         ('NONE', ''),
-        ('DOC', _('document type')),
         ('DOC_TITLE', _('document type as title')),
     )
 
     GROUPSBY_ALL_CHOICE = (
         ('NONE', ''),
         ('YEAR_TITLE', _('year as title')),
-        ('DOC', _('document type')),
         ('DOC_TITLE', _('document type as title')),
     )
 
