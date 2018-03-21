@@ -10,9 +10,7 @@
 
 {% if article.Title %}
 	<span>
-		{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
 		<strong>{{ article.Title }}</strong>
-		{% if options.link_title and article.ELA_URL %}</a>{% endif %}
 		{% if options.adv_conf_paper_journal_name and article.Publisher %} ; {% else %} . {% endif %}
 	</span>
 {% endif %}
