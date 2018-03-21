@@ -202,8 +202,10 @@ push-prod:
 
 deploy: dump
 	git pull
-	# update docker image
-	docker-compose -f docker-compose-dev.yml build web
+	# update docker images
+	docker-compose -f docker-compose-dev.yml build
+	# restart containers
+	make restart
 	# update DB
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
