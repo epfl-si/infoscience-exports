@@ -4,6 +4,7 @@ FROM python:3
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		gettext \
 		tree \
+		curl \
 	&& rm -rf /var/lib/apt/lists/*
 
 # create directories
@@ -20,6 +21,9 @@ COPY ./requirements*.txt /usr/src/app/
 RUN pip install -r requirements-dev.txt
 
 # copy project files
+COPY ./update_release.py /usr/src/app/update_release.py
+COPY ./infoscience_exports/exports/versions.py /usr/src/app/versions.py
+COPY ./Makefile /usr/src/app/Makefile
 COPY ./infoscience_exports /usr/src/app/infoscience_exports
 
 # collectstatic

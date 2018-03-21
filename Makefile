@@ -61,11 +61,6 @@ build:
 	docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml build
 
-build-travis:
-	docker-compose -f docker-compose-dev.yml build
-	docker-compose -f docker-compose-dev.yml up -d
-	sleep 2
-
 init-db:
 	# create DB
 	docker-compose -f docker-compose-dev.yml exec postgres \
@@ -228,7 +223,7 @@ fast-test: check-env
 
 test: check-env
 	docker-compose -f docker-compose-dev.yml exec web \
-		flake8 infoscience_exports/exports --max-line-length=120
+		flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py test exports --settings=settings.test --noinput
 
@@ -237,6 +232,11 @@ coverage: check-env
 	pytest --cov=infoscience_exports infoscience_exports/exports/pytests
 	coverage html
 	open htmlcov/index.html
+
+travis-test:
+	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
+	python infoscience_exports/manage.py test exports --settings=settings.test --noinput
+	bash -c "bash <(curl -s https://codecov.io/bash)"
 
 check-env:
 ifeq ($(wildcard .env),)
