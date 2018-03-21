@@ -39,7 +39,6 @@ class BulletsSettings(BaseSettings):
 
 
 class LinksSettings(BaseSettings):
-    show_linkable_titles = models.BooleanField(default=False)
     show_linkable_authors = models.BooleanField(default=False)
     show_links_for_printing = models.BooleanField(default=False)
     show_detailed = models.BooleanField(default=True)

@@ -23,9 +23,7 @@
 
 {% if article.Title %}
 	<span>
-		{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
 		<strong>{{ article.Title }}</strong>
-		{% if options.link_title and article.ELA_URL %}</a>{% endif %}
 		{% if article.Patent %} ; {% else %} . {% endif %}
 	</span>
 {% endif %}
