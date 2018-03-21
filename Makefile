@@ -106,7 +106,7 @@ restart-web:
 	docker-compose -f docker-compose-dev.yml stop web
 	docker-compose -f docker-compose-dev.yml start web
 
-superadmin: up
+superadmin:
 	docker-compose -f docker-compose-dev.yml exec web \
 	python infoscience_exports/manage.py shell -c "from django.contrib.auth import get_user_model; \
 		User = get_user_model(); \
@@ -234,10 +234,10 @@ coverage: check-env
 	open htmlcov/index.html
 
 build-travis:		
-	docker-compose -f docker-compose-dev.yml build		
-	docker-compose -f docker-compose-dev.yml up -d		
+	docker-compose -f docker-compose-dev.yml build
+	docker-compose -f docker-compose-dev.yml run --service-ports ${ci_env} -d nginx
 
-travis-test:
+test-travis:
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
 	python infoscience_exports/manage.py test exports --settings=settings.test --noinput
 	bash -c "bash <(curl -s https://codecov.io/bash)"
