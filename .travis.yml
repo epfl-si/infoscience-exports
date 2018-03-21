@@ -16,11 +16,10 @@ install:
 
 script:
 - make vars
-- make codecov
 - make fast-test
 # see https://docs.codecov.io/docs/testing-with-docker for documentation
 - ci_env=`bash <(curl -s https://codecov.io/env)`
-- docker-compose -f docker-compose-dev.yml exec web bash -c 'bash <(curl -s https://codecov.io/bash)'
+- docker-compose -f docker-compose-dev.yml run $ci_env web bash -c 'bash <(curl -s https://codecov.io/bash)'
 
 matrix:
   fast_finish: true

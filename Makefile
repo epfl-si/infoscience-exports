@@ -223,11 +223,14 @@ deploy: dump
 	make restart-web
 
 fast-test: check-env
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --settings=settings.test --noinput --failfast --keepdb
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py test exports --settings=settings.test --noinput --failfast --keepdb
 
 test: check-env
-	flake8 infoscience_exports/exports --max-line-length=120
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --settings=settings.test --noinput
+	docker-compose -f docker-compose-dev.yml exec web \
+		flake8 infoscience_exports/exports --max-line-length=120
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py test exports --settings=settings.test --noinput
 
 coverage: check-env
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
