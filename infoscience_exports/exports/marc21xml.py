@@ -243,7 +243,7 @@ def import_marc21xml(url, can_display_pending_publications):
     result = []
 
     o = urlparse(url)
-    if not '*' in settings.ALLOWED_HOSTS and \
+    if '*' not in settings.ALLOWED_HOSTS and \
             o.netloc not in settings.ALLOWED_HOSTS:
         result.append(get_message('danger', _('The domain is not allowed')))
         return result
