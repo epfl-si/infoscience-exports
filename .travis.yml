@@ -18,8 +18,7 @@ script:
 - make vars
 - make codecov
 - make fast-test
-
-after_success:
+# see https://docs.codecov.io/docs/testing-with-docker for documentation
 - ci_env=`bash <(curl -s https://codecov.io/env)`
 - docker-compose -f docker-compose-dev.yml exec web bash -c 'bash <(curl -s https://codecov.io/bash)'
 
