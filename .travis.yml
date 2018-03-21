@@ -12,12 +12,14 @@ python:
 install:
 - make init-venv
 - make build-travis
+# give time to the DB to be ready
+- sleep 2
 - make init-db
 
 script:
 # see https://docs.codecov.io/docs/testing-with-docker for documentation
 - ci_env=`bash <(curl -s https://codecov.io/env)`
-- docker-compose -f docker-compose-dev.yml run $ci_env web make travis-test
+- docker-compose -f docker-compose-dev.yml run --service-ports $ci_env web make travis-test
 
 matrix:
   fast_finish: true
