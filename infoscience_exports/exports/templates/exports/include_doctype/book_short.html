@@ -24,13 +24,20 @@
 {% endif %}
 
 {% if article.Publication_Institution %}
-	<span>{{ article.Publication_Institution }},</span>
+	<span>{{ article.Publication_Institution }}</span>
+	{% if options.article.Publication_Date or options.adv_book_isbn and article.ISBN %}
+		<span> , </span>
+	{% else %}
+		<span> . </span>
+	{% endif %}
 {% endif %}
 
 {% if options.article.Publication_Date %}
 	<span>{{ article.Publication_Date }}</span>
 	{% if options.adv_book_isbn and article.ISBN %}
 		<span> - </span>
+	{% else %}
+		<span> . </span>
 	{% endif %}
 {% endif %}
 

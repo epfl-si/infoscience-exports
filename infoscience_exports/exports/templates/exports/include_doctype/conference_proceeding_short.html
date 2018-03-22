@@ -2,9 +2,11 @@
 {% load staticfiles %}
 
 
-{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
-
-{% if article.Authors %}
+{% if article.Authors_1 %}
+	{% include "exports/include_doctype/common/authors.html" with authors=article.Authors_1 %}
+	<span> : </span>
+{% elif article.Authors_3 %}
+	{% include "exports/include_doctype/common/authors.html" with authors=article.Authors_3 %}
 	<span> : </span>
 {% endif %}
 

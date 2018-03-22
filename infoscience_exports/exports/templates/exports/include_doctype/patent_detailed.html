@@ -32,14 +32,18 @@
 {% endif %}
 </p>
 
-{% if article.Patent %}
+{% if article.Patents %}
 <p>
-	<span>
-	{% for patent in article.Patent %}
-		{{ patent.a }} {% if options.adv_patent_status %} ({{ patent.c }}) {% endif %}
-		</ br>
-	{% endfor %}
-	</span>
+	<div>
+		<div class="patent-patents-list-left">
+			<span>{% trans "Patent number(s)" %} :</span>
+		</div>
+		<div class="patent-patents-list-right">
+			{% for patent in article.Patents %}
+			<span>{{ patent.a }} {% if options.adv_patent_status and patent.c %} ({{ patent.c }}) {% endif %}</span><br />
+			{% endfor %}			
+		</div>
+	</div>
 </p>
 {% endif %}
 

@@ -207,10 +207,20 @@ def parse_dict(record):
         added_entry_meeting = get_list(fields, '711', '2', ' ', ['a', 'c', 'd'])
     result['added_entry_meeting'] = get_dict(added_entry_meeting)
 
+    # '720', ' ', '1', ['a']
+    added_entry_uncontrolled_name_person = get_list(fields, '720', ' ', '1', ['a'])
+    authors = get_values(added_entry_uncontrolled_name_person, 'a')
+    result['added_entry_uncontrolled_name_person_1'] = set_authors(authors)
+
     # '720', ' ', '2', ['a']
     added_entry_uncontrolled_name_person = get_list(fields, '720', ' ', '2', ['a'])
-    directors = get_values(added_entry_uncontrolled_name_person, 'a')
-    result['added_entry_uncontrolled_name_person'] = set_authors(directors)
+    authors = get_values(added_entry_uncontrolled_name_person, 'a')
+    result['added_entry_uncontrolled_name_person_2'] = set_authors(authors)
+
+    # '720', ' ', '3', ['a']
+    added_entry_uncontrolled_name_person = get_list(fields, '720', ' ', '3', ['a'])
+    authors = get_values(added_entry_uncontrolled_name_person, 'a')
+    result['added_entry_uncontrolled_name_person_3'] = set_authors(authors)
 
     # '720', ' ', '5', ['a']
     added_entry_uncontrolled_name_company = get_list(fields, '720', ' ', '5', ['a'])
@@ -269,7 +279,9 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result['DOI'] = dict_record['other_standard_identification_doi']
         dict_result['Title'] = dict_record['title']
         dict_result['Authors'] = dict_record['added_entry_personal_name']
-        dict_result['Directors'] = dict_record['added_entry_uncontrolled_name_person']
+        dict_result['Authors_1'] = dict_record['added_entry_uncontrolled_name_person_1']
+        dict_result['Authors_3'] = dict_record['added_entry_uncontrolled_name_person_3']
+        dict_result['Directors'] = dict_record['added_entry_uncontrolled_name_person_2']
         dict_result['Patents'] = dict_record['patent_control_information']
         dict_result['Publication_Location'] = dict_record['publication_distribution'].get('a', '')
         dict_result['Publication_Institution'] = dict_record['publication_distribution'].get('b', '')

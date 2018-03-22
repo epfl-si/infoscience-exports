@@ -187,3 +187,12 @@
     clear: left;
 }
 
+.infoscience_record .patent-patents-list-left {
+    float: left;
+}
+
+.infoscience_record .patent-patents-list-right {
+    display: inline-block;
+    margin-left: 20px;
+}
+

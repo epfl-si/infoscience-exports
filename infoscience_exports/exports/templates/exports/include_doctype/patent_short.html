@@ -28,10 +28,10 @@
 	</span>
 {% endif %}
 
-{% if article.Patent %}
+{% if article.Patents %}
 	<span>
-	{% for patent in article.Patent %}
-		{{ patent.a }} {% if options.adv_patent_status %} ({{ patent.c }}) {% endif %}
+	{% for patent in article.Patents %}
+		{{ patent.a }} {% if options.adv_patent_status and patent.c %} ({{ patent.c }}) {% endif %}
 		{% if forloop.last %}
 		.	
 		{% else %}
