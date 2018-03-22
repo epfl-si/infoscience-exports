@@ -35,6 +35,7 @@ class ExportFactory(factory.DjangoModelFactory):
     groupsby_year = 'NONE'
     groupsby_doc = 'NONE'
     bullets_type = 'NONE'
+    formats_type = 'SHORT'
     # created_at = factory.fuzzy.FuzzyDateTime
     # updated_at = factory.fuzzy.FuzzyDateTime
 

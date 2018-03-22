@@ -16,6 +16,7 @@ class ExportTest(TransactionTestCase):
             'groupsby_year': export_for_data.groupsby_year,
             'groupsby_doc': export_for_data.groupsby_doc,
             'bullets_type': export_for_data.bullets_type,
+            'formats_type': export_for_data.formats_type,
         }
 
     def test_factory_create(self):
@@ -42,7 +43,8 @@ class ExportTest(TransactionTestCase):
 
         self.client.force_login(self.mpl.user)
         response = self.client.post(reverse('crud:export-create'),
-                                    data=self.export_data_to_post, follow=True)
+                                    data=self.export_data_to_post,
+                                    follow=True)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(total + 1, Export.objects.count(), "{}".format(response.content))
@@ -61,8 +63,7 @@ class ExportTest(TransactionTestCase):
         """
         pk = self.mpl.pk
 
-        response = self.client.post(reverse('crud:export-update',
-                                            kwargs={'pk': pk, }),
+        response = self.client.post(reverse('crud:export-update', kwargs={'pk': pk, }),
                                     data=self.export_data_to_post,
                                     follow=True)
 
@@ -80,8 +81,7 @@ class ExportTest(TransactionTestCase):
             Export.objects.get(name=update_name)
 
         self.client.force_login(self.mpl.user)
-        response = self.client.post(reverse('crud:export-update',
-                                            kwargs={'pk': pk, }),
+        response = self.client.post(reverse('crud:export-update', kwargs={'pk': pk, }),
                                     data=self.export_data_to_post,
                                     follow=True)
 
@@ -92,8 +92,7 @@ class ExportTest(TransactionTestCase):
         Test that we can delete an instance via the delete view.
         """
         pk = self.mpl.pk
-        response = self.client.post(reverse('crud:export-delete',
-                                            kwargs={'pk': pk, }),
+        response = self.client.post(reverse('crud:export-delete', kwargs={'pk': pk, }),
                                     follow=True)
 
         self.assertFalse(response.wsgi_request.user.is_authenticated)
@@ -106,8 +105,7 @@ class ExportTest(TransactionTestCase):
         """
         pk = self.mpl.pk
         self.client.force_login(self.mpl.user)
-        response = self.client.post(reverse('crud:export-delete',
-                                            kwargs={'pk': pk, }),
+        response = self.client.post(reverse('crud:export-delete', kwargs={'pk': pk, }),
                                     follow=True)
 
         self.assertEqual(response.status_code, 200)
