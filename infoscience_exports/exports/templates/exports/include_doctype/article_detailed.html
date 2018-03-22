@@ -36,6 +36,9 @@
 	</span>
 {% endif %}
 
+{% if options.adv_article_volume_pages and article.Publisher_Volume_Pages %}
+	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}.</span>
+{% endif %}
 </p>
 
 {% if article.DOI %}

@@ -15,23 +15,36 @@
 <p class="infoscience_host">
 
 {% if article.Publisher %}
-	<span>{{ article.Publisher }} ;</span>
+	<span>{{ article.Publisher }}</span>
+	{% if article.Publication_Location or article.Publication_Institution or article.Publication_Date %}
+		<span> ; </span>
+	{% else %}
+		<span> . </span>
+	{% endif %}
 {% endif %}
 
 {% if article.Publication_Location %}
 	<span>{{ article.Publication_Location }}</span>
-{% endif %}
-
-{% if article.Publication_Location and article.Publication_Institution %}
-	<span> : </span>
+	{% if article.Publication_Institution %}
+		<span> : </span>
+	{% elif article.Publication_Date %}
+		<span> , </span>
+	{% else %}
+		<span> . </span>
+	{% endif %}
 {% endif %}
 
 {% if article.Publication_Institution %}
-	<span>{{ article.Publication_Institution }},</span>
+	<span>{{ article.Publication_Institution }}</span>
+	{% if article.Publication_Date %}
+		<span> , </span>
+	{% else %}
+		<span> . </span>
+	{% endif %}
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}</span>
+	<span>{{ article.Publication_Date }}.</span>
 {% endif %}
 
 {% if article.Publisher_Volume_Pages %}
