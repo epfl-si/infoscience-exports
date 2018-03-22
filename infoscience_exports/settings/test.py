@@ -21,6 +21,9 @@ NOSE_ARGS = [
 # for test verification at the moment
 INFOSCIENCE_SITE_URL = 'https://infoscience.epfl.ch'
 
+# as we don't have invenio in backend, send here for logged out confirmation
+LOGOUT_URL = "{}/logged-out/".format(SITE_PATH)
+
 # no auth for tests
 AUTHENTICATION_BACKENDS = ('exports.test.auth_backends.TestcaseUserBackend', )
 
