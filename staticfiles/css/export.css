@@ -178,6 +178,15 @@
     padding-left: 0px;
 }
 
+.infoscience_record .infoscience_links {
+    padding-top: 0px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-family: Georgia,'Times New Roman',Times,serif;
+    font-style: italic;
+    clear: left;
+}
+
 .infoscience_record .patent-patents-list-left {
     float: left;
 }
