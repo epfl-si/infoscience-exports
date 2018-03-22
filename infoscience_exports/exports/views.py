@@ -100,9 +100,10 @@ class ExportView(DetailView):
         options = {}
         options['is_extern'] = True
         options['url'] = self.object.url
-        options['format'] = 'SHORT'  # self.object.formats_type
+        options['format'] = self.object.formats_type
         options['bullet'] = self.object.bullets_type
         options['thumb'] = self.object.show_thumbnail
+        options['summary'] = self.object.show_summary
         options['link_authors'] = self.object.show_linkable_authors
         options['link_print'] = self.object.show_links_for_printing
         options['link_detailed'] = self.object.show_detailed
@@ -138,9 +139,10 @@ def preview(request):
     options = {}
     options['is_extern'] = False
     options['url'] = params['params[url]']
-    options['format'] = 'SHORT'  # params['params[format]']
+    options['format'] = params['params[format]']
     options['bullet'] = params['params[bullet]']
     options['thumb'] = params['params[thumb]'] == 'true'
+    options['summary'] = params['params[summary]'] == 'true'
     options['link_authors'] = params['params[link_authors]'] == 'true'
     options['link_print'] = params['params[link_print]'] == 'true'
     options['link_detailed'] = params['params[link_detailed]'] == 'true'

@@ -7,11 +7,12 @@ from dirtyfields import DirtyFieldsMixin
 
 from .settings import BulletsSettings, ThumbnailSettings, LinksSettings, \
     GroupBySettings, PendingPublicationsSettings, FormatsSettings, \
-    AdvancedOptionsSettings
+    AdvancedOptionsSettings, SummarySettings
 
 
 class Export(BulletsSettings,
              ThumbnailSettings,
+             SummarySettings,
              LinksSettings,
              GroupBySettings,
              PendingPublicationsSettings,

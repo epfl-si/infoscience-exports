@@ -24,9 +24,10 @@ jQuery(function($) {
 		$("#display-mrc21xml").html('<div class="alert alert-info" role="alert"><span>'+$("#display-mrc21xml").attr('data-progress')+'</span></div>');
 		var params = {};
         params['url'] = $("#id_url").val();
-		/*params['format'] = $("#id_formats_type").find(":selected").val();*/
+		params['format'] = $("#id_formats_type").find(":selected").val();
 		params['bullet'] = $("#id_bullets_type").find(":selected").val();
 		params['thumb'] = $("#id_show_thumbnail").is(':checked');
+		params['summary'] = $("#id_show_summary").is(':checked');
 		params['groupsby_all'] = $("#id_groupsby_type").find(":selected").val();
 		params['groupsby_year'] = $("#id_groupsby_year").find(":selected").val();
 		params['groupsby_doc'] = $("#id_groupsby_doc").find(":selected").val();
