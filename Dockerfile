@@ -34,4 +34,4 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
 	DATABASE_URL="not needed to collectstaticfiles" \
 	python infoscience_exports/manage.py collectstatic
 
-VOLUME ["/usr/src/app/staticfiles", "/var/log/django", "/usr/src/app/coverage.xml"]
+VOLUME ["/usr/src/app/staticfiles", "/var/log/django", "/usr/src/app/.coverage"]

@@ -14,7 +14,7 @@ web:
   volumes:
     - ./infoscience_exports:/usr/src/app/infoscience_exports
     - ./staticfiles:/usr/src/app/staticfiles
-    - ./coverage.xml:/usr/src/app/coverage.xml
+    - ./.coverage:/usr/src/app/.coverage
   env_file:
     - .env
   environment:
