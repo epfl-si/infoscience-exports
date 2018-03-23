@@ -10,8 +10,6 @@ python:
 - 3.5
 
 install:
-# see https://docs.codecov.io/docs/testing-with-docker for documentation
-- ci_env=`bash <(curl -s https://codecov.io/env)`
 - make init-venv
 - make build-travis
 # give time to the DB to be ready
@@ -20,6 +18,8 @@ install:
 
 script:
 - docker-compose -f docker-compose-dev.yml exec web make test-travis
+- ll coverage.xml
+- codecov
 
 matrix:
   fast_finish: true

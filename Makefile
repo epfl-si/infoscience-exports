@@ -240,7 +240,6 @@ build-travis:
 test-travis:
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
 	python infoscience_exports/manage.py test exports --settings=settings.test --noinput
-	bash -c "bash <(curl -s https://codecov.io/bash)"
 
 check-env:
 ifeq ($(wildcard .env),)
