@@ -214,7 +214,7 @@ CACHES = {
         'TIMEOUT': None, # persistant, at least until MAX_ENTRIES
         'OPTIONS': {
             'MAX_ENTRIES': 3000, # default is 300
-            'CULL_FREQUENCY': 5, # 1/5 of the cache is clean when max entry is reached
+            'CULL_FREQUENCY': 5, # 1/5 of the cache is cleaned when max entry is reached
         }
     }
 }
