@@ -61,11 +61,6 @@ build:
 	docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml build
 
-build-travis:
-	docker-compose -f docker-compose-dev.yml build
-	docker-compose -f docker-compose-dev.yml up -d
-	sleep 2
-
 init-db:
 	# create DB
 	docker-compose -f docker-compose-dev.yml exec postgres \
@@ -111,7 +106,7 @@ restart-web:
 	docker-compose -f docker-compose-dev.yml stop web
 	docker-compose -f docker-compose-dev.yml start web
 
-superadmin: up
+superadmin:
 	docker-compose -f docker-compose-dev.yml exec web \
 	python infoscience_exports/manage.py shell -c "from django.contrib.auth import get_user_model; \
 		User = get_user_model(); \
@@ -212,8 +207,10 @@ update-changelog:
 
 deploy: dump
 	git pull
-	# update docker image
-	docker-compose -f docker-compose-dev.yml build web
+	# update docker images
+	docker-compose -f docker-compose-dev.yml build
+	# restart containers
+	make restart
 	# update DB
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
@@ -221,15 +218,29 @@ deploy: dump
 	make restart-web
 
 fast-test: check-env
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --settings=settings.test --noinput --failfast --keepdb
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py test exports --settings=settings.test --noinput --failfast --keepdb
 
 test: check-env
-	flake8 infoscience_exports/exports --max-line-length=120
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py test exports --settings=settings.test --noinput
+	docker-compose -f docker-compose-dev.yml exec web \
+		flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py test exports --settings=settings.test --noinput
 
-coverage: check-env test
+coverage: check-env
+	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
+	pytest --cov=infoscience_exports infoscience_exports/exports/pytests
 	coverage html
 	open htmlcov/index.html
+
+build-travis:		
+	docker-compose -f docker-compose-dev.yml build
+	docker-compose -f docker-compose-dev.yml up -d
+
+test-travis:
+	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
+	python infoscience_exports/manage.py test exports --settings=settings.test --noinput
+	coverage xml
 
 check-env:
 ifeq ($(wildcard .env),)

@@ -1,10 +1,18 @@
 [run]
 branch = True
-omit = *migrations*,
-       *urls*,
-       */test*,
-       *admin*,
-       ./infoscience_exports/config/*,
-       ./infoscience_exports/manage.py,
-       ./infoscience_exports/wsgi.py,
-       *__init__*
+
+include = 
+    ./infoscience_exports/*.py
+
+omit = 
+    */migrations/*,
+    */test/*,
+    */pytests/*,
+    */settings/*,
+    */config/*,
+    */*urls.py,
+    */*admin.py,
+    */manage.py,
+    */wsgi.py,
+    *__init__.py
+    ./fabfile.py
