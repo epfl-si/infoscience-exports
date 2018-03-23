@@ -75,6 +75,9 @@ init-db:
 		python infoscience_exports/manage.py makemigrations
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
+	# make a room for the cache
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py createcachetable
 	# create super admin in app
 	make superadmin
 	@echo "  -> All set up! You can connect with your tequila acount or the admin (${SUPER_ADMIN_EMAIL})"
