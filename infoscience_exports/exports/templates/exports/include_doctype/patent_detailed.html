@@ -1,0 +1,49 @@
+{% load i18n %}
+{% load staticfiles %}
+
+
+{% if article.Title %}
+<h3 class="infoscience_title">{{ article.Title }}</h3>
+{% endif %}
+
+{% if article.Authors %}
+<p class="infoscience_authors">
+{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
+</p>
+{% endif %}
+
+<p class="infoscience_host">
+
+{% if article.Corporate_Name %}
+	<span>{{ article.Corporate_Name.0 }}</span>
+	{% if article.Company_Name %}
+	/
+	{% else %}
+	:
+	{% endif %}
+{% endif %}
+
+{% if article.Company_Name %}
+	<span>{{ article.Company_Name }}</span>
+{% endif %}
+
+{% if article.Publication_Date %}
+	<span>{{ article.Publication_Date }}.</span>
+{% endif %}
+</p>
+
+{% if article.Patents %}
+<p>
+	<div>
+		<div class="patent-patents-list-left">
+			<span>{% trans "Patent number(s)" %} :</span>
+		</div>
+		<div class="patent-patents-list-right">
+			{% for patent in article.Patents %}
+			<span>{{ patent.a }} {% if options.adv_patent_status and patent.c %} ({{ patent.c }}) {% endif %}</span><br />
+			{% endfor %}			
+		</div>
+	</div>
+</p>
+{% endif %}
+

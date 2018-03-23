@@ -2,24 +2,25 @@
 {% load staticfiles %}
 
 
-{% if article.Authors_1 %}
-	{% include "exports/include_doctype/common/authors.html" with authors=article.Authors_1 %}
-	<span> : </span>
-{% elif article.Authors_3 %}
-	{% include "exports/include_doctype/common/authors.html" with authors=article.Authors_3 %}
-	<span> : </span>
+{% if article.Title %}
+<h3 class="infoscience_title">{{ article.Title }}</h3>
 {% endif %}
 
-{% if article.Title %}
-	<span>
-		<strong>{{ article.Title }}</strong>
-		{% if article.Publisher %} ; {% else %} . {% endif %}
-	</span>
+{% if article.Authors_1 %}
+<p class="infoscience_authors">
+{% include "exports/include_doctype/common/authors.html" with authors=article.Authors_1 %}	
+</p>
+{% elif article.Authors_3 %}
+<p class="infoscience_authors">
+{% include "exports/include_doctype/common/authors.html" with authors=article.Authors_3 %}	
+</p>
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}.</span>
+	<p>{{ article.Publication_Date }}.</p>
 {% endif %}
+
+<p class="infoscience_host">
 
 {% if article.Conference_Meeting_Name %}
 	<span>
@@ -40,5 +41,7 @@
 		{{ article.Conference_Meeting_Date }}.
 	</span>
 {% endif %}
+
+</p>
 
 

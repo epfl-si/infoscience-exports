@@ -67,6 +67,9 @@
 
 						{% endif %}
 
+						{% if options.summary and article.Summary %}
+							<p class="infoscience_abstract">{{ article.Summary }}</p>
+						{% endif %}
 					</div>
 					{% if options.thumb and article.ELA_Icon %}
 					<img class="record-illustration" src="{{ article.ELA_Icon }}" class="record-illustration" alt="n/a">

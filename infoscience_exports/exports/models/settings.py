@@ -19,6 +19,13 @@ class ThumbnailSettings(BaseSettings):
         abstract = True
 
 
+class SummarySettings(BaseSettings):
+    show_summary = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+
 class BulletsSettings(BaseSettings):
     BULLETS_TYPE_CHOICE = (
         ('NONE', ''),

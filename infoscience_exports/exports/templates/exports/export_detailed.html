@@ -23,45 +23,56 @@
 			{% endif %}
 				<div class="infoscience_data">
 					<div class="record-content">
-						{% if article.Title %}
-						<h3 class="infoscience_title">
-						{% if options.link_title and article.ELA_URL %}<a href="{{ article.ELA_URL }}" target="_blank">{% endif %}
-						{{ article.Title }}
-						{% if options.link_title and article.ELA_URL %}</a>{% endif %}
-						</h3>
+                        {% if article.Doc_Type == 'Journal Articles' %}
+							{% include "exports/include_doctype/article_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Reviews' %}
+							{% include "exports/include_doctype/article_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Theses' %}
+							{% include "exports/include_doctype/thesis_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Working Papers' %}
+							{% include "exports/include_doctype/report_and_working_paper_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Reports' %}
+							{% include "exports/include_doctype/report_and_working_paper_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Conference Proceedings' %}
+							{% include "exports/include_doctype/conference_proceeding_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Conference Papers' %}
+							{% include "exports/include_doctype/conference_paper_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Posters' %}
+							{% include "exports/include_doctype/poster_and_talks_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Talks' %}
+							{% include "exports/include_doctype/poster_and_talks_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Student Projects' %}
+							{% include "exports/include_doctype/student_project_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Books' %}
+							{% include "exports/include_doctype/book_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Book Chapters' %}
+							{% include "exports/include_doctype/book_chapter_detailed.html" with article=article %}
+                        {% elif article.Doc_Type == 'Patents' %}
+							{% include "exports/include_doctype/patent_detailed.html" with article=article %}
+						{% else %}
+
+							{% if article.Title %}
+							<h3 class="infoscience_title">{{ article.Title }}</h3>
+							{% endif %}
+
+							{% if article.Authors %}
+							<p class="infoscience_authors">
+							{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
+							</p>
+							{% endif %}	
+
+							{% if article.Publication_Date %}
+							<p>{{ article.Publication_Date }}.</p>
+							{% endif %}
+
 						{% endif %}
 
-						{% if article.Authors %}
-						<p class="infoscience_authors">
-                        {% for author in article.Authors|slice:":6" %}
-							{% if forloop.counter > 5 %}
-								{% trans "and al." %}
-							{% else %}
-								{% if not forloop.first %} ; {% endif %}
-								{% if options.link_authors %}<a href="{{ author.search_url }}" target="_blank">{% endif %}
-	  							{{ author.fullname }}
-								{% if options.link_authors %}</a>{% endif %}
-								{% if forloop.last %}
-		   						.
-								{% endif %}
-							{% endif %}
-						{% endfor %}
-						</p>
-						{% endif %}			
-
-						{% if article.Publisher or article.Publisher_Date %}<p class="infoscience_host">{% endif %}
-						{% if article.Publisher %}<span>{{ article.Publisher }}</span>{% endif %}
-						{% if article.Publisher_Date %}{% if article.Publisher %}, {% endif %}<span>{{ article.Publisher_Date }}</span>{% endif %}
-						{% if article.Publisher or article.Publisher_Date %}</p>{% endif %}
-
-						{% if article.Summary %}
-						<p class="infoscience_abstract">
-						{{ article.Summary }}
-						</p>
+						{% if options.summary and article.Summary %}
+							<p class="infoscience_abstract">{{ article.Summary }}</p>
 						{% endif %}
 					</div>
 					{% if options.thumb and article.ELA_Icon %}
-					<img class="record-illustration" src="{{ article.ELA_Icon.0 }}" class="record-illustration" alt="n/a">
+					<img class="record-illustration" src="{{ article.ELA_Icon }}" class="record-illustration" alt="n/a">
 					{% endif %}
 					<ul class="record-metadata">
 						<p></p>
