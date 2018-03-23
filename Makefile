@@ -235,11 +235,12 @@ coverage: check-env
 
 build-travis:		
 	docker-compose -f docker-compose-dev.yml build
-	docker-compose -f docker-compose-dev.yml run --service-ports ${ci_env} -d nginx
+	docker-compose -f docker-compose-dev.yml up -d
 
 test-travis:
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
 	python infoscience_exports/manage.py test exports --settings=settings.test --noinput
+	coverage xml
 
 check-env:
 ifeq ($(wildcard .env),)
