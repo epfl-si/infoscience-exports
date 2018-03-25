@@ -37,6 +37,10 @@ class Export(BulletsSettings,
     def get_absolute_url(self):
         return reverse('crud:export-view', args=[str(self.id)])
 
+    def get_cache_key(self):
+        """ build an uniq key per object"""
+        return "export_{}".format(self.id)
+
     class Meta:
         ordering = ['-id']
 
