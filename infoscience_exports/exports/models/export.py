@@ -1,6 +1,8 @@
 from django.urls import reverse
 from django.db import models
 from django.conf import settings
+from django.db.models.signals import post_save
+from django.core.cache import cache
 
 from auditlog.registry import auditlog
 from dirtyfields import DirtyFieldsMixin
@@ -45,4 +47,11 @@ class Export(BulletsSettings,
         ordering = ['-id']
 
 
+def invalidate_view_cache(sender, instance, **kwargs):
+    cache_key = 'view_{}'.format(instance.get_cache_key())
+    if cache_key in cache:
+        cache.delete(cache_key)
+
+
+post_save.connect(invalidate_view_cache, sender=Export)
 auditlog.register(Export)
