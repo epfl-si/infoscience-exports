@@ -15,33 +15,29 @@
 <p class="infoscience_host">
 
 {% if article.Publisher %}
-	<span><i>{{ article.Publisher }}</i>.</span>
+	<span><i>{{ article.Publisher }}</i>. </span>
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}.</span>
+	<span>{{ article.Publication_Date }}. </span>
 {% endif %}
 
 {% if options.adv_article_volume and article.Publisher_Volume %}
-	<span>
-		{% trans "Vol." %} {{ article.Publisher_Volume }} 
-		{% if options.adv_article_volume_number and article.Publisher_Volume_Number or options.adv_article_volume_pages and article.Publisher_Volume_Pages %}, {% else %}. {% endif %}
-	</span>
+	<span>{% trans "Vol." %} {{ article.Publisher_Volume }}</span> 
+	<span>{% if options.adv_article_volume_number and article.Publisher_Volume_Number or options.adv_article_volume_pages and article.Publisher_Volume_Pages %}, {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if options.adv_article_volume_number and article.Publisher_Volume_Number %}
-	<span>
-		{% trans "num." %} {{ article.Publisher_Volume_Number }}
-		{% if options.adv_article_volume_pages and article.Publisher_Volume_Pages %}, {% else %}. {% endif %}
-	</span>
+	<span>{% trans "num." %} {{ article.Publisher_Volume_Number }}</span>
+	<span>{% if options.adv_article_volume_pages and article.Publisher_Volume_Pages %}, {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if options.adv_article_volume_pages and article.Publisher_Volume_Pages %}
-	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}.</span>
+	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}. </span>
 {% endif %}
 </p>
 
 {% if article.DOI %}
-	<p>{% trans "DOI" %} : {{ article.DOI }}.</p>
+<p>{% trans "DOI" %} : {{ article.DOI }}.</p>
 {% endif %}
 

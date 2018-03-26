@@ -18,29 +18,27 @@
 {% endif %}
 
 {% if article.Title %}
-	<span><strong>{{ article.Title }}</strong>.</span>
+	<span><strong>{{ article.Title }}</strong>. </span>
 {% endif %}
 
 {% if article.Publication_Location %}
 	<span>{{ article.Publication_Location }}</span>
-	{% if article.Publication_Institution or article.Publication_Date %} , {% else %} . {% endif %}
+	<span>{% if article.Publication_Institution or article.Publication_Date %}, {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if article.Publication_Institution %}
-	<span>{{ article.Publication_Institution }}.</span>
-	{% if article.Publication_Date %} , {% else %} . {% endif %}
+	<span>{{ article.Publication_Institution }}</span>
+	<span>{% if article.Publication_Date %}, {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}.</span>
+	<span>{{ article.Publication_Date }}. </span>
 {% endif %}
 
 {% if options.adv_thesis_pages and article.Publication_Pages %}
-	<span>{% trans "p." %} {{ article.Publication_Pages }}.</span>
+	<span>{% trans "p." %} {{ article.Publication_Pages }}. </span>
 {% endif %}
 
 {% if article.DOI %}
-	<span>{% trans "DOI" %} : {{ article.DOI }}.</span>
+	<span>{% trans "DOI" %} : {{ article.DOI }}. </span>
 {% endif %}
-
-

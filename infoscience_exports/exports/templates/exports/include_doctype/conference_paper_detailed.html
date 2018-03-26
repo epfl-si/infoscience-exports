@@ -15,11 +15,11 @@
 <p class="infoscience_host">
 
 {% if options.adv_conf_paper_journal_name and article.Publisher %}
-	<span><i>{{ article.Publisher }}.</i></span>
+	<span><i>{{ article.Publisher }}</i>. </span>
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}.</span>
+	<span>{{ article.Publication_Date }}. </span>
 {% endif %}
 
 {% if article.Conference_Meeting_Name %}
@@ -37,13 +37,11 @@
 {% endif %}
 
 {% if article.Conference_Meeting_Date %}
-	<span>
-		{{ article.Conference_Meeting_Date }}.
-	</span>
+	<span>{{ article.Conference_Meeting_Date }}. </span>
 {% endif %}
 
 {% if article.Publisher_Volume_Pages %}
-	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}.</span>
+	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}. </span>
 {% endif %}
 
 </p>
