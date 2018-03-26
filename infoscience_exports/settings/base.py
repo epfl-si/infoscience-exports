@@ -47,8 +47,8 @@ RANGE_DISPLAY = 50
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = get_env_variable('ALLOWED_HOSTS').split(',')
 
+CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?([-\w\d]+\.)?epfl\.ch$', )
 CORS_ORIGIN_WHITELIST = [
-    "epfl.ch",
     "localhost",
     "127.0.0.1",
 ]
@@ -223,8 +223,8 @@ CACHES = {
         'LOCATION': 'generated_export_cache',
         'TIMEOUT': get_env_variable('CACHE_TIMEOUT', 7200),
         'OPTIONS': {
-            'MAX_ENTRIES': 3000, # default is 300
-            'CULL_FREQUENCY': 5, # 1/5 of the cache is clean when max entry is reached
+            'MAX_ENTRIES': 3000,  # default is 300
+            'CULL_FREQUENCY': 5,  # 1/5 of the cache is clean when max entry is reached
         }
     }
 }
