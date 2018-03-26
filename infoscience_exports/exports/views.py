@@ -95,49 +95,54 @@ class ExportView(DetailView):
     model = Export
     template_name_suffix = ''
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-
-        # do we have cached the result ?
+    def get(self, request, *args, **kwargs):
+        """ Warning, as we cache the view, don't use any request data"""
+        self.object = self.get_object()
         cache_key = 'view_{}'.format(self.object.get_cache_key())
         if cache_key in cache:
-            options = cache.get(cache_key)
+            # do we have cached the result ?
+            rendered_response = cache.get(cache_key)
         else:
-            options = {}
-            options['is_extern'] = True
-            options['url'] = self.object.url
-            options['format'] = self.object.formats_type
-            options['bullet'] = self.object.bullets_type
-            options['thumb'] = self.object.show_thumbnail
-            options['summary'] = self.object.show_summary
-            options['link_authors'] = self.object.show_linkable_authors
-            options['link_print'] = self.object.show_links_for_printing
-            options['link_detailed'] = self.object.show_detailed
-            options['link_fulltext'] = self.object.show_fulltext
-            options['link_publisher'] = self.object.show_viewpublisher
-            options['groupsby_all'] = self.object.groupsby_type
-            options['groupsby_year'] = self.object.groupsby_year
-            options['groupsby_doc'] = self.object.groupsby_doc
-            options['pending_publications'] = self.object.show_pending_publications
-            options['adv_article_volume'] = self.object.show_article_volume
-            options['adv_article_volume_number'] = self.object.show_article_volume_number
-            options['adv_article_volume_pages'] = self.object.show_article_volume_pages
-            options['adv_thesis_directors'] = self.object.show_thesis_directors
-            options['adv_thesis_pages'] = self.object.show_thesis_pages
-            options['adv_report_working_papers_pages'] = self.object.show_report_working_papers_pages
-            options['adv_conf_proceed_place'] = self.object.show_conf_proceed_place
-            options['adv_conf_proceed_date'] = self.object.show_conf_proceed_date
-            options['adv_conf_paper_journal_name'] = self.object.show_conf_paper_journal_name
-            options['adv_book_isbn'] = self.object.show_book_isbn
-            options['adv_book_doi'] = self.object.show_book_doi
-            options['adv_book_chapter_isbn'] = self.object.show_book_chapter_isbn
-            options['adv_book_chapter_doi'] = self.object.show_book_chapter_doi
-            options['adv_patent_status'] = self.object.show_patent_status
+            context = self.get_context_data(object=self.object)
+            rendered_response = self.render_to_response(context).render()
+            cache.set(cache_key, rendered_response, 60 * 15)
 
-            options = get_notices(options)
+        return rendered_response
 
-            cache.set(cache_key, options, 60*15)
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        options = {}
+        options['is_extern'] = True
+        options['url'] = self.object.url
+        options['format'] = self.object.formats_type
+        options['bullet'] = self.object.bullets_type
+        options['thumb'] = self.object.show_thumbnail
+        options['summary'] = self.object.show_summary
+        options['link_authors'] = self.object.show_linkable_authors
+        options['link_print'] = self.object.show_links_for_printing
+        options['link_detailed'] = self.object.show_detailed
+        options['link_fulltext'] = self.object.show_fulltext
+        options['link_publisher'] = self.object.show_viewpublisher
+        options['groupsby_all'] = self.object.groupsby_type
+        options['groupsby_year'] = self.object.groupsby_year
+        options['groupsby_doc'] = self.object.groupsby_doc
+        options['pending_publications'] = self.object.show_pending_publications
+        options['adv_article_volume'] = self.object.show_article_volume
+        options['adv_article_volume_number'] = self.object.show_article_volume_number
+        options['adv_article_volume_pages'] = self.object.show_article_volume_pages
+        options['adv_thesis_directors'] = self.object.show_thesis_directors
+        options['adv_thesis_pages'] = self.object.show_thesis_pages
+        options['adv_report_working_papers_pages'] = self.object.show_report_working_papers_pages
+        options['adv_conf_proceed_place'] = self.object.show_conf_proceed_place
+        options['adv_conf_proceed_date'] = self.object.show_conf_proceed_date
+        options['adv_conf_paper_journal_name'] = self.object.show_conf_paper_journal_name
+        options['adv_book_isbn'] = self.object.show_book_isbn
+        options['adv_book_doi'] = self.object.show_book_doi
+        options['adv_book_chapter_isbn'] = self.object.show_book_chapter_isbn
+        options['adv_book_chapter_doi'] = self.object.show_book_chapter_doi
+        options['adv_patent_status'] = self.object.show_patent_status
 
+        options = get_notices(options)
         context['options'] = options
         return context
 
