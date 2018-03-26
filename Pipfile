@@ -21,6 +21,7 @@ markdown = "*"
 "psycopg2-binary" = "*"
 pymarc = "*"
 pytz = "*"
+django-cors-headers = "*"
 
 
 [dev-packages]
