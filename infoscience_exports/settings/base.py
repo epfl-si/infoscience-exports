@@ -47,6 +47,12 @@ RANGE_DISPLAY = 50
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = get_env_variable('ALLOWED_HOSTS').split(',')
 
+CORS_ORIGIN_WHITELIST = [
+    "epfl.ch",
+    "localhost",
+    "127.0.0.1",
+]
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,6 +65,7 @@ INSTALLED_APPS = (
     'bootstrap4',
     'django_tequila',
     'auditlog',
+    'corsheaders',
 
     # Your apps
     'exports',
@@ -66,6 +73,9 @@ INSTALLED_APPS = (
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # CORS should be placed as high as possible. Must come before Common and CSRF Middlewares
+    # see https://github.com/ottoyiu/django-cors-headers for documentation
+    'corsheaders.middleware.CorsMiddleware',
     'exports.middleware.InvenioLocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
