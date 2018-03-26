@@ -100,7 +100,7 @@ class ExportView(DetailView):
         self.object = self.get_object()
         # language dependant cache
         ln = get_language()
-        cache_key = 'view_{}_{}'.format(ln, self.object.get_cache_key())
+        cache_key = 'view_{}'.format(self.object.get_cache_key(ln))
 
         if cache_key in cache:
             # do we have the result in the cache?
