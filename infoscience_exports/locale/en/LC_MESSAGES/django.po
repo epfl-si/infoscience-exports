@@ -56,8 +56,8 @@ msgid "detailed with abstract"
 msgstr ""
 
 #: infoscience_exports/exports/options_notices.py:12
-msgid "Press Articles"
-msgstr ""
+msgid "Journal Articles"
+msgstr "Press Articles"
 
 #: infoscience_exports/exports/options_notices.py:13
 msgid "Conference Papers"
@@ -304,8 +304,8 @@ msgid "next"
 msgstr ""
 
 #: infoscience_exports/exports/templates/log_out.html:6
-msgid "You have successfully logged out of the infoscience exports"
-msgstr ""
+msgid "You have successfully logged out from the infoscience exports"
+msgstr "You have successfully logged out of the infoscience exports"
 
 #: infoscience_exports/exports/views.py:111
 msgid "Only the creator can edit the publication"
