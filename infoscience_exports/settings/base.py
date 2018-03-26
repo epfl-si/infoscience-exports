@@ -10,9 +10,9 @@ from django.utils.translation import gettext_lazy as _
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def get_env_variable(var_name):
-    """Get the environment variable or return exception."""
-    environ_var = os.environ.get(var_name)
+def get_env_variable(var_name, default=None):
+    """Get the environment variable, the default or return exception."""
+    environ_var = os.environ.get(var_name, default)
 
     if not environ_var:
         error_msg = "Set the {} environment variable".format(var_name)
@@ -211,7 +211,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'generated_export_cache',
-        'TIMEOUT': None, # persistant, at least until MAX_ENTRIES
+        'TIMEOUT': get_env_variable('CACHE_TIMEOUT', 7200),
         'OPTIONS': {
             'MAX_ENTRIES': 3000, # default is 300
             'CULL_FREQUENCY': 5, # 1/5 of the cache is clean when max entry is reached
