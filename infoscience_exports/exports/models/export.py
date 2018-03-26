@@ -39,9 +39,9 @@ class Export(BulletsSettings,
     def get_absolute_url(self):
         return reverse('crud:export-view', args=[str(self.id)])
 
-    def get_cache_key(self, language):
-        """ build an uniq key per object"""
-        return "export_{}_{}".format(self.id, language)
+    def get_cache_key_for_view(self, language):
+        """ build an uniq key per object for the view"""
+        return "view_export_{}_{}".format(self.id, language)
 
     class Meta:
         ordering = ['-id']
@@ -53,7 +53,7 @@ def invalidate_view_cache(sender, instance, **kwargs):
 
     for lang in languages:
         ln = lang[0]
-        cache_key = 'view_{}'.format(instance.get_cache_key(ln))
+        cache_key = instance.get_cache_key_for_view(ln)
 
         if cache_key in cache:
             cache.delete(cache_key)
