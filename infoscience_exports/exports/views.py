@@ -108,7 +108,7 @@ class ExportView(DetailView):
         else:
             context = self.get_context_data(object=self.object)
             rendered_response = self.render_to_response(context).render()
-            cache.set(cache_key, rendered_response, 60 * 15)
+            cache.set(cache_key, rendered_response)
 
         return rendered_response
 
