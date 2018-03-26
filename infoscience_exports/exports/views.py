@@ -5,8 +5,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.utils.translation import gettext as _
-
+from django.utils.translation import gettext as _, get_language
+from django.core.cache import cache
 
 from exports import format_version
 from log_utils import LogMixin
@@ -94,6 +94,23 @@ class ExportDelete(IsTheUserAccessTest, LoginRequiredMixin, DeleteView):
 class ExportView(DetailView):
     model = Export
     template_name_suffix = ''
+
+    def get(self, request, *args, **kwargs):
+        """ Warning, as we cache the view, don't use any request data"""
+        self.object = self.get_object()
+        # language dependant cache
+        ln = get_language()
+        cache_key = self.object.get_cache_key_for_view(ln)
+
+        if cache_key in cache:
+            # do we have the result in the cache?
+            rendered_response = cache.get(cache_key)
+        else:
+            context = self.get_context_data(object=self.object)
+            rendered_response = self.render_to_response(context).render()
+            cache.set(cache_key, rendered_response)
+
+        return rendered_response
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
