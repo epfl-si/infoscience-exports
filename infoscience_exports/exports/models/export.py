@@ -48,9 +48,15 @@ class Export(BulletsSettings,
 
 
 def invalidate_view_cache(sender, instance, **kwargs):
-    cache_key = 'view_{}'.format(instance.get_cache_key())
-    if cache_key in cache:
-        cache.delete(cache_key)
+    """ invalidate cache for installed languages"""
+    languages = settings.LANGUAGES
+
+    for lang in languages:
+        ln = lang[0]
+        cache_key = 'view_{}_{}'.format(ln, instance.get_cache_key())
+
+        if cache_key in cache:
+            cache.delete(cache_key)
 
 
 post_save.connect(invalidate_view_cache, sender=Export)
