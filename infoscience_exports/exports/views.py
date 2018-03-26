@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, get_language
 from django.core.cache import cache
 
 from exports import format_version
@@ -98,9 +98,12 @@ class ExportView(DetailView):
     def get(self, request, *args, **kwargs):
         """ Warning, as we cache the view, don't use any request data"""
         self.object = self.get_object()
-        cache_key = 'view_{}'.format(self.object.get_cache_key())
+        # language dependant cache
+        ln = get_language()
+        cache_key = 'view_{}_{}'.format(ln, self.object.get_cache_key())
+
         if cache_key in cache:
-            # do we have cached the result ?
+            # do we have the result in the cache?
             rendered_response = cache.get(cache_key)
         else:
             context = self.get_context_data(object=self.object)
