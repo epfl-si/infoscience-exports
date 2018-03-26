@@ -56,7 +56,7 @@ msgid "detailed with abstract"
 msgstr ""
 
 #: infoscience_exports/exports/options_notices.py:12
-msgid "Journal Articles"
+msgid "Press Articles"
 msgstr ""
 
 #: infoscience_exports/exports/options_notices.py:13
@@ -304,7 +304,7 @@ msgid "next"
 msgstr ""
 
 #: infoscience_exports/exports/templates/log_out.html:6
-msgid "You have successfully logged out from the infoscience exports"
+msgid "You have successfully logged out of the infoscience exports"
 msgstr ""
 
 #: infoscience_exports/exports/views.py:111
