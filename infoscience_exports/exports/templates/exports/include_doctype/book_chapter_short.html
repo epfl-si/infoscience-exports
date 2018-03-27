@@ -10,7 +10,7 @@
 
 {% if article.Title %}
 	<span><strong>{{ article.Title }}</strong></span>
-    <span> ; </span>
+    <span>{% if article.Publisher or article.Publication_Location or article.Publication_Institution or article.Publication_Date %}; {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if article.Publisher %}
