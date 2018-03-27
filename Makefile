@@ -128,6 +128,10 @@ migrate: up
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
 
+messages: up
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py makemessages --all
+
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
 	docker-compose -f docker-compose-dev.yml run --rm \

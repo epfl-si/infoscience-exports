@@ -11,40 +11,34 @@
 {% if article.Title %}
 	<span>
 		<strong>{{ article.Title }}</strong>
-		{% if options.adv_conf_paper_journal_name and article.Publisher %} ; {% else %} . {% endif %}
+		{% if options.adv_conf_paper_journal_name and article.Publisher %} ; {% else %}. {% endif %}
 	</span>
 {% endif %}
 
 {% if options.adv_conf_paper_journal_name and article.Publisher %}
-	<span><i>{{ article.Publisher }}.</i></span>
+	<span><i>{{ article.Publisher }}</i>. </span>
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}.</span>
+	<span>{{ article.Publication_Date }}. </span>
 {% endif %}
 
 {% if article.Conference_Meeting_Name %}
-	<span>
-		{{ article.Conference_Meeting_Name }}
-		{% if article.Conference_Meeting_Location or article.Conference_Meeting_Date %}, {% else %}. {% endif %}
-	</span>
+	<span>{{ article.Conference_Meeting_Name }}</span>
+	<span>{% if article.Conference_Meeting_Location or article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if article.Conference_Meeting_Location %}
-	<span>
-		{{ article.Conference_Meeting_Location }}
-		{% if article.Conference_Meeting_Date %}, {% else %}. {% endif %}
-	</span>
+	<span>{{ article.Conference_Meeting_Location }}</span>
+	<span>{% if article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if article.Conference_Meeting_Date %}
-	<span>
-		{{ article.Conference_Meeting_Date }}.
-	</span>
+	<span>{{ article.Conference_Meeting_Date }}. </span>
 {% endif %}
 
 {% if article.Publisher_Volume_Pages %}
-	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}.</span>
+	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}. </span>
 {% endif %}
 
 {% if article.DOI %}

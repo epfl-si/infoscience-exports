@@ -2,6 +2,8 @@
 {% load staticfiles %}
 
 
+{% spaceless %}
+
 {% for titles in options.marc21xml %}
 	{% for groups in titles %}
 	{% if forloop.first %}
@@ -58,11 +60,11 @@
 							{% endif %}
 
 							{% if article.Title %}
-								<span><strong>{{ article.Title }}</strong> .</span>
+								<span><strong>{{ article.Title }}</strong>. </span>
 							{% endif %}
 
 							{% if article.Publication_Date %}
-								<span>{{ article.Publication_Date }}.</span>
+								<span>{{ article.Publication_Date }}. </span>
 							{% endif %}
 
 						{% endif %}
@@ -122,4 +124,6 @@
 {% empty %}
 <p>{% trans "No notices loaded" %}.</p>
 {% endfor %}
+
+{% endspaceless %}
 

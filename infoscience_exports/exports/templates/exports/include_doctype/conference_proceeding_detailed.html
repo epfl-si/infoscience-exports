@@ -23,25 +23,17 @@
 <p class="infoscience_host">
 
 {% if article.Conference_Meeting_Name %}
-	<span>
-		{{ article.Conference_Meeting_Name }}
-		{% if options.adv_conf_proceed_place and article.Conference_Meeting_Location or options.adv_conf_proceed_date and article.Conference_Meeting_Date %}, {% else %}. {% endif %}
-	</span>
+	<span>{{ article.Conference_Meeting_Name }}</span>
+	<span>{% if options.adv_conf_proceed_place and article.Conference_Meeting_Location or options.adv_conf_proceed_date and article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if options.adv_conf_proceed_place and article.Conference_Meeting_Location %}
-	<span>
-		{{ article.Conference_Meeting_Location }}
-		{% if options.adv_conf_proceed_date and article.Conference_Meeting_Date %}, {% else %}. {% endif %}
-	</span>
+	<span>{{ article.Conference_Meeting_Location }}</span>
+	<span>{% if options.adv_conf_proceed_date and article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if options.adv_conf_proceed_date and article.Conference_Meeting_Date %}
-	<span>
-		{{ article.Conference_Meeting_Date }}.
-	</span>
+	<span>{{ article.Conference_Meeting_Date }}.</span>
 {% endif %}
 
 </p>
-
-

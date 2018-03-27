@@ -107,11 +107,11 @@ def get_ELA_fields(field):
     ela_fulltexts = []
     ela_icon = ''
     for ela in field:
-        ELA_type = ela.get('x', '').lower()
-        if ELA_type == 'icon':
-            ela_icon = ela.get('u', '')
-        elif ELA_type == 'public':
+        ELA_object = ela.get('u', '').lower()
+        if ELA_object.endswith(".pdf"):
             ela_fulltexts.append(ela.get('u', ''))
+        elif ELA_object.endswith(".png") or ELA_object.endswith(".jpg"):
+            ela_icon = ela.get('u', '')
     ela_fulltexts = list(filter(None, ela_fulltexts))
     ela_fulltexts = set_fulltext(ela_fulltexts)
     return {'icon': ela_icon, 'fulltexts': ela_fulltexts}
@@ -234,8 +234,8 @@ def parse_dict(record):
     local_added_entry_url_link = get_list(fields, '790', ' ', ' ', ['w'])
     result['local_added_entry_url_link'] = get_value(local_added_entry_url_link, 'w')
 
-    # '856', '4', ' ', ['x', 'u']      => Electronic Location Access: Icon url, links to Full Texts
-    electronic_location_access = get_list(fields, '856', '4', ' ', ['x', 'u'])
+    # '856', '4', ' ', ['u']      => Electronic Location Access: Icon url, links to Full Texts
+    electronic_location_access = get_list(fields, '856', '4', ' ', ['u'])
     result['electronic_location_access'] = get_ELA_fields(electronic_location_access)
 
     # '909', 'C', '0', ['p']

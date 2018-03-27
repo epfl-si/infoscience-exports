@@ -9,10 +9,8 @@
 {% endif %}
 
 {% if article.Title %}
-	<span>
-		<strong>{{ article.Title }}</strong>
-		{% if article.Publication_Date %} ; {% else %} . {% endif %}
-	</span>
+	<span><strong>{{ article.Title }}</strong></span>
+	<span>{% if article.Publication_Date %} ; {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if article.Publication_Date %}
