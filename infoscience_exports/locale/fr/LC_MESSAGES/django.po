@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-27 08:42+0200\n"
-"PO-Revision-Date: 2018-03-27 08:54+0200\n"
+"PO-Revision-Date: 2018-03-27 14:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -90,7 +90,7 @@ msgstr "Actes de congrès"
 
 #: infoscience_exports/exports/options_notices.py:24
 msgid "Working Papers"
-msgstr "Papiers de travail"
+msgstr "Documents de travail"
 
 #: infoscience_exports/exports/options_notices.py:25
 msgid "Reports"
@@ -102,7 +102,7 @@ msgstr "Posters"
 
 #: infoscience_exports/exports/options_notices.py:27
 msgid "Talks"
-msgstr "Discours"
+msgstr "Présentations"
 
 #: infoscience_exports/exports/options_notices.py:28
 msgid "Standards"
@@ -114,7 +114,7 @@ msgstr "Brevets"
 
 #: infoscience_exports/exports/options_notices.py:30
 msgid "Student Projects"
-msgstr "Travaux d'étudiants"
+msgstr "Projets d'étudiants"
 
 #: infoscience_exports/exports/options_notices.py:31
 msgid "Teaching Resources"
@@ -122,7 +122,7 @@ msgstr "Documents d'enseignement"
 
 #: infoscience_exports/exports/options_notices.py:32
 msgid "Media"
-msgstr "Media"
+msgstr "Média"
 
 #: infoscience_exports/exports/options_notices.py:33
 msgid "Datasets"
@@ -244,7 +244,7 @@ msgstr "Options avancées"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:106
 msgid "Article & Review"
-msgstr "Article & revues"
+msgstr "Article & Revue"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:107
 msgid "Volume"
@@ -262,19 +262,19 @@ msgstr "Pages"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:111
 msgid "PhD Thesis"
-msgstr "Thèses"
+msgstr "Thèse"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:112
 msgid "Directors"
-msgstr "Directeur"
+msgstr "Directeurs"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:115
 msgid "Report & Working papers"
-msgstr "Rapports & Papiers de travail"
+msgstr "Rapports & Documents de travail"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:118
 msgid "Conference Proceeding"
-msgstr "Actes de congrès"
+msgstr "Acte de congrès"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:119
 msgid "Place"
@@ -436,7 +436,7 @@ msgstr "Seul le créateur d'une publication peut l'éditer"
 
 #: infoscience_exports/exports/views.py:88
 msgid "Only the creator can delete the publication"
-msgstr "Seul le créateur d'une publication peut le supprimer"
+msgstr "Seul le créateur d'une publication peut la supprimer"
 
 #: infoscience_exports/settings/base.py:180
 msgid "French"
