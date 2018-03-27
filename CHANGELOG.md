@@ -1,5 +1,19 @@
 # Change Log
 
+## [Unreleased](https://github.com/epfl-idevelop/infoscience-exports/tree/HEAD)
+
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...HEAD)
+
+**Merged pull requests:**
+
+- Removed useless spaces [\#86](https://github.com/epfl-idevelop/infoscience-exports/pull/86) ([dragonleman](https://github.com/dragonleman))
+- Added cors headers [\#85](https://github.com/epfl-idevelop/infoscience-exports/pull/85) ([ebreton](https://github.com/ebreton))
+- don't translate 'et al.' [\#83](https://github.com/epfl-idevelop/infoscience-exports/pull/83) ([dragonleman](https://github.com/dragonleman))
+- Per object caching [\#82](https://github.com/epfl-idevelop/infoscience-exports/pull/82) ([jdelasoie](https://github.com/jdelasoie))
+
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-23)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...prod-release)
+
 ## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-23)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.2...qa-release)
 
@@ -71,14 +85,11 @@
 - Translations: locale folders [\#45](https://github.com/epfl-idevelop/infoscience-exports/pull/45) ([dragonleman](https://github.com/dragonleman))
 
 ## [0.3.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.4) (2018-03-09)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.3.4)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...0.3.4)
 
 **Merged pull requests:**
 
 - Limitation to 5 authors max, copy to clipboard confirmation, pending validations in its own field [\#40](https://github.com/epfl-idevelop/infoscience-exports/pull/40) ([dragonleman](https://github.com/dragonleman))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-06)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...prod-release)
 
 ## [0.3.3](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.3) (2018-03-05)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.2...0.3.3)
