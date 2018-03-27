@@ -19,7 +19,7 @@ WORKDIR /usr/src/app
 # install requirements 
 # (asap to make cache more efficent)
 COPY ./requirements*.txt /usr/src/app/
-RUN pip install -r requirements-dev.txt
+RUN pip install --no-cache-dir -r requirements-dev.txt
 
 # copy project files
 COPY ./update_release.py /usr/src/app/update_release.py
