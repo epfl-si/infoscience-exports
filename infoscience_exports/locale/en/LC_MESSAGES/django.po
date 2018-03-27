@@ -426,7 +426,7 @@ msgstr ""
 
 #: infoscience_exports/exports/templates/log_out.html:6
 msgid "You have successfully logged out from the infoscience exports"
-msgstr ""
+msgstr "You have successfully logged out of the infoscience exports"
 
 #: infoscience_exports/exports/views.py:76
 msgid "Only the creator can edit the publication"
