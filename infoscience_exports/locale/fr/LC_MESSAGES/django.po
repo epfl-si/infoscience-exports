@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-27 08:42+0200\n"
-"PO-Revision-Date: 2018-03-26 18:42+0200\n"
+"PO-Revision-Date: 2018-03-27 08:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -20,43 +20,37 @@ msgstr ""
 
 #: infoscience_exports/exports/admin.py:23
 msgid "Personal info"
-msgstr ""
+msgstr "Informations personnelles"
 
 #: infoscience_exports/exports/admin.py:24
 msgid "EPFL info"
-msgstr ""
+msgstr "Données EPFL"
 
 #: infoscience_exports/exports/admin.py:25
 msgid "Permissions"
-msgstr ""
+msgstr "Permissions"
 
 #: infoscience_exports/exports/admin.py:27
 msgid "Important dates"
-msgstr ""
+msgstr "Dates importantes"
 
 #: infoscience_exports/exports/marc21xml.py:258
 msgid "The domain is not allowed"
-msgstr ""
+msgstr "Ce domaine n'est pas autorisé"
 
 #: infoscience_exports/exports/marc21xml.py:315
-#, fuzzy
-#| msgid "year: with pending publications"
 msgid "There are only pending publications"
-msgstr "années: avec publications en attente de validation"
+msgstr "Il n'y a que des publications en attente de validation"
 
 #: infoscience_exports/exports/models/settings.py:62
 #: infoscience_exports/exports/models/settings.py:72
-#, fuzzy
-#| msgid "year: year as title"
 msgid "year as title"
-msgstr "années: années comme titre"
+msgstr "années comme titre"
 
 #: infoscience_exports/exports/models/settings.py:67
 #: infoscience_exports/exports/models/settings.py:73
-#, fuzzy
-#| msgid "document type, document type as title"
 msgid "document type as title"
-msgstr "type de document: type de document comme titre"
+msgstr "type de document comme titre"
 
 #: infoscience_exports/exports/models/settings.py:107
 msgid "short"
@@ -83,8 +77,6 @@ msgid "Books"
 msgstr "Livres"
 
 #: infoscience_exports/exports/options_notices.py:21
-#, fuzzy
-#| msgid "PhD Theses"
 msgid "Theses"
 msgstr "Thèses"
 
@@ -97,13 +89,12 @@ msgid "Conference Proceedings"
 msgstr "Actes de congrès"
 
 #: infoscience_exports/exports/options_notices.py:24
-#, fuzzy
 msgid "Working Papers"
 msgstr "Papiers de travail"
 
 #: infoscience_exports/exports/options_notices.py:25
 msgid "Reports"
-msgstr ""
+msgstr "Rapports techniques"
 
 #: infoscience_exports/exports/options_notices.py:26
 msgid "Posters"
@@ -111,7 +102,7 @@ msgstr "Posters"
 
 #: infoscience_exports/exports/options_notices.py:27
 msgid "Talks"
-msgstr ""
+msgstr "Discours"
 
 #: infoscience_exports/exports/options_notices.py:28
 msgid "Standards"
@@ -122,46 +113,40 @@ msgid "Patents"
 msgstr "Brevets"
 
 #: infoscience_exports/exports/options_notices.py:30
-#, fuzzy
-#| msgid "Student works"
 msgid "Student Projects"
 msgstr "Travaux d'étudiants"
 
 #: infoscience_exports/exports/options_notices.py:31
-#, fuzzy
-#| msgid "Teaching Documents"
 msgid "Teaching Resources"
 msgstr "Documents d'enseignement"
 
 #: infoscience_exports/exports/options_notices.py:32
 msgid "Media"
-msgstr ""
+msgstr "Media"
 
 #: infoscience_exports/exports/options_notices.py:33
 msgid "Datasets"
-msgstr ""
+msgstr "Echantillons de données"
 
 #: infoscience_exports/exports/options_notices.py:144
 msgid "Url field is empty"
-msgstr ""
+msgstr "Le champ URL est vide"
 
 #: infoscience_exports/exports/templates/exports/export.html:12
 msgid "Success"
-msgstr ""
+msgstr "Succès"
 
 #: infoscience_exports/exports/templates/exports/export.html:13
-#, fuzzy
-#| msgid "Configurations"
 msgid "Information"
-msgstr "Configurations"
+msgstr "Information"
 
 #: infoscience_exports/exports/templates/exports/export.html:14
 msgid "Warning"
-msgstr ""
+msgstr "Avertissement"
 
 #: infoscience_exports/exports/templates/exports/export.html:15
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: infoscience_exports/exports/templates/exports/export_detailed.html:83
 #: infoscience_exports/exports/templates/exports/export_detailed.html:102
@@ -200,11 +185,11 @@ msgstr "Nom"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:41
 msgid "Request Url"
-msgstr ""
+msgstr "URL de la requête"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:47
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:53
 #: infoscience_exports/exports/templates/exports/export_form.html:56
@@ -214,10 +199,8 @@ msgstr "Groupement"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:65
 #: infoscience_exports/exports/templates/exports/export_form.html:68
-#, fuzzy
-#| msgid "year: with pending publications"
 msgid "Show pending publications"
-msgstr "années: avec publications en attente de validation"
+msgstr "Afficher les publications en attente de validation"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:71
 msgid "Bullets and Numbering"
@@ -233,11 +216,11 @@ msgstr "Afficher l'image"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:83
 msgid "Summary"
-msgstr ""
+msgstr "Résumé"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:86
 msgid "Show Summary"
-msgstr ""
+msgstr "Afficher le résumé"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:89
 msgid "Links"
@@ -257,79 +240,66 @@ msgstr "Texte intégral"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:102
 msgid "Advanced options"
-msgstr ""
+msgstr "Options avancées"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:106
 msgid "Article & Review"
-msgstr ""
+msgstr "Article & revues"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:107
 msgid "Volume"
-msgstr ""
+msgstr "Volume"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:108
 msgid "Number"
-msgstr ""
+msgstr "Numéro"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:109
 #: infoscience_exports/exports/templates/exports/export_form.html:113
 #: infoscience_exports/exports/templates/exports/export_form.html:116
-#, fuzzy
-#| msgid "Page"
 msgid "Pages"
-msgstr "Page"
+msgstr "Pages"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:111
-#, fuzzy
-#| msgid "PhD Theses"
 msgid "PhD Thesis"
 msgstr "Thèses"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:112
 msgid "Directors"
-msgstr ""
+msgstr "Directeur"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:115
-#, fuzzy
 msgid "Report & Working papers"
-msgstr "Papiers de travail"
+msgstr "Rapports & Papiers de travail"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:118
-#, fuzzy
-#| msgid "Conference Proceedings"
 msgid "Conference Proceeding"
 msgstr "Actes de congrès"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:119
 msgid "Place"
-msgstr ""
+msgstr "Lieu"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:120
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:122
-#, fuzzy
-#| msgid "Conference Papers"
 msgid "Conference Paper"
-msgstr "Papiers de conférences"
+msgstr "Papier de conférences"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:123
-#, fuzzy
-#| msgid "Journal Articles"
 msgid "Journal"
-msgstr "Articles de journaux"
+msgstr "Journal"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:125
-#, fuzzy
-#| msgid "Books"
 msgid "Book"
-msgstr "Livres"
+msgstr "Livre"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:126
 #: infoscience_exports/exports/templates/exports/export_form.html:130
 msgid "ISBN"
-msgstr ""
+msgstr "ISBN"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:127
 #: infoscience_exports/exports/templates/exports/export_form.html:131
@@ -344,23 +314,19 @@ msgstr ""
 #: infoscience_exports/exports/templates/exports/include_doctype/thesis_detailed.html:49
 #: infoscience_exports/exports/templates/exports/include_doctype/thesis_short.html:43
 msgid "DOI"
-msgstr ""
+msgstr "DOI"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:129
-#, fuzzy
-#| msgid "Book Chapter"
 msgid "Book chapter"
 msgstr "Chapitre de livre"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:133
-#, fuzzy
-#| msgid "Patents"
 msgid "Patent"
 msgstr "Brevets"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:134
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:141
 msgid "Cancel"
@@ -380,7 +346,7 @@ msgstr "Soumettre"
 
 #: infoscience_exports/exports/templates/exports/export_form.html:147
 msgid "In progress"
-msgstr ""
+msgstr "En cours"
 
 #: infoscience_exports/exports/templates/exports/export_list.html:6
 msgid "Configurations"
@@ -424,17 +390,17 @@ msgstr "suivant"
 
 #: infoscience_exports/exports/templates/exports/export_short.html:123
 msgid "No notices loaded"
-msgstr ""
+msgstr "Nombre de notices chargées"
 
 #: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:27
 #: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:28
 msgid "Vol."
-msgstr ""
+msgstr "Vol."
 
 #: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:34
 #: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:35
 msgid "num."
-msgstr ""
+msgstr "num."
 
 #: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:40
 #: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:41
@@ -447,18 +413,16 @@ msgstr ""
 #: infoscience_exports/exports/templates/exports/include_doctype/thesis_detailed.html:43
 #: infoscience_exports/exports/templates/exports/include_doctype/thesis_short.html:39
 msgid "p."
-msgstr ""
+msgstr "p."
 
 #: infoscience_exports/exports/templates/exports/include_doctype/patent_detailed.html:39
-#, fuzzy
-#| msgid "Patents"
 msgid "Patent number(s)"
-msgstr "Brevets"
+msgstr "Numéro de brevet"
 
 #: infoscience_exports/exports/templates/exports/include_doctype/thesis_detailed.html:19
 #: infoscience_exports/exports/templates/exports/include_doctype/thesis_short.html:13
 msgid "Dir."
-msgstr ""
+msgstr "Dir."
 
 #: infoscience_exports/exports/templates/log_out.html:6
 msgid "You have successfully logged out from the infoscience exports"
@@ -483,92 +447,80 @@ msgid "English"
 msgstr "Anglais"
 
 #: src/django-auditlog/src/auditlog/models.py:169
-#, fuzzy
-#| msgid "Create"
 msgid "create"
-msgstr "Créer"
+msgstr "créer"
 
 #: src/django-auditlog/src/auditlog/models.py:170
-#, fuzzy
-#| msgid "Updated at"
 msgid "update"
-msgstr "Mis à jour le"
+msgstr "mettre à jour"
 
 #: src/django-auditlog/src/auditlog/models.py:171
 msgid "delete"
-msgstr ""
+msgstr "supprimer"
 
 #: src/django-auditlog/src/auditlog/models.py:174
-#, fuzzy
-#| msgid "document type"
 msgid "content type"
 msgstr "type de document"
 
 #: src/django-auditlog/src/auditlog/models.py:175
 msgid "object pk"
-msgstr ""
+msgstr "clef objet"
 
 #: src/django-auditlog/src/auditlog/models.py:176
 msgid "object id"
-msgstr ""
+msgstr "id objet"
 
 #: src/django-auditlog/src/auditlog/models.py:177
-#, fuzzy
-#| msgid "Poster Presentation"
 msgid "object representation"
-msgstr "Poster de présentation"
+msgstr "description objet"
 
 #: src/django-auditlog/src/auditlog/models.py:178
 msgid "action"
-msgstr ""
+msgstr "action"
 
 #: src/django-auditlog/src/auditlog/models.py:179
 msgid "change message"
-msgstr ""
+msgstr "modifier le message"
 
 #: src/django-auditlog/src/auditlog/models.py:180
 msgid "actor"
-msgstr ""
+msgstr "acteur"
 
 #: src/django-auditlog/src/auditlog/models.py:181
 msgid "remote address"
-msgstr ""
+msgstr "adresse distante"
 
 #: src/django-auditlog/src/auditlog/models.py:182
 msgid "timestamp"
-msgstr ""
+msgstr "horodateur"
 
 #: src/django-auditlog/src/auditlog/models.py:183
 msgid "additional data"
-msgstr ""
+msgstr "données additionnelles"
 
 #: src/django-auditlog/src/auditlog/models.py:190
 msgid "log entry"
-msgstr ""
+msgstr "entrée de log"
 
 #: src/django-auditlog/src/auditlog/models.py:191
 msgid "log entries"
-msgstr ""
+msgstr "entrées de log"
 
 #: src/django-auditlog/src/auditlog/models.py:195
-#, fuzzy
-#| msgid "Created at"
 msgid "Created {repr:s}"
-msgstr "Créé le"
+msgstr "Créé le {repr:s}"
 
 #: src/django-auditlog/src/auditlog/models.py:197
-#, fuzzy
-#| msgid "Updated at"
 msgid "Updated {repr:s}"
-msgstr "Mis à jour le"
+msgstr "Mis à jour le {repr:s}"
 
 #: src/django-auditlog/src/auditlog/models.py:199
 msgid "Deleted {repr:s}"
-msgstr ""
+msgstr "Supprimée le {repr:s}"
 
 #: src/django-auditlog/src/auditlog/models.py:201
 msgid "Logged {repr:s}"
-msgstr ""
+msgstr "Loggué le {repr:s}"
 
 #~ msgid "year: year as title, with pending publications"
 #~ msgstr ""
