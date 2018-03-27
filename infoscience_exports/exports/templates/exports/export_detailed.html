@@ -2,6 +2,8 @@
 {% load staticfiles %}
 
 
+{% spaceless %}
+
 {% for titles in options.marc21xml %}
 	{% for groups in titles %}
 	{% if forloop.first %}
@@ -122,5 +124,7 @@
 {% empty %}
 <p>{% trans "No items" %}.</p>
 {% endfor %}
+
+{% endspaceless %}
 
 

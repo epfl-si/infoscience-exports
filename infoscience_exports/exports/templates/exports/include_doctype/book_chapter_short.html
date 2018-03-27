@@ -9,51 +9,52 @@
 {% endif %}
 
 {% if article.Title %}
-	<span><strong>{{ article.Title }}</strong> ;</span>
+	<span><strong>{{ article.Title }}</strong></span>
+    <span>{% if article.Publisher or article.Publication_Location or article.Publication_Institution or article.Publication_Date %}; {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if article.Publisher %}
-	<span>{{ article.Publisher }}</span>
+	<span><i>{{ article.Publisher }}</i></span>
 	{% if article.Publication_Location or article.Publication_Institution or article.Publication_Date %}
-		<span> ; </span>
+		<span>; </span>
 	{% else %}
-		<span> . </span>
+		<span>. </span>
 	{% endif %}
 {% endif %}
 
 {% if article.Publication_Location %}
 	<span>{{ article.Publication_Location }}</span>
 	{% if article.Publication_Institution %}
-		<span> : </span>
+		<span>: </span>
 	{% elif article.Publication_Date %}
-		<span> , </span>
+		<span>, </span>
 	{% else %}
-		<span> . </span>
+		<span>. </span>
 	{% endif %}
 {% endif %}
 
 {% if article.Publication_Institution %}
 	<span>{{ article.Publication_Institution }}</span>
 	{% if article.Publication_Date %}
-		<span> , </span>
+		<span>, </span>
 	{% else %}
-		<span> . </span>
+		<span>. </span>
 	{% endif %}
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}.</span>
+	<span>{{ article.Publication_Date }}. </span>
 {% endif %}
 
 {% if article.Publisher_Volume_Pages %}
-	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}.</span>
+	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}. </span>
 	{% if options.adv_book_chapter_isbn and article.ISBN %}
 		<span> - </span>
 	{% endif %}
 {% endif %}
 
 {% if options.adv_book_chapter_isbn and article.ISBN %}
-	<span>{{ article.ISBN }}.</span>
+	<span>{{ article.ISBN }}. </span>
 {% endif %}
 
 {% if options.adv_book_chapter_doi and article.DOI %}

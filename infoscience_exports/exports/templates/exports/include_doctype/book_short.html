@@ -11,24 +11,29 @@
 {% if article.Title %}
 	<span>
 		<strong>{{ article.Title }}</strong>
-		{% if article.Publication_Location or article.Publication_Institution %} ; {% else %} . {% endif %}
+		{% if article.Publication_Location or article.Publication_Institution %} ; {% else %}. {% endif %}
 	</span>
 {% endif %}
 
 {% if article.Publication_Location %}
 	<span>{{ article.Publication_Location }}</span>
-{% endif %}
-
-{% if article.Publication_Location and article.Publication_Institution %}
-	<span> : </span>
+	{% if article.Publication_Institution or options.article.Publication_Date %}
+		<span>: </span>
+	{% elif options.adv_book_isbn and article.ISBN %}
+		<span> - </span>
+	{% else %}
+		<span>. </span>		
+	{% endif %}
 {% endif %}
 
 {% if article.Publication_Institution %}
 	<span>{{ article.Publication_Institution }}</span>
-	{% if options.article.Publication_Date or options.adv_book_isbn and article.ISBN %}
-		<span> , </span>
+	{% if options.article.Publication_Date %}
+		<span>, </span>
+	{% elif options.adv_book_isbn and article.ISBN %}
+		<span> - </span>
 	{% else %}
-		<span> . </span>
+		<span>. </span>		
 	{% endif %}
 {% endif %}
 
@@ -37,12 +42,12 @@
 	{% if options.adv_book_isbn and article.ISBN %}
 		<span> - </span>
 	{% else %}
-		<span> . </span>
+		<span>. </span>
 	{% endif %}
 {% endif %}
 
 {% if options.adv_book_isbn and article.ISBN %}
-	<span>{{ article.ISBN }}.</span>
+	<span>{{ article.ISBN }}. </span>
 {% endif %}
 
 {% if options.adv_book_doi and article.DOI %}
