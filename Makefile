@@ -89,6 +89,7 @@ reset: build up
 	sleep 3
 	make init-db
 	make collectstatic
+	make compilemessages
 
 up:
 	docker-compose -f docker-compose-dev.yml up -d
@@ -131,6 +132,10 @@ migrate: up
 messages: up
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py makemessages --all
+
+compilemessages: up
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py compilemessages
 
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
