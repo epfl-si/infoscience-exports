@@ -6,7 +6,7 @@
 	up down logs restart restart-web \
 	superadmin collectstatic migrations migrate \
 	dump restore release push-prod deploy \
-	fast-test test coverage
+	fast-test test coverage load-dump bash
 
 VERSION:=$(shell python update_release.py -v)
 
@@ -244,6 +244,13 @@ test-travis:
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
 	python infoscience_exports/manage.py test exports --settings=settings.test --noinput
 	coverage xml
+
+migrate-load-dump:
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py loaddata --settings=settings.test --app exporter exports_from_32
+
+migrate-do:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py migrate_from_legacy --settings=settings.test
 
 check-env:
 ifeq ($(wildcard .env),)
