@@ -6,7 +6,8 @@
 	up down logs restart restart-web \
 	superadmin collectstatic migrations migrate \
 	dump restore release push-prod deploy \
-	fast-test test coverage shell load-dump
+	fast-test test coverage shell \
+	migrate-load-dump migrate-do
 
 VERSION:=$(shell python update_release.py -v)
 
