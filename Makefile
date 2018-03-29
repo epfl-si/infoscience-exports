@@ -6,7 +6,7 @@
 	up down logs restart restart-web \
 	superadmin collectstatic migrations migrate \
 	dump restore release push-prod deploy \
-	fast-test test coverage load-dump bash
+	fast-test test coverage shell load-dump
 
 VERSION:=$(shell python update_release.py -v)
 
@@ -89,6 +89,7 @@ reset: build up
 	sleep 3
 	make init-db
 	make collectstatic
+	make compilemessages
 
 up:
 	docker-compose -f docker-compose-dev.yml up -d
@@ -127,6 +128,14 @@ migrations: up
 migrate: up
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
+
+messages: up
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py makemessages --all
+
+compilemessages: up
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py compilemessages
 
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
@@ -229,6 +238,10 @@ test: check-env
 		flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py test exports --settings=settings.test --noinput
+
+shell:
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py shell_plus
 
 coverage: check-env
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations

@@ -1,10 +1,23 @@
 # Change Log
 
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-23)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.2...qa-release)
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-03-28)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.3...qa-release)
+
+## [0.4.3](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.3) (2018-03-28)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.2...0.4.3)
+
+**Merged pull requests:**
+
+- Reduce image size [\#88](https://github.com/epfl-idevelop/infoscience-exports/pull/88) ([dabelenda](https://github.com/dabelenda))
+- Translated in French [\#87](https://github.com/epfl-idevelop/infoscience-exports/pull/87) ([ebreton](https://github.com/ebreton))
+- Removed useless spaces [\#86](https://github.com/epfl-idevelop/infoscience-exports/pull/86) ([dragonleman](https://github.com/dragonleman))
+- Added cors headers [\#85](https://github.com/epfl-idevelop/infoscience-exports/pull/85) ([ebreton](https://github.com/ebreton))
+- Update django.po [\#84](https://github.com/epfl-idevelop/infoscience-exports/pull/84) ([tommybeck](https://github.com/tommybeck))
+- don't translate 'et al.' [\#83](https://github.com/epfl-idevelop/infoscience-exports/pull/83) ([dragonleman](https://github.com/dragonleman))
+- Per object caching [\#82](https://github.com/epfl-idevelop/infoscience-exports/pull/82) ([jdelasoie](https://github.com/jdelasoie))
 
 ## [0.4.2](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.2) (2018-03-23)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.1...0.4.2)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.4.2)
 
 **Merged pull requests:**
 
@@ -16,6 +29,9 @@
 - Modified 'Url' =\> 'Request Url' [\#72](https://github.com/epfl-idevelop/infoscience-exports/pull/72) ([dragonleman](https://github.com/dragonleman))
 - Removed clickable title [\#71](https://github.com/epfl-idevelop/infoscience-exports/pull/71) ([dragonleman](https://github.com/dragonleman))
 - Added codecov [\#68](https://github.com/epfl-idevelop/infoscience-exports/pull/68) ([ebreton](https://github.com/ebreton))
+
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-20)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.1...prod-release)
 
 ## [0.4.1](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.1) (2018-03-20)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.0...0.4.1)
@@ -71,14 +87,11 @@
 - Translations: locale folders [\#45](https://github.com/epfl-idevelop/infoscience-exports/pull/45) ([dragonleman](https://github.com/dragonleman))
 
 ## [0.3.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.4) (2018-03-09)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.3.4)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...0.3.4)
 
 **Merged pull requests:**
 
 - Limitation to 5 authors max, copy to clipboard confirmation, pending validations in its own field [\#40](https://github.com/epfl-idevelop/infoscience-exports/pull/40) ([dragonleman](https://github.com/dragonleman))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-06)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...prod-release)
 
 ## [0.3.3](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.3) (2018-03-05)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.2...0.3.3)

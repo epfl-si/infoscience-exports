@@ -17,18 +17,23 @@
 {% if article.Corporate_Name %}
 	<span>{{ article.Corporate_Name.0 }}</span>
 	{% if article.Company_Name %}
-	/
+	<span> / </span>
 	{% else %}
-	:
+	<span>: </span>
 	{% endif %}
 {% endif %}
 
 {% if article.Company_Name %}
 	<span>{{ article.Company_Name }}</span>
+	{% if article.Publication_Date %}
+	<span>: </span>
+	{% else %}
+	<span>. </span>
+	{% endif %}
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}.</span>
+	<span>{{ article.Publication_Date }}. </span>
 {% endif %}
 </p>
 
@@ -40,7 +45,7 @@
 		</div>
 		<div class="patent-patents-list-right">
 			{% for patent in article.Patents %}
-			<span>{{ patent.a }} {% if options.adv_patent_status and patent.c %} ({{ patent.c }}) {% endif %}</span><br />
+			<span>{{ patent.a }} {% if options.adv_patent_status and patent.c %}({{ patent.c }}){% endif %}</span><br />
 			{% endfor %}			
 		</div>
 	</div>

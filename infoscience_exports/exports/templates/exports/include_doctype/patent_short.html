@@ -11,34 +11,31 @@
 {% if article.Corporate_Name %}
 	<span>{{ article.Corporate_Name.0 }}</span>
 	{% if article.Company_Name %}
-	/
+	<span> / </span>
 	{% else %}
-	:
+	<span>: </span>
 	{% endif %}
 {% endif %}
 
 {% if article.Company_Name %}
-	<span>{{ article.Company_Name }}</span> :
+	<span>{{ article.Company_Name }}</span>
+	<span>: </span>
 {% endif %}
 
 {% if article.Title %}
-	<span>
-		<strong>{{ article.Title }}</strong>
-		{% if article.Patent %} ; {% else %} . {% endif %}
-	</span>
+	<span><strong>{{ article.Title }}</strong></span>
+	<span>{% if article.Patent %} ; {% else %}. {% endif %}</span>
 {% endif %}
 
 {% if article.Patents %}
-	<span>
 	{% for patent in article.Patents %}
-		{{ patent.a }} {% if options.adv_patent_status and patent.c %} ({{ patent.c }}) {% endif %}
+		<span>{{ patent.a }} {% if options.adv_patent_status and patent.c %}({{ patent.c }}){% endif %}</span>
 		{% if forloop.last %}
-		.	
+		<span>. </span>
 		{% else %}
-        ; 
+        <span>; </span>
 		{% endif %}
 	{% endfor %}
-	</span>
 {% endif %}
 
 {% if article.Publication_Date %}
