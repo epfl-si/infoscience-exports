@@ -71,14 +71,22 @@ class Command(BaseCommand):
         if 'format_bullet_order' in s and s['format_bullet_order']:
             new_export.show_detailed = True
 
-        if 'format_bullet_text' in s and s['format_bullet_text']:
-            if s['format_bullet_text'] == '*':
-                new_export.bullets_type = 'CHARACTER_STAR'
-            elif s['format_bullet_text'] == '-':
-                new_export.bullets_type = 'CHARACTER_MINUS'
-            else:  # default
-                new_export.bullets_type = 'CHARACTER_STAR'
-        # todo: bullet number
+        if 'format_bullets' in s and s['format_bullets']:
+            if 'format_bullets_type' in s:
+                if s['format_bullets_type'] == 'text':
+                    if 'format_bullet_text' in s and s['format_bullet_text']:
+                        if s['format_bullet_text'] == '*':
+                            new_export.bullets_type = 'CHARACTER_STAR'
+                        elif s['format_bullet_text'] == '-':
+                            new_export.bullets_type = 'CHARACTER_MINUS'
+                        else:  # default
+                            new_export.bullets_type = 'CHARACTER_STAR'
+                elif s['format_bullets_type'] == 'number':
+                    if 'format_bullet_order' in s:
+                        if s['format_bullet_order'] == 'desc':
+                            new_export.bullets_type = 'NUMBER_DESC'
+                        elif s['format_bullet_order'] == 'asc':
+                            new_export.bullets_type = 'NUMBER_ASC'
 
         # links
         if 'link_has_detailed_record' in s and s['link_has_detailed_record']:
