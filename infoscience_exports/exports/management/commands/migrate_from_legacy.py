@@ -49,18 +49,23 @@ class Command(BaseCommand):
 
         # group by
         # TODO:
-        # if 'group_by_year_seperate_pending' in s and s['group_by_year_seperate_pending']:
-        #     new_export.show_pending_publications = True
-        #
-        # if 'group_by_first' in s and s['group_by_first'] == 'year':
-        #     new_export.groupsby_year = 'YEAR_TITLE'
-        #
-        #     if 'group_by_second' in s and s['group_by_first'] == 'year':
-        #
-        #     # old default groupby, if not "years as title" and not second lvl
-        #     # this is the default listing
-        #     if 'group_by_year_display_headings' in s and s['group_by_year_display_headings']:
-        #         new_export.groupsby_year = 'YEAR_TITLE'
+        if 'group_by_year_seperate_pending' in s and s['group_by_year_seperate_pending']:
+            new_export.show_pending_publications = True
+
+        new_export.groupsby_type = 'NONE'
+        new_export.groupsby_doc = 'NONE'
+        new_export.groupsby_year = 'NONE'
+
+        if 'group_by_first' in s:
+            if s['group_by_first'] == 'year':
+                if 'group_by_year_display_headings' in s and s['group_by_year_display_headings']:
+                    new_export.groupsby_type = 'YEAR_TITLE'
+                if 'group_by_second' in s and s['group_by_second'] == 'doctype':
+                    new_export.groupsby_doc = 'DOC_TITLE'
+            elif s['group_by_first'] == 'doctype':
+                new_export.groupsby_type = 'DOC_TITLE'
+                if 'group_by_second' in s and s['group_by_second'] == 'year':
+                    new_export.groupsby_year = 'YEAR_TITLE'
 
         # bullets
         if 'format_bullet_order' in s and s['format_bullet_order']:
@@ -73,6 +78,7 @@ class Command(BaseCommand):
                 new_export.bullets_type = 'CHARACTER_MINUS'
             else:  # default
                 new_export.bullets_type = 'CHARACTER_STAR'
+        # todo: bullet number
 
         # links
         if 'link_has_detailed_record' in s and s['link_has_detailed_record']:
@@ -81,7 +87,6 @@ class Command(BaseCommand):
             new_export.show_fulltext = True
         if 'link_has_official' in s and s['link_has_official']:
             new_export.show_viewpublisher = True
-
 
         # divers
         if 'link_has_readable_links' in s and s['link_has_readable_links']:
