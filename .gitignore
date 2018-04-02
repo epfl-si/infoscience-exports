@@ -57,6 +57,7 @@ target/
 
 # IDEA/PyCharm
 .idea/
+.vscode
 
 # Development
 .env
