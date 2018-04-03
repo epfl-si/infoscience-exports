@@ -12,7 +12,6 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('output', nargs='*', type=str)
 
-    # A command must define handle()
     def handle(self, output, *args, **options):
         if not output:
             raise CommandError("Missing the 'output' argument")
@@ -23,7 +22,8 @@ class Command(BaseCommand):
             writer.writerow(('legacy url', 'new generated url'))
 
             for exporter in SettingsModel.objects.all():
-                old_url = 'https://infoscience-legacy.epfl.ch/curator/export/{}'.format(exporter.id)
-                row = (old_url, exporter.build_url())
+                old_url = 'https://infoscience-legacy.epfl.ch/' \
+                          'curator/export/{}'.format(exporter.id)
+                row = (old_url, exporter.build_search_url(limit=200))
 
                 writer.writerow(row)
