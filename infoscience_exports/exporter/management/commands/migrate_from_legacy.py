@@ -21,7 +21,7 @@ class Command(BaseCommand):
         import pdb
 
         for exporter in SettingsModel.objects.all():
-            s = exporter.settings_as_dict()
+            s = exporter.settings_as_dict
 
             self.stdout.write("doing {}...".format(exporter.id))
             new_export = Export()
@@ -33,7 +33,7 @@ class Command(BaseCommand):
             new_export.updated_at = exporter.updated_at
 
             # url
-            new_export.url = exporter.build_url()
+            new_export.url = exporter.build_search_url()
 
             # format type
             if 'format_type' in s and s['format_type']:
@@ -69,7 +69,6 @@ class Command(BaseCommand):
 
 
             # group by
-            # TODO:
             if 'group_by_year_seperate_pending' in s and s['group_by_year_seperate_pending']:
                 new_export.show_pending_publications = True
 
@@ -121,7 +120,7 @@ class Command(BaseCommand):
             if 'link_has_readable_links' in s and s['link_has_readable_links']:
                 new_export.show_links_for_printing= True
 
-            #TODO set the right user
+            # TODO set the right user
             new_export.user = User.objects.all()[0]
             new_export.save()
             self.stdout.write("...saving {}".format(new_export.id))
