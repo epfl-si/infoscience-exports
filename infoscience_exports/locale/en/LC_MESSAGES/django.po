@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-27 08:42+0200\n"
+"POT-Creation-Date: 2018-03-29 11:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,30 +148,30 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: infoscience_exports/exports/templates/exports/export_detailed.html:83
-#: infoscience_exports/exports/templates/exports/export_detailed.html:102
+#: infoscience_exports/exports/templates/exports/export_detailed.html:85
+#: infoscience_exports/exports/templates/exports/export_detailed.html:104
 #: infoscience_exports/exports/templates/exports/export_form.html:96
-#: infoscience_exports/exports/templates/exports/export_short.html:83
-#: infoscience_exports/exports/templates/exports/export_short.html:102
+#: infoscience_exports/exports/templates/exports/export_short.html:85
+#: infoscience_exports/exports/templates/exports/export_short.html:104
 msgid "Detailed record"
 msgstr ""
 
-#: infoscience_exports/exports/templates/exports/export_detailed.html:88
-#: infoscience_exports/exports/templates/exports/export_detailed.html:105
-#: infoscience_exports/exports/templates/exports/export_short.html:88
-#: infoscience_exports/exports/templates/exports/export_short.html:106
+#: infoscience_exports/exports/templates/exports/export_detailed.html:90
+#: infoscience_exports/exports/templates/exports/export_detailed.html:107
+#: infoscience_exports/exports/templates/exports/export_short.html:90
+#: infoscience_exports/exports/templates/exports/export_short.html:108
 msgid "Full text"
 msgstr ""
 
-#: infoscience_exports/exports/templates/exports/export_detailed.html:94
-#: infoscience_exports/exports/templates/exports/export_detailed.html:109
+#: infoscience_exports/exports/templates/exports/export_detailed.html:96
+#: infoscience_exports/exports/templates/exports/export_detailed.html:111
 #: infoscience_exports/exports/templates/exports/export_form.html:98
-#: infoscience_exports/exports/templates/exports/export_short.html:94
-#: infoscience_exports/exports/templates/exports/export_short.html:110
+#: infoscience_exports/exports/templates/exports/export_short.html:96
+#: infoscience_exports/exports/templates/exports/export_short.html:112
 msgid "View at publisher"
 msgstr ""
 
-#: infoscience_exports/exports/templates/exports/export_detailed.html:123
+#: infoscience_exports/exports/templates/exports/export_detailed.html:125
 msgid "No items"
 msgstr ""
 
@@ -215,11 +215,11 @@ msgid "Show illustration"
 msgstr ""
 
 #: infoscience_exports/exports/templates/exports/export_form.html:83
-msgid "Summary"
+msgid "Abstract"
 msgstr ""
 
 #: infoscience_exports/exports/templates/exports/export_form.html:86
-msgid "Show Summary"
+msgid "Show abstract"
 msgstr ""
 
 #: infoscience_exports/exports/templates/exports/export_form.html:89
@@ -303,14 +303,14 @@ msgstr ""
 
 #: infoscience_exports/exports/templates/exports/export_form.html:127
 #: infoscience_exports/exports/templates/exports/export_form.html:131
-#: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:45
-#: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:45
+#: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:41
+#: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:39
 #: infoscience_exports/exports/templates/exports/include_doctype/book_chapter_detailed.html:64
-#: infoscience_exports/exports/templates/exports/include_doctype/book_chapter_short.html:60
-#: infoscience_exports/exports/templates/exports/include_doctype/book_detailed.html:50
-#: infoscience_exports/exports/templates/exports/include_doctype/book_short.html:49
-#: infoscience_exports/exports/templates/exports/include_doctype/conference_paper_detailed.html:52
-#: infoscience_exports/exports/templates/exports/include_doctype/conference_paper_short.html:51
+#: infoscience_exports/exports/templates/exports/include_doctype/book_chapter_short.html:61
+#: infoscience_exports/exports/templates/exports/include_doctype/book_detailed.html:55
+#: infoscience_exports/exports/templates/exports/include_doctype/book_short.html:54
+#: infoscience_exports/exports/templates/exports/include_doctype/conference_paper_detailed.html:50
+#: infoscience_exports/exports/templates/exports/include_doctype/conference_paper_short.html:45
 #: infoscience_exports/exports/templates/exports/include_doctype/thesis_detailed.html:49
 #: infoscience_exports/exports/templates/exports/include_doctype/thesis_short.html:43
 msgid "DOI"
@@ -388,26 +388,26 @@ msgstr ""
 msgid "next"
 msgstr ""
 
-#: infoscience_exports/exports/templates/exports/export_short.html:123
+#: infoscience_exports/exports/templates/exports/export_short.html:125
 msgid "No notices loaded"
 msgstr ""
 
-#: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:27
-#: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:28
+#: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:26
+#: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:25
 msgid "Vol."
 msgstr ""
 
-#: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:34
-#: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:35
+#: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:31
+#: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:30
 msgid "num."
 msgstr ""
 
-#: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:40
-#: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:41
+#: infoscience_exports/exports/templates/exports/include_doctype/article_detailed.html:36
+#: infoscience_exports/exports/templates/exports/include_doctype/article_short.html:35
 #: infoscience_exports/exports/templates/exports/include_doctype/book_chapter_detailed.html:51
-#: infoscience_exports/exports/templates/exports/include_doctype/book_chapter_short.html:49
-#: infoscience_exports/exports/templates/exports/include_doctype/conference_paper_detailed.html:46
-#: infoscience_exports/exports/templates/exports/include_doctype/conference_paper_short.html:47
+#: infoscience_exports/exports/templates/exports/include_doctype/book_chapter_short.html:50
+#: infoscience_exports/exports/templates/exports/include_doctype/conference_paper_detailed.html:44
+#: infoscience_exports/exports/templates/exports/include_doctype/conference_paper_short.html:41
 #: infoscience_exports/exports/templates/exports/include_doctype/report_and_working_paper_detailed.html:22
 #: infoscience_exports/exports/templates/exports/include_doctype/report_and_working_paper_short.html:20
 #: infoscience_exports/exports/templates/exports/include_doctype/thesis_detailed.html:43
@@ -415,7 +415,7 @@ msgstr ""
 msgid "p."
 msgstr ""
 
-#: infoscience_exports/exports/templates/exports/include_doctype/patent_detailed.html:39
+#: infoscience_exports/exports/templates/exports/include_doctype/patent_detailed.html:44
 msgid "Patent number(s)"
 msgstr ""
 
