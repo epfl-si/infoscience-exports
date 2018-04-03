@@ -48,9 +48,8 @@ class SettingsModel(models.Model):
 
         if 'search_basket_id' in s and s['search_basket_id']:
             invenio_vars['bskid'] = s['search_basket_id']
-            invenio_vars['category'] = 'P'
-            invenio_vars['topic'] = 'default'
             invenio_vars['of'] = 'xm'
+            return invenio_vars
 
         invenio_vars['p'] = self._get_search_pattern()
 
@@ -126,6 +125,6 @@ class SettingsModel(models.Model):
             invenio_vars['rg'] = limit
 
         if invenio_vars.get('bskid'):
-            return 'https://infoscience.epfl.ch/yourbaskets/display?' + urllib.parse.urlencode(invenio_args)
+            return 'https://infoscience.epfl.ch/yourbaskets/display_public?' + urllib.parse.urlencode(invenio_args)
         else:
             return 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(invenio_args)
