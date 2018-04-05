@@ -17,10 +17,10 @@ admin.site.site_header = "Infoscience-Exporter Admin"
 admin.site.site_title = "Publication lists exporter"
 admin.site.__class__ = TequilaAdminSite
 
+
 class UserChangeForm(forms.ModelForm):
     # remove the mandatory password
     password1 = forms.HiddenInput()
-
 
     class Meta:
         model = User
