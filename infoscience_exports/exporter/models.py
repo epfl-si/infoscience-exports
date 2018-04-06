@@ -102,7 +102,7 @@ class SettingsManager(Manager):
 
                 new_export = exporter.as_new_export()
 
-            new_export.name = "Imported People export ({})".format(sciper)
+            new_export.name = "People".format(sciper)
             new_export.user = User.objects.get(username='delasoie')
             new_export.save()
 
@@ -163,7 +163,7 @@ class SettingsManager(Manager):
 
                 new_export = exporter.as_new_export()
 
-            new_export.name = "Imported Jahia export ({})".format(jahia_site_key)
+            new_export.name = "Jahia export ({})".format(jahia_site_key)
             # TODO: manage when missing sciper
             new_export.user = User.objects.get(username='delasoie')
             new_export.save()

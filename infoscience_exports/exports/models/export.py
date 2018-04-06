@@ -70,6 +70,9 @@ class LegacyExport(models.Model):
     origin_sciper = models.TextField()
     raw_csv_entry = models.TextField()
 
+    def __str__(self):
+        return "{} ({})".format(self.legacy_url, self.origin)
+
 
 def invalidate_view_cache(sender, instance, **kwargs):
     """ invalidate cache for installed languages"""

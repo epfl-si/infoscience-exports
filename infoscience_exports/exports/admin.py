@@ -4,6 +4,7 @@ from django.contrib.admin.options import ModelAdmin
 from django.conf import settings
 from django_tequila.admin import TequilaAdminSite
 from django.utils.translation import gettext_lazy as _
+from django.contrib.admin import SimpleListFilter
 
 from log_utils import LoggedModelAdminMixin
 from .models import Export, LegacyExport, User
@@ -28,6 +29,18 @@ class EPFLUserModelAdmin(UserAdmin):
     )
 
 
+class LegacyExportFilter(SimpleListFilter):
+    title = 'exports imported'
+    parameter_name = 'Imported'
+
+    def lookups(self, request, model_admin):
+        return (('imported','Imported only'),)
+
+    def queryset(self, request, queryset):
+        if self.value() == 'imported':
+            return queryset.filter(legacyexport__isnull=False)
+
+
 class LegacyExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
     pass
 
@@ -44,8 +57,8 @@ class LegacyExportInline(admin.StackedInline):
 
 
 class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
-    list_display = ('name', 'user', 'get_absolute_url', 'updated_at')
-    list_filter = ('updated_at', )
+    list_display = ('name', 'user', 'get_absolute_url', 'updated_at',)
+    list_filter = ('updated_at', LegacyExportFilter)
     inlines = [LegacyExportInline]
 
     def get_formsets_with_inlines(self, request, obj=None):
