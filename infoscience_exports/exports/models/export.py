@@ -47,6 +47,30 @@ class Export(BulletsSettings,
         ordering = ['-id']
 
 
+class LegacyExport(models.Model):
+    """
+    Old exports that were imported
+    """
+    ORIGIN_CHOICE = (
+        ('OTHER', ''),
+        ('JAHIA', 'Jahia'),
+        ('PEOPLE', 'People'),
+    )
+
+    export = models.OneToOneField(
+        Export,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+
+    legacy_url = models.TextField()
+    language = models.TextField()
+    referenced_url = models.TextField()  # the page that use this export
+    origin = models.TextField(choices=ORIGIN_CHOICE)
+    origin_sciper = models.TextField()
+    raw_csv_entry = models.TextField()
+
+
 def invalidate_view_cache(sender, instance, **kwargs):
     """ invalidate cache for installed languages"""
     languages = settings.LANGUAGES

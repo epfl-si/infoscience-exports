@@ -8,15 +8,22 @@ from exporter.models import SettingsModel
 
 class Command(BaseCommand):
 
-    help = "For every export in legacy, find in Infoscience if " \
-           "there is new publications since the migration date"
+    help = "For export found in jahia or people, add them as new exports" \
+           "people list exports-sciper (provided by Ion)" \
+           "jahia list of exports-sciper (provided by Francis, INC0219923)"
 
     def add_arguments(self, parser):
         parser.add_argument('output', nargs='*', type=str)
+        parser.add_argument('people', nargs='*', type=str)
+        parser.add_argument('jahia', nargs='*', type=str)
 
-    def handle(self, output, *args, **options):
+    def handle(self, output, people, jahia, *args, **options):
         if not output:
             raise CommandError("Missing the 'output' argument")
+        if not people:
+            raise CommandError("Missing the 'people' argument")
+        if not jahia:
+            raise CommandError("Missing the 'jahia' argument")
 
         with open(output[0], 'w') as f:
             writer = csv.writer(f)
