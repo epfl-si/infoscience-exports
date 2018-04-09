@@ -110,7 +110,7 @@ def get_ELA_fields(field):
         ELA_object = ela.get('u', '').lower()
         if ELA_object.endswith(".pdf"):
             ela_fulltexts.append(ela.get('u', ''))
-        elif ELA_object.endswith(".png") or ELA_object.endswith(".jpg"):
+        elif ELA_object.endswith(".png") or ELA_object.endswith(".jpg") or ELA_object.endswith(".gif"):
             ela_icon = ela.get('u', '')
     ela_fulltexts = list(filter(None, ela_fulltexts))
     ela_fulltexts = set_fulltext(ela_fulltexts)

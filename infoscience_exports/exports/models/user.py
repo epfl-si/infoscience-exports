@@ -20,7 +20,10 @@ class User(AbstractUser):
         return self
 
     def __str__(self):
-        return self.email
+        if self.email:
+            return self.email
+        else:
+            return self.username
 
     def __unicode__(self):
         return ("<Profile Sciper:{0.sciper} - "
