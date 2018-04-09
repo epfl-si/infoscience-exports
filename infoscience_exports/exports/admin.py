@@ -34,7 +34,7 @@ class LegacyExportFilter(SimpleListFilter):
     parameter_name = 'Imported'
 
     def lookups(self, request, model_admin):
-        return (('imported','Imported only'),)
+        return (('imported', 'Imported only'),)
 
     def queryset(self, request, queryset):
         if self.value() == 'imported':
