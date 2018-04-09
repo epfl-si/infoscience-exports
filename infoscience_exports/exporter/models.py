@@ -65,11 +65,12 @@ class SettingsManager(Manager):
             return True
 
     @staticmethod
-    def get_user_from_sciper(sciper, default_user):
+    def get_user_from_sciper(sciper, default_user, username=''):
         export_user = None
         email = ''
         try:
-            username = get_username(sciper)
+            if not username:
+                username = get_username(sciper)
 
             # remove @ precision
             if username and '@' in username:
@@ -94,7 +95,7 @@ class SettingsManager(Manager):
     def load_exports_from_people(self, people_file_path):
         """
         Save as new exports from the people csv
-        csv is sciper,src
+        csv is sciper, username, src
         """
         with open(people_file_path, 'r') as f:
             reader = csv.reader(f)
@@ -102,7 +103,8 @@ class SettingsManager(Manager):
 
         for row in people_full_list[1:]:
             sciper = row[0]
-            legacy_export_url = row[1].strip()
+            username = row[1]
+            legacy_export_url = row[2].strip()
 
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
@@ -133,7 +135,7 @@ class SettingsManager(Manager):
                 new_export = exporter.as_new_export()
 
             new_export.name = "People".format(sciper)
-            new_export.user = self.get_user_from_sciper(sciper, User.objects.get(username='delasoie'))
+            new_export.user = self.get_user_from_sciper(sciper, User.objects.get(username='delasoie'), username)
             new_export.save()
 
             # add info that created this export
