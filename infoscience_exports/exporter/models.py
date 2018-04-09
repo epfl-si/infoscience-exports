@@ -8,6 +8,9 @@ from django.db.models.manager import Manager
 
 from django.contrib.postgres.fields import JSONField
 
+from epflldap.ldap_search import get_username, get_email
+from epflldap.utils import EpflLdapException
+
 from exports.models import Export, LegacyExport, User
 
 export_id_extractors = [
@@ -61,6 +64,28 @@ class SettingsManager(Manager):
         if matched:
             return True
 
+    @staticmethod
+    def get_user_from_sciper(sciper, default_user):
+        export_user = None
+        email = ''
+        try:
+            username = get_username(sciper)
+            export_user = User.objects.get_or_create(username=username)[0]
+            try:
+                email = get_email(sciper)
+                export_user.email = email
+                export_user.save()
+            except EpflLdapException:
+                # No email ? not a problem, it is not mandatory
+                pass
+        except EpflLdapException:
+            # this sciper is unknown !
+            # TODO: set good user
+            # fallback to default user
+            export_user = default_user
+
+        return export_user
+
     def load_exports_from_people(self, people_file_path):
         """
         Save as new exports from the people csv
@@ -103,7 +128,7 @@ class SettingsManager(Manager):
                 new_export = exporter.as_new_export()
 
             new_export.name = "People".format(sciper)
-            new_export.user = User.objects.get(username='delasoie')
+            new_export.user = self.get_user_from_sciper(sciper, User.objects.get(username='delasoie'))
             new_export.save()
 
             # add info that created this export
@@ -164,9 +189,10 @@ class SettingsManager(Manager):
                 new_export = exporter.as_new_export()
 
             new_export.name = "Jahia export ({})".format(jahia_site_key)
-            # TODO: manage when missing sciper
-            new_export.user = User.objects.get(username='delasoie')
+
+            new_export.user = self.get_user_from_sciper(sciper, User.objects.get(username='delasoie'))
             new_export.save()
+
             # add info that created this export
             legacy_export = LegacyExport(export=new_export,
                                          legacy_url=legacy_export_url,

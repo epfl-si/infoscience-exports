@@ -14,6 +14,8 @@ django-filter = "*"
 django-model-utils = "*"
 django-auditlog = {git = "https://github.com/epfl-idevelop/django-auditlog.git", editable = true}
 django-tequila = {git = "https://github.com/epfl-idevelop/django-tequila.git", editable = true}
+ldap = "*"
+epfl-ldap = {git = "https://github.com/epfl-idevelop/epfl-ldap", editable = true}
 "django-bootstrap4" = "*"
 gevent = "*"
 gunicorn = "*"
