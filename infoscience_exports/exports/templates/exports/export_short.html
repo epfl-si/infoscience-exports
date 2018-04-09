@@ -73,48 +73,9 @@
 							<p class="infoscience_abstract">{{ article.Summary }}</p>
 						{% endif %}
 					</div>
-					{% if options.thumb and article.ELA_Icon %}
-					<img class="record-illustration" src="{{ article.ELA_Icon }}" class="record-illustration" alt="n/a">
-					{% endif %}
-					<ul class="record-metadata">
-						<p></p>
-						<p class="infoscience_links">
-						{% if options.link_print %}
-						
-							{% if options.link_detailed %}
-							{% trans "Detailed record" %}: {{ article.Infoscience_URL }}?ln=en
-							<br />
-							{% endif %}
+					
+					{% include "exports/include_doctype/common/links-bar.html" %}
 
-							{% if options.link_fulltext and article.ELA_URL %}
-							{% trans "Full text" %}: {{ article.ELA_URL }}
-							<br />
-							{% endif %}
-
-							{% if options.link_publisher %}
-							{% for view_publisher in article.View_Publisher %}
-							 	{% trans "View at publisher" %}: {{ view_publisher }}
-								<br />
-							{% endfor %}
-							{% endif %}
-
-						{% else %}
-							
-							{% if options.link_detailed %}
-								<a class="infoscience_link_detailed" href="{{ article.Infoscience_URL }}?ln=en" target="_blank">{% trans "Detailed record" %}</a>
-								{% if options.link_fulltext and article.ELA_URL or options.link_publisher and article.DOI %} - {% endif %}
-							{% endif %}
-							{% if options.link_fulltext and article.ELA_URL %}
-								<a class="infoscience_link_fulltext" href="{{ article.ELA_URL }}" target="_blank">{% trans "Full text" %}</a>
-								{% if options.link_publisher and article.DOI %} - {% endif %}
-							{% endif %}
-							{% if options.link_publisher and article.DOI %}
-								<a class="infoscience_link_official" href="https://dx.doi.org/{{ article.DOI }}" target="_blank">{% trans "View at publisher" %}</a>
-							{% endif %}
-						
-						{% endif %}
-						</p>
-					</ul>
 				</div>
 			</div>
 		{% endif %}
