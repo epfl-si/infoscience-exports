@@ -226,6 +226,9 @@ deploy: dump
 	# update DB
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
+	# update languages
+	make collectstatic
+	make compilemessages
 	# restart web container
 	make restart-web
 
