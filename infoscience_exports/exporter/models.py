@@ -70,6 +70,11 @@ class SettingsManager(Manager):
         email = ''
         try:
             username = get_username(sciper)
+
+            # remove @ precision
+            if username and '@' in username:
+                username = username[:username.rfind('@')]
+
             export_user = User.objects.get_or_create(username=username)[0]
             try:
                 email = get_email(sciper)
