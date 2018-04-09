@@ -1,5 +1,8 @@
 # Change Log
 
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-04-06)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...prod-release)
+
 ## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-06)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.4...qa-release)
 
@@ -12,7 +15,7 @@
 - Set common links bar for detailed/short [\#89](https://github.com/epfl-idevelop/infoscience-exports/pull/89) ([dragonleman](https://github.com/dragonleman))
 
 ## [0.4.3](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.3) (2018-03-28)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.4.3)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.2...0.4.3)
 
 **Merged pull requests:**
 
@@ -23,9 +26,6 @@
 - Update django.po [\#84](https://github.com/epfl-idevelop/infoscience-exports/pull/84) ([tommybeck](https://github.com/tommybeck))
 - don't translate 'et al.' [\#83](https://github.com/epfl-idevelop/infoscience-exports/pull/83) ([dragonleman](https://github.com/dragonleman))
 - Per object caching [\#82](https://github.com/epfl-idevelop/infoscience-exports/pull/82) ([jdelasoie](https://github.com/jdelasoie))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-23)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.2...prod-release)
 
 ## [0.4.2](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.2) (2018-03-23)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.1...0.4.2)
