@@ -239,7 +239,7 @@ class SettingsModel(models.Model):
         if 'search_pattern' in s and s['search_pattern']:
             search_pattern = s['search_pattern']
 
-        as_args['p'] = '"{}"'.format(search_pattern)
+        as_args['p'] = '{}'.format(search_pattern)
 
         # convert ext to c
         exts = s.get('search_filter')
