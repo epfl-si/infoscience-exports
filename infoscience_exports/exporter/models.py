@@ -287,7 +287,7 @@ class SettingsModel(models.Model):
         invenio_vars.update(self._get_search_pattern())
 
         if 'search_field_restriction' in s and s['search_field_restriction']:
-            invenio_vars['f'] = s['search_field_restriction']
+            invenio_vars['f1'] = s['search_field_restriction']
 
         if 'search_collection' in s and s['search_collection']:
             if not invenio_vars.get('c'):
