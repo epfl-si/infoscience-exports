@@ -33,3 +33,6 @@ class User(AbstractUser):
                 "classe:{0.class} - "
                 "statut:{0.statut} - "
                 "statut:{0.memberof}>").format(self)
+
+    def nb_exports(self):
+        return self.export_set.count()

@@ -49,29 +49,6 @@ class UserCreationForm(forms.ModelForm):
             user.save()
         return user
 
-
-class EPFLUserModelAdmin(UserAdmin):
-    form = UserChangeForm
-    add_form = UserCreationForm
-    add_form_template = 'admin/add_user_form.html'
-    list_display = ('username', 'email', 'last_login', 'is_superuser')
-    fieldsets = (
-        (None, {'fields': ('username',)}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
-        (_('EPFL info'), {'fields': ('sciper', 'where', 'units', 'group', 'classe', 'statut', 'memberof')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                       'groups', 'user_permissions')}),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-    )
-    # remove password from form
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('username', 'email'),
-        }),
-    )
-
-
 class LegacyExportFilter(SimpleListFilter):
     title = 'exports imported'
     parameter_name = 'Imported'
@@ -91,6 +68,7 @@ class LegacyExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
 class LegacyExportInline(admin.StackedInline):
     model = LegacyExport
     can_delete = False
+    extra = 0
     readonly_fields = ('legacy_url',
                        'language',
                        'referenced_url',
@@ -114,6 +92,38 @@ class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
                 except LegacyExport.DoesNotExist:
                     pass
 
+
+class ExportInline(admin.StackedInline):
+    extra = 0
+    show_change_link = True
+    model = Export
+    can_delete = False
+    view_on_site = False
+    fields = ('id', 'name', 'url', 'updated_at',)
+    readonly_fields = ('name', 'url', 'updated_at',)
+
+
+class EPFLUserModelAdmin(UserAdmin):
+    form = UserChangeForm
+    add_form = UserCreationForm
+    add_form_template = 'admin/add_user_form.html'
+    list_display = ('username', 'email', 'last_login', 'is_superuser', 'nb_exports')
+    inlines = [ExportInline]
+    fieldsets = (
+        (None, {'fields': ('username',)}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('EPFL info'), {'fields': ('sciper', 'where', 'units', 'group', 'classe', 'statut', 'memberof')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                       'groups', 'user_permissions')}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+    # remove password from form
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email'),
+        }),
+    )
 
 admin.site.register(Export, ExportLoggedModelAdmin)
 admin.site.register(LegacyExport, LegacyExportLoggedModelAdmin)
