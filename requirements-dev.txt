@@ -58,7 +58,7 @@ pytest-cov==2.5.1
 pytest-django==3.1.2
 pytest==3.5.0
 python-dateutil==2.7.2
-pytz==2018.3
+pytz==2018.4
 pyyaml==3.12
 requests==2.18.4
 rope==0.10.7

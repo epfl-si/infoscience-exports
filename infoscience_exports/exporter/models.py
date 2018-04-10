@@ -8,9 +8,6 @@ from django.db.models.manager import Manager
 
 from django.contrib.postgres.fields import JSONField
 
-from epflldap.ldap_search import get_username, get_email
-from epflldap.utils import EpflLdapException
-
 from exports.models import Export, LegacyExport, User
 
 export_id_extractors = [
@@ -64,39 +61,15 @@ class SettingsManager(Manager):
         if matched:
             return True
 
-    @staticmethod
-    def get_user_from_sciper(sciper, default_user, username=''):
-        export_user = None
-        email = ''
-        try:
-            if not username:
-                username = get_username(sciper)
 
-            # remove @ precision
-            if username and '@' in username:
-                username = username[:username.rfind('@')]
-
-            export_user = User.objects.get_or_create(username=username)[0]
-            try:
-                email = get_email(sciper)
-                export_user.email = email
-                export_user.save()
-            except EpflLdapException:
-                # No email ? not a problem, it is not mandatory
-                pass
-        except EpflLdapException:
-            # this sciper is unknown !
-            # TODO: set good user
-            # fallback to default user
-            export_user = default_user
-
-        return export_user
 
     def load_exports_from_people(self, people_file_path):
         """
         Save as new exports from the people csv
-        csv is sciper, username, src
+        csv is sciper, username, src, email
         """
+        fallback_user = User.objects.get(username='delasoie')
+
         with open(people_file_path, 'r') as f:
             reader = csv.reader(f)
             people_full_list = list(reader)
@@ -105,6 +78,7 @@ class SettingsManager(Manager):
             sciper = row[0]
             username = row[1]
             legacy_export_url = row[2].strip()
+            email = row[3]
 
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
@@ -135,7 +109,19 @@ class SettingsManager(Manager):
                 new_export = exporter.as_new_export()
 
             new_export.name = "People".format(sciper)
-            new_export.user = self.get_user_from_sciper(sciper, User.objects.get(username='delasoie'), username)
+
+            if not username:
+                export_user = fallback_user
+            else:
+                export_user = User.objects.get_or_create(username=username)[0]
+                if email:
+                    export_user.email = email
+                if sciper:
+                    export_user.sciper = sciper
+                if email or sciper:
+                    export_user.save()
+
+            new_export.user = export_user
             new_export.save()
 
             # add info that created this export
@@ -153,11 +139,13 @@ class SettingsManager(Manager):
         Save as new exports from the jahia csv
         csv is id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export
         """
+        fallback_user = User.objects.get(username='delasoie')
+
         with open(jahia_file_path, 'r') as f:
             reader = csv.reader(f)
             jahia_full_list = list(reader)
 
-        print("Raw jahia data : id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export")
+        print("Raw jahia data : id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email")
 
         for row in jahia_full_list[1:]:
             jahia_id = row[0]
@@ -168,6 +156,8 @@ class SettingsManager(Manager):
             raw_audit_time = row[5]
             UNIXTIME_audit_time = row[6]  # FROM_UNIXTIME(log2.time_jahia_audit_log / 1000)
             legacy_export_url = row[7]
+            username = row[8]
+            email = row[9]
 
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
@@ -197,8 +187,20 @@ class SettingsManager(Manager):
 
             new_export.name = "Jahia export ({})".format(jahia_site_key)
 
-            new_export.user = self.get_user_from_sciper(sciper, User.objects.get(username='delasoie'))
+            if not username:
+                export_user = fallback_user
+            else:
+                export_user = User.objects.get_or_create(username=username)[0]
+                if email:
+                    export_user.email = email
+                if sciper:
+                    export_user.sciper = sciper
+                if email or sciper:
+                    export_user.save()
+
+            new_export.user = export_user
             new_export.save()
+
 
             # add info that created this export
             legacy_export = LegacyExport(export=new_export,

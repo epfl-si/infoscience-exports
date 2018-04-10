@@ -17,5 +17,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # TODO: make it better?
-        SettingsModel.objects.load_exports_from_jahia('/usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv')
-        SettingsModel.objects.load_exports_from_people('/usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv')
+        SettingsModel.objects.load_exports_from_jahia('/usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv')
+        SettingsModel.objects.load_exports_from_people('/usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv')
