@@ -44,7 +44,13 @@ class Command(BaseCommand):
                           'curator/export/{}'.format(exporter.id)
 
                 try:
-                    new_url = exporter.build_advanced_search_url(invenio_vars={'of':'xm'}, limit=200)
+                    invenio_vars = {
+                        'd1d': '29',
+                        'd1m': '01',
+                        'd1y': '2018',
+                        'of' : 'xm',
+                    }
+                    new_url = exporter.build_advanced_search_url(invenio_vars=invenio_vars, limit=200)
                 except ValueError:
                     self.stdout.write("ignoring this basket url")
                     continue

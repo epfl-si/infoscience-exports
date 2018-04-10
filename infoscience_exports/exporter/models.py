@@ -235,12 +235,45 @@ class SettingsModel(models.Model):
 
     def _get_search_pattern(self):
         s = self.settings_as_dict
+        as_args = {}
         search_pattern = ''
 
         if 'search_pattern' in s and s['search_pattern']:
             search_pattern = s['search_pattern']
 
-        return search_pattern
+        as_args['p'] = '{}'.format(search_pattern)
+
+        # convert ext to c
+        exts = s.get('search_filter')
+
+        if exts:
+            if not 'c' in as_args:
+                as_args['c'] = []
+            for ext in exts.split(','):
+                # only take the left part, like
+                # collection:ARTICLE,review:REVIEWED,status:PUBLISHED,status:ACCEPTED
+                # to
+                # infoscience/ARTICLE, ...
+
+                collection_name = ext[ext.find(':')+1:]
+
+                if collection_name == 'CONF':
+                    collection_name = 'Conference'
+                elif collection_name == 'TALK':
+                    collection_name = 'Presentation'
+                elif collection_name == 'REVIEWED':
+                    continue
+                elif collection_name == 'WORKING':
+                    collection_name = 'Working papers'
+                elif collection_name == 'PROC':
+                    collection_name = 'Proceeding'
+
+                if collection_name != 'EPFL':
+                    collection_name = collection_name.title()
+
+                as_args['c'].append("Infoscience/{}".format(collection_name))
+
+        return as_args
 
     def _configuration_as_invenio_args(self):
         s = self.settings_as_dict
@@ -251,13 +284,15 @@ class SettingsModel(models.Model):
             invenio_vars['of'] = 'xm'
             return invenio_vars
 
-        invenio_vars['p'] = self._get_search_pattern()
+        invenio_vars.update(self._get_search_pattern())
 
         if 'search_field_restriction' in s and s['search_field_restriction']:
             invenio_vars['f'] = s['search_field_restriction']
 
         if 'search_collection' in s and s['search_collection']:
-            invenio_vars['cc'] = s['search_collection']
+            if not invenio_vars.get('c'):
+                invenio_vars['c'] = []
+            invenio_vars['c'].append(s['search_collection'])
 
         if 'group_by_year_order' in s and s['group_by_year_order']:
             if s['group_by_year_order'] == 'asc':
@@ -267,11 +302,6 @@ class SettingsModel(models.Model):
 
         if 'limit_number' in s and s['limit_number']:
             invenio_vars['rg'] = s['limit_number']
-
-        if 'search_filter' in s:
-            pass
-            # logger.warning(("Warning, in the new export system, search filter is no more :\n{}"
-            #                  .format(s['search_filter']))
 
         return invenio_vars
 
@@ -295,9 +325,6 @@ class SettingsModel(models.Model):
         # add the advanced search options
         # see https://github.com/inveniosoftware/invenio/blob/5df3f3ae79a26724a28e9e77f576a5d021d1f4f9/modules/websearch/lib/search_engine.py#L5454
         advanced_search_vars = {
-            'd1d': '29',
-            'd1m': '01',
-            'd1y': '2018',
             # uncomment for modified instead of added
             # 'dt': 'm',
             'as': '1',
@@ -313,7 +340,7 @@ class SettingsModel(models.Model):
         invenio_args.update(advanced_search_vars)
 
         return 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(
-            invenio_args)
+            invenio_args, doseq=True)
 
     def build_search_url(self, invenio_vars={}, limit=None):
         """ build the infoscience url where it probably come from"""
@@ -325,9 +352,9 @@ class SettingsModel(models.Model):
             invenio_vars['rg'] = limit
 
         if invenio_vars.get('bskid'):
-            return 'https://infoscience.epfl.ch/yourbaskets/display_public?' + urllib.parse.urlencode(invenio_args)
+            return 'https://infoscience.epfl.ch/yourbaskets/display_public?' + urllib.parse.urlencode(invenio_args, doseq=True)
         else:
-            return 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(invenio_args)
+            return 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(invenio_args, doseq=True)
 
     def as_new_export(self):
         new_export = Export()
