@@ -7,7 +7,8 @@
 	superadmin collectstatic migrations migrate \
 	dump restore release push-prod deploy \
 	fast-test test coverage shell \
-	migrate-load-dump migrate-do
+	migration-load-dump migration-build-delta \
+	migration-migrate
 
 VERSION:=$(shell python update_release.py -v)
 
@@ -262,11 +263,14 @@ test-travis:
 	python infoscience_exports/manage.py test exports --settings=settings.test --noinput
 	coverage xml
 
-migrate-load-dump:
+migration-load-dump:
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py loaddata --settings=settings.test --app exporter exports_from_32
 
-migrate-do:
+migration-build-delta:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py add_quality_content_comparaison --settings=settings.test
+
+migration-migrate:
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py migrate_from_legacy --settings=settings.test
 
 check-env:

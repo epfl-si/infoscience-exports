@@ -4,10 +4,13 @@ from exporter.models import SettingsModel
 
 """
 dump with 
-manage.py dumpdata -o ./exports_from_32.json exporter
+    manage.py dumpdata -o ./exports_from_32.json exporter
 
-load with
-make migrate-load-dump
+load dump with
+    make migration-load-dump
+
+do the migration with
+    make migration-migrate
 """
 
 

@@ -69,6 +69,7 @@ class LegacyExport(models.Model):
     origin = models.TextField(choices=ORIGIN_CHOICE)
     origin_sciper = models.TextField()
     raw_csv_entry = models.TextField()
+    content_delta = models.IntegerField(blank=True, null=True)  # diff between old system and new
 
     def __str__(self):
         return "{} ({})".format(self.legacy_url, self.origin)

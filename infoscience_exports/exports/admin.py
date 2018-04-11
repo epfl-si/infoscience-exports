@@ -62,7 +62,7 @@ class LegacyExportFilter(SimpleListFilter):
 
 
 class LegacyExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
-    pass
+    list_display = ('legacy_url', 'content_delta',)
 
 
 class LegacyExportInline(admin.StackedInline):
