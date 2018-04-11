@@ -61,8 +61,6 @@ class SettingsManager(Manager):
         if matched:
             return True
 
-
-
     def load_exports_from_people(self, people_file_path):
         """
         Save as new exports from the people csv
