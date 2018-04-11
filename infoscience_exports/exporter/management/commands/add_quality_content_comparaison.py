@@ -40,9 +40,9 @@ class Command(BaseCommand):
             # cache_key = legacy_export.export.get_cache_key_for_view('en')
             # request = RequestFactory().get(legacy_export.export.get_absolute_url())
             # new_export_to_read = str(views.ExportView.as_view()(request, pk=legacy_export.export.id).content)
-
+            old_count = None
+            new_count = None
             old_count = old_infoscience_to_read.count("infoscience_record")
-            new_count = 0
 
             text_to_find = r"<!-- Search-Engine-Total-Number-Of-Results: (\d+)"
             m = re.search(text_to_find, new_export_to_read)
@@ -54,7 +54,7 @@ class Command(BaseCommand):
             if m.group(1):
                 new_count = int(m.group(1))
 
-            if old_count and new_count:
+            if old_count != None and new_count != None:
                 legacy_export.content_delta = abs(old_count - new_count)
                 self.stdout.write("delta found %s" % abs(old_count - new_count))
                 legacy_export.save()
