@@ -17,6 +17,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         for legacy_export in LegacyExport.objects.all():
+            if legacy_export.content_delta or legacy_export.content_delta == 0:
+                # dont redo it
+                continue
+
             old_url_content = legacy_export.legacy_url.replace(
                 'infoscience.epfl.ch', 'test-infoscience.epfl.ch')
             self.stdout.write("Doing legacy {}".format(old_url_content))
@@ -28,7 +32,7 @@ class Command(BaseCommand):
             try:
                 old_infoscience_to_read = urlopen(old_url_content).read().decode('utf-8')
                 new_export_to_read = urlopen(new_export_url+'&of=xm').read().decode('utf-8')
-            except HTTPError:
+            except (HTTPError, UnicodeDecodeError):
                 self.stdout.write(
                     "unknown address, leaving")
                 continue
