@@ -49,6 +49,7 @@ class UserCreationForm(forms.ModelForm):
             user.save()
         return user
 
+
 class LegacyExportFilter(SimpleListFilter):
     title = 'exports imported'
     parameter_name = 'Imported'
@@ -125,6 +126,7 @@ class EPFLUserModelAdmin(UserAdmin):
             'fields': ('username', 'email'),
         }),
     )
+
 
 admin.site.register(Export, ExportLoggedModelAdmin)
 admin.site.register(LegacyExport, LegacyExportLoggedModelAdmin)

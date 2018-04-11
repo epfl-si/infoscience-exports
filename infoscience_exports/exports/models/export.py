@@ -79,7 +79,9 @@ class LegacyExport(models.Model):
         from exporter.models import SettingsManager
         id = SettingsManager.get_legacy_export_id_from_url(self.legacy_url)
         if id:
-            return mark_safe('<a target="_blank" href="https://test-infoscience.epfl.ch/curator/export/{}/edit/">see on old site</a>'.format(id))
+            return mark_safe('<a target="_blank" href='
+                             '"https://test-infoscience.epfl.ch/curator/export/{}/edit/">'
+                             'see on old site</a>'.format(id))
         else:
             return "Not available"
 
