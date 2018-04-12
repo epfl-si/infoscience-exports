@@ -16,7 +16,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        for legacy_export in LegacyExport.objects.all():
+        for legacy_export in LegacyExport.objects.all().select_related('export'):
             if legacy_export.content_delta or legacy_export.content_delta == 0:
                 # dont redo it
                 continue
