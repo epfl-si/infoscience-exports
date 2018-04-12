@@ -2,6 +2,7 @@ import re
 import csv
 import json
 import urllib.parse
+import logging
 
 from django.db import models
 from django.db.models.manager import Manager
@@ -9,6 +10,9 @@ from django.db.models.manager import Manager
 from django.contrib.postgres.fields import JSONField
 
 from exports.models import Export, LegacyExport, User
+
+
+logger = logging.getLogger('migration')
 
 export_id_extractors = [
     r'^(?:https|http)://infoscience.epfl.ch/curator/export/(\d+)/?.*',
@@ -91,14 +95,14 @@ class SettingsManager(Manager):
                 legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
                 if not legacy_export_id:
-                    print(
+                    logger.info(
                         "Skipping : invalid legacy export url for {}\n"
                         "Raw People data : {}".format(legacy_export_url, row))
                     continue
                 try:
                     exporter = SettingsModel.objects.get(id=legacy_export_id)
                 except SettingsModel.DoesNotExist:
-                    print(
+                    logger.info(
                         "Skipping : no Settings model found for id {}\n"
                         "Raw People data : {}".format(legacy_export_id, row)
                     )
@@ -135,7 +139,7 @@ class SettingsManager(Manager):
     def load_exports_from_jahia(self, jahia_file_path):
         """
         Save as new exports from the jahia csv
-        csv is id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export
+        csv is id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email
         """
         fallback_user = User.objects.get(username='delasoie')
 
@@ -143,7 +147,7 @@ class SettingsManager(Manager):
             reader = csv.reader(f)
             jahia_full_list = list(reader)
 
-        print("Raw jahia data : id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email")
+            logger.info("Raw jahia data : id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email")
 
         for row in jahia_full_list[1:]:
             jahia_id = row[0]
@@ -168,14 +172,14 @@ class SettingsManager(Manager):
                 legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
                 if not legacy_export_id:
-                    print(
+                    logger.info(
                         "Skipping : invalid legacy export url for {}\n"
                         "Raw Jahia data : {}".format(legacy_export_url, row))
                     continue
                 try:
                     exporter = SettingsModel.objects.get(id=legacy_export_id)
                 except SettingsModel.DoesNotExist:
-                    print(
+                    logger.info(
                         "Skipping : no Settings model found for id {}\n"
                         "Raw Jahia data : {}".format(legacy_export_id, row)
                     )

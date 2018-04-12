@@ -25,6 +25,31 @@ INSTALLED_APPS += ('debug_toolbar',
                    )
 MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
+LOGGING['handlers'].update({
+    'graylog': {
+        "level": 'DEBUG',
+        "class": 'graypy.GELFHandler',
+        "host": '127.0.0.1',
+        "port": 12201,
+    },
+    'file': {
+        'level': 'DEBUG',
+        'class': 'logging.handlers.RotatingFileHandler',
+        'filename': '/var/log/django/infoscience_exports.log',
+        'maxBytes': 1024*1024*5,  # 5 MB
+        'backupCount': 5,
+        'formatter': 'verbose',
+    },
+    'migration_file': {
+        'level': 'DEBUG',
+        'class': 'logging.handlers.RotatingFileHandler',
+        'filename': '/var/log/django/infoscience_exports_migration.log',
+        'maxBytes': 1024*1024*5,  # 5 MB
+        'backupCount': 5,
+        'formatter': 'verbose',
+    }
+})
+
 LOGGING['loggers'] = {
     'django.db': {
         'handlers': ['null'],
@@ -55,6 +80,11 @@ LOGGING['loggers'] = {
     },
     'exports': {
         'handlers': ['console'],
+        'level': 'DEBUG',
+        'propagate': True
+    },
+    'migration': {
+        'handlers': ['migration_file', 'console'],
         'level': 'DEBUG',
         'propagate': True
     }

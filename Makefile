@@ -265,13 +265,13 @@ test-travis:
 
 migration-load-dump:
 	docker-compose -f docker-compose-dev.yml exec web \
-		python infoscience_exports/manage.py loaddata --settings=settings.test --app exporter exports_from_32
+		python infoscience_exports/manage.py loaddata --app exporter exports_from_32
 
 migration-build-delta:
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py add_quality_content_comparaison --settings=settings.test
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py add_quality_content_comparaison
 
 migration-migrate:
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py migrate_from_legacy --settings=settings.test
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py migrate_from_legacy
 
 check-env:
 ifeq ($(wildcard .env),)
