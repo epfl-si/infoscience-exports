@@ -268,7 +268,7 @@ class SettingsModel(models.Model):
                 elif collection_name == 'WORKING':
                     collection_name = 'Working papers'
                 elif collection_name == 'PROC':
-                    collection_name = 'Proceeding'
+                    collection_name = 'Proceedings'
 
                 if collection_name != 'EPFL':
                     collection_name = collection_name.title()
