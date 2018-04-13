@@ -243,37 +243,37 @@ class SettingsModel(models.Model):
         if 'search_pattern' in s and s['search_pattern']:
             search_pattern = s['search_pattern']
 
-        as_args['p'] = '{}'.format(search_pattern)
-
-        # convert ext to c
         exts = s.get('search_filter')
 
-        if exts:
-            if not 'c' in as_args:
-                as_args['c'] = []
+        if not exts:
+            as_args['p'] = '{}'.format(search_pattern)
+        else:
+            """
+           'collection:ARTICLE,review:REVIEWED,status:PUBLISHED,status:ACCEPTED,collection:PROC,review:ACCEPTED'
+           => '(collection:ARTICLE AND collection:PROC) OR (review:REVIEWED) OR (status:PUBLISHED AND status:ACCEPTED)'
+           """
+            ext_search_pattern = ""
+            # regroup first
+            regrouped_index = {}
             for ext in exts.split(','):
-                # only take the left part, like
-                # collection:ARTICLE,review:REVIEWED,status:PUBLISHED,status:ACCEPTED
-                # to
-                # infoscience/ARTICLE, ...
+                if not regrouped_index.get(ext[:ext.find(':')]):
+                    regrouped_index[ext[:ext.find(':')]] = []
+                regrouped_index[ext[:ext.find(':')]].append(ext)
 
-                collection_name = ext[ext.find(':')+1:]
-
-                if collection_name == 'CONF':
-                    collection_name = 'Conference'
-                elif collection_name == 'TALK':
-                    collection_name = 'Presentation'
-                elif collection_name == 'REVIEWED':
+            for key, values in regrouped_index.items():
+                if key == 'fulltext':
+                    """ fulltext search is no more a feature """
                     continue
-                elif collection_name == 'WORKING':
-                    collection_name = 'Working papers'
-                elif collection_name == 'PROC':
-                    collection_name = 'Proceedings'
+                if ext_search_pattern:
+                    ext_search_pattern += ' AND '
+                ext_search_pattern += '(' + ' OR '.join(values) + ')'
 
-                if collection_name != 'EPFL':
-                    collection_name = collection_name.title()
+            if search_pattern and search_pattern != '':
+                search_pattern = '(' + search_pattern + ') AND ' + ext_search_pattern
+            else:
+                search_pattern = ext_search_pattern
 
-                as_args['c'].append("Infoscience/{}".format(collection_name))
+            as_args['p'] = search_pattern
 
         return as_args
 
