@@ -252,7 +252,7 @@ class SettingsModel(models.Model):
         else:
             """
            'collection:ARTICLE,review:REVIEWED,status:PUBLISHED,status:ACCEPTED,collection:PROC,review:ACCEPTED'
-           => '(collection:ARTICLE AND collection:PROC) OR (review:REVIEWED) OR (status:PUBLISHED AND status:ACCEPTED)'
+           => '( collection:ARTICLE AND collection:PROC ) OR ( review:REVIEWED ) OR ( status:PUBLISHED AND status:ACCEPTED )'
            """
             ext_search_pattern = ""
             # regroup first
@@ -268,10 +268,10 @@ class SettingsModel(models.Model):
                     continue
                 if ext_search_pattern:
                     ext_search_pattern += ' AND '
-                ext_search_pattern += '(' + ' OR '.join(values) + ')'
+                ext_search_pattern += '( ' + ' OR '.join(values) + ' )'
 
             if search_pattern and search_pattern != '':
-                search_pattern = '(' + search_pattern + ') AND ' + ext_search_pattern
+                search_pattern = '( ' + search_pattern + ' ) AND ' + ext_search_pattern
             else:
                 search_pattern = ext_search_pattern
 
