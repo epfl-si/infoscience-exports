@@ -18,9 +18,14 @@ Files that should be in this folder:
 1. `make migration-load-dump`
   * nothing fancy here, only the load of json values to an empty SettingsModel table
 
-2. `make migration-migrate`
+2.a `make migration-migrate`
   * one-shot migration that will create exports for Jahia and People (~4000)
   * see /var/log/django/infoscience_exports_migration.log
+
+2.b `docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py migrate_from_legacy --urls_csv_path ./infoscience_exports/exporter/fixtures/urls_to_migrate.csv`
+
+  * selective migration for only the urls provided
+  * put your csv of the urls from legacy to migrate in entry
 
 ## Post
 

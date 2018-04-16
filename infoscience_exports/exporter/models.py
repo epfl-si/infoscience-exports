@@ -65,10 +65,11 @@ class SettingsManager(Manager):
         if matched:
             return True
 
-    def load_exports_from_people(self, people_file_path):
+    def load_exports_from_people(self, people_file_path, only_this_urls_from_legacy=[]):
         """
         Save as new exports from the people csv
         csv is sciper, username, src, email
+        only_this_url_from_legacy : if we want only a batch of migration
         """
         fallback_user = User.objects.get(username='delasoie')
 
@@ -81,6 +82,11 @@ class SettingsManager(Manager):
             username = row[1]
             legacy_export_url = row[2].strip()
             email = row[3]
+
+            # if we are in selective mode, only do the one we want
+            if only_this_urls_from_legacy:
+                if not legacy_export_url in only_this_urls_from_legacy:
+                    continue
 
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
@@ -136,10 +142,11 @@ class SettingsManager(Manager):
 
             legacy_export.save()
 
-    def load_exports_from_jahia(self, jahia_file_path):
+    def load_exports_from_jahia(self, jahia_file_path, only_this_urls_from_legacy=[]):
         """
         Save as new exports from the jahia csv
         csv is id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email
+        only_this_url_from_legacy : if we want only a batch of migration
         """
         fallback_user = User.objects.get(username='delasoie')
 
@@ -160,6 +167,11 @@ class SettingsManager(Manager):
             legacy_export_url = row[7]
             username = row[8]
             email = row[9]
+
+            # if we are in selective mode, only do the one we want
+            if only_this_urls_from_legacy:
+                if not legacy_export_url in only_this_urls_from_legacy:
+                    continue
 
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
@@ -202,7 +214,6 @@ class SettingsManager(Manager):
 
             new_export.user = export_user
             new_export.save()
-
 
             # add info that created this export
             legacy_export = LegacyExport(export=new_export,
@@ -376,7 +387,6 @@ class SettingsModel(models.Model):
 
         new_export.url = self.build_search_url()
 
-
         # format type
         if 'format_type' in s and s['format_type']:
             if 'ENACFULL' in s['format_type']:
@@ -419,8 +429,7 @@ class SettingsModel(models.Model):
 
         if 'group_by_first' in s:
             if s['group_by_first'] == 'year':
-                if 'group_by_year_display_headings' in s and s[
-                    'group_by_year_display_headings']:
+                if 'group_by_year_display_headings' in s and s['group_by_year_display_headings']:
                     new_export.groupsby_type = 'YEAR_TITLE'
                 if 'group_by_second' in s and s['group_by_second'] == 'doctype':
                     new_export.groupsby_doc = 'DOC_TITLE'
