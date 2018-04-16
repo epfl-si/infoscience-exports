@@ -245,8 +245,10 @@ class SettingsModel(models.Model):
             # uppercase AND and OR
             search_pattern = search_pattern.replace(' or ', ' OR ').replace(' and ', ' AND ')
             # add space when paranthesis search
-            # TODO: go regex for a better approache
-            search_pattern = search_pattern.replace('(', ' ( ').replace(')', ' ) ')
+            first_parenthesis = r'\(([^\s-])'
+            second_parenthesis = r'([^\s-])\)'
+            search_pattern = re.sub(first_parenthesis, r'( \1', search_pattern)
+            search_pattern = re.sub(second_parenthesis, r'\1 )',search_pattern)
 
         exts = s.get('search_filter')
 
