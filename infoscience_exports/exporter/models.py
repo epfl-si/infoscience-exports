@@ -241,9 +241,12 @@ class SettingsModel(models.Model):
         search_pattern = ''
 
         if 'search_pattern' in s and s['search_pattern']:
-            # uppercase AND and OR
             search_pattern = s['search_pattern']
+            # uppercase AND and OR
             search_pattern = search_pattern.replace(' or ', ' OR ').replace(' and ', ' AND ')
+            # add space when paranthesis search
+            # TODO: go regex for a better approache
+            search_pattern = search_pattern.replace('(', ' ( ').replace(')', ' ) ')
 
         exts = s.get('search_filter')
 
