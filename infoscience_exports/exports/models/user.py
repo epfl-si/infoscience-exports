@@ -24,5 +24,4 @@ class User(AbstractUser):
                 "units: {0.units} - "
                 "group: {0.group} - "
                 "classe:{0.class} - "
-                "statut:{0.statut} - "
-                "statut:{0.memberof}>").format(self)
+                "statut:{0.statut}>").format(self)
