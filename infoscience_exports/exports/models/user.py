@@ -11,6 +11,7 @@ class User(AbstractUser):
     group = models.TextField(null=True, blank=True)
     classe = models.CharField(max_length=100, null=True, blank=True)
     statut = models.CharField(max_length=100, null=True, blank=True)
+    memberof = models.TextField(null=True, blank=True)
 
     def __str__(self):
         if self.email:
@@ -24,4 +25,5 @@ class User(AbstractUser):
                 "units: {0.units} - "
                 "group: {0.group} - "
                 "classe:{0.class} - "
-                "statut:{0.statut}>").format(self)
+                "statut:{0.statut} - "
+                "memberof:{o.memberof}>").format(self)
