@@ -176,19 +176,20 @@ class SettingsManager(Manager):
             reader = csv.reader(f)
             jahia_full_list = list(reader)
 
-            logger.info("Raw jahia data : id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email")
+            logger.info("Raw jahia data : id_jahia_fields_data,id_jahia_ctn_entries,key_jahia_sites,site,language_code,username_jahia_audit_log,time_jahia_audit_log,FROM_UNIXTIME(log2.time_jahia_audit_log / 1000),value_jahia_fields_data,username,email")
 
         for row in jahia_full_list[1:]:
-            jahia_id = row[0]
-            jahia_site_key = row[1]
-            jahia_site_url = row[2]
-            language = row[3]
-            sciper = row[4]
-            raw_audit_time = row[5]
-            UNIXTIME_audit_time = row[6]  # FROM_UNIXTIME(log2.time_jahia_audit_log / 1000)
-            legacy_export_url = row[7]
-            username = row[8]
-            email = row[9]
+            jahia_id_fields_data = row[0]
+            jahia_id = row[1]
+            jahia_site_key = row[2]
+            jahia_site_url = row[3]
+            language = row[4]
+            sciper = row[5]
+            raw_audit_time = row[6]
+            UNIXTIME_audit_time = row[7]  # FROM_UNIXTIME(log2.time_jahia_audit_log / 1000)
+            legacy_export_url = row[8]
+            username = row[9]
+            email = row[10]
 
             # if we are in selective mode, only do the one we want
             if only_this_urls_from_legacy:

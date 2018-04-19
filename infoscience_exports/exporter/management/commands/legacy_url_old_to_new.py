@@ -1,3 +1,4 @@
+import ast
 import csv
 import logging
 
@@ -21,20 +22,21 @@ class Command(BaseCommand):
         with open(options['jahia_csv_path'][0], 'w') as csv_jahia_file:
             logger.info("Building jahia csv :{}".format(options['jahia_csv_path'][0]))
             writer = csv.writer(csv_jahia_file)
-            writer.writerow(['old_url', 'new_url'])
+            writer.writerow(['id_jahia_fields_data', 'old_url', 'new_url', 'referenced_url'])
 
             for legacy_export in LegacyExport.objects.filter(origin='JAHIA').select_related('export'):
                 new_url = settings.SITE_DOMAIN + legacy_export.export.get_absolute_url()
-                row = [legacy_export.legacy_url, new_url]
+                id_jahia_fields_data = ast.literal_eval(legacy_export.raw_csv_entry)[0]
+                row = [id_jahia_fields_data, legacy_export.legacy_url, new_url, legacy_export.referenced_url]
                 writer.writerow(row)
 
         with open(options['people_csv_path'][0], 'w') as csv_people_file:
             logger.info(
                 "Building people csv :{}".format(options['people_csv_path'][0]))
             writer = csv.writer(csv_people_file)
-            writer.writerow(['old_url', 'new_url'])
+            writer.writerow(['sciper', 'old_url', 'new_url'])
 
             for legacy_export in LegacyExport.objects.filter(origin='PEOPLE').select_related('export'):
                 new_url = settings.SITE_DOMAIN + legacy_export.export.get_absolute_url()
-                row = [legacy_export.legacy_url, new_url]
+                row = [legacy_export.export.user.sciper, legacy_export.legacy_url, new_url]
                 writer.writerow(row)
