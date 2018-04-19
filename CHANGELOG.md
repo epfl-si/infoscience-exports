@@ -1,7 +1,23 @@
 # Change Log
 
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-06)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.4...qa-release)
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-13)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.5...qa-release)
+
+## [0.4.5](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.5) (2018-04-13)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.4.5)
+
+**Merged pull requests:**
+
+- Corrected forgotten to close \<i\> html tag [\#98](https://github.com/epfl-idevelop/infoscience-exports/pull/98) ([dragonleman](https://github.com/dragonleman))
+- Accept .jpeg for thumbnail [\#97](https://github.com/epfl-idevelop/infoscience-exports/pull/97) ([dragonleman](https://github.com/dragonleman))
+- Modified message when no export configured =\> no publication lists co… [\#96](https://github.com/epfl-idevelop/infoscience-exports/pull/96) ([dragonleman](https://github.com/dragonleman))
+- Accepted .git images for thumbnails [\#95](https://github.com/epfl-idevelop/infoscience-exports/pull/95) ([dragonleman](https://github.com/dragonleman))
+- Titres avec Liste\(s\) de publications [\#94](https://github.com/epfl-idevelop/infoscience-exports/pull/94) ([dragonleman](https://github.com/dragonleman))
+- Added collectstatic an makemessages when deploying [\#93](https://github.com/epfl-idevelop/infoscience-exports/pull/93) ([dragonleman](https://github.com/dragonleman))
+- User creation for admins [\#92](https://github.com/epfl-idevelop/infoscience-exports/pull/92) ([jdelasoie](https://github.com/jdelasoie))
+
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-04-06)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.4...prod-release)
 
 ## [0.4.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.4) (2018-04-06)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.3...0.4.4)
@@ -12,7 +28,7 @@
 - Set common links bar for detailed/short [\#89](https://github.com/epfl-idevelop/infoscience-exports/pull/89) ([dragonleman](https://github.com/dragonleman))
 
 ## [0.4.3](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.3) (2018-03-28)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.4.3)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.2...0.4.3)
 
 **Merged pull requests:**
 
@@ -23,9 +39,6 @@
 - Update django.po [\#84](https://github.com/epfl-idevelop/infoscience-exports/pull/84) ([tommybeck](https://github.com/tommybeck))
 - don't translate 'et al.' [\#83](https://github.com/epfl-idevelop/infoscience-exports/pull/83) ([dragonleman](https://github.com/dragonleman))
 - Per object caching [\#82](https://github.com/epfl-idevelop/infoscience-exports/pull/82) ([jdelasoie](https://github.com/jdelasoie))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-23)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.2...prod-release)
 
 ## [0.4.2](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.2) (2018-03-23)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.1...0.4.2)
