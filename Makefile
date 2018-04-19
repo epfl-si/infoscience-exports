@@ -8,7 +8,8 @@
 	dump restore release push-prod deploy \
 	fast-test test coverage shell \
 	migration-load-dump migration-build-delta \
-	migration-migrate migration-post-generate-csv
+	migration-migrate migration-post-generate-csv \
+	migration-fetch-ldap
 
 VERSION:=$(shell python update_release.py -v)
 
@@ -279,6 +280,10 @@ migration-post-generate-csv:
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \
 	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
 	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv"
+
+migration-fetch-ldap:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py add_username_email_to_csv \
+		--jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod.csv
 
 check-env:
 ifeq ($(wildcard .env),)
