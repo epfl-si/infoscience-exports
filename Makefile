@@ -271,7 +271,9 @@ migration-build-delta:
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py add_quality_content_comparaison
 
 migration-migrate:
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py migrate_from_legacy
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
+	migrate_from_legacy --jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv \
+            --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv
 
 migration-post-generate-csv:
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \

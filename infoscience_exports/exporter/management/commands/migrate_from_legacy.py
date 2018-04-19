@@ -25,6 +25,8 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--urls_csv_path', nargs='+', type=str)
+        parser.add_argument('--jahia_csv_path', nargs='+', type=str)
+        parser.add_argument('--people_csv_path', nargs='+', type=str)
 
     def handle(self, *args, **options):
         list_urls = []
@@ -39,10 +41,8 @@ class Command(BaseCommand):
                 list_urls = reduce(operator.concat, urls_csv_list)
 
         SettingsModel.objects.load_exports_from_jahia(
-            '/usr/src/app/infoscience_exports/exporter/fixtures/'
-            'infoscience-prod-jahia.csv.extended.csv',
+            options['jahia_csv_path'][0],
             list_urls)
         SettingsModel.objects.load_exports_from_people(
-            '/usr/src/app/infoscience_exports/exporter/fixtures/'
-            'infoscience-people-actif-only.csv.extended.csv',
+            options['people_csv_path'][0],
             list_urls)
