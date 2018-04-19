@@ -4,6 +4,7 @@ import json
 import urllib.parse
 import logging
 
+from django.utils import timezone
 from django.db import models
 from django.db.models.manager import Manager
 
@@ -94,9 +95,15 @@ class SettingsManager(Manager):
 
             # it may be a search directly, so we don't have the legacy export
             if self.is_url_already_a_search(legacy_export_url):
-                new_export = Export(url=legacy_export_url)
+                new_export = Export(url=legacy_export_url,
+                                    created_at=timezone.now(),
+                                    updated_at=timezone.now(),
+                                    )
             elif self.is_url_a_record(legacy_export_url):
-                new_export = Export(url=legacy_export_url, formats_type='DETAILED')
+                new_export = Export(url=legacy_export_url,
+                                    created_at=timezone.now(),
+                                    updated_at=timezone.now(),
+                                    )
             else:
                 legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
@@ -130,17 +137,32 @@ class SettingsManager(Manager):
                     export_user.save()
 
             new_export.user = export_user
-            new_export.save()
 
-            # add info that created this export
-            legacy_export = LegacyExport(export=new_export,
-                                         legacy_url=legacy_export_url,
-                                         origin='PEOPLE',
-                                         origin_sciper=sciper,
-                                         raw_csv_entry=row,  # for regeneration purpose
-                                         )
+            # is this an update or a new element ?
+            try:
+                existing_legacy_export = LegacyExport.objects.get(
+                    legacy_url=legacy_export_url,
+                    origin='PEOPLE',
+                    origin_sciper=sciper,
+                )
 
-            legacy_export.save()
+                # it's an update
+                new_export.id = existing_legacy_export.export_id
+                new_export.save()
+                # update legacy info
+                existing_legacy_export.raw_csv_entry = row
+                existing_legacy_export.save()
+            except LegacyExport.DoesNotExist:
+                # it's new
+                new_export.save()
+                # add info that created this export
+                legacy_export = LegacyExport(export=new_export,
+                                             legacy_url=legacy_export_url,
+                                             origin='PEOPLE',
+                                             origin_sciper=sciper,
+                                             raw_csv_entry=row,  # for regeneration purpose
+                                             )
+                legacy_export.save()
 
     def load_exports_from_jahia(self, jahia_file_path, only_this_urls_from_legacy=[]):
         """
@@ -179,7 +201,10 @@ class SettingsManager(Manager):
 
             # it may be a search directly, so we don't have the legacy export
             if self.is_url_already_a_search(legacy_export_url):
-                new_export = Export(url=legacy_export_url)
+                new_export = Export(url=legacy_export_url,
+                                    created_at=timezone.now(),
+                                    updated_at=timezone.now(),
+                                    )
             else:
                 legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
@@ -213,19 +238,37 @@ class SettingsManager(Manager):
                     export_user.save()
 
             new_export.user = export_user
-            new_export.save()
 
-            # add info that created this export
-            legacy_export = LegacyExport(export=new_export,
-                                         legacy_url=legacy_export_url,
-                                         language=language,
-                                         referenced_url=jahia_site_url,
-                                         origin='JAHIA',
-                                         origin_sciper=sciper,
-                                         raw_csv_entry=row,  # for regeneration purpose
-                                         )
+            # is this an update or a new element ?
+            try:
+                existing_legacy_export = LegacyExport.objects.get(
+                    language=language,
+                    legacy_url=legacy_export_url,
+                    origin='JAHIA',
+                    origin_sciper=sciper,
+                    referenced_url=jahia_site_url,
+                )
 
-            legacy_export.save()
+                # it's an update
+                new_export.id = existing_legacy_export.export_id
+                new_export.save()
+                # update legacy info
+                existing_legacy_export.raw_csv_entry = row
+                existing_legacy_export.save()
+            except LegacyExport.DoesNotExist:
+                # it's new
+                new_export.save()
+                # add info that created this export
+                legacy_export = LegacyExport(export=new_export,
+                                             legacy_url=legacy_export_url,
+                                             language=language,
+                                             referenced_url=jahia_site_url,
+                                             origin='JAHIA',
+                                             origin_sciper=sciper,
+                                             raw_csv_entry=row,  # for regeneration purpose
+                                             )
+
+                legacy_export.save()
 
 
 class SettingsModel(models.Model):
