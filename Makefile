@@ -6,7 +6,7 @@
 	up down logs restart restart-web \
 	superadmin collectstatic migrations migrate \
 	dump restore release push-prod deploy \
-	fast-test test coverage shell \
+	fast-test test coverage shell bash \
 	migration-load-dump migration-build-delta \
 	migration-migrate migration-post-generate-csv
 
@@ -247,6 +247,10 @@ test: check-env
 shell:
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py shell_plus
+
+bash:
+	docker-compose -f docker-compose-dev.yml exec web \
+		bash
 
 coverage: check-env
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
