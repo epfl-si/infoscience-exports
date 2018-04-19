@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('exports', '0012_export_show_summary'),
+        ('exports', '0015_legacyexport_content_delta'),
     ]
 
     operations = [
