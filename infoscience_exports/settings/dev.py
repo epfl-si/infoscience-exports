@@ -57,6 +57,11 @@ LOGGING['loggers'] = {
         'handlers': ['console'],
         'level': 'DEBUG',
         'propagate': True
+    },
+    'django_tequila': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+        'propagate': True
     }
 }
 
