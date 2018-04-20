@@ -58,7 +58,7 @@ jQuery(function($) {
     });
 
 	$('.fa-clipboard').click(function () {
-		var copyText = INFOSCIENCE_DOMAIN+$(this).parent().siblings('input').val();
+		var copyText = $(this).parent().siblings('input').val();
 		var $temp = $('<input>');
 		$('body').append($temp);
 		$temp.val(copyText).select();
