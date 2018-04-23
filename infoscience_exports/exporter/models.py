@@ -336,6 +336,7 @@ class SettingsModel(models.Model):
                 search_pattern = ext_search_pattern
 
             as_args['p'] = search_pattern
+            logger.debug("Ext created for this export {} : {}".format(self.id, search_pattern))
 
         return as_args
 
