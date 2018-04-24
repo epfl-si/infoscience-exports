@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.core.cache import cache
+from django.utils.safestring import mark_safe
 
 from auditlog.registry import auditlog
 from dirtyfields import DirtyFieldsMixin
@@ -45,6 +46,45 @@ class Export(BulletsSettings,
 
     class Meta:
         ordering = ['-id']
+
+
+class LegacyExport(models.Model):
+    """
+    Old exports that were imported
+    """
+    ORIGIN_CHOICE = (
+        ('OTHER', ''),
+        ('JAHIA', 'Jahia'),
+        ('PEOPLE', 'People'),
+    )
+
+    export = models.OneToOneField(
+        Export,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+
+    legacy_id = models.IntegerField()
+    legacy_url = models.TextField()
+    language = models.TextField()
+    referenced_url = models.TextField()  # the page that use this export
+    origin = models.TextField(choices=ORIGIN_CHOICE)
+    origin_sciper = models.TextField()
+    raw_csv_entry = models.TextField()
+    content_delta = models.IntegerField(blank=True, null=True)  # diff between old system and new
+
+    def __str__(self):
+        return "{} ({})".format(self.legacy_url, self.origin)
+
+    def link_to_old_export(self):
+        from exporter.models import SettingsManager
+        id = SettingsManager.get_legacy_export_id_from_url(self.legacy_url)
+        if id:
+            return mark_safe('<a target="_blank" href='
+                             '"https://test-infoscience.epfl.ch/curator/export/{}/edit/">'
+                             'see on old site</a>'.format(id))
+        else:
+            return "Not available"
 
 
 def invalidate_view_cache(sender, instance, **kwargs):

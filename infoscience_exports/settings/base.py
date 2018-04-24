@@ -69,6 +69,7 @@ INSTALLED_APPS = (
 
     # Your apps
     'exports',
+    'exporter',
 )
 
 MIDDLEWARE = (

@@ -6,7 +6,9 @@
 	up down logs restart restart-web \
 	superadmin collectstatic migrations migrate \
 	dump restore release push-prod deploy \
-	fast-test test coverage shell
+	fast-test test coverage shell bash \
+	migration-load-dump migration-build-delta \
+	migration-migrate migration-post-generate-csv
 
 VERSION:=$(shell python update_release.py -v)
 
@@ -246,6 +248,10 @@ shell:
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py shell_plus
 
+bash:
+	docker-compose -f docker-compose-dev.yml exec web \
+		bash
+
 coverage: check-env
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
 	pytest --cov=infoscience_exports infoscience_exports/exports/pytests
@@ -260,6 +266,23 @@ test-travis:
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
 	python infoscience_exports/manage.py test exports --settings=settings.test --noinput
 	coverage xml
+
+migration-load-dump:
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py loaddata --app exporter exports_from_32
+
+migration-build-delta:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py add_quality_content_comparaison
+
+migration-migrate:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
+	migrate_from_legacy --jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv \
+            --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv
+
+migration-post-generate-csv:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \
+	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
+	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv"
 
 check-env:
 ifeq ($(wildcard .env),)

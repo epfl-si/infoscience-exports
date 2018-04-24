@@ -15,6 +15,7 @@ web:
     - ./infoscience_exports:/usr/src/app/infoscience_exports
     - ./staticfiles:/usr/src/app/staticfiles
     - ./coverage.xml:/usr/src/app/coverage.xml
+    - ./logs:/var/log/django
   env_file:
     - .env
   environment:
