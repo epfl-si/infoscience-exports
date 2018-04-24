@@ -1,7 +1,16 @@
 # Change Log
 
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-13)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.5...qa-release)
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-24)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.6...qa-release)
+
+## [0.4.6](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.6) (2018-04-24)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.5...0.4.6)
+
+**Merged pull requests:**
+
+- Url migration process [\#102](https://github.com/epfl-idevelop/infoscience-exports/pull/102) ([jdelasoie](https://github.com/jdelasoie))
+- Removed duplicate call to domain when clipboarding [\#100](https://github.com/epfl-idevelop/infoscience-exports/pull/100) ([dragonleman](https://github.com/dragonleman))
+- RANGE\_DISPLAY in env variables [\#99](https://github.com/epfl-idevelop/infoscience-exports/pull/99) ([dragonleman](https://github.com/dragonleman))
 
 ## [0.4.5](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.5) (2018-04-13)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.4.5)
