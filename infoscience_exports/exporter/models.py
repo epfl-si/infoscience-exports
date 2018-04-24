@@ -141,6 +141,7 @@ class SettingsManager(Manager):
             # is this an update or a new element ?
             try:
                 existing_legacy_export = LegacyExport.objects.get(
+                    legacy_id=legacy_export_id,
                     legacy_url=legacy_export_url,
                     origin='PEOPLE',
                     origin_sciper=sciper,
@@ -157,6 +158,7 @@ class SettingsManager(Manager):
                 new_export.save()
                 # add info that created this export
                 legacy_export = LegacyExport(export=new_export,
+                                             legacy_id=legacy_export_id,
                                              legacy_url=legacy_export_url,
                                              origin='PEOPLE',
                                              origin_sciper=sciper,
@@ -243,6 +245,7 @@ class SettingsManager(Manager):
             # is this an update or a new element ?
             try:
                 existing_legacy_export = LegacyExport.objects.get(
+                    legacy_id=legacy_export_id,
                     language=language,
                     legacy_url=legacy_export_url,
                     origin='JAHIA',
@@ -261,6 +264,7 @@ class SettingsManager(Manager):
                 new_export.save()
                 # add info that created this export
                 legacy_export = LegacyExport(export=new_export,
+                                             legacy_id = legacy_export_id,
                                              legacy_url=legacy_export_url,
                                              language=language,
                                              referenced_url=jahia_site_url,
