@@ -66,11 +66,11 @@ class SettingsManager(Manager):
         if matched:
             return True
 
-    def load_exports_from_people(self, people_file_path, only_this_urls_from_legacy=[]):
+    def load_exports_from_people(self, people_file_path, only_this_ids_from_legacy=[]):
         """
         Save as new exports from the people csv
         csv is sciper, username, src, email
-        only_this_url_from_legacy : if we want only a batch of migration
+        only_this_ids_from_legacy : if we want only a batch of migration
         """
         fallback_user = User.objects.get(username='delasoie')
 
@@ -79,15 +79,16 @@ class SettingsManager(Manager):
             people_full_list = list(reader)
 
         for row in people_full_list[1:]:
-            sciper = row[0]
-            username = row[1]
-            legacy_export_url = row[2].strip()
-            email = row[3]
-
-            # if we are in selective mode, only do the one we want
-            if only_this_urls_from_legacy:
-                if not legacy_export_url in only_this_urls_from_legacy:
-                    continue
+            username = row[0]
+            sciper = row[1]
+            box_id = row[2]
+            language = row[3]
+            legacy_export_url = row[4].strip()
+            try:
+                email = row[5]
+            except IndexError:
+                # email should come soon
+                email = ''
 
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
@@ -107,11 +108,19 @@ class SettingsManager(Manager):
             else:
                 legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
-                if not legacy_export_id:
+                if not legacy_export_id and not only_this_ids_from_legacy:
                     logger.info(
                         "Skipping : invalid legacy export url for {}\n"
                         "Raw People data : {}".format(legacy_export_url, row))
                     continue
+
+                # if we are in selective mode, only do the one we want
+                if only_this_ids_from_legacy:
+                    if not legacy_export_id in only_this_ids_from_legacy:
+                        continue
+                    logger.info(
+                        "Doing the selective mode withe legacy ID {}".format(legacy_export_id))
+
                 try:
                     exporter = SettingsModel.objects.get(id=legacy_export_id)
                 except SettingsModel.DoesNotExist:
@@ -143,8 +152,10 @@ class SettingsManager(Manager):
                 existing_legacy_export = LegacyExport.objects.get(
                     legacy_id=legacy_export_id,
                     legacy_url=legacy_export_url,
+                    language=language,
                     origin='PEOPLE',
                     origin_sciper=sciper,
+                    raw_csv_entry=row,
                 )
 
                 # it's an update
@@ -160,19 +171,22 @@ class SettingsManager(Manager):
                 legacy_export = LegacyExport(export=new_export,
                                              legacy_id=legacy_export_id,
                                              legacy_url=legacy_export_url,
+                                             language=language,
                                              origin='PEOPLE',
                                              origin_sciper=sciper,
                                              raw_csv_entry=row,  # for regeneration purpose
                                              )
                 legacy_export.save()
 
-    def load_exports_from_jahia(self, jahia_file_path, only_this_urls_from_legacy=[]):
+    def load_exports_from_jahia(self, jahia_file_path, only_this_ids_from_legacy=[]):
         """
         Save as new exports from the jahia csv
         csv is id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email
         only_this_url_from_legacy : if we want only a batch of migration
         """
         fallback_user = User.objects.get(username='delasoie')
+
+        logger.debug("Doing selective {}".format(only_this_ids_from_legacy))
 
         with open(jahia_file_path, 'r') as f:
             reader = csv.reader(f)
@@ -193,13 +207,10 @@ class SettingsManager(Manager):
             username = row[9]
             email = row[10]
 
-            # if we are in selective mode, only do the one we want
-            if only_this_urls_from_legacy:
-                if not legacy_export_url in only_this_urls_from_legacy:
-                    continue
-
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
+                logger.debug("Ignoring this url as it is not "
+                             "known as a legacy url: {}".format(legacy_export_url))
                 continue
 
             # it may be a search directly, so we don't have the legacy export
@@ -208,14 +219,25 @@ class SettingsManager(Manager):
                                     created_at=timezone.now(),
                                     updated_at=timezone.now(),
                                     )
+                logger.debug(
+                    "Building this url as it : {}".format(
+                        legacy_export_url))
             else:
                 legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
-                if not legacy_export_id:
-                    logger.info(
+                if not legacy_export_id and not only_this_ids_from_legacy:
+                    logger.debug(
                         "Skipping : invalid legacy export url for {}\n"
                         "Raw Jahia data : {}".format(legacy_export_url, row))
                     continue
+
+                # if we are in selective mode, only do the one we want
+                if only_this_ids_from_legacy:
+                    if not legacy_export_id in only_this_ids_from_legacy:
+                        continue
+                    logger.debug(
+                        "Doing the selective mode with legacy ID {}".format(legacy_export_id))
+
                 try:
                     exporter = SettingsModel.objects.get(id=legacy_export_id)
                 except SettingsModel.DoesNotExist:
@@ -251,15 +273,18 @@ class SettingsManager(Manager):
                     origin='JAHIA',
                     origin_sciper=sciper,
                     referenced_url=jahia_site_url,
+                    raw_csv_entry=row,
                 )
 
                 # it's an update
+                logger.debug("This is an update on Export id {} ...".format(existing_legacy_export.export_id))
                 new_export.id = existing_legacy_export.export_id
                 new_export.save()
                 # update legacy info
                 existing_legacy_export.raw_csv_entry = row
                 existing_legacy_export.save()
             except LegacyExport.DoesNotExist:
+                logger.debug("This is a new export, creating...")
                 # it's new
                 new_export.save()
                 # add info that created this export
@@ -274,6 +299,7 @@ class SettingsManager(Manager):
                                              )
 
                 legacy_export.save()
+                logger.debug("Created Export id {}".format(new_export.id))
 
 
 class SettingsModel(models.Model):
