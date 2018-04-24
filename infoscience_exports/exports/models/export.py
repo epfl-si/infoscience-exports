@@ -64,7 +64,8 @@ class LegacyExport(models.Model):
         primary_key=True,
     )
 
-    legacy_id = models.IntegerField()
+    # allow null as we may not have an export
+    legacy_id = models.IntegerField(blank=True, null=True)
     legacy_url = models.TextField()
     language = models.TextField()
     referenced_url = models.TextField()  # the page that use this export

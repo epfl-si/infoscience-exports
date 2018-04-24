@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='legacyexport',
             name='legacy_id',
-            field=models.IntegerField(),
+            field=models.IntegerField(blank=True, null=True),
         ),
     ]
