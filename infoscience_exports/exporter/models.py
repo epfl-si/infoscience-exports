@@ -84,15 +84,11 @@ class SettingsManager(Manager):
 
         for row in people_full_list[1:]:
             username = row[0]
-            sciper = row[1]
-            box_id = row[2]
-            language = row[3]
-            legacy_export_url = row[4].strip()
-            try:
-                email = row[5]
-            except IndexError:
-                # email should come soon
-                email = ''
+            email = row[1]
+            sciper = row[2]
+            box_id = row[3]
+            language = row[4]
+            legacy_export_url = row[5].strip()
 
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
@@ -100,11 +96,15 @@ class SettingsManager(Manager):
 
             # it may be a search directly, so we don't have the legacy export
             if self.is_url_already_a_search(legacy_export_url):
+                if only_this_ids_from_legacy:
+                    continue
                 new_export = Export(url=legacy_export_url,
                                     created_at=timezone.now(),
                                     updated_at=timezone.now(),
                                     )
             elif self.is_url_a_record(legacy_export_url):
+                if only_this_ids_from_legacy:
+                    continue
                 new_export = Export(url=legacy_export_url,
                                     created_at=timezone.now(),
                                     updated_at=timezone.now(),
@@ -211,15 +211,18 @@ class SettingsManager(Manager):
             username = row[9]
             email = row[10]
 
-
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
+                if only_this_ids_from_legacy:
+                    continue
                 skipped_logger.debug("Ignoring this url as it is not "
                              "known as a legacy url: {}".format(legacy_export_url))
                 continue
 
             # it may be a search directly, so we don't have the legacy export
             if self.is_url_already_a_search(legacy_export_url):
+                if only_this_ids_from_legacy:
+                    continue
                 new_export = Export(url=legacy_export_url,
                                     created_at=timezone.now(),
                                     updated_at=timezone.now(),
