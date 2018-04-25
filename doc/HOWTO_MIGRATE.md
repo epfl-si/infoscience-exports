@@ -32,22 +32,27 @@ Files that should be in this folder before running any command :
 ## Do the migration
 1. Inside the container, run :
 
-```python infoscience_exports/manage.py migrate_from_legacy \
+```
+python infoscience_exports/manage.py migrate_from_legacy \
 --ids_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv \
 --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
---jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv```
+--jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv
+```
 
 ## After the migration
 
 1. Inside the container, run :
 
-```python infoscience_exports/manage.py legacy_url_old_to_new \
+```
+python infoscience_exports/manage.py legacy_url_old_to_new \
     --jahia_csv_path /var/log/django/infoscience_exports_new_url_jahia.csv \
-    --people_csv_path /var/log/django/infoscience_exports_new_url_people.csv```
+    --people_csv_path /var/log/django/infoscience_exports_new_url_people.csv
+```
 
 ## Files to upload after a migration
+
 On the Google Drive folder, put this files in the subfolder `2018-04-xx raw files`
 
-    * /var/log/django/infoscience_exports_new_url_jahia.csv
-    * /var/log/django/infoscience_exports_new_url_people.csv
-    * /var/log/django/infoscience_exports_migration.log
+* /var/log/django/infoscience_exports_new_url_jahia.csv
+* /var/log/django/infoscience_exports_new_url_people.csv
+* /var/log/django/infoscience_exports_migration.log
