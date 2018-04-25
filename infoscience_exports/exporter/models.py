@@ -9,11 +9,15 @@ from django.db import models
 from django.db.models.manager import Manager
 
 from django.contrib.postgres.fields import JSONField
+from django.conf import settings
 
 from exports.models import Export, LegacyExport, User
 
 
 logger = logging.getLogger('migration')
+search_logger = logging.getLogger('migration.search')
+urls_logger = logging.getLogger('migration.urls')
+skipped_logger = logging.getLogger('migration.skipped')
 
 export_id_extractors = [
     r'^(?:https|http)://infoscience.epfl.ch/curator/export/(\d+)/?.*',
@@ -66,11 +70,11 @@ class SettingsManager(Manager):
         if matched:
             return True
 
-    def load_exports_from_people(self, people_file_path, only_this_urls_from_legacy=[]):
+    def load_exports_from_people(self, people_file_path, only_this_ids_from_legacy=[]):
         """
         Save as new exports from the people csv
         csv is sciper, username, src, email
-        only_this_url_from_legacy : if we want only a batch of migration
+        only_this_ids_from_legacy : if we want only a batch of migration
         """
         fallback_user = User.objects.get(username='delasoie')
 
@@ -79,15 +83,12 @@ class SettingsManager(Manager):
             people_full_list = list(reader)
 
         for row in people_full_list[1:]:
-            sciper = row[0]
-            username = row[1]
-            legacy_export_url = row[2].strip()
-            email = row[3]
-
-            # if we are in selective mode, only do the one we want
-            if only_this_urls_from_legacy:
-                if not legacy_export_url in only_this_urls_from_legacy:
-                    continue
+            username = row[0]
+            email = row[1]
+            sciper = row[2]
+            box_id = row[3]
+            language = row[4]
+            legacy_export_url = row[5].strip()
 
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
@@ -95,11 +96,15 @@ class SettingsManager(Manager):
 
             # it may be a search directly, so we don't have the legacy export
             if self.is_url_already_a_search(legacy_export_url):
+                if only_this_ids_from_legacy:
+                    continue
                 new_export = Export(url=legacy_export_url,
                                     created_at=timezone.now(),
                                     updated_at=timezone.now(),
                                     )
             elif self.is_url_a_record(legacy_export_url):
+                if only_this_ids_from_legacy:
+                    continue
                 new_export = Export(url=legacy_export_url,
                                     created_at=timezone.now(),
                                     updated_at=timezone.now(),
@@ -107,15 +112,23 @@ class SettingsManager(Manager):
             else:
                 legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
-                if not legacy_export_id:
-                    logger.info(
+                if not legacy_export_id and not only_this_ids_from_legacy:
+                    skipped_logger.info(
                         "Skipping : invalid legacy export url for {}\n"
                         "Raw People data : {}".format(legacy_export_url, row))
                     continue
+
+                # if we are in selective mode, only do the one we want
+                if only_this_ids_from_legacy:
+                    if not legacy_export_id in only_this_ids_from_legacy:
+                        continue
+                    logger.info("----------------\n" \
+                        "Doing the selective mode for People with legacy ID {}".format(legacy_export_id))
+
                 try:
                     exporter = SettingsModel.objects.get(id=legacy_export_id)
                 except SettingsModel.DoesNotExist:
-                    logger.info(
+                    skipped_logger.info(
                         "Skipping : no Settings model found for id {}\n"
                         "Raw People data : {}".format(legacy_export_id, row)
                     )
@@ -143,8 +156,10 @@ class SettingsManager(Manager):
                 existing_legacy_export = LegacyExport.objects.get(
                     legacy_id=legacy_export_id,
                     legacy_url=legacy_export_url,
+                    language=language,
                     origin='PEOPLE',
                     origin_sciper=sciper,
+                    raw_csv_entry=row,
                 )
 
                 # it's an update
@@ -160,19 +175,22 @@ class SettingsManager(Manager):
                 legacy_export = LegacyExport(export=new_export,
                                              legacy_id=legacy_export_id,
                                              legacy_url=legacy_export_url,
+                                             language=language,
                                              origin='PEOPLE',
                                              origin_sciper=sciper,
                                              raw_csv_entry=row,  # for regeneration purpose
                                              )
                 legacy_export.save()
 
-    def load_exports_from_jahia(self, jahia_file_path, only_this_urls_from_legacy=[]):
+    def load_exports_from_jahia(self, jahia_file_path, only_this_ids_from_legacy=[]):
         """
         Save as new exports from the jahia csv
         csv is id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email
         only_this_url_from_legacy : if we want only a batch of migration
         """
         fallback_user = User.objects.get(username='delasoie')
+
+        logger.debug("Doing selective {}".format(only_this_ids_from_legacy))
 
         with open(jahia_file_path, 'r') as f:
             reader = csv.reader(f)
@@ -193,33 +211,49 @@ class SettingsManager(Manager):
             username = row[9]
             email = row[10]
 
-            # if we are in selective mode, only do the one we want
-            if only_this_urls_from_legacy:
-                if not legacy_export_url in only_this_urls_from_legacy:
-                    continue
-
             # we may need to ignore empty or no means
             if self.is_url_to_ignore(legacy_export_url):
+                if only_this_ids_from_legacy:
+                    continue
+                skipped_logger.debug("Ignoring this url as it is not "
+                             "known as a legacy url: {}".format(legacy_export_url))
                 continue
 
             # it may be a search directly, so we don't have the legacy export
             if self.is_url_already_a_search(legacy_export_url):
+                if only_this_ids_from_legacy:
+                    continue
                 new_export = Export(url=legacy_export_url,
                                     created_at=timezone.now(),
                                     updated_at=timezone.now(),
                                     )
+                logger.debug(
+                    "Keeping this url as it : {}".format(
+                        legacy_export_url))
             else:
                 legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
-                if not legacy_export_id:
-                    logger.info(
+                if not legacy_export_id and not only_this_ids_from_legacy:
+                    skipped_logger.debug(
                         "Skipping : invalid legacy export url for {}\n"
                         "Raw Jahia data : {}".format(legacy_export_url, row))
                     continue
+
+                # if we are in selective mode, only do the one we want
+                if only_this_ids_from_legacy:
+                    if not legacy_export_id in only_this_ids_from_legacy:
+                        skipped_logger.info(
+                            "This jahia entry for Legacy id {} is not needed".format(
+                                legacy_export_id))
+                        continue
+                    logger.debug("----------------")
+                    logger.debug("Jahia entry {}".format(row))
+                    logger.info("Doing the selective mode for Jahia with legacy ID {}".format(legacy_export_id))
+
                 try:
                     exporter = SettingsModel.objects.get(id=legacy_export_id)
                 except SettingsModel.DoesNotExist:
-                    logger.info(
+                    skipped_logger.info(
                         "Skipping : no Settings model found for id {}\n"
                         "Raw Jahia data : {}".format(legacy_export_id, row)
                     )
@@ -251,15 +285,20 @@ class SettingsManager(Manager):
                     origin='JAHIA',
                     origin_sciper=sciper,
                     referenced_url=jahia_site_url,
+                    raw_csv_entry=row,
                 )
 
                 # it's an update
+                logger.debug("Updating Export id {} ...".format(existing_legacy_export.export_id))
                 new_export.id = existing_legacy_export.export_id
                 new_export.save()
                 # update legacy info
                 existing_legacy_export.raw_csv_entry = row
                 existing_legacy_export.save()
+                urls_logger.info("Resulting export url : {}".format(
+                    settings.SITE_DOMAIN + new_export.get_absolute_url()))
             except LegacyExport.DoesNotExist:
+                logger.debug("Creating new export...")
                 # it's new
                 new_export.save()
                 # add info that created this export
@@ -274,6 +313,8 @@ class SettingsManager(Manager):
                                              )
 
                 legacy_export.save()
+                logger.debug("Created Export id {}".format(new_export.id))
+                urls_logger.info("Resulting export url : {}".format(settings.SITE_DOMAIN + new_export.get_absolute_url()))
 
 
 class SettingsModel(models.Model):
@@ -295,12 +336,14 @@ class SettingsModel(models.Model):
         return self._settings_as_dict
 
     def _get_search_pattern(self):
+        search_logger.debug("Doing search pattern conversion")
         s = self.settings_as_dict
         as_args = {}
         search_pattern = ''
 
         if 'search_pattern' in s and s['search_pattern']:
             search_pattern = s['search_pattern']
+            search_logger.debug('pattern is : "{}"'.format(search_pattern))
             # uppercase AND and OR
             search_pattern = search_pattern.replace(' or ', ' OR ').replace(' and ', ' AND ')
             # add space when paranthesis search
@@ -308,16 +351,24 @@ class SettingsModel(models.Model):
             second_parenthesis = r'([^\s-])\)'
             search_pattern = re.sub(first_parenthesis, r'( \1', search_pattern)
             search_pattern = re.sub(second_parenthesis, r'\1 )',search_pattern)
+        else:
+            search_logger.debug(
+                "search_pattern is empty")
 
         exts = s.get('search_filter')
 
         if not exts:
             as_args['p'] = '{}'.format(search_pattern)
+            search_logger.debug(
+                "Filters are empty")
         else:
             """
            'collection:ARTICLE,review:REVIEWED,status:PUBLISHED,status:ACCEPTED,collection:PROC,review:ACCEPTED'
            => '( collection:ARTICLE AND collection:PROC ) OR ( review:REVIEWED ) OR ( status:PUBLISHED AND status:ACCEPTED )'
            """
+            search_logger.debug(
+                "exts found : {}".format(exts))
+
             ext_search_pattern = ""
             # regroup first
             regrouped_index = {}
@@ -340,7 +391,8 @@ class SettingsModel(models.Model):
                 search_pattern = ext_search_pattern
 
             as_args['p'] = search_pattern
-            logger.debug("Ext created for this export {} : {}".format(self.id, search_pattern))
+        if search_pattern:
+            search_logger.debug('New pattern : "{}"'.format(search_pattern))
 
         return as_args
 
@@ -349,6 +401,7 @@ class SettingsModel(models.Model):
         invenio_vars = {}
 
         if 'search_basket_id' in s and s['search_basket_id']:
+            logger.debug("Set has basket")
             invenio_vars['bskid'] = s['search_basket_id']
             invenio_vars['of'] = 'xm'
             return invenio_vars
@@ -356,9 +409,12 @@ class SettingsModel(models.Model):
         invenio_vars.update(self._get_search_pattern())
 
         if 'search_field_restriction' in s and s['search_field_restriction']:
+            search_logger.debug("field_restriction is {}".format(s['search_field_restriction']))
             invenio_vars['f1'] = s['search_field_restriction']
 
         if 'search_collection' in s and s['search_collection']:
+            search_logger.debug("collection is {}".format(
+                s['search_collection']))
             if not invenio_vars.get('c'):
                 invenio_vars['c'] = []
             invenio_vars['c'].append(s['search_collection'])
@@ -387,7 +443,7 @@ class SettingsModel(models.Model):
 
         # dont do basket at the moment
         if invenio_args.get('bskid'):
-            raise ValueError("No basket at the moment")
+            raise ValueError("No basket at the moment for advanced search url")
 
         search_pattern = invenio_args.get('p')
 
@@ -408,8 +464,12 @@ class SettingsModel(models.Model):
 
         invenio_args.update(advanced_search_vars)
 
-        return 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(
+        search_url = 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(
             invenio_args, doseq=True)
+
+        urls_logger.debug("Advanced search url built : {}".format(search_url))
+
+        return
 
     def build_search_url(self, invenio_vars={}, limit=None):
         """ build the infoscience url where it probably come from"""
@@ -421,11 +481,16 @@ class SettingsModel(models.Model):
             invenio_vars['rg'] = limit
 
         if invenio_vars.get('bskid'):
-            return 'https://infoscience.epfl.ch/yourbaskets/display_public?' + urllib.parse.urlencode(invenio_args, doseq=True)
+            search_url = 'https://infoscience.epfl.ch/yourbaskets/display_public?' + urllib.parse.urlencode(invenio_args, doseq=True)
+
         else:
-            return 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(invenio_args, doseq=True)
+            search_url = 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(invenio_args, doseq=True)
+
+        urls_logger.debug("New search url built : {}".format(search_url))
+        return search_url
 
     def as_new_export(self):
+        logger.debug("Building a new export from Legacy ID {}...".format(self.id))
         new_export = Export()
 
         new_export.name = "Imported export {}".format(self.id)

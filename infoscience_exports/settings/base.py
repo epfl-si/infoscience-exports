@@ -197,7 +197,7 @@ LOGGING = {
                       ' %(thread)d %(message)s'
         },
         'simple': {
-            'format': '%(levelname)s %(message)s'
+            'format': '[%(name)s:%(levelname)s] %(message)s'
         },
     },
     'handlers': {
