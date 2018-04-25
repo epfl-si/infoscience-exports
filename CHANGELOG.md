@@ -1,16 +1,7 @@
 # Change Log
 
-## [0.4.9](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.9) (2018-04-25)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.4.9)
-
 ## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-25)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.8...qa-release)
-
-## [0.4.8](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.8) (2018-04-25)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.7...0.4.8)
-
-## [0.4.7](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.7) (2018-04-25)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.6...0.4.7)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.6...qa-release)
 
 **Merged pull requests:**
 
