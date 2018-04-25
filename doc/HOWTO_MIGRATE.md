@@ -5,7 +5,7 @@
 Assert that the listed files are accessible from inside the container.
 In this document, the assumption is made that the path is `/usr/src/app/infoscience_exports/exporter/fixtures/`
 
-The files can be found on Google Drive
+The files can be found on Google Drive https://drive.google.com/drive/folders/1vlI45w-qDWkQUsMJ2YwUjYZbV45fBL-6?usp=sharing
 
 Files that should be in this folder before running any command :
 
