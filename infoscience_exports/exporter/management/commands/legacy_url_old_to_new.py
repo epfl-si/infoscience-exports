@@ -24,7 +24,7 @@ class Command(BaseCommand):
             writer = csv.writer(csv_jahia_file)
 
             for legacy_export in LegacyExport.objects.filter(origin='JAHIA').select_related('export'):
-                new_url = settings.SITE_DOMAIN + legacy_export.export.get_absolute_url()
+                new_url = settings.SITE_DOMAIN + legacy_export.get_with_langage_absolute_url()
                 row = ast.literal_eval(legacy_export.raw_csv_entry)
                 row.append(new_url)
                 writer.writerow(row)
@@ -36,7 +36,7 @@ class Command(BaseCommand):
             writer.writerow(['user', 'addrlog', 'sciper', 'id', 'cvlang', 'src', 'new_url'])
 
             for legacy_export in LegacyExport.objects.filter(origin='PEOPLE').select_related('export'):
-                new_url = settings.SITE_DOMAIN + legacy_export.export.get_absolute_url()
+                new_url = settings.SITE_DOMAIN + legacy_export.get_with_langage_absolute_url()
                 row = ast.literal_eval(legacy_export.raw_csv_entry)
                 row.append(new_url)
                 writer.writerow(row)

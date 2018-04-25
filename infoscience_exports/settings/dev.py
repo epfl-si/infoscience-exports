@@ -93,6 +93,11 @@ LOGGING['loggers'] = {
         'level': 'INFO',
         'propagate': False
     },
+    'migration.search': {
+        'handlers': [],
+        'level': 'INFO',
+        'propagate': False
+    },
     'django_tequila': {
         'handlers': ['console'],
         'level': 'DEBUG',

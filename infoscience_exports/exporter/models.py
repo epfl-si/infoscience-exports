@@ -18,6 +18,7 @@ logger = logging.getLogger('migration')
 search_logger = logging.getLogger('migration.search')
 urls_logger = logging.getLogger('migration.urls')
 skipped_logger = logging.getLogger('migration.skipped')
+handling_logger = logging.getLogger('migration.handling')
 
 export_id_extractors = [
     r'^(?:https|http)://infoscience.epfl.ch/curator/export/(\d+)/?.*',
@@ -134,6 +135,9 @@ class SettingsManager(Manager):
                     )
                     continue
 
+                if not exporter.can_handle():
+                    continue
+
                 new_export = exporter.as_new_export()
 
             new_export.name = "People".format(sciper)
@@ -168,6 +172,9 @@ class SettingsManager(Manager):
                 # update legacy info
                 existing_legacy_export.raw_csv_entry = row
                 existing_legacy_export.save()
+                urls_logger.info("Resulting export url : {}".format(
+                    settings.SITE_DOMAIN + existing_legacy_export.get_with_langage_absolute_url()))
+
             except LegacyExport.DoesNotExist:
                 # it's new
                 new_export.save()
@@ -181,6 +188,8 @@ class SettingsManager(Manager):
                                              raw_csv_entry=row,  # for regeneration purpose
                                              )
                 legacy_export.save()
+                logger.debug("Created Export id {}".format(new_export.id))
+                urls_logger.info("Resulting export url : {}".format(settings.SITE_DOMAIN + legacy_export.get_with_langage_absolute_url()))
 
     def load_exports_from_jahia(self, jahia_file_path, only_this_ids_from_legacy=[]):
         """
@@ -216,7 +225,7 @@ class SettingsManager(Manager):
                 if only_this_ids_from_legacy:
                     continue
                 skipped_logger.debug("Ignoring this url as it is not "
-                             "known as a legacy url: {}".format(legacy_export_url))
+                                     "known as a legacy url: {}".format(legacy_export_url))
                 continue
 
             # it may be a search directly, so we don't have the legacy export
@@ -259,6 +268,12 @@ class SettingsManager(Manager):
                     )
                     continue
 
+                if not exporter.can_handle():
+                    handling_logger.info(
+                        "Skipping : This settings model is to tricky to be migrated"
+                    )
+                    continue
+
                 new_export = exporter.as_new_export()
 
             new_export.name = "Jahia export ({})".format(jahia_site_key)
@@ -296,7 +311,7 @@ class SettingsManager(Manager):
                 existing_legacy_export.raw_csv_entry = row
                 existing_legacy_export.save()
                 urls_logger.info("Resulting export url : {}".format(
-                    settings.SITE_DOMAIN + new_export.get_absolute_url()))
+                    settings.SITE_DOMAIN + existing_legacy_export.get_with_langage_absolute_url()))
             except LegacyExport.DoesNotExist:
                 logger.debug("Creating new export...")
                 # it's new
@@ -314,7 +329,7 @@ class SettingsManager(Manager):
 
                 legacy_export.save()
                 logger.debug("Created Export id {}".format(new_export.id))
-                urls_logger.info("Resulting export url : {}".format(settings.SITE_DOMAIN + new_export.get_absolute_url()))
+                urls_logger.info("Resulting export url : {}".format(settings.SITE_DOMAIN + legacy_export.get_with_langage_absolute_url()))
 
 
 class SettingsModel(models.Model):
@@ -335,8 +350,54 @@ class SettingsModel(models.Model):
             self._settings_as_dict = json.loads(self.settings)
         return self._settings_as_dict
 
+    def search_values(self):
+        """ shortcut mainly for report on old key"""
+        s = self.settings_as_dict
+        search_key = {}
+
+        if 'search_pattern' in s and s['search_pattern']:
+            search_key['search_pattern'] = s['search_pattern']
+
+        if 'search_collection' in s and s['search_collection']:
+            search_key['search_collection'] = s['search_collection']
+
+        if 'search_field_restriction' in s and s['search_field_restriction']:
+            search_key['search_field_restriction'] = s['search_field_restriction']
+
+        if 'search_filter' in s and s['search_filter']:
+            search_key['search_filter'] = s['search_filter']
+
+        return search_key
+
+    def can_handle(self):
+        """ Some exports are too tricky to be valid
+            This method is here to filter them
+        """
+        can_handle = False
+        s = self.settings_as_dict
+        # only do the one that have only a search_pattern
+        if 'search_pattern' in s and s['search_pattern']:
+            if 'search_collection' in s and s['search_collection']:
+                can_handle = False
+            if 'search_field_restriction' in s and s['search_field_restriction']:
+                can_handle = False
+            if 'search_filter' in s and s['search_filter']:
+                can_handle = False
+
+            can_handle = True
+
+        if not can_handle:
+            handling_logger.info(
+                "Skipping : This settings model is "
+                "to tricky to be migrated {}\nSearch values {}".format(self.id, self.search_values())
+            )
+
+        return can_handle
+
     def _get_search_pattern(self):
-        search_logger.debug("Doing search pattern conversion")
+        search_logger.info("Doing search pattern conversion")
+        search_logger.info("From {}".format(self.search_values()))
+
         s = self.settings_as_dict
         as_args = {}
         search_pattern = ''
@@ -391,8 +452,9 @@ class SettingsModel(models.Model):
                 search_pattern = ext_search_pattern
 
             as_args['p'] = search_pattern
+
         if search_pattern:
-            search_logger.debug('New pattern : "{}"'.format(search_pattern))
+            search_logger.info('to New pattern : "{}"'.format(search_pattern))
 
         return as_args
 
