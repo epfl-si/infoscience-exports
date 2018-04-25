@@ -1,7 +1,14 @@
 # Change Log
 
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-24)
+## [0.4.7](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.7) (2018-04-25)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.4.7)
+
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-25)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.6...qa-release)
+
+**Merged pull requests:**
+
+- Selective migration [\#103](https://github.com/epfl-idevelop/infoscience-exports/pull/103) ([jdelasoie](https://github.com/jdelasoie))
 
 ## [0.4.6](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.6) (2018-04-24)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.5...0.4.6)
@@ -13,7 +20,7 @@
 - RANGE\_DISPLAY in env variables [\#99](https://github.com/epfl-idevelop/infoscience-exports/pull/99) ([dragonleman](https://github.com/dragonleman))
 
 ## [0.4.5](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.5) (2018-04-13)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.4.5)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.4...0.4.5)
 
 **Merged pull requests:**
 
@@ -24,9 +31,6 @@
 - Titres avec Liste\(s\) de publications [\#94](https://github.com/epfl-idevelop/infoscience-exports/pull/94) ([dragonleman](https://github.com/dragonleman))
 - Added collectstatic an makemessages when deploying [\#93](https://github.com/epfl-idevelop/infoscience-exports/pull/93) ([dragonleman](https://github.com/dragonleman))
 - User creation for admins [\#92](https://github.com/epfl-idevelop/infoscience-exports/pull/92) ([jdelasoie](https://github.com/jdelasoie))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-04-06)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.4...prod-release)
 
 ## [0.4.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.4) (2018-04-06)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.3...0.4.4)
@@ -107,7 +111,7 @@
 - Remove any usages or dependencies on Django Rest Framework [\#49](https://github.com/epfl-idevelop/infoscience-exports/pull/49) ([jdelasoie](https://github.com/jdelasoie))
 
 ## [0.3.5](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.5) (2018-03-13)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.4...0.3.5)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.3.5)
 
 **Merged pull requests:**
 
@@ -115,6 +119,9 @@
 - FullText: only one link to redirect to a pdf or a directory with several media [\#47](https://github.com/epfl-idevelop/infoscience-exports/pull/47) ([dragonleman](https://github.com/dragonleman))
 - Corrected group\_by year [\#46](https://github.com/epfl-idevelop/infoscience-exports/pull/46) ([dragonleman](https://github.com/dragonleman))
 - Translations: locale folders [\#45](https://github.com/epfl-idevelop/infoscience-exports/pull/45) ([dragonleman](https://github.com/dragonleman))
+
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-09)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.4...prod-release)
 
 ## [0.3.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.4) (2018-03-09)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...0.3.4)
