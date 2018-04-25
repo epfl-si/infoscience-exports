@@ -15,6 +15,7 @@ class Command(BaseCommand):
     help = "Write to csv what become of the old url with the new system "
 
     def add_arguments(self, parser):
+        parser.add_argument('--all_csv_path', nargs='+', type=str)
         parser.add_argument('--jahia_csv_path', nargs='+', type=str)
         parser.add_argument('--people_csv_path', nargs='+', type=str)
 
@@ -40,3 +41,17 @@ class Command(BaseCommand):
                 row = ast.literal_eval(legacy_export.raw_csv_entry)
                 row.append(new_url)
                 writer.writerow(row)
+
+        if options.get('all_csv_path'):
+            with open(options['all_csv_path'][0], 'w') as csv_all_file:
+                logger.info(
+                    "Building cumul csv : {}".format(options['all_csv_path'][0])
+                )
+                writer = csv.writer(csv_all_file)
+                writer.writerow(
+                    ['legacy_id', 'old_url', 'new_url'])
+
+                for legacy_export in LegacyExport.objects.select_related('export'):
+                    new_url = settings.SITE_DOMAIN + legacy_export.get_with_langage_absolute_url()
+                    row = [legacy_export.legacy_id, legacy_export.legacy_url, new_url]
+                    writer.writerow(row)
