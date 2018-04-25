@@ -92,53 +92,41 @@ class SettingsManager(Manager):
             legacy_export_url = row[5].strip()
 
             # we may need to ignore empty or no means
-            if self.is_url_to_ignore(legacy_export_url):
+            if self.is_url_to_ignore(legacy_export_url) or \
+               self.is_url_already_a_search(legacy_export_url) or \
+               self.is_url_a_record(legacy_export_url):
+                skipped_logger.debug(
+                    "Ignoring an invalid legacy url : {}".format(legacy_export_url))
                 continue
 
-            # it may be a search directly, so we don't have the legacy export
-            if self.is_url_already_a_search(legacy_export_url):
-                if only_this_ids_from_legacy:
-                    continue
-                new_export = Export(url=legacy_export_url,
-                                    created_at=timezone.now(),
-                                    updated_at=timezone.now(),
-                                    )
-            elif self.is_url_a_record(legacy_export_url):
-                if only_this_ids_from_legacy:
-                    continue
-                new_export = Export(url=legacy_export_url,
-                                    created_at=timezone.now(),
-                                    updated_at=timezone.now(),
-                                    )
-            else:
-                legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
+            legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
-                if not legacy_export_id and not only_this_ids_from_legacy:
-                    skipped_logger.info(
-                        "Skipping : invalid legacy export url for {}\n"
-                        "Raw People data : {}".format(legacy_export_url, row))
+            if not legacy_export_id:
+                skipped_logger.info(
+                    "Skipping : invalid legacy export url for {}\n"
+                    "Raw People data : {}".format(legacy_export_url, row))
+                continue
+
+            # if we are in selective mode, only do the one we want
+            if only_this_ids_from_legacy:
+                if not legacy_export_id in only_this_ids_from_legacy:
                     continue
+                logger.info("----------------\n" \
+                    "Doing the selective mode for People with legacy ID {}".format(legacy_export_id))
 
-                # if we are in selective mode, only do the one we want
-                if only_this_ids_from_legacy:
-                    if not legacy_export_id in only_this_ids_from_legacy:
-                        continue
-                    logger.info("----------------\n" \
-                        "Doing the selective mode for People with legacy ID {}".format(legacy_export_id))
+            try:
+                exporter = SettingsModel.objects.get(id=legacy_export_id)
+            except SettingsModel.DoesNotExist:
+                skipped_logger.info(
+                    "Skipping : no Settings model found for id {}\n"
+                    "Raw People data : {}".format(legacy_export_id, row)
+                )
+                continue
 
-                try:
-                    exporter = SettingsModel.objects.get(id=legacy_export_id)
-                except SettingsModel.DoesNotExist:
-                    skipped_logger.info(
-                        "Skipping : no Settings model found for id {}\n"
-                        "Raw People data : {}".format(legacy_export_id, row)
-                    )
-                    continue
+            if not exporter.can_handle():
+                continue
 
-                if not exporter.can_handle():
-                    continue
-
-                new_export = exporter.as_new_export()
+            new_export = exporter.as_new_export()
 
             new_export.name = "People".format(sciper)
 
@@ -221,60 +209,47 @@ class SettingsManager(Manager):
             email = row[10]
 
             # we may need to ignore empty or no means
-            if self.is_url_to_ignore(legacy_export_url):
-                if only_this_ids_from_legacy:
-                    continue
-                skipped_logger.debug("Ignoring this url as it is not "
-                                     "known as a legacy url: {}".format(legacy_export_url))
+            if self.is_url_to_ignore(legacy_export_url) or \
+               self.is_url_already_a_search(legacy_export_url):
+                skipped_logger.debug(
+                    "Ignoring an invalid legacy url : {}".format(legacy_export_url))
                 continue
 
-            # it may be a search directly, so we don't have the legacy export
-            if self.is_url_already_a_search(legacy_export_url):
-                if only_this_ids_from_legacy:
-                    continue
-                new_export = Export(url=legacy_export_url,
-                                    created_at=timezone.now(),
-                                    updated_at=timezone.now(),
-                                    )
-                logger.debug(
-                    "Keeping this url as it : {}".format(
-                        legacy_export_url))
-            else:
-                legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
+            legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
-                if not legacy_export_id and not only_this_ids_from_legacy:
-                    skipped_logger.debug(
-                        "Skipping : invalid legacy export url for {}\n"
-                        "Raw Jahia data : {}".format(legacy_export_url, row))
-                    continue
+            if not legacy_export_id and not only_this_ids_from_legacy:
+                skipped_logger.debug(
+                    "Skipping : invalid legacy export url for {}\n"
+                    "Raw Jahia data : {}".format(legacy_export_url, row))
+                continue
 
-                # if we are in selective mode, only do the one we want
-                if only_this_ids_from_legacy:
-                    if not legacy_export_id in only_this_ids_from_legacy:
-                        skipped_logger.info(
-                            "This jahia entry for Legacy id {} is not needed".format(
-                                legacy_export_id))
-                        continue
-                    logger.debug("----------------")
-                    logger.debug("Jahia entry {}".format(row))
-                    logger.info("Doing the selective mode for Jahia with legacy ID {}".format(legacy_export_id))
-
-                try:
-                    exporter = SettingsModel.objects.get(id=legacy_export_id)
-                except SettingsModel.DoesNotExist:
+            # if we are in selective mode, only do the one we want
+            if only_this_ids_from_legacy:
+                if not legacy_export_id in only_this_ids_from_legacy:
                     skipped_logger.info(
-                        "Skipping : no Settings model found for id {}\n"
-                        "Raw Jahia data : {}".format(legacy_export_id, row)
-                    )
+                        "This jahia entry for Legacy id {} is not needed".format(
+                            legacy_export_id))
                     continue
+                logger.debug("----------------")
+                logger.debug("Jahia entry {}".format(row))
+                logger.info("Doing the selective mode for Jahia with legacy ID {}".format(legacy_export_id))
 
-                if not exporter.can_handle():
-                    handling_logger.info(
-                        "Skipping : This settings model is to tricky to be migrated"
-                    )
-                    continue
+            try:
+                exporter = SettingsModel.objects.get(id=legacy_export_id)
+            except SettingsModel.DoesNotExist:
+                skipped_logger.info(
+                    "Skipping : no Settings model found for id {}\n"
+                    "Raw Jahia data : {}".format(legacy_export_id, row)
+                )
+                continue
 
-                new_export = exporter.as_new_export()
+            if not exporter.can_handle():
+                handling_logger.info(
+                    "Skipping : This settings model is to tricky to be migrated"
+                )
+                continue
+
+            new_export = exporter.as_new_export()
 
             new_export.name = "Jahia export ({})".format(jahia_site_key)
 
