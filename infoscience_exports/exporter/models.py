@@ -377,14 +377,14 @@ class SettingsModel(models.Model):
         s = self.settings_as_dict
         # only do the one that have only a search_pattern
         if 'search_pattern' in s and s['search_pattern']:
+            can_handle = True
+
             if 'search_collection' in s and s['search_collection']:
                 can_handle = False
             if 'search_field_restriction' in s and s['search_field_restriction']:
                 can_handle = False
             if 'search_filter' in s and s['search_filter']:
                 can_handle = False
-
-            can_handle = True
 
         if not can_handle:
             handling_logger.info(
