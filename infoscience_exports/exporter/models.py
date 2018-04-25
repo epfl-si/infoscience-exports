@@ -506,7 +506,7 @@ class SettingsModel(models.Model):
 
         urls_logger.debug("Advanced search url built : {}".format(search_url))
 
-        return
+        return search_url
 
     def build_search_url(self, invenio_vars={}, limit=None):
         """ build the infoscience url where it probably come from"""
