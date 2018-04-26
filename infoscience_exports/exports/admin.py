@@ -71,7 +71,8 @@ class LegacyExportInline(admin.StackedInline):
     model = LegacyExport
     can_delete = False
     extra = 0
-    readonly_fields = ('legacy_url',
+    readonly_fields = ('legacy_id',
+                       'legacy_url',
                        'language',
                        'referenced_url',
                        'origin',
@@ -89,7 +90,7 @@ class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
         for inline in self.get_inline_instances(request, obj):
             if obj is not None:
                 try:
-                    obj.legacyexport
+                    obj.legacyexport_set.all()
                     yield inline.get_formset(request, obj), inline
                 except LegacyExport.DoesNotExist:
                     pass
