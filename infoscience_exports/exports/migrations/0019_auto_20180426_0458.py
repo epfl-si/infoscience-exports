@@ -29,6 +29,7 @@ class Migration(migrations.Migration):
                     choices=[('OTHER', ''), ('JAHIA', 'Jahia'),
                              ('PEOPLE', 'People')])),
                 ('origin_sciper', models.TextField()),
+                ('origin_id', models.TextField()),
                 ('raw_csv_entry', models.TextField()),
             ],
         ),

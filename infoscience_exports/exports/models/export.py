@@ -70,6 +70,7 @@ class LegacyExport(models.Model):
     referenced_url = models.TextField()  # the page that use this export
     origin = models.TextField(choices=ORIGIN_CHOICE)
     origin_sciper = models.TextField()
+    origin_id = models.TextField()
     raw_csv_entry = models.TextField()
     content_delta = models.IntegerField(blank=True, null=True)  # diff between old system and new
 

@@ -71,11 +71,12 @@ class SettingsManager(Manager):
         if matched:
             return True
 
-    def load_exports_from_people(self, people_file_path, only_this_ids_from_legacy=[]):
+    def load_exports_from_people(self, people_file_path, only_this_ids_from_legacy=[], subset=False):
         """
         Save as new exports from the people csv
         csv is sciper, username, src, email
         only_this_ids_from_legacy : if we want only a batch of migration
+        subset : if you want to filter the od legacy exports that are too complex. See can_handle() for the complexity check
         """
         fallback_user = User.objects.get(username='delasoie')
 
@@ -123,12 +124,17 @@ class SettingsManager(Manager):
                 )
                 continue
 
-            if not only_this_ids_from_legacy and not exporter.can_handle():
-                continue
+            if subset:
+                if not exporter.can_handle():
+                    handling_logger.info(
+                        "Skipping : This settings model is to tricky to be migrated"
+                    )
+                    continue
 
-            new_export = exporter.as_new_export()
+            # always create the export
+            current_export = exporter.as_new_export()
 
-            new_export.name = "People".format(sciper)
+            current_export.name = "People"
 
             if not username:
                 export_user = fallback_user
@@ -141,49 +147,58 @@ class SettingsManager(Manager):
                 if email or sciper:
                     export_user.save()
 
-            new_export.user = export_user
+            current_export.user = export_user
 
-            # is this an update or a new element ?
+            # now is it an update or a new ?
+            existing_exports = Export.objects.filter(legacyexport__legacy_id=exporter.id).distinct()
+            if existing_exports:
+                existing_export = existing_exports[0]
+                logger.debug("Updating Export id {} from the new build...".format(
+                    existing_export.id))
+                # it exists, so we will save to this id
+                current_export.id = existing_export.id
+                current_export.save()
+            else:
+                # it's new, a save will do it
+                logger.debug("Creating a new Export ...")
+                current_export.save()
+
+            # now check for every refs, if this a new or an update
+            current_legacy_export = LegacyExport(export=current_export,
+                                                 legacy_id=legacy_export_id,
+                                                 legacy_url=legacy_export_url,
+                                                 language=language,
+                                                 origin='PEOPLE',
+                                                 origin_sciper=sciper,
+                                                 origin_id=box_id,
+                                                 raw_csv_entry=row,
+                                                 )
+
             try:
-                existing_legacy_export = LegacyExport.objects.get(
-                    legacy_id=legacy_export_id,
-                    legacy_url=legacy_export_url,
-                    language=language,
-                    origin='PEOPLE',
-                    origin_sciper=sciper,
-                    raw_csv_entry=row,
-                )
-
+                existing_legacy_export = current_export.legacyexport_set.get(legacy_id=legacy_export_id,
+                                                                             language=language,
+                                                                             origin='PEOPLE',
+                                                                             origin_id=box_id,
+                                                                             )
                 # it's an update
-                new_export.id = existing_legacy_export.export_id
-                new_export.save()
-                # update legacy info
-                existing_legacy_export.raw_csv_entry = row
-                existing_legacy_export.save()
+                logger.debug("Updating a legacy export ref, id {} ...".format(existing_legacy_export.export_id))
+                current_legacy_export.id = existing_legacy_export.id
+                current_legacy_export.save()
                 urls_logger.info("Resulting export url : {}".format(
                     settings.SITE_DOMAIN + existing_legacy_export.get_with_langage_absolute_url()))
-
             except LegacyExport.DoesNotExist:
+                logger.debug("Creating new legacy export ref...")
                 # it's new
-                new_export.save()
-                # add info that created this export
-                legacy_export = LegacyExport(export=new_export,
-                                             legacy_id=legacy_export_id,
-                                             legacy_url=legacy_export_url,
-                                             language=language,
-                                             origin='PEOPLE',
-                                             origin_sciper=sciper,
-                                             raw_csv_entry=row,  # for regeneration purpose
-                                             )
-                legacy_export.save()
-                logger.debug("Created Export id {}".format(new_export.id))
-                urls_logger.info("Resulting export url : {}".format(settings.SITE_DOMAIN + legacy_export.get_with_langage_absolute_url()))
+                current_legacy_export.save()
+                logger.debug("Created id {}".format(current_legacy_export.id))
+                urls_logger.info("Resulting export url : {}".format(settings.SITE_DOMAIN + current_legacy_export.get_with_langage_absolute_url()))
 
-    def load_exports_from_jahia(self, jahia_file_path, only_this_ids_from_legacy=[]):
+    def load_exports_from_jahia(self, jahia_file_path, only_this_ids_from_legacy=[], subset=False):
         """
         Save as new exports from the jahia csv
         csv is id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email
         only_this_url_from_legacy : if we want only a batch of migration
+        subset : if you want to filter the od legacy exports that are too complex. See can_handle() for the complexity check
         """
         fallback_user = User.objects.get(username='delasoie')
 
@@ -243,15 +258,17 @@ class SettingsManager(Manager):
                 )
                 continue
 
-            if not only_this_ids_from_legacy and not exporter.can_handle():
-                handling_logger.info(
-                    "Skipping : This settings model is to tricky to be migrated"
-                )
-                continue
+            if subset:
+                if not exporter.can_handle():
+                    handling_logger.info(
+                        "Skipping : This settings model is to tricky to be migrated"
+                    )
+                    continue
 
-            new_export = exporter.as_new_export()
+            # always create the export
+            current_export = exporter.as_new_export()
 
-            new_export.name = "Jahia export ({})".format(jahia_site_key)
+            current_export.name = "Jahia export ({})".format(jahia_site_key)
 
             if not username:
                 export_user = fallback_user
@@ -264,47 +281,52 @@ class SettingsManager(Manager):
                 if email or sciper:
                     export_user.save()
 
-            new_export.user = export_user
+            current_export.user = export_user
+            # now is it an update or a new ?
+            existing_exports = Export.objects.filter(legacyexport__legacy_id=exporter.id).distinct()
+            if existing_exports:
+                existing_export = existing_exports[0]
+                logger.debug("Updating Export id {} from the new build...".format(
+                    existing_export.id))
+                # it exists, so we will save to this id
+                current_export.id = existing_export.id
+                current_export.save()
+            else:
+                # it's new, a save will do it
+                logger.debug("Creating a new Export ...")
+                current_export.save()
 
-            # is this an update or a new element ?
+            # now check for every refs, if this a new or an update
+            current_legacy_export = LegacyExport(export=current_export,
+                                         legacy_id=legacy_export_id,
+                                         legacy_url=legacy_export_url,
+                                         language=language,
+                                         referenced_url=jahia_site_url,
+                                         origin='JAHIA',
+                                         origin_id=jahia_id_fields_data,
+                                         origin_sciper=sciper,
+                                         raw_csv_entry=row,
+                                         # for regeneration purpose
+                                         )
+
             try:
-                existing_legacy_export = LegacyExport.objects.get(
-                    legacy_id=legacy_export_id,
-                    language=language,
-                    legacy_url=legacy_export_url,
-                    origin='JAHIA',
-                    origin_sciper=sciper,
-                    referenced_url=jahia_site_url,
-                    raw_csv_entry=row,
-                )
-
+                existing_legacy_export = current_export.legacyexport_set.get(legacy_id=legacy_export_id,
+                                                                             language=language,
+                                                                             origin='JAHIA',
+                                                                             origin_id=jahia_id_fields_data,
+                                                                             )
                 # it's an update
-                logger.debug("Updating Export id {} ...".format(existing_legacy_export.export_id))
-                new_export.id = existing_legacy_export.export_id
-                new_export.save()
-                # update legacy info
-                existing_legacy_export.raw_csv_entry = row
-                existing_legacy_export.save()
+                logger.debug("Updating a legacy export ref, id {} ...".format(existing_legacy_export.export_id))
+                current_legacy_export.id = existing_legacy_export.id
+                current_legacy_export.save()
                 urls_logger.info("Resulting export url : {}".format(
                     settings.SITE_DOMAIN + existing_legacy_export.get_with_langage_absolute_url()))
             except LegacyExport.DoesNotExist:
-                logger.debug("Creating new export...")
+                logger.debug("Creating new legacy export ref...")
                 # it's new
-                new_export.save()
-                # add info that created this export
-                legacy_export = LegacyExport(export=new_export,
-                                             legacy_id = legacy_export_id,
-                                             legacy_url=legacy_export_url,
-                                             language=language,
-                                             referenced_url=jahia_site_url,
-                                             origin='JAHIA',
-                                             origin_sciper=sciper,
-                                             raw_csv_entry=row,  # for regeneration purpose
-                                             )
-
-                legacy_export.save()
-                logger.debug("Created Export id {}".format(new_export.id))
-                urls_logger.info("Resulting export url : {}".format(settings.SITE_DOMAIN + legacy_export.get_with_langage_absolute_url()))
+                current_legacy_export.save()
+                logger.debug("Created id {}".format(current_legacy_export.id))
+                urls_logger.info("Resulting export url : {}".format(settings.SITE_DOMAIN + current_legacy_export.get_with_langage_absolute_url()))
 
 
 class SettingsModel(models.Model):
@@ -331,7 +353,7 @@ class SettingsModel(models.Model):
         search_key = {}
 
         if 'search_basket_id' in s and s['search_basket_id']:
-            search_key['search_basket_id']
+            search_key['search_basket_id'] = s['search_basket_id']
         else:
             if 'search_pattern' in s and s['search_pattern']:
                 search_key['search_pattern'] = s['search_pattern']
