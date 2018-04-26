@@ -70,11 +70,16 @@ class LegacyExport(models.Model):
     referenced_url = models.TextField()  # the page that use this export
     origin = models.TextField(choices=ORIGIN_CHOICE)
     origin_sciper = models.TextField()
+    origin_id = models.TextField()
     raw_csv_entry = models.TextField()
     content_delta = models.IntegerField(blank=True, null=True)  # diff between old system and new
 
     def __str__(self):
         return "{} ({})".format(self.legacy_url, self.origin)
+
+    def get_with_langage_absolute_url(self):
+        """ get the url of the export, and add the language needed"""
+        return reverse('crud:export-view', args=[str(self.export.id)]) + '?ln={}'.format(self.language)
 
     def link_to_old_export(self):
         from exporter.models import SettingsManager

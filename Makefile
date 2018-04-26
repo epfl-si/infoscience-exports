@@ -8,7 +8,8 @@
 	dump restore release push-prod deploy \
 	fast-test test coverage shell bash \
 	migration-load-dump migration-build-delta \
-	migration-migrate migration-post-generate-csv
+	migration-post-generate-csvs migration-migrate \
+	migration-migrate-selective-with-subset migration-migrate-all
 
 VERSION:=$(shell python update_release.py -v)
 
@@ -280,10 +281,24 @@ migration-migrate:
             --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
             --ids_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv
 
+migration-migrate-selective-with-subset:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
+	migrate_from_legacy --jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv \
+            --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
+            --ids_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv \
+            --subset_only 1
+
+migration-migrate-all:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
+	migrate_from_legacy --jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv \
+            --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
+            --migate_all
+
 migration-post-generate-csv:
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \
 	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
-	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv"
+	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv " \
+	--all_csv_path "/var/log/django/infoscience_exports_all_new_url.csv"
 
 check-env:
 ifeq ($(wildcard .env),)
