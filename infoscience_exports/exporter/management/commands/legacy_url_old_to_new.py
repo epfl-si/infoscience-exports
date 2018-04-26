@@ -53,5 +53,7 @@ class Command(BaseCommand):
 
                 for legacy_export in LegacyExport.objects.select_related('export'):
                     new_url = settings.SITE_DOMAIN + legacy_export.get_with_langage_absolute_url()
-                    row = [legacy_export.legacy_id, legacy_export.legacy_url, new_url]
+                    # direct access to legacy instead of the infoscience proxy
+                    old_url = legacy_export.legacy_url.replace('infoscience.epfl.ch', 'infoscience-legacy.epfl.ch')
+                    row = [legacy_export.legacy_id, old_url, new_url]
                     writer.writerow(row)
