@@ -123,7 +123,7 @@ class SettingsManager(Manager):
                 )
                 continue
 
-            if not exporter.can_handle():
+            if not only_this_ids_from_legacy and not exporter.can_handle():
                 continue
 
             new_export = exporter.as_new_export()
@@ -243,7 +243,7 @@ class SettingsManager(Manager):
                 )
                 continue
 
-            if not exporter.can_handle():
+            if not only_this_ids_from_legacy and not exporter.can_handle():
                 handling_logger.info(
                     "Skipping : This settings model is to tricky to be migrated"
                 )
