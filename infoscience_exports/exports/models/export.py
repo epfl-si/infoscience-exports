@@ -58,10 +58,9 @@ class LegacyExport(models.Model):
         ('PEOPLE', 'People'),
     )
 
-    export = models.OneToOneField(
+    export = models.ForeignKey(
         Export,
-        on_delete=models.CASCADE,
-        primary_key=True,
+        on_delete=models.CASCADE
     )
 
     # allow null as we may not have an export
