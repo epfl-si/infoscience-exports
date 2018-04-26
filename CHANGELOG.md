@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.5.0](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.0) (2018-04-26)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.5.0)
+
 ## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-26)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.7...qa-release)
 
