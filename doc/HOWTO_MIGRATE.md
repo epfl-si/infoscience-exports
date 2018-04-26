@@ -5,7 +5,7 @@
 Assert that the listed files are accessible from inside the container.
 In this document, the assumption is made that the path is `/usr/src/app/infoscience_exports/exporter/fixtures/`
 
-The files can be found on Google Drive
+The files can be found on Google Drive, in the `Input for App` folder
 
 Files that should be in this folder before running any command :
 
@@ -45,8 +45,10 @@ python infoscience_exports/manage.py migrate_from_legacy \
 
 ```
 python infoscience_exports/manage.py legacy_url_old_to_new \
-    --jahia_csv_path /var/log/django/infoscience_exports_new_url_jahia.csv \
-    --people_csv_path /var/log/django/infoscience_exports_new_url_people.csv
+	--ids_csv_path "/usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv" \
+	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
+	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv " \
+	--all_csv_path "/var/log/django/infoscience_exports_all_new_url.csv"
 ```
 
 ## Files to upload after a migration
@@ -55,4 +57,5 @@ On the Google Drive folder, put this files in the subfolder `2018-04-xx raw file
 
 * /var/log/django/infoscience_exports_new_url_jahia.csv
 * /var/log/django/infoscience_exports_new_url_people.csv
+* /var/log/django/infoscience_exports_all_new_url.csv
 * /var/log/django/infoscience_exports_migration.log
