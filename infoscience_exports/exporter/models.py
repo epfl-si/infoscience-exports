@@ -330,17 +330,17 @@ class SettingsModel(models.Model):
         s = self.settings_as_dict
         search_key = {}
 
-        if 'search_pattern' in s and s['search_pattern']:
-            search_key['search_pattern'] = s['search_pattern']
-
-        if 'search_collection' in s and s['search_collection']:
-            search_key['search_collection'] = s['search_collection']
-
-        if 'search_field_restriction' in s and s['search_field_restriction']:
-            search_key['search_field_restriction'] = s['search_field_restriction']
-
-        if 'search_filter' in s and s['search_filter']:
-            search_key['search_filter'] = s['search_filter']
+        if 'search_basket_id' in s and s['search_basket_id']:
+            search_key['search_basket_id']
+        else:
+            if 'search_pattern' in s and s['search_pattern']:
+                search_key['search_pattern'] = s['search_pattern']
+            if 'search_collection' in s and s['search_collection']:
+                search_key['search_collection'] = s['search_collection']
+            if 'search_field_restriction' in s and s['search_field_restriction']:
+                search_key['search_field_restriction'] = s['search_field_restriction']
+            if 'search_filter' in s and s['search_filter']:
+                search_key['search_filter'] = s['search_filter']
 
         return search_key
 

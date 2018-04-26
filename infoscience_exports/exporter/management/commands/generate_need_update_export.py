@@ -23,6 +23,7 @@ class Command(BaseCommand):
 
             writer.writerow(['legacy id',
                              'legacy url',
+                             'legacy raw search values',
                              'new generated url',
                              'url for counting',
                              'number of new elements since migration',
@@ -64,6 +65,7 @@ class Command(BaseCommand):
                 row = [
                     legacy_export.legacy_id,
                     legacy_export.legacy_url,
+                    legacy_export.search_values,
                     legacy_export.export.url,
                     count_url,
                     number_of_new_record,
