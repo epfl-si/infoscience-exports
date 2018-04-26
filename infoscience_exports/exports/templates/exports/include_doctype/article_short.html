@@ -14,11 +14,13 @@
 {% endif %}
 
 {% if article.Publisher %}
-	<span><i>{{ article.Publisher }}</i>. </span>
+	<span><i>{{ article.Publisher }}</i></span>
+	<span>. </span>
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}. </span>
+	<span>{{ article.Publication_Date }}</span>
+	<span>. </span>
 {% endif %}
 
 {% if options.adv_article_volume and article.Publisher_Volume %}
