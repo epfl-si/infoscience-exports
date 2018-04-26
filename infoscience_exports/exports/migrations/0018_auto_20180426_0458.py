@@ -8,8 +8,12 @@ def remove_existing_legacy_export(apps, schema_editor):
     # We can't import the Person model directly as it may be a newer
     # version than this migration expects. We use the historical version.
     LegacyExport = apps.get_model('exports', 'LegacyExport')
+    export_to_delete = []
     for legacy_export in LegacyExport.objects.all():
-        legacy_export.export.delete()
+        export_to_delete.append(legacy_export.export)
+
+    for export in export_to_delete:
+        export.delete()
 
 
 class Migration(migrations.Migration):
@@ -20,25 +24,4 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(remove_existing_legacy_export),
-        migrations.DeleteModel('LegacyExport'),
-        migrations.CreateModel(
-            name='LegacyExport',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True,
-                                        serialize=False, verbose_name='ID')),
-                ('export', models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE,
-                    to='exports.Export')),
-                ('legacy_id', models.IntegerField(blank=True, null=True)),
-                ('content_delta', models.IntegerField(blank=True, null=True)),
-                ('legacy_url', models.TextField()),
-                ('language', models.TextField()),
-                ('referenced_url', models.TextField()),
-                ('origin', models.TextField(
-                    choices=[('OTHER', ''), ('JAHIA', 'Jahia'),
-                             ('PEOPLE', 'People')])),
-                ('origin_sciper', models.TextField()),
-                ('raw_csv_entry', models.TextField()),
-            ],
-        ),
     ]
