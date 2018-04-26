@@ -1,7 +1,15 @@
 # Change Log
 
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-25)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.6...qa-release)
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-26)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.7...qa-release)
+
+**Merged pull requests:**
+
+- Migration subset [\#105](https://github.com/epfl-idevelop/infoscience-exports/pull/105) ([jdelasoie](https://github.com/jdelasoie))
+- Change OnetoOne Legacy Export to OnetoMany [\#104](https://github.com/epfl-idevelop/infoscience-exports/pull/104) ([jdelasoie](https://github.com/jdelasoie))
+
+## [0.4.7](https://github.com/epfl-idevelop/infoscience-exports/tree/0.4.7) (2018-04-25)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.6...0.4.7)
 
 **Merged pull requests:**
 
