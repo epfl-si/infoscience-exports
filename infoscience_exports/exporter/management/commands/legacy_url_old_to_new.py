@@ -48,7 +48,7 @@ class Command(BaseCommand):
 
             if selective_mode:
                 legacy_exports = LegacyExport.objects.filter(
-                    origin='JAHIA').filter(pk__in=list_ids).select_related('export')
+                    origin='JAHIA').filter(legacy_id__in=list_ids).select_related('export')
             else:
                 legacy_exports = LegacyExport.objects.filter(
                     origin='JAHIA').select_related('export')
@@ -67,7 +67,7 @@ class Command(BaseCommand):
 
             if selective_mode:
                 legacy_exports = LegacyExport.objects.filter(
-                    origin='PEOPLE').filter(pk__in=list_ids).select_related('export')
+                    origin='PEOPLE').filter(legacy_id__in=list_ids).select_related('export')
             else:
                 legacy_exports = LegacyExport.objects.filter(
                     origin='PEOPLE').select_related('export')
@@ -89,7 +89,7 @@ class Command(BaseCommand):
 
                 if selective_mode:
                     legacy_exports = LegacyExport.objects.filter(
-                        pk__in=list_ids).select_related('export')
+                        legacy_id__in=list_ids).select_related('export')
                 else:
                     legacy_exports = LegacyExport.objects.select_related('export')
 
