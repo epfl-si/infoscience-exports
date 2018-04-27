@@ -1,5 +1,8 @@
 # Change Log
 
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-04-26)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.0...prod-release)
+
 ## [0.5.0](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.0) (2018-04-26)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.5.0)
 
@@ -119,7 +122,7 @@
 - Remove any usages or dependencies on Django Rest Framework [\#49](https://github.com/epfl-idevelop/infoscience-exports/pull/49) ([jdelasoie](https://github.com/jdelasoie))
 
 ## [0.3.5](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.5) (2018-03-13)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...0.3.5)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.4...0.3.5)
 
 **Merged pull requests:**
 
@@ -127,9 +130,6 @@
 - FullText: only one link to redirect to a pdf or a directory with several media [\#47](https://github.com/epfl-idevelop/infoscience-exports/pull/47) ([dragonleman](https://github.com/dragonleman))
 - Corrected group\_by year [\#46](https://github.com/epfl-idevelop/infoscience-exports/pull/46) ([dragonleman](https://github.com/dragonleman))
 - Translations: locale folders [\#45](https://github.com/epfl-idevelop/infoscience-exports/pull/45) ([dragonleman](https://github.com/dragonleman))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-03-09)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.4...prod-release)
 
 ## [0.3.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.3.4) (2018-03-09)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.3.3...0.3.4)
