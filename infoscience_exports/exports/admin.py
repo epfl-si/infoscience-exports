@@ -63,8 +63,11 @@ class LegacyExportFilter(SimpleListFilter):
 
 
 class LegacyExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
-    list_display = ('legacy_url', 'content_delta',)
+    list_display = ('legacy_id', 'legacy_url', 'referenced_url',)
     readonly_fields = ('link_to_old_export',)
+    search_fields = (
+        'legacy_id', 'legacy_url', 'referenced_url',
+    )
 
 
 class LegacyExportInline(admin.StackedInline):
@@ -84,6 +87,9 @@ class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
     list_display = ('name', 'user', 'get_absolute_url', 'updated_at',)
     list_filter = ('updated_at', LegacyExportFilter)
     inlines = [LegacyExportInline]
+    search_fields = (
+        'id', 'name', 'user__email',
+    )
 
     def get_formsets_with_inlines(self, request, obj=None):
         """ Only show inline if needed"""
