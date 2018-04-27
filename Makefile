@@ -304,7 +304,7 @@ migration-post-generate-csv:
 
 migration-fetch-ldap:
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py add_username_email_to_csv \
-		--jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod.csv
+		--jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-ctn-20180427.csv
 
 check-env:
 ifeq ($(wildcard .env),)

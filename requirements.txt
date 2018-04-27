@@ -1,19 +1,19 @@
-markdown==2.6.11      -i https://pypi.python.org/simple
-gunicorn==19.7.1      -i https://pypi.python.org/simple
-psycopg2-binary==2.7.4                                                        -i https://pypi.python.org/simple
-pymarc==3.1.7    -i https://pypi.python.org/simple
-django-filter==1.1.0      -i https://pypi.python.org/simple
-pytz==2018.3                    -i https://pypi.python.org/simple
-# six==1.11.0   
-django-model-utils==3.1.1      -i https://pypi.python.org/simple
-django==2.0.3      -i https://pypi.python.org/simple
-django-jsonfield==1.0.1 
-django-cors-headers==2.2.0      -i https://pypi.python.org/simple
-gevent==1.2.2                                                            -i https://pypi.python.org/simple
-python-dateutil==2.7.1   
-greenlet==0.4.13                                 
-django-dirtyfields==1.3.1    -i https://pypi.python.org/simple
-django-bootstrap4==0.0.6    -i https://pypi.python.org/simple
-dj-database-url==0.5.0      -i https://pypi.python.org/simple
--e git+https://github.com/epfl-idevelop/django-tequila.git@9fe2dd74c4ebac2f7c06536bee6dc12d664a0f10#egg=django-tequila
--e git+https://github.com/epfl-idevelop/django-auditlog.git@3410ca60abc20ceb9a8766a3f961b056b428df46#egg=django-auditlog
+-e git+https://github.com/epfl-idevelop/django-auditlog.git#egg=django-auditlog
+-e git+https://github.com/epfl-idevelop/django-tequila.git#egg=django-tequila
+dj-database-url==0.5.0
+django-bootstrap4==0.0.6
+django-cors-headers==2.2.0
+django-dirtyfields==1.3.1
+django-filter==1.1.0
+django-jsonfield==1.0.1
+django-model-utils==3.1.1
+django==2.0.4
+gevent==1.2.2
+greenlet==0.4.13
+gunicorn==19.7.1
+markdown==2.6.11
+psycopg2-binary==2.7.4
+pymarc==3.1.8
+python-dateutil==2.7.2
+pytz==2018.4
+six==1.11.0
