@@ -87,6 +87,21 @@ LOGGING['loggers'] = {
         'handlers': ['migration_file', 'console'],
         'level': 'DEBUG',
         'propagate': True
+    },
+    'migration.skipped': {
+        'handlers': [],
+        'level': 'INFO',
+        'propagate': False
+    },
+    'migration.search': {
+        'handlers': [],
+        'level': 'INFO',
+        'propagate': False
+    },
+    'django_tequila': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+        'propagate': True
     }
 }
 

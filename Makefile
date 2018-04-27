@@ -6,9 +6,10 @@
 	up down logs restart restart-web \
 	superadmin collectstatic migrations migrate \
 	dump restore release push-prod deploy \
-	fast-test test coverage shell \
+	fast-test test coverage shell bash \
 	migration-load-dump migration-build-delta \
-	migration-migrate migration-post-generate-csv \
+	migration-post-generate-csvs migration-migrate \
+	migration-migrate-selective-with-subset migration-migrate-all \
 	migration-fetch-ldap
 
 VERSION:=$(shell python update_release.py -v)
@@ -87,9 +88,9 @@ init-db:
 
 reset: build up
 	@echo ''
-	@echo "! sleeping 3secs, time for postgres container to be available"
+	@echo "! sleeping 6secs, time for postgres container to be available"
 	@echo ''
-	sleep 3
+	sleep 6
 	make init-db
 	make collectstatic
 	make compilemessages
@@ -249,6 +250,10 @@ shell:
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py shell_plus
 
+bash:
+	docker-compose -f docker-compose-dev.yml exec web \
+		bash
+
 coverage: check-env
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
 	pytest --cov=infoscience_exports infoscience_exports/exports/pytests
@@ -274,12 +279,28 @@ migration-build-delta:
 migration-migrate:
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
 	migrate_from_legacy --jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv \
-            --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv
+            --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
+            --ids_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv
+
+migration-migrate-selective-with-subset:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
+	migrate_from_legacy --jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv \
+            --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
+            --ids_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv \
+            --subset_only 1
+
+migration-migrate-all:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
+	migrate_from_legacy --jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv \
+            --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
+            --migate_all
 
 migration-post-generate-csv:
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \
+	--ids_csv_path "/usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv" \
 	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
-	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv"
+	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv " \
+	--all_csv_path "/var/log/django/infoscience_exports_all_new_url.csv"
 
 migration-fetch-ldap:
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py add_username_email_to_csv \

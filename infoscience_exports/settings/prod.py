@@ -71,7 +71,7 @@ LOGGING['loggers'] = {
     },
     'migration': {
         'handlers': ['migration_file'],
-        'level': 'ERROR',
+        'level': 'DEBUG',
         'propagate': True
     }
 }

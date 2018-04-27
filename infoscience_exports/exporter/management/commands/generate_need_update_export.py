@@ -4,79 +4,72 @@ from urllib.request import urlopen
 from django.core.management.base import BaseCommand, CommandError
 
 from exporter.models import SettingsModel
+from exports.models import LegacyExport
 
 
 class Command(BaseCommand):
 
-    help = "For export found in jahia or people, add them as new exports" \
-           "people list exports-sciper (provided by Ion)" \
-           "jahia list of exports-sciper (provided by Francis, INC0219923)"
+    help = "Check on migrated export if we have new publications on prod."
 
     def add_arguments(self, parser):
-        parser.add_argument('output', nargs='*', type=str)
-        parser.add_argument('people', nargs='*', type=str)
-        parser.add_argument('jahia', nargs='*', type=str)
+        parser.add_argument('--output_csv_path', nargs='*', type=str)
 
-    def handle(self, output, people, jahia, *args, **options):
-        if not output:
-            raise CommandError("Missing the 'output' argument")
-        if not people:
-            raise CommandError("Missing the 'people' argument")
-        if not jahia:
-            raise CommandError("Missing the 'jahia' argument")
+    def handle(self, output_csv_path, *args, **options):
+        if not output_csv_path:
+            raise CommandError("Missing the 'output_csv_path' argument")
 
-        with open(output[0], 'w') as f:
+        with open(output_csv_path[0], 'w') as f:
             writer = csv.writer(f)
 
             writer.writerow(['legacy id',
                              'legacy url',
+                             'legacy raw search values',
                              'new generated url',
+                             'url for counting',
                              'number of new elements since migration',
+                             'used in',
                              ])
 
             i = 0
-            total = SettingsModel.objects.count()
+            total = LegacyExport.objects.count()
 
-            for exporter in SettingsModel.objects.all():
-                i = i+1
+            invenio_vars = {
+                'd1d': '29',
+                'd1m': '01',
+                'd1y': '2018',
+                'of': 'xm'
+            }
+
+            for legacy_export in LegacyExport.objects.all().select_related('export'):
+                i = i + 1
                 self.stdout.write("Doing n. {}/{}".format(i, total))
-                old_url = 'https://infoscience-legacy.epfl.ch/' \
-                          'curator/export/{}'.format(exporter.id)
 
-                try:
-                    invenio_vars = {
-                        'd1d': '29',
-                        'd1m': '01',
-                        'd1y': '2018',
-                        'of' : 'xm',
-                    }
-                    new_url = exporter.build_advanced_search_url(invenio_vars=invenio_vars, limit=200)
-                except ValueError:
-                    self.stdout.write("ignoring this basket url")
-                    continue
-
-                infoscience_to_read = urlopen(new_url)
-                infoscience_read = infoscience_to_read.read().decode('utf-8')
-                infoscience_to_read.close()
-
-                text_to_find = r"<!-- Search-Engine-Total-Number-Of-Results: (\d+)"
-                m = re.search(text_to_find, infoscience_read)
-
+                old_settings = SettingsModel.objects.get(id=legacy_export.legacy_id)
                 number_of_new_record = 0
+                try:
+                    count_url = old_settings.build_advanced_search_url(invenio_vars=invenio_vars)
+                    infoscience_to_read = urlopen(count_url)
+                    infoscience_read = infoscience_to_read.read().decode('utf-8')
+                    infoscience_to_read.close()
 
-                if not m:
-                    # we found nothing, skip this
-                    self.stdout.write("Look like there is no new record, end here")
-                    continue
+                    text_to_find = r"<!-- Search-Engine-Total-Number-Of-Results: (\d+)"
+                    m = re.search(text_to_find, infoscience_read)
 
-                if m.group(1):
-                    number_of_new_record = m.group(1)
+                    if m and m.group(1):
+                        number_of_new_record = m.group(1)
+                except ValueError:
+                    # it's a basket, ignore
+                    count_url = ''
+                    number_of_new_record = 'n/a'
 
                 row = [
-                    exporter.id,
-                    old_url,
-                    new_url,
+                    legacy_export.legacy_id,
+                    legacy_export.legacy_url,
+                    legacy_export.search_values,
+                    legacy_export.export.url,
+                    count_url,
                     number_of_new_record,
+                    legacy_export.origin,
                 ]
 
                 writer.writerow(row)

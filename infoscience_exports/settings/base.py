@@ -40,8 +40,8 @@ LOGOUT_URL = "/youraccount/logout"
 LOGIN_REDIRECT_IF_NOT_ALLOWED = "{}/not_allowed".format(SITE_PATH)
 LOGIN_REDIRECT_TEXT_IF_NOT_ALLOWED = "Not allowed"
 
-# Default values for url infoscience
-RANGE_DISPLAY = 50
+# Default values for export configurations
+RANGE_DISPLAY = get_env_variable('RANGE_DISPLAY', 50)
 
 # Site
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
@@ -197,7 +197,7 @@ LOGGING = {
                       ' %(thread)d %(message)s'
         },
         'simple': {
-            'format': '%(levelname)s %(message)s'
+            'format': '[%(name)s:%(levelname)s] %(message)s'
         },
     },
     'handlers': {

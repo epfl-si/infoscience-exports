@@ -9,11 +9,16 @@ from django.db import models
 from django.db.models.manager import Manager
 
 from django.contrib.postgres.fields import JSONField
+from django.conf import settings
 
 from exports.models import Export, LegacyExport, User
 
 
 logger = logging.getLogger('migration')
+search_logger = logging.getLogger('migration.search')
+urls_logger = logging.getLogger('migration.urls')
+skipped_logger = logging.getLogger('migration.skipped')
+handling_logger = logging.getLogger('migration.handling')
 
 export_id_extractors = [
     r'^(?:https|http)://infoscience.epfl.ch/curator/export/(\d+)/?.*',
@@ -66,11 +71,12 @@ class SettingsManager(Manager):
         if matched:
             return True
 
-    def load_exports_from_people(self, people_file_path, only_this_urls_from_legacy=[]):
+    def load_exports_from_people(self, people_file_path, only_this_ids_from_legacy=[], subset=False):
         """
         Save as new exports from the people csv
         csv is sciper, username, src, email
-        only_this_url_from_legacy : if we want only a batch of migration
+        only_this_ids_from_legacy : if we want only a batch of migration
+        subset : if you want to filter the od legacy exports that are too complex. See can_handle() for the complexity check
         """
         fallback_user = User.objects.get(username='delasoie')
 
@@ -79,51 +85,56 @@ class SettingsManager(Manager):
             people_full_list = list(reader)
 
         for row in people_full_list[1:]:
-            sciper = row[0]
-            username = row[1]
-            legacy_export_url = row[2].strip()
-            email = row[3]
-
-            # if we are in selective mode, only do the one we want
-            if only_this_urls_from_legacy:
-                if not legacy_export_url in only_this_urls_from_legacy:
-                    continue
+            username = row[0]
+            email = row[1]
+            sciper = row[2]
+            box_id = row[3]
+            language = row[4]
+            legacy_export_url = row[5].strip()
 
             # we may need to ignore empty or no means
-            if self.is_url_to_ignore(legacy_export_url):
+            if self.is_url_to_ignore(legacy_export_url) or \
+               self.is_url_already_a_search(legacy_export_url) or \
+               self.is_url_a_record(legacy_export_url):
+                skipped_logger.debug(
+                    "Ignoring an invalid legacy url : {}".format(legacy_export_url))
                 continue
 
-            # it may be a search directly, so we don't have the legacy export
-            if self.is_url_already_a_search(legacy_export_url):
-                new_export = Export(url=legacy_export_url,
-                                    created_at=timezone.now(),
-                                    updated_at=timezone.now(),
-                                    )
-            elif self.is_url_a_record(legacy_export_url):
-                new_export = Export(url=legacy_export_url,
-                                    created_at=timezone.now(),
-                                    updated_at=timezone.now(),
-                                    )
-            else:
-                legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
+            legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
-                if not legacy_export_id:
-                    logger.info(
-                        "Skipping : invalid legacy export url for {}\n"
-                        "Raw People data : {}".format(legacy_export_url, row))
+            if not legacy_export_id:
+                skipped_logger.info(
+                    "Skipping : invalid legacy export url for {}\n"
+                    "Raw People data : {}".format(legacy_export_url, row))
+                continue
+
+            # if we are in selective mode, only do the one we want
+            if only_this_ids_from_legacy:
+                if not legacy_export_id in only_this_ids_from_legacy:
                     continue
-                try:
-                    exporter = SettingsModel.objects.get(id=legacy_export_id)
-                except SettingsModel.DoesNotExist:
-                    logger.info(
-                        "Skipping : no Settings model found for id {}\n"
-                        "Raw People data : {}".format(legacy_export_id, row)
+                logger.info("----------------\n" \
+                    "Doing the selective mode for People with legacy ID {}".format(legacy_export_id))
+
+            try:
+                exporter = SettingsModel.objects.get(id=legacy_export_id)
+            except SettingsModel.DoesNotExist:
+                skipped_logger.info(
+                    "Skipping : no Settings model found for id {}\n"
+                    "Raw People data : {}".format(legacy_export_id, row)
+                )
+                continue
+
+            if subset:
+                if not exporter.can_handle():
+                    handling_logger.info(
+                        "Skipping : This settings model is to tricky to be migrated"
                     )
                     continue
 
-                new_export = exporter.as_new_export()
+            # always create the export
+            current_export = exporter.as_new_export()
 
-            new_export.name = "People".format(sciper)
+            current_export.name = "People"
 
             if not username:
                 export_user = fallback_user
@@ -136,95 +147,128 @@ class SettingsManager(Manager):
                 if email or sciper:
                     export_user.save()
 
-            new_export.user = export_user
+            current_export.user = export_user
 
-            # is this an update or a new element ?
+            # now is it an update or a new ?
+            existing_exports = Export.objects.filter(legacyexport__legacy_id=exporter.id).distinct()
+            if existing_exports:
+                existing_export = existing_exports[0]
+                logger.debug("Updating Export id {} from the new build...".format(
+                    existing_export.id))
+                # it exists, so we will save to this id
+                current_export.id = existing_export.id
+                current_export.save()
+            else:
+                # it's new, a save will do it
+                logger.debug("Creating a new Export ...")
+                current_export.save()
+
+            # now check for every refs, if this a new or an update
+            current_legacy_export = LegacyExport(export=current_export,
+                                                 legacy_id=legacy_export_id,
+                                                 legacy_url=legacy_export_url,
+                                                 language=language,
+                                                 origin='PEOPLE',
+                                                 origin_sciper=sciper,
+                                                 origin_id=box_id,
+                                                 raw_csv_entry=row,
+                                                 )
+
             try:
-                existing_legacy_export = LegacyExport.objects.get(
-                    legacy_url=legacy_export_url,
-                    origin='PEOPLE',
-                    origin_sciper=sciper,
-                )
-
+                existing_legacy_export = current_export.legacyexport_set.get(legacy_id=legacy_export_id,
+                                                                             language=language,
+                                                                             origin='PEOPLE',
+                                                                             origin_id=box_id,
+                                                                             )
                 # it's an update
-                new_export.id = existing_legacy_export.export_id
-                new_export.save()
-                # update legacy info
-                existing_legacy_export.raw_csv_entry = row
-                existing_legacy_export.save()
+                logger.debug("Updating a legacy export ref, id {} ...".format(existing_legacy_export.export_id))
+                current_legacy_export.id = existing_legacy_export.id
+                current_legacy_export.save()
+                urls_logger.info("Resulting export url : {}".format(
+                    settings.SITE_DOMAIN + existing_legacy_export.get_with_langage_absolute_url()))
             except LegacyExport.DoesNotExist:
+                logger.debug("Creating new legacy export ref...")
                 # it's new
-                new_export.save()
-                # add info that created this export
-                legacy_export = LegacyExport(export=new_export,
-                                             legacy_url=legacy_export_url,
-                                             origin='PEOPLE',
-                                             origin_sciper=sciper,
-                                             raw_csv_entry=row,  # for regeneration purpose
-                                             )
-                legacy_export.save()
+                current_legacy_export.save()
+                logger.debug("Created id {}".format(current_legacy_export.id))
+                urls_logger.info("Resulting export url : {}".format(settings.SITE_DOMAIN + current_legacy_export.get_with_langage_absolute_url()))
 
-    def load_exports_from_jahia(self, jahia_file_path, only_this_urls_from_legacy=[]):
+    def load_exports_from_jahia(self, jahia_file_path, only_this_ids_from_legacy=[], subset=False):
         """
         Save as new exports from the jahia csv
         csv is id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email
         only_this_url_from_legacy : if we want only a batch of migration
+        subset : if you want to filter the od legacy exports that are too complex. See can_handle() for the complexity check
         """
         fallback_user = User.objects.get(username='delasoie')
+
+        logger.debug("Doing selective {}".format(only_this_ids_from_legacy))
 
         with open(jahia_file_path, 'r') as f:
             reader = csv.reader(f)
             jahia_full_list = list(reader)
 
-            logger.info("Raw jahia data : id_jahia_ctn_entries,key_jahia_sites, site ,language_code,last_change_sciper,time_jahia_audit_log,last_changed_date,url_export,username,email")
+            logger.info("Raw jahia data : id_jahia_fields_data,id_jahia_ctn_entries,key_jahia_sites,site,language_code,username_jahia_audit_log,time_jahia_audit_log,FROM_UNIXTIME(log2.time_jahia_audit_log / 1000),value_jahia_fields_data,username,email")
 
         for row in jahia_full_list[1:]:
-            jahia_id = row[0]
-            jahia_site_key = row[1]
-            jahia_site_url = row[2]
-            language = row[3]
-            sciper = row[4]
-            raw_audit_time = row[5]
-            UNIXTIME_audit_time = row[6]  # FROM_UNIXTIME(log2.time_jahia_audit_log / 1000)
-            legacy_export_url = row[7]
-            username = row[8]
-            email = row[9]
-
-            # if we are in selective mode, only do the one we want
-            if only_this_urls_from_legacy:
-                if not legacy_export_url in only_this_urls_from_legacy:
-                    continue
+            jahia_id_fields_data = row[0]
+            jahia_id = row[1]
+            jahia_site_key = row[2]
+            jahia_site_url = row[3]
+            language = row[4]
+            sciper = row[5]
+            raw_audit_time = row[6]
+            UNIXTIME_audit_time = row[7]  # FROM_UNIXTIME(log2.time_jahia_audit_log / 1000)
+            legacy_export_url = row[8]
+            username = row[9]
+            email = row[10]
 
             # we may need to ignore empty or no means
-            if self.is_url_to_ignore(legacy_export_url):
+            if self.is_url_to_ignore(legacy_export_url) or \
+               self.is_url_already_a_search(legacy_export_url):
+                skipped_logger.debug(
+                    "Ignoring an invalid legacy url : {}".format(legacy_export_url))
                 continue
 
-            # it may be a search directly, so we don't have the legacy export
-            if self.is_url_already_a_search(legacy_export_url):
-                new_export = Export(url=legacy_export_url,
-                                    created_at=timezone.now(),
-                                    updated_at=timezone.now(),
-                                    )
-            else:
-                legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
+            legacy_export_id = self.get_legacy_export_id_from_url(legacy_export_url)
 
-                if not legacy_export_id:
-                    logger.info(
-                        "Skipping : invalid legacy export url for {}\n"
-                        "Raw Jahia data : {}".format(legacy_export_url, row))
+            if not legacy_export_id and not only_this_ids_from_legacy:
+                skipped_logger.debug(
+                    "Skipping : invalid legacy export url for {}\n"
+                    "Raw Jahia data : {}".format(legacy_export_url, row))
+                continue
+
+            # if we are in selective mode, only do the one we want
+            if only_this_ids_from_legacy:
+                if not legacy_export_id in only_this_ids_from_legacy:
+                    skipped_logger.info(
+                        "This jahia entry for Legacy id {} is not needed".format(
+                            legacy_export_id))
                     continue
-                try:
-                    exporter = SettingsModel.objects.get(id=legacy_export_id)
-                except SettingsModel.DoesNotExist:
-                    logger.info(
-                        "Skipping : no Settings model found for id {}\n"
-                        "Raw Jahia data : {}".format(legacy_export_id, row)
+                logger.debug("----------------")
+                logger.debug("Jahia entry {}".format(row))
+                logger.info("Doing the selective mode for Jahia with legacy ID {}".format(legacy_export_id))
+
+            try:
+                exporter = SettingsModel.objects.get(id=legacy_export_id)
+            except SettingsModel.DoesNotExist:
+                skipped_logger.info(
+                    "Skipping : no Settings model found for id {}\n"
+                    "Raw Jahia data : {}".format(legacy_export_id, row)
+                )
+                continue
+
+            if subset:
+                if not exporter.can_handle():
+                    handling_logger.info(
+                        "Skipping : This settings model is to tricky to be migrated"
                     )
                     continue
 
-                new_export = exporter.as_new_export()
+            # always create the export
+            current_export = exporter.as_new_export()
 
-            new_export.name = "Jahia export ({})".format(jahia_site_key)
+            current_export.name = "Jahia export ({})".format(jahia_site_key)
 
             if not username:
                 export_user = fallback_user
@@ -237,38 +281,52 @@ class SettingsManager(Manager):
                 if email or sciper:
                     export_user.save()
 
-            new_export.user = export_user
+            current_export.user = export_user
+            # now is it an update or a new ?
+            existing_exports = Export.objects.filter(legacyexport__legacy_id=exporter.id).distinct()
+            if existing_exports:
+                existing_export = existing_exports[0]
+                logger.debug("Updating Export id {} from the new build...".format(
+                    existing_export.id))
+                # it exists, so we will save to this id
+                current_export.id = existing_export.id
+                current_export.save()
+            else:
+                # it's new, a save will do it
+                logger.debug("Creating a new Export ...")
+                current_export.save()
 
-            # is this an update or a new element ?
+            # now check for every refs, if this a new or an update
+            current_legacy_export = LegacyExport(export=current_export,
+                                         legacy_id=legacy_export_id,
+                                         legacy_url=legacy_export_url,
+                                         language=language,
+                                         referenced_url=jahia_site_url,
+                                         origin='JAHIA',
+                                         origin_id=jahia_id_fields_data,
+                                         origin_sciper=sciper,
+                                         raw_csv_entry=row,
+                                         # for regeneration purpose
+                                         )
+
             try:
-                existing_legacy_export = LegacyExport.objects.get(
-                    language=language,
-                    legacy_url=legacy_export_url,
-                    origin='JAHIA',
-                    origin_sciper=sciper,
-                    referenced_url=jahia_site_url,
-                )
-
+                existing_legacy_export = current_export.legacyexport_set.get(legacy_id=legacy_export_id,
+                                                                             language=language,
+                                                                             origin='JAHIA',
+                                                                             origin_id=jahia_id_fields_data,
+                                                                             )
                 # it's an update
-                new_export.id = existing_legacy_export.export_id
-                new_export.save()
-                # update legacy info
-                existing_legacy_export.raw_csv_entry = row
-                existing_legacy_export.save()
+                logger.debug("Updating a legacy export ref, id {} ...".format(existing_legacy_export.export_id))
+                current_legacy_export.id = existing_legacy_export.id
+                current_legacy_export.save()
+                urls_logger.info("Resulting export url : {}".format(
+                    settings.SITE_DOMAIN + existing_legacy_export.get_with_langage_absolute_url()))
             except LegacyExport.DoesNotExist:
+                logger.debug("Creating new legacy export ref...")
                 # it's new
-                new_export.save()
-                # add info that created this export
-                legacy_export = LegacyExport(export=new_export,
-                                             legacy_url=legacy_export_url,
-                                             language=language,
-                                             referenced_url=jahia_site_url,
-                                             origin='JAHIA',
-                                             origin_sciper=sciper,
-                                             raw_csv_entry=row,  # for regeneration purpose
-                                             )
-
-                legacy_export.save()
+                current_legacy_export.save()
+                logger.debug("Created id {}".format(current_legacy_export.id))
+                urls_logger.info("Resulting export url : {}".format(settings.SITE_DOMAIN + current_legacy_export.get_with_langage_absolute_url()))
 
 
 class SettingsModel(models.Model):
@@ -289,13 +347,61 @@ class SettingsModel(models.Model):
             self._settings_as_dict = json.loads(self.settings)
         return self._settings_as_dict
 
+    def search_values(self):
+        """ shortcut mainly for report on old key"""
+        s = self.settings_as_dict
+        search_key = {}
+
+        if 'search_basket_id' in s and s['search_basket_id']:
+            search_key['search_basket_id'] = s['search_basket_id']
+        else:
+            if 'search_pattern' in s and s['search_pattern']:
+                search_key['search_pattern'] = s['search_pattern']
+            if 'search_collection' in s and s['search_collection']:
+                search_key['search_collection'] = s['search_collection']
+            if 'search_field_restriction' in s and s['search_field_restriction']:
+                search_key['search_field_restriction'] = s['search_field_restriction']
+            if 'search_filter' in s and s['search_filter']:
+                search_key['search_filter'] = s['search_filter']
+
+        return search_key
+
+    def can_handle(self):
+        """ Some exports are too tricky to be valid
+            This method is here to filter them
+        """
+        can_handle = False
+        s = self.settings_as_dict
+        # only do the one that have only a search_pattern
+        if 'search_pattern' in s and s['search_pattern']:
+            can_handle = True
+
+            if 'search_collection' in s and s['search_collection']:
+                can_handle = False
+            if 'search_field_restriction' in s and s['search_field_restriction']:
+                can_handle = False
+            if 'search_filter' in s and s['search_filter']:
+                can_handle = False
+
+        if not can_handle:
+            handling_logger.info(
+                "Skipping : This settings model is "
+                "to tricky to be migrated {}\nSearch values {}".format(self.id, self.search_values())
+            )
+
+        return can_handle
+
     def _get_search_pattern(self):
+        search_logger.info("Doing search pattern conversion")
+        search_logger.info("From {}".format(self.search_values()))
+
         s = self.settings_as_dict
         as_args = {}
         search_pattern = ''
 
         if 'search_pattern' in s and s['search_pattern']:
             search_pattern = s['search_pattern']
+            search_logger.debug('pattern is : "{}"'.format(search_pattern))
             # uppercase AND and OR
             search_pattern = search_pattern.replace(' or ', ' OR ').replace(' and ', ' AND ')
             # add space when paranthesis search
@@ -303,16 +409,24 @@ class SettingsModel(models.Model):
             second_parenthesis = r'([^\s-])\)'
             search_pattern = re.sub(first_parenthesis, r'( \1', search_pattern)
             search_pattern = re.sub(second_parenthesis, r'\1 )',search_pattern)
+        else:
+            search_logger.debug(
+                "search_pattern is empty")
 
         exts = s.get('search_filter')
 
         if not exts:
             as_args['p'] = '{}'.format(search_pattern)
+            search_logger.debug(
+                "Filters are empty")
         else:
             """
            'collection:ARTICLE,review:REVIEWED,status:PUBLISHED,status:ACCEPTED,collection:PROC,review:ACCEPTED'
            => '( collection:ARTICLE AND collection:PROC ) OR ( review:REVIEWED ) OR ( status:PUBLISHED AND status:ACCEPTED )'
            """
+            search_logger.debug(
+                "exts found : {}".format(exts))
+
             ext_search_pattern = ""
             # regroup first
             regrouped_index = {}
@@ -336,6 +450,9 @@ class SettingsModel(models.Model):
 
             as_args['p'] = search_pattern
 
+        if search_pattern:
+            search_logger.info('to New pattern : "{}"'.format(search_pattern))
+
         return as_args
 
     def _configuration_as_invenio_args(self):
@@ -343,6 +460,7 @@ class SettingsModel(models.Model):
         invenio_vars = {}
 
         if 'search_basket_id' in s and s['search_basket_id']:
+            logger.debug("Set has basket")
             invenio_vars['bskid'] = s['search_basket_id']
             invenio_vars['of'] = 'xm'
             return invenio_vars
@@ -350,9 +468,12 @@ class SettingsModel(models.Model):
         invenio_vars.update(self._get_search_pattern())
 
         if 'search_field_restriction' in s and s['search_field_restriction']:
+            search_logger.debug("field_restriction is {}".format(s['search_field_restriction']))
             invenio_vars['f1'] = s['search_field_restriction']
 
         if 'search_collection' in s and s['search_collection']:
+            search_logger.debug("collection is {}".format(
+                s['search_collection']))
             if not invenio_vars.get('c'):
                 invenio_vars['c'] = []
             invenio_vars['c'].append(s['search_collection'])
@@ -381,7 +502,7 @@ class SettingsModel(models.Model):
 
         # dont do basket at the moment
         if invenio_args.get('bskid'):
-            raise ValueError("No basket at the moment")
+            raise ValueError("No basket at the moment for advanced search url")
 
         search_pattern = invenio_args.get('p')
 
@@ -402,8 +523,12 @@ class SettingsModel(models.Model):
 
         invenio_args.update(advanced_search_vars)
 
-        return 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(
+        search_url = 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(
             invenio_args, doseq=True)
+
+        urls_logger.debug("Advanced search url built : {}".format(search_url))
+
+        return search_url
 
     def build_search_url(self, invenio_vars={}, limit=None):
         """ build the infoscience url where it probably come from"""
@@ -415,11 +540,16 @@ class SettingsModel(models.Model):
             invenio_vars['rg'] = limit
 
         if invenio_vars.get('bskid'):
-            return 'https://infoscience.epfl.ch/yourbaskets/display_public?' + urllib.parse.urlencode(invenio_args, doseq=True)
+            search_url = 'https://infoscience.epfl.ch/yourbaskets/display_public?' + urllib.parse.urlencode(invenio_args, doseq=True)
+
         else:
-            return 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(invenio_args, doseq=True)
+            search_url = 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(invenio_args, doseq=True)
+
+        urls_logger.debug("New search url built : {}".format(search_url))
+        return search_url
 
     def as_new_export(self):
+        logger.debug("Building a new export from Legacy ID {}...".format(self.id))
         new_export = Export()
 
         new_export.name = "Imported export {}".format(self.id)

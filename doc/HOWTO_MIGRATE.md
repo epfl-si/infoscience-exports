@@ -1,36 +1,61 @@
 # Migration steps
 
-## Pre
+## Pre-requisites
 
-Assert that you can put files in infoscience_exports/exporter/fixtures and that folder is a volume to /usr/src/app/infoscience_exports/exporter/fixtures/
+Assert that the listed files are accessible from inside the container.
+In this document, the assumption is made that the path is `/usr/src/app/infoscience_exports/exporter/fixtures/`
 
-Files that should be in this folder:
+The files can be found on Google Drive, in the `Input for App` folder
+
+Files that should be in this folder before running any command :
 
 * exports_from_32.json
   * the dump from the old export system
+
 * infoscience-people-actif-only.csv.extended.csv
   * the list of exports from people.epfl.ch with their sciper, username and email
+
 * infoscience-prod-jahia.csv.extended.csv
   * the list of exports from our CMS;  with their sciper, username and email
 
-## Do
+* ids_to_migrate.csv
+  * the legacy export ids that we need to migrate
 
-1. `make migration-load-dump`
+
+### Pre-step, only one time
+
+1. Inside the container, run : `python infoscience_exports/manage.py loaddata --app exporter exports_from_32`
   * nothing fancy here, only the load of json values to an empty SettingsModel table
+  * once it's done, you should never need to rerun again as the data will not evolve
 
-2.a `make migration-migrate`
-  * one-shot migration that will create exports for Jahia and People (~4000)
-  * see /var/log/django/infoscience_exports_migration.log
 
-2.b `docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py migrate_from_legacy --urls_csv_path ./infoscience_exports/exporter/fixtures/urls_to_migrate.csv`
+## Do the migration
+1. Inside the container, run :
 
-  * selective migration for only the urls provided
-  * put your csv of the urls from legacy to migrate in entry
+```
+python infoscience_exports/manage.py migrate_from_legacy \
+--ids_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv \
+--people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
+--jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv
+```
 
-## Post
+## After the migration
 
-1. `make migration-post-generate-csv`
-  * this will create two files in /var/log/django
-    * /var/log/django/infoscience_exports_new_url_jahia.csv
-    * /var/log/django/infoscience_exports_new_url_people.csv
-  * this can be run as many times as needed
+1. Inside the container, run :
+
+```
+python infoscience_exports/manage.py legacy_url_old_to_new \
+	--ids_csv_path "/usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv" \
+	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
+	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv " \
+	--all_csv_path "/var/log/django/infoscience_exports_all_new_url.csv"
+```
+
+## Files to upload after a migration
+
+On the Google Drive folder, put this files in the subfolder `2018-04-xx raw files`
+
+* /var/log/django/infoscience_exports_new_url_jahia.csv
+* /var/log/django/infoscience_exports_new_url_people.csv
+* /var/log/django/infoscience_exports_all_new_url.csv
+* /var/log/django/infoscience_exports_migration.log

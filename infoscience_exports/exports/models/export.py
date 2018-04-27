@@ -58,22 +58,28 @@ class LegacyExport(models.Model):
         ('PEOPLE', 'People'),
     )
 
-    export = models.OneToOneField(
+    export = models.ForeignKey(
         Export,
-        on_delete=models.CASCADE,
-        primary_key=True,
+        on_delete=models.CASCADE
     )
 
+    # allow null as we may not have an export
+    legacy_id = models.IntegerField(blank=True, null=True)
     legacy_url = models.TextField()
     language = models.TextField()
     referenced_url = models.TextField()  # the page that use this export
     origin = models.TextField(choices=ORIGIN_CHOICE)
     origin_sciper = models.TextField()
+    origin_id = models.TextField()
     raw_csv_entry = models.TextField()
     content_delta = models.IntegerField(blank=True, null=True)  # diff between old system and new
 
     def __str__(self):
         return "{} ({})".format(self.legacy_url, self.origin)
+
+    def get_with_langage_absolute_url(self):
+        """ get the url of the export, and add the language needed"""
+        return reverse('crud:export-view', args=[str(self.export.id)]) + '?ln={}'.format(self.language)
 
     def link_to_old_export(self):
         from exporter.models import SettingsManager

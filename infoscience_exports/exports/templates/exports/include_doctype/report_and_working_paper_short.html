@@ -9,11 +9,13 @@
 {% endif %}
 
 {% if article.Title %}
-	<span><strong>{{ article.Title }}</strong>. </span>
+	<span><strong>{{ article.Title }}</strong></span>
+	<span>. </span>
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}. </span>
+	<span>{{ article.Publication_Date }}</span>
+	<span>. </span>
 {% endif %}
 
 {% if options.adv_report_working_papers_pages and article.Publication_Pages %}
