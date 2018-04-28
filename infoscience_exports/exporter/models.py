@@ -483,9 +483,9 @@ class SettingsModel(models.Model):
                 invenio_vars['so'] = 'a'
             else:
                 invenio_vars['so'] = 'd'
-
-        if 'limit_number' in s and s['limit_number']:
-            invenio_vars['rg'] = s['limit_number']
+        if 'limit_first' in s and s['limit_first']:
+            if 'limit_number' in s and s['limit_number']:
+                invenio_vars['rg'] = s['limit_number']
 
         return invenio_vars
 
