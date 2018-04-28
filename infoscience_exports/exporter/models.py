@@ -402,6 +402,20 @@ class SettingsModel(models.Model):
         if 'search_pattern' in s and s['search_pattern']:
             search_pattern = s['search_pattern']
             search_logger.debug('pattern is : "{}"'.format(search_pattern))
+
+            # look for minus symbol
+            search_pattern_split = search_pattern.split(' ')
+            if search_pattern_split:
+                search_pattern_list = []
+                for key in search_pattern_split:
+                    # wrap in double-quotes when there is a minus and it is not already quoted
+                    if key.find("-") != -1:
+                        if key[0] not in ["'", '"']:
+                            search_pattern_list.append('"{}"'.format(key))
+                    else:
+                        search_pattern_list.append(key)
+                search_pattern = " ".join(search_pattern_list)
+
             # uppercase AND and OR
             search_pattern = search_pattern.replace(' or ', ' OR ').replace(' and ', ' AND ')
             # add space when paranthesis search
@@ -483,6 +497,7 @@ class SettingsModel(models.Model):
                 invenio_vars['so'] = 'a'
             else:
                 invenio_vars['so'] = 'd'
+
         if 'limit_first' in s and s['limit_first']:
             if 'limit_number' in s and s['limit_number']:
                 invenio_vars['rg'] = s['limit_number']
