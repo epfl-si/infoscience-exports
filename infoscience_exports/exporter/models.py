@@ -409,9 +409,8 @@ class SettingsModel(models.Model):
                 search_pattern_list = []
                 for key in search_pattern_split:
                     # wrap in double-quotes when there is a minus and it is not already quoted
-                    if key.find("-") != -1:
-                        if key[0] not in ["'", '"']:
-                            search_pattern_list.append('"{}"'.format(key))
+                    if key.find("-") != -1 and key[0] not in ["'", '"']:
+                        search_pattern_list.append('"{}"'.format(key))
                     else:
                         search_pattern_list.append(key)
                 search_pattern = " ".join(search_pattern_list)
@@ -427,6 +426,44 @@ class SettingsModel(models.Model):
             search_logger.debug(
                 "search_pattern is empty")
 
+        # add date limit if needed
+        # by default, all is need, so skip the date limit check
+        if 'filter_published' in s and \
+            s['filter_published'] == 'range' and \
+            'filter_published_from' in s and \
+            s['filter_published_from'] == 'all' and \
+            'filter_published_to' in s and \
+            s['filter_published_to'] == 'present':
+            pass  # this is a convenient way to not do a negative if
+        else:
+          if 'filter_published' in s:
+            if s['filter_published'] == 'range':
+                from_year = None
+                to_year = None
+                if 'filter_published_from' in s and s['filter_published_from']:
+                    from_year = s['filter_published_from']
+                if 'filter_published_to' in s and s['filter_published_to']:
+                    to_year = s['filter_published_to']
+                if from_year:
+                    if from_year == 'all':
+                        search_pattern += ' year:'
+                    else:
+                        search_pattern += ' year:{}'.format(from_year)
+                    if to_year:
+                        if to_year == 'present':
+                            search_pattern += '->now'
+                        else:
+                            search_pattern += '->{}'.format(to_year)
+            elif s['filter_published'] == 'date':
+                if 'filter_published_date' in s:
+                    try:
+                        last_x_years = int(s['filter_published_date'])
+                        search_pattern += ' year:{}->now'.format(2018-last_x_years)
+                    except ValueError:
+                        if s['filter_published_date'] == 'current':
+                            search_pattern += ' year:2018'
+
+        # Do the exts
         exts = s.get('search_filter')
 
         if not exts:
