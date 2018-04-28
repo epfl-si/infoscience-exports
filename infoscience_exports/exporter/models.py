@@ -604,11 +604,11 @@ class SettingsModel(models.Model):
             if s['group_by_first'] == 'year':
                 if 'group_by_year_display_headings' in s and s['group_by_year_display_headings']:
                     new_export.groupsby_type = 'YEAR_TITLE'
-                if 'group_by_second' in s and s['group_by_second'] == 'doctype':
+                if 'group_by_second' in s and s['group_by_second']:
                     new_export.groupsby_doc = 'DOC_TITLE'
             elif s['group_by_first'] == 'doctype':
                 new_export.groupsby_type = 'DOC_TITLE'
-                if 'group_by_second' in s and s['group_by_second'] == 'year':
+                if 'group_by_second' in s and s['group_by_second']:
                     new_export.groupsby_year = 'YEAR_TITLE'
 
         # bullets
