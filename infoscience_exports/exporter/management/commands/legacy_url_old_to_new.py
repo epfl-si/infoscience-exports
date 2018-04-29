@@ -9,6 +9,8 @@ from django.conf import settings
 
 from exporter.models import SettingsModel
 from exports.models import LegacyExport
+import urllib.parse as urlparse
+from urllib.parse import urlencode
 
 logger = logging.getLogger('migration')
 
@@ -99,7 +101,27 @@ class Command(BaseCommand):
                     old_url = legacy_export.legacy_url.replace('infoscience.epfl.ch', 'infoscience-legacy.epfl.ch')
                     old_key = 'n/a'
                     try:
-                        old_key = SettingsModel.objects.get(id=legacy_export.legacy_id).search_values()
+                        export_settings = SettingsModel.objects.get(id=legacy_export.legacy_id)
+                        old_key = export_settings.search_values()
+
+                        # try to add a limit to legacy parsing, of the same value for infoscience max, for better QA
+                        s = export_settings.settings_as_dict
+                        override_limit = False
+                        if 'limit_first' in s and s['limit_first']:
+                            if 'limit_number' in s and s['limit_number']:
+                                limit_number = int(s['limit_number'])
+                                if limit_number > 1000:
+                                    override_limit = True
+                        else:
+                            override_limit = True
+
+                        if override_limit:
+                            params = {'rg': '1000'}
+                            url_parts = list(urlparse.urlparse(old_url))
+                            query = dict(urlparse.parse_qsl(url_parts[4]))
+                            query.update(params)
+                            url_parts[4] = urlencode(query)
+                            old_url = urlparse.urlunparse(url_parts)
                     except SettingsModel.DoesNotExist:
                         pass
 
