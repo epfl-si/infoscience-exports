@@ -419,6 +419,22 @@ class SettingsModel(models.Model):
             search_pattern = search_pattern.replace(' or ', ' OR ').replace(' and ', ' AND ')
             # replace YEAR=XXX by YEAR:XXX
             search_pattern = search_pattern.replace('YEAR=', 'YEAR:').replace('year=', 'year:')
+            # doi:xxx -> doi:"xxxx"
+            if search_pattern.find('doi:') != -1:
+                new_search_pattern = []
+                for one_split in search_pattern.split(' '):
+                    try:
+                        if one_split.find('doi:') != -1 and one_split[4] not in ['"', "'"] and \
+                                        one_split[-1] not in ['"', "'"]:
+                            doi_place = one_split.find('doi:')
+                            new_search_pattern.append('doi:"' + one_split[doi_place+4:] + '"')
+                        else:
+                            new_search_pattern.append(one_split)
+                    except ValueError:
+                        new_search_pattern.append(one_split)
+
+                search_pattern = " ".join(new_search_pattern)
+
             # add space when paranthesis search
             first_parenthesis = r'\(([^\s-])'
             second_parenthesis = r'([^\s-])\)'
