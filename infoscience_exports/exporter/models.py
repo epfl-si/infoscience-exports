@@ -417,6 +417,8 @@ class SettingsModel(models.Model):
 
             # uppercase AND and OR
             search_pattern = search_pattern.replace(' or ', ' OR ').replace(' and ', ' AND ')
+            # replace YEAR=XXX by YEAR:XXX
+            search_pattern = search_pattern.replace('YEAR=', 'YEAR:').replace('year=', 'year:')
             # add space when paranthesis search
             first_parenthesis = r'\(([^\s-])'
             second_parenthesis = r'([^\s-])\)'
