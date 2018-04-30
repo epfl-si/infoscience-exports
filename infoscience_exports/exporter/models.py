@@ -661,6 +661,10 @@ class SettingsModel(models.Model):
                 if '_authors' in s['format_type']:
                     new_export.show_linkable_authors = True
 
+        if 'link_has_clickable_authors' in s and s[
+            'link_has_clickable_authors']:
+            new_export.show_linkable_authors = True
+
         # group by
         if 'group_by_year_seperate_pending' in s and s[
             'group_by_year_seperate_pending']:
