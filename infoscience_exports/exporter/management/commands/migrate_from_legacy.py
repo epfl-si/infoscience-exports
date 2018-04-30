@@ -42,7 +42,7 @@ class Command(BaseCommand):
 
         subset_mode = False
 
-        if not options.get('ids_csv_path') and not options.get('subset_only') and not options.get('migate_all'):
+        if not options.get('ids_csv_path') and not options.get('subset_only') and not options.get('migrate_all'):
             raise CommandError("Set at least --migrate_all if you want a full migration")
 
         if options.get('ids_csv_path'):
