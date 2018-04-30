@@ -402,8 +402,44 @@ class SettingsModel(models.Model):
         if 'search_pattern' in s and s['search_pattern']:
             search_pattern = s['search_pattern']
             search_logger.debug('pattern is : "{}"'.format(search_pattern))
+
+            # look for minus symbol
+            search_pattern_split = search_pattern.split(' ')
+            if search_pattern_split:
+                search_pattern_list = []
+                for key in search_pattern_split:
+                    # wrap in double-quotes when there is a minus and it is not already quoted
+                    # unit have a -
+                    # year range is not to escape
+                    if key.find("-") != -1 and key[0] not in ["'", '"'] and \
+                                    key.find('unit:') == -1 and key.find('->') == -1:
+                        search_pattern_list.append('"{}"'.format(key))
+                    else:
+                        search_pattern_list.append(key)
+                search_pattern = " ".join(search_pattern_list)
+
             # uppercase AND and OR
             search_pattern = search_pattern.replace(' or ', ' OR ').replace(' and ', ' AND ')
+            # replace YEAR=XXX by YEAR:XXX
+            # replace AUTHOR=XXX BY AUTHOR:XXX
+            search_pattern = search_pattern.replace('YEAR=', 'YEAR:').replace('year=', 'year:')
+            search_pattern = search_pattern.replace('AUTHOR=', 'AUTHOR:').replace('author=', 'author:')
+            # doi:xxx -> doi:"xxxx"
+            if search_pattern.find('doi:') != -1:
+                new_search_pattern = []
+                for one_split in search_pattern.split(' '):
+                    try:
+                        if one_split.find('doi:') != -1 and one_split[4] not in ['"', "'"] and \
+                                        one_split[-1] not in ['"', "'"]:
+                            doi_place = one_split.find('doi:')
+                            new_search_pattern.append('doi:"' + one_split[doi_place+4:] + '"')
+                        else:
+                            new_search_pattern.append(one_split)
+                    except ValueError:
+                        new_search_pattern.append(one_split)
+
+                search_pattern = " ".join(new_search_pattern)
+
             # add space when paranthesis search
             first_parenthesis = r'\(([^\s-])'
             second_parenthesis = r'([^\s-])\)'
@@ -413,6 +449,44 @@ class SettingsModel(models.Model):
             search_logger.debug(
                 "search_pattern is empty")
 
+        # add date limit if needed
+        # by default, all is need, so skip the date limit check
+        if 'filter_published' in s and \
+            s['filter_published'] == 'range' and \
+            'filter_published_from' in s and \
+            s['filter_published_from'] == 'all' and \
+            'filter_published_to' in s and \
+            s['filter_published_to'] == 'present':
+            pass  # this is a convenient way to not do a negative if
+        else:
+          if 'filter_published' in s:
+            if s['filter_published'] == 'range':
+                from_year = None
+                to_year = None
+                if 'filter_published_from' in s and s['filter_published_from']:
+                    from_year = s['filter_published_from']
+                if 'filter_published_to' in s and s['filter_published_to']:
+                    to_year = s['filter_published_to']
+                if from_year:
+                    if from_year == 'all':
+                        search_pattern += ' year:'
+                    else:
+                        search_pattern += ' year:{}'.format(from_year)
+                    if to_year:
+                        if to_year == 'present':
+                            search_pattern += '->now'
+                        else:
+                            search_pattern += '->{}'.format(to_year)
+            elif s['filter_published'] == 'date':
+                if 'filter_published_date' in s:
+                    try:
+                        last_x_years = int(s['filter_published_date'])
+                        search_pattern += ' year:{}->now'.format(2018-last_x_years)
+                    except ValueError:
+                        if s['filter_published_date'] == 'current':
+                            search_pattern += ' year:2018'
+
+        # Do the exts
         exts = s.get('search_filter')
 
         if not exts:
@@ -484,8 +558,9 @@ class SettingsModel(models.Model):
             else:
                 invenio_vars['so'] = 'd'
 
-        if 'limit_number' in s and s['limit_number']:
-            invenio_vars['rg'] = s['limit_number']
+        if 'limit_first' in s and s['limit_first']:
+            if 'limit_number' in s and s['limit_number']:
+                invenio_vars['rg'] = s['limit_number']
 
         return invenio_vars
 
@@ -560,6 +635,9 @@ class SettingsModel(models.Model):
 
         new_export.url = self.build_search_url()
 
+        # by default show the thesis director
+        new_export.show_thesis_directors = True
+
         # format type
         if 'format_type' in s and s['format_type']:
             if 'ENACFULL' in s['format_type']:
@@ -569,7 +647,6 @@ class SettingsModel(models.Model):
                 new_export.show_article_volume = True
                 new_export.show_article_volume_number = True
                 new_export.show_article_volume_pages = True
-                new_export.show_thesis_directors = True
                 new_export.show_thesis_pages = True
                 new_export.show_report_working_papers_pages = True
                 new_export.show_conf_proceed_place = True
@@ -591,6 +668,10 @@ class SettingsModel(models.Model):
                 if '_authors' in s['format_type']:
                     new_export.show_linkable_authors = True
 
+        if 'link_has_clickable_authors' in s and s[
+            'link_has_clickable_authors']:
+            new_export.show_linkable_authors = True
+
         # group by
         if 'group_by_year_seperate_pending' in s and s[
             'group_by_year_seperate_pending']:
@@ -604,12 +685,16 @@ class SettingsModel(models.Model):
             if s['group_by_first'] == 'year':
                 if 'group_by_year_display_headings' in s and s['group_by_year_display_headings']:
                     new_export.groupsby_type = 'YEAR_TITLE'
-                if 'group_by_second' in s and s['group_by_second'] == 'doctype':
-                    new_export.groupsby_doc = 'DOC_TITLE'
+                if 'group_by_second' in s and s['group_by_second']:
+                    if 'group_by_doctype_display_headings' in s and s[
+                        'group_by_doctype_display_headings']:
+                        new_export.groupsby_doc = 'DOC_TITLE'
             elif s['group_by_first'] == 'doctype':
                 new_export.groupsby_type = 'DOC_TITLE'
-                if 'group_by_second' in s and s['group_by_second'] == 'year':
-                    new_export.groupsby_year = 'YEAR_TITLE'
+                if 'group_by_second' in s and s['group_by_second']:
+                    if 'group_by_year_display_headings' in s and s[
+                        'group_by_year_display_headings']:
+                        new_export.groupsby_year = 'YEAR_TITLE'
 
         # bullets
         if 'format_bullet_order' in s and s['format_bullet_order']:
