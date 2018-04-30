@@ -421,7 +421,9 @@ class SettingsModel(models.Model):
             # uppercase AND and OR
             search_pattern = search_pattern.replace(' or ', ' OR ').replace(' and ', ' AND ')
             # replace YEAR=XXX by YEAR:XXX
+            # replace AUTHOR=XXX BY AUTHOR:XXX
             search_pattern = search_pattern.replace('YEAR=', 'YEAR:').replace('year=', 'year:')
+            search_pattern = search_pattern.replace('AUTHOR=', 'AUTHOR:').replace('author=', 'author:')
             # doi:xxx -> doi:"xxxx"
             if search_pattern.find('doi:') != -1:
                 new_search_pattern = []
