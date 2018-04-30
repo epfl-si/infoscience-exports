@@ -409,7 +409,10 @@ class SettingsModel(models.Model):
                 search_pattern_list = []
                 for key in search_pattern_split:
                     # wrap in double-quotes when there is a minus and it is not already quoted
-                    if key.find("-") != -1 and key[0] not in ["'", '"']:
+                    # unit have a -
+                    # year range is not to escape
+                    if key.find("-") != -1 and key[0] not in ["'", '"'] and \
+                                    key.find('unit:') == -1 and key.find('->') == -1:
                         search_pattern_list.append('"{}"'.format(key))
                     else:
                         search_pattern_list.append(key)
