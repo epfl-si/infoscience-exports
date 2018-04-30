@@ -630,6 +630,9 @@ class SettingsModel(models.Model):
 
         new_export.url = self.build_search_url()
 
+        # by default show the thesis director
+        new_export.show_thesis_directors = True
+
         # format type
         if 'format_type' in s and s['format_type']:
             if 'ENACFULL' in s['format_type']:
@@ -639,7 +642,6 @@ class SettingsModel(models.Model):
                 new_export.show_article_volume = True
                 new_export.show_article_volume_number = True
                 new_export.show_article_volume_pages = True
-                new_export.show_thesis_directors = True
                 new_export.show_thesis_pages = True
                 new_export.show_report_working_papers_pages = True
                 new_export.show_conf_proceed_place = True
