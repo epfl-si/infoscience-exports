@@ -10,7 +10,7 @@
 	migration-load-dump migration-build-delta \
 	migration-post-generate-csvs migration-migrate \
 	migration-migrate-selective-with-subset migration-migrate-all \
-	migration-fetch-ldap
+	migration-post-generate-csv-all migration-fetch-ldap
 
 VERSION:=$(shell python update_release.py -v)
 
@@ -298,6 +298,12 @@ migration-migrate-all:
 migration-post-generate-csv:
 	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \
 	--ids_csv_path "/usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv" \
+	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
+	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv " \
+	--all_csv_path "/var/log/django/infoscience_exports_all_new_url.csv"
+
+migration-post-generate-csv-all:
+	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \
 	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
 	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv " \
 	--all_csv_path "/var/log/django/infoscience_exports_all_new_url.csv"
