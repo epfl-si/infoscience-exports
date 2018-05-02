@@ -718,15 +718,11 @@ class SettingsModel(models.Model):
                             new_export.bullets_type = 'NUMBER_ASC'
 
         # links
-        if 'link_has_detailed_record' in s and s['link_has_detailed_record']:
-            new_export.show_detailed = True
-        if 'link_has_fulltext' in s and s['link_has_fulltext']:
-            new_export.show_fulltext = True
-        if 'link_has_official' in s and s['link_has_official']:
-            new_export.show_viewpublisher = True
+        new_export.show_detailed = 'link_has_detailed_record' in s and s['link_has_detailed_record']
+        new_export.show_fulltext = 'link_has_fulltext' in s and s['link_has_fulltext']
+        new_export.show_viewpublisher = 'link_has_official' in s and s['link_has_official']
 
         # divers
-        if 'link_has_readable_links' in s and s['link_has_readable_links']:
-            new_export.show_links_for_printing = True
+        new_export.show_links_for_printing = 'link_has_readable_links' in s and s['link_has_readable_links']
 
         return new_export
