@@ -424,6 +424,8 @@ class SettingsModel(models.Model):
             # replace AUTHOR=XXX BY AUTHOR:XXX
             search_pattern = search_pattern.replace('YEAR=', 'YEAR:').replace('year=', 'year:')
             search_pattern = search_pattern.replace('AUTHOR=', 'AUTHOR:').replace('author=', 'author:')
+            search_pattern = search_pattern.replace('recid:', '001__:')
+            search_pattern = search_pattern.replace('affiliation:', '973__a:')
             # doi:xxx -> doi:"xxxx"
             if search_pattern.find('doi:') != -1:
                 new_search_pattern = []
