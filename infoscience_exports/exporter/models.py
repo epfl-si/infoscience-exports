@@ -424,6 +424,8 @@ class SettingsModel(models.Model):
             # replace AUTHOR=XXX BY AUTHOR:XXX
             search_pattern = search_pattern.replace('YEAR=', 'YEAR:').replace('year=', 'year:')
             search_pattern = search_pattern.replace('AUTHOR=', 'AUTHOR:').replace('author=', 'author:')
+            search_pattern = search_pattern.replace('recid:', '001__:')
+            search_pattern = search_pattern.replace('affiliation:', '973__a:')
             # doi:xxx -> doi:"xxxx"
             if search_pattern.find('doi:') != -1:
                 new_search_pattern = []
@@ -720,13 +722,23 @@ class SettingsModel(models.Model):
         # links
         if 'link_has_detailed_record' in s and s['link_has_detailed_record']:
             new_export.show_detailed = True
+        else:
+            new_export.show_detailed = False
+
         if 'link_has_fulltext' in s and s['link_has_fulltext']:
             new_export.show_fulltext = True
+        else:
+            new_export.show_fulltext = False
+
         if 'link_has_official' in s and s['link_has_official']:
             new_export.show_viewpublisher = True
+        else:
+            new_export.show_viewpublisher = False
 
         # divers
         if 'link_has_readable_links' in s and s['link_has_readable_links']:
             new_export.show_links_for_printing = True
+        else:
+            new_export.show_links_for_printing = False
 
         return new_export
