@@ -1,18 +1,25 @@
 # Change Log
 
-## [0.5.1](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.1) (2018-04-30)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.5.1)
+## [0.5.2](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.2) (2018-05-03)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.5.2)
 
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-04-30)
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-05-03)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...qa-release)
+
+**Merged pull requests:**
+
+- Migrate algo enhancement [\#108](https://github.com/epfl-idevelop/infoscience-exports/pull/108) ([jdelasoie](https://github.com/jdelasoie))
+
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-04-30)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.1...prod-release)
+
+## [0.5.1](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.1) (2018-04-30)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.0...0.5.1)
 
 **Merged pull requests:**
 
 - Migrate strategy enhancement [\#107](https://github.com/epfl-idevelop/infoscience-exports/pull/107) ([jdelasoie](https://github.com/jdelasoie))
 - Add search in admin for Exports and LegacyExports [\#106](https://github.com/epfl-idevelop/infoscience-exports/pull/106) ([jdelasoie](https://github.com/jdelasoie))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-04-26)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.0...prod-release)
 
 ## [0.5.0](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.0) (2018-04-26)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.4.7...0.5.0)
