@@ -609,11 +609,11 @@ class SettingsModel(models.Model):
         invenio_args.update(invenio_vars)
 
         if limit:
-            invenio_vars['rg'] = limit
+            invenio_args['rg'] = limit
 
         if 'search_basket_id' in s and s['search_basket_id']:
-            invenio_vars['bskid'] = s['search_basket_id']
-            invenio_vars['of'] = 'xm'
+            invenio_args['bskid'] = s['search_basket_id']
+            invenio_args['of'] = 'xm'
             search_url = 'https://infoscience.epfl.ch/yourbaskets/display_public?' + urllib.parse.urlencode(invenio_args, doseq=True)
         else:
             search_url = 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(invenio_args, doseq=True)
