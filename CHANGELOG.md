@@ -1,17 +1,17 @@
 # Change Log
 
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-05-04)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.4...prod-release)
+
 ## [0.5.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.4) (2018-05-04)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.5.4)
 
 ## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-05-04)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...qa-release)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.3...qa-release)
 
 **Merged pull requests:**
 
 - Fix using app url for export source [\#110](https://github.com/epfl-idevelop/infoscience-exports/pull/110) ([jdelasoie](https://github.com/jdelasoie))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-05-04)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.3...prod-release)
 
 ## [0.5.3](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.3) (2018-05-04)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.2...0.5.3)
