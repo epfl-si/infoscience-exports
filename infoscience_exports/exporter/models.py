@@ -535,12 +535,6 @@ class SettingsModel(models.Model):
         s = self.settings_as_dict
         invenio_vars = {}
 
-        if 'search_basket_id' in s and s['search_basket_id']:
-            logger.debug("Set has basket")
-            invenio_vars['bskid'] = s['search_basket_id']
-            invenio_vars['of'] = 'xm'
-            return invenio_vars
-
         invenio_vars.update(self._get_search_pattern())
 
         if 'search_field_restriction' in s and s['search_field_restriction']:
@@ -609,16 +603,18 @@ class SettingsModel(models.Model):
 
     def build_search_url(self, invenio_vars={}, limit=None):
         """ build the infoscience url where it probably come from"""
-        invenio_args = self._configuration_as_invenio_args()
+        s = self.settings_as_dict
 
+        invenio_args = self._configuration_as_invenio_args()
         invenio_args.update(invenio_vars)
 
         if limit:
-            invenio_vars['rg'] = limit
+            invenio_args['rg'] = limit
 
-        if invenio_vars.get('bskid'):
+        if 'search_basket_id' in s and s['search_basket_id']:
+            invenio_args['bskid'] = s['search_basket_id']
+            invenio_args['of'] = 'xm'
             search_url = 'https://infoscience.epfl.ch/yourbaskets/display_public?' + urllib.parse.urlencode(invenio_args, doseq=True)
-
         else:
             search_url = 'https://infoscience.epfl.ch/search?' + urllib.parse.urlencode(invenio_args, doseq=True)
 
