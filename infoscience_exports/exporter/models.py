@@ -546,7 +546,7 @@ class SettingsModel(models.Model):
                 s['search_collection']))
             if not invenio_vars.get('c'):
                 invenio_vars['c'] = []
-            invenio_vars['c'].append(s['search_collection'])
+            invenio_vars['c'] += (s['search_collection'].split(','))
 
         if 'group_by_year_order' in s and s['group_by_year_order']:
             if s['group_by_year_order'] == 'asc':
