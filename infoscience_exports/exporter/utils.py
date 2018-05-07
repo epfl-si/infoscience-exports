@@ -1,8 +1,16 @@
+import operator
+from functools import reduce
+
 from django.utils.html import escape
 
 from exporter.settings import BasketSettings, SearchSettings, \
     FilterSettings, GroupBySettings, FormatSettings, LinkSettings
 
+def flatten_list(list_to_flatten):
+    """ from list_to_flatten = [[1,2,3],[4,5,6], [7], [8,9]] to
+       [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    """
+    return reduce(operator.concat, list_to_flatten)
 
 def _build_settings_from_POST(dict, limit=5000):
     """Build settings classes from the POST QuerySet"""

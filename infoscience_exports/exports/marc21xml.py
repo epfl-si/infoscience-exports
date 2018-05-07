@@ -258,6 +258,10 @@ def import_marc21xml(url, can_display_pending_publications):
         result.append(get_message('danger', _('The domain is not allowed')))
         return result
 
+    if url.find(settings.SITE_DOMAIN + settings.SITE_PATH) != -1:  # self referencing url is bad
+        result.append(get_message('danger', _('The domain is not allowed')))
+        return result
+
     try:
         url = ''.join(c for c in unicodedata.normalize('NFD', url) if unicodedata.category(c) != 'Mn')
         reader = marcxml.parse_xml_to_array(urlopen(url))

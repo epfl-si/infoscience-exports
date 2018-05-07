@@ -1,13 +1,12 @@
-import operator
-import ast
 import csv
 import logging
+import ast
 
-from functools import reduce
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
 from exporter.models import SettingsModel
+from exporter.utils import flatten_list
 from exports.models import LegacyExport
 import urllib.parse as urlparse
 from urllib.parse import urlencode
@@ -41,8 +40,7 @@ class Command(BaseCommand):
                 next(reader)
                 # from l = [[1,2,3],[4,5,6], [7], [8,9]] to
                 # [1, 2, 3, 4, 5, 6, 7, 8, 9]
-                list_ids = list(reader)
-                list_ids = reduce(operator.concat, list_ids)
+                list_ids = flatten_list(list(reader))
 
         with open(options['jahia_csv_path'][0], 'w') as csv_jahia_file:
             logger.info("Building jahia csv : {}".format(options['jahia_csv_path'][0]))
