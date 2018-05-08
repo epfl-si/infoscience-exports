@@ -1,17 +1,17 @@
 # Change Log
 
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-05-08)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.5...prod-release)
+
 ## [0.5.5](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.5) (2018-05-08)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.5.5)
 
 ## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-05-08)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...qa-release)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.4...qa-release)
 
 **Merged pull requests:**
 
 - compilemessages command added in DockerFile [\#101](https://github.com/epfl-idevelop/infoscience-exports/pull/101) ([dragonleman](https://github.com/dragonleman))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-05-04)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.4...prod-release)
 
 ## [0.5.4](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.4) (2018-05-04)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.3...0.5.4)
