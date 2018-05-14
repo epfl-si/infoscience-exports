@@ -59,7 +59,7 @@ class LegacyExportFilter(SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value() == 'imported':
-            return queryset.filter(legacyexport__isnull=False)
+            return queryset.filter(legacyexport__isnull=False).distinct()
 
 
 class LegacyExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
