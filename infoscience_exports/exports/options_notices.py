@@ -138,7 +138,7 @@ def validate_url(url):
     if 'rg' in queries and queries['rg'][0] == '10':
         url = url.replace("rg=10", "rg=" + str(settings.RANGE_DISPLAY))
     elif '&rg=' not in url:
-        url = url + "&rg=50"
+        url = url + "&rg=" + str(settings.RANGE_DISPLAY)
 
     return url
 
