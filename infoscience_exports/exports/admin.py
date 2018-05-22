@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.admin.options import ModelAdmin
 from django.conf import settings
 from django.contrib.auth.forms import UsernameField
+from django.utils.safestring import mark_safe
 from django_tequila.admin import TequilaAdminSite
 from django.utils.translation import gettext_lazy as _
 from django.contrib.admin import SimpleListFilter
@@ -84,7 +85,7 @@ class LegacyExportInline(admin.StackedInline):
 
 
 class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
-    list_display = ('name', 'user', 'get_absolute_url', 'updated_at',)
+    list_display = ('name', 'user', 'view_url', 'legacy_url', 'updated_at',)
     list_filter = ('updated_at', LegacyExportFilter)
     inlines = [LegacyExportInline]
     search_fields = (
@@ -100,6 +101,18 @@ class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
                     yield inline.get_formset(request, obj), inline
                 except LegacyExport.DoesNotExist:
                     pass
+
+    def view_url(self, obj):
+        return mark_safe('<a target="_blank" href="%s">%s</a>' % (obj.get_absolute_url(), obj.get_absolute_url()))
+
+    def legacy_url(self, obj):
+        try:
+            legacy_url = 'https://test-infoscience.epfl.ch/curator/export/{}/'.format(
+                obj.legacyexport_set.all()[0].legacy_id)
+            return mark_safe('<a target="_blank" href="%s">%s</a>' % (
+            legacy_url, legacy_url))
+        except IndexError:  # no legacy linked
+            return ''
 
 
 class ExportInline(admin.StackedInline):
