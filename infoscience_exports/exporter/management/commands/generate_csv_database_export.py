@@ -30,8 +30,8 @@ class Command(BaseCommand):
 
             for export in Export.objects.all().select_related('user'):
                 try:
-                    export.legacy_url = 'https://infoscience-legacy.epfl.ch/curator/export/{}/'.format(export.legacyexport_set.all()[0].legacy_id)
-                except IndexError:  # no legacy linked
+                    export.legacy_url = 'https://test-infoscience.epfl.ch/curator/export/{}/'.format(export.legacyexport_set.all()[0].legacy_id)
+                except IndexError:  # not legacy linked
                     export.legacy_url = ''
 
                 export.absolute_url = settings.SITE_DOMAIN + export.get_absolute_url()
