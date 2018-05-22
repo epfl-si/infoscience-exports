@@ -1,18 +1,26 @@
 # Change Log
 
-## [0.5.6](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.6) (2018-05-16)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.5.6)
+## [0.5.7](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.7) (2018-05-22)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/qa-release...0.5.7)
 
-## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-05-16)
+## [qa-release](https://github.com/epfl-idevelop/infoscience-exports/tree/qa-release) (2018-05-22)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/prod-release...qa-release)
+
+**Merged pull requests:**
+
+- Add links in export admin view [\#114](https://github.com/epfl-idevelop/infoscience-exports/pull/114) ([jdelasoie](https://github.com/jdelasoie))
+- Add a command to generate a csv for all exports [\#113](https://github.com/epfl-idevelop/infoscience-exports/pull/113) ([jdelasoie](https://github.com/jdelasoie))
+
+## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-05-16)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.6...prod-release)
+
+## [0.5.6](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.6) (2018-05-16)
+[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.5...0.5.6)
 
 **Merged pull requests:**
 
 - Fix the wrong hard limit being applied when no limit is found [\#112](https://github.com/epfl-idevelop/infoscience-exports/pull/112) ([jdelasoie](https://github.com/jdelasoie))
 - Fix export list on admin when filtering by imported only is enabled [\#111](https://github.com/epfl-idevelop/infoscience-exports/pull/111) ([jdelasoie](https://github.com/jdelasoie))
-
-## [prod-release](https://github.com/epfl-idevelop/infoscience-exports/tree/prod-release) (2018-05-08)
-[Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.5...prod-release)
 
 ## [0.5.5](https://github.com/epfl-idevelop/infoscience-exports/tree/0.5.5) (2018-05-08)
 [Full Changelog](https://github.com/epfl-idevelop/infoscience-exports/compare/0.5.4...0.5.5)
