@@ -1,0 +1,17 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    # command for faster load dump
+    command: postgres -c maintenance_work_mem=88MB -c max_wal_size=8GB -c wal_level=minimal -c archive_mode=off -c max_wal_senders=0
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    volumes:
+      - /media/del/SSD850EVO1TB/workspace/symlink_target/postgres_docker:/var/lib/postgresql/data
