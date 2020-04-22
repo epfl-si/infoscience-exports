@@ -49,8 +49,8 @@ ALLOWED_HOSTS = get_env_variable('ALLOWED_HOSTS').split(',')
 
 CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?([-\w\d]+\.)?epfl\.ch$', )
 CORS_ORIGIN_WHITELIST = [
-    "localhost",
-    "127.0.0.1",
+    "https://localhost",
+    "https://127.0.0.1",
 ]
 
 INSTALLED_APPS = (

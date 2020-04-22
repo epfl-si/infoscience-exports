@@ -1,19 +1,16 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
-django = "*"
+django = "==2.2"
 dj-database-url = "*"
 django-dirtyfields = "*"
 django-filter = "*"
 django-model-utils = "*"
-django-auditlog = {git = "https://github.com/epfl-idevelop/django-auditlog.git", editable = true}
-django-tequila = {git = "https://github.com/epfl-idevelop/django-tequila.git", editable = true}
+django-auditlog = "*"
+django-tequila = {editable = true, git = "https://github.com/epfl-idevelop/django-tequila.git"}
 "django-bootstrap4" = "*"
 gevent = "*"
 gunicorn = "*"
@@ -23,9 +20,7 @@ pymarc = "*"
 pytz = "*"
 django-cors-headers = "*"
 
-
 [dev-packages]
-
 "autopep8" = "*"
 coverage = "*"
 coveralls = "*"
@@ -37,7 +32,6 @@ django-nose = "*"
 factory-boy = "*"
 faker = "*"
 "flake8" = "*"
-graypy = "*"
 ipdb = "*"
 ipython = "*"
 mkdocs = "*"
@@ -50,7 +44,5 @@ pytest = "*"
 pytest-django = "*"
 pytest-cov = "*"
 
-
 [requires]
-
-python_version = "3.6"
+python_version = "3.8"
