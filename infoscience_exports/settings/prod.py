@@ -29,12 +29,6 @@ TEMPLATE_LOADERS = (
 )
 
 LOGGING['handlers'].update({
-    'graylog': {
-        "level": 'DEBUG',
-        "class": 'graypy.GELFHandler',
-        "host": '127.0.0.1',
-        "port": 12201,
-    },
     'file': {
         'level': 'DEBUG',
         'class': 'logging.handlers.RotatingFileHandler',
@@ -60,12 +54,12 @@ LOGGING['loggers'] = {
         'propagate': True
     },
     'infoscience_exports': {
-        'handlers': ['file', 'graylog'],
+        'handlers': ['file'],
         'level': 'INFO',
         'propagate': True
     },
     'exports': {
-        'handlers': ['file', 'graylog'],
+        'handlers': ['file'],
         'level': 'INFO',
         'propagate': True
     },
