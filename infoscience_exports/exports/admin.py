@@ -110,7 +110,7 @@ class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
             legacy_url = 'https://test-infoscience.epfl.ch/curator/export/{}/'.format(
                 obj.legacyexport_set.all()[0].legacy_id)
             return mark_safe('<a target="_blank" href="%s">%s</a>' % (
-            legacy_url, legacy_url))
+                legacy_url, legacy_url))
         except IndexError:  # no legacy linked
             return ''
 
