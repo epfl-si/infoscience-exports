@@ -46,7 +46,7 @@ nginx:
   command: /bin/bash -c "envsubst < /etc/nginx/conf.d/web.template > /etc/nginx/conf.d/web.conf && nginx -g 'daemon off;'"
 
 postgres:
-  image: postgres:10
+  image: postgres:12
   environment:
     - POSTGRES_PASSWORD=django
   volumes:
