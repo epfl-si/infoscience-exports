@@ -86,7 +86,7 @@ def set_fulltext(fulltexts):
 
     # multiple pdfs found... return first folder that matchs infoscience/record/xxx/files
     for dir_path in map(dirname, unic_pdfs):
-        if re.search("infoscience.epfl.ch/record/\d+/files", dir_path):
+        if re.search(r"infoscience.epfl.ch/record/\d+/files", dir_path):
             return dir_path
 
     # no infoscience folder found... log a warning and return first match
