@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load staticfiles %}
+
+
+{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
+
+{% if article.Authors %}
+	<span> : </span>
+{% endif %}
+
+{% if article.Title %}
+	<span><strong>{{ article.Title }}</strong></span>
+	<span>{% if article.Conference_Meeting_Name or Conference_Meeting_Location or Conference_Meeting_Date %} ; {% else %}. {% endif %}</span>
+{% endif %}
+
+{% if article.Conference_Meeting_Name %}
+	<span>{{ article.Conference_Meeting_Name }}</span>
+	<span>{% if article.Conference_Meeting_Location or article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
+{% endif %}
+
+{% if article.Conference_Meeting_Location %}
+	<span>{{ article.Conference_Meeting_Location }}</span>
+	<span>{% if article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
+{% endif %}
+
+{% if article.Conference_Meeting_Date %}
+	<span>{{ article.Conference_Meeting_Date }}</span>
+	<span>.</span>
+{% endif %}
+
+
