@@ -63,7 +63,7 @@ See by yourself live::
 
     fab serve
 
-And go to `http://127.0.0.1:${DEV_PORT}/publications-exports <http://127.0.0.1:8000/publications-exports/>`_.
+And go to `http://127.0.0.1:${DEV_PORT}/publication-exports <http://127.0.0.1:8000/publication-exports/>`_.
 
 ## How to start the development process
 
