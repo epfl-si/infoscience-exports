@@ -1,10 +1,11 @@
-FROM python:3
+FROM python:3.8
 
 # install gettext
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		gettext \
 		tree \
 		curl \
+		libevent-dev \
 	&& rm -rf /var/cache/apt/ \
 	&& rm -rf /var/lib/apt/lists/*
 
@@ -16,7 +17,7 @@ RUN mkdir -p /usr/src/app && \
 
 WORKDIR /usr/src/app
 
-# install requirements 
+# install requirements
 # (asap to make cache more efficent)
 COPY ./requirements*.txt /usr/src/app/
 RUN pip install --no-cache-dir -r requirements-dev.txt
@@ -28,7 +29,7 @@ COPY ./Makefile /usr/src/app/Makefile
 COPY ./infoscience_exports /usr/src/app/infoscience_exports
 
 # collectstatic
-RUN DJANGO_SETTINGS_MODULE=settings.prod \ 
+RUN DJANGO_SETTINGS_MODULE=settings.prod \
 	SECRET_KEY="not needed to collectstaticfiles" \
 	ALLOWED_HOSTS="not needed to collectstaticfiles" \
 	SITE_URL="not needed to collectstaticfiles" \
@@ -36,7 +37,7 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
 	python infoscience_exports/manage.py collectstatic
 
 # compilemessages
-RUN DJANGO_SETTINGS_MODULE=settings.prod \ 
+RUN DJANGO_SETTINGS_MODULE=settings.prod \
 	SECRET_KEY="not needed to compilemessages" \
 	ALLOWED_HOSTS="not needed to compilemessages" \
 	SITE_URL="not needed to compilemessages" \

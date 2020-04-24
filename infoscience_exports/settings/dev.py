@@ -26,12 +26,6 @@ INSTALLED_APPS += ('debug_toolbar',
 MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 LOGGING['handlers'].update({
-    'graylog': {
-        "level": 'DEBUG',
-        "class": 'graypy.GELFHandler',
-        "host": '127.0.0.1',
-        "port": 12201,
-    },
     'file': {
         'level': 'DEBUG',
         'class': 'logging.handlers.RotatingFileHandler',

@@ -61,5 +61,8 @@ target/
 
 # Development
 .env
+env/bin
+env/lib64
+env/pyvenv.cfg
 db_data/
 backup/

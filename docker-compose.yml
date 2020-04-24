@@ -17,4 +17,4 @@ web:
   command: gunicorn --reload -w 4 -b :80 --chdir /usr/src/app/infoscience_exports wsgi:application
 
 postgres:
-  image: postgres:10
+  image: postgres:12

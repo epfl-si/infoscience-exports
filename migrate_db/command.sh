@@ -1,6 +1,9 @@
 #!/bin/bash
 set -x
-sudo -u postgres psql -h localhost <<EOF
+
+POSTGRES_PORT=25432
+
+sudo -u postgres psql -h localhost -p $POSTGRES_PORT <<EOF
 \x
 create user django;
 drop database infoscience_exports;
@@ -17,6 +20,7 @@ pg_restore \
 --schema "public" \
 --username "postgres" \
 --host "localhost" \
+--port "$POSTGRES_PORT" \
 -l \
 "/media/del/SSD850EVO1TB/workspace/Infoscience-exports-data/backup.sql.tar" > db.list
 
@@ -27,11 +31,11 @@ sed -i 's/.*TABLE DATA public django_session.*/;&/' db.list  | grep django_sessi
 pg_restore \
 --clean \
 --verbose \
---no-password \
 --dbname "infoscience_exports" \
 --schema "public" \
---username "postgres" \
+--username "django" \
 --host "localhost" \
+--port "$POSTGRES_PORT" \
 -L db.list \
 "/media/del/SSD850EVO1TB/workspace/Infoscience-exports-data/backup.sql.tar"
 

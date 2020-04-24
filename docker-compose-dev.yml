@@ -28,7 +28,7 @@ web:
 nginx:
   build: ./nginx
   ports:
-    # out:in = from [out] host, into [in] container 
+    # out:in = from [out] host, into [in] container
     - "${DEV_PORT}:${DEV_PORT}"
   volumes:
     - ./nginx/sites-enabled/web.template:/etc/nginx/conf.d/web.template
@@ -43,10 +43,12 @@ nginx:
     - SITE_PATH=${SITE_PATH}
     - DEV_PORT=${DEV_PORT}
     - DOLLAR=$$
-  command: /bin/bash -c "envsubst < /etc/nginx/conf.d/web.template > /etc/nginx/conf.d/web.conf && nginx -g 'daemon off;'" 
+  command: /bin/bash -c "envsubst < /etc/nginx/conf.d/web.template > /etc/nginx/conf.d/web.conf && nginx -g 'daemon off;'"
 
 postgres:
-  image: postgres:10
+  image: postgres:12
+  environment:
+    - POSTGRES_PASSWORD=django
   volumes:
     - ./db_data:/var/lib/postgresql
   ports:

@@ -57,7 +57,7 @@ build:
 	pipenv lock --requirements > requirements.txt
 	echo "-r requirements.txt" > requirements-dev.txt
 	pipenv lock --requirements --dev >> requirements-dev.txt
-	# clean up requirements	
+	# clean up requirements
 	sed -i "s/# -e git/-e git/g" requirements.txt
 	sed -i -r "s/--hash=[^ ]+//g" requirements.txt
 	sed -i -r "s/--hash=[^ ]+//g" requirements-dev.txt
@@ -260,7 +260,7 @@ coverage: check-env
 	coverage html
 	open htmlcov/index.html
 
-build-travis:		
+build-travis:
 	docker-compose -f docker-compose-dev.yml build
 	docker-compose -f docker-compose-dev.yml up -d
 
