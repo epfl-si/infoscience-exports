@@ -69,6 +69,6 @@ You can check the correct intallation from your host
 
 ## 5. Checkout code and run
 
-    git clone git@github.com:epfl-idevelop/infoscience-exports.git
+    git clone git@github.com:epfl-si/infoscience-exports.git
 
 and continue the reading with INSTALL.md

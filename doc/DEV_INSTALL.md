@@ -63,7 +63,7 @@ See by yourself live::
 
     fab serve
 
-And go to `http://127.0.0.1:${DEV_PORT}/exports <http://127.0.0.1:8000/exports/>`_.
+And go to `http://127.0.0.1:${DEV_PORT}/publications-exports <http://127.0.0.1:8000/publications-exports/>`_.
 
 ## How to start the development process
 
@@ -71,8 +71,8 @@ Here is the standard config to have a nice synchronisation with the different re
 
 Don't forget to set tequila_user_name to the right value::
 
-    git clone git@github.com:epfl-idevelop/infoscience-exports.git
-    git remote add github git@github.com:epfl-idevelop/infoscience-exports.git
+    git clone git@github.com:epfl-si/infoscience-exports.git
+    git remote add github git@github.com:epfl-si/infoscience-exports.git
     git remote add gitlab git@gitlab.epfl.ch:infoscience/infoscience-exports.git
     git remote add epfl https://tequila_user_name@git.epfl.ch/repo/infoscience-exports.git
     git remote set-url --add origin git@gitlab.epfl.ch:infoscience/infoscience-exports.git
@@ -88,11 +88,11 @@ In the end, your .git/config should look like this::
         bare = false
         logallrefupdates = true
     [remote "origin"]
-        url = git@github.com:epfl-idevelop/infoscience-exports.git
+        url = git@github.com:epfl-si/infoscience-exports.git
         url = git@gitlab.epfl.ch:infoscience/infoscience-exports.git
         fetch = +refs/heads/*:refs/remotes/origin/*
     [remote "github"]
-        url = git@github.com:epfl-idevelop/infoscience-exports.git
+        url = git@github.com:epfl-si/infoscience-exports.git
         fetch = +refs/heads/*:refs/remotes/github/*
     [remote "gitlab"]
         url = git@gitlab.epfl.ch:infoscience/infoscience-exports.git
