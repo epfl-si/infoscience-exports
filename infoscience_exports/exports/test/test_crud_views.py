@@ -1,5 +1,6 @@
 from django.test import TransactionTestCase
 from django.urls import reverse
+
 from .factories import ExportFactory, ExportInMemoryFactory
 from ..models import Export
 
@@ -110,3 +111,29 @@ class ExportTest(TransactionTestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertFalse(Export.objects.filter(pk=pk).exists())
+
+    def test_old_render_view(self):
+        """
+        Test final html rendered
+        """
+        import os
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+
+        with open(dir_path + '/old_ref_render.html') as ref_render:
+            pk = self.mpl.pk
+            self.client.force_login(self.mpl.user)
+
+            response = self.client.get(reverse('crud:export-2010-view', kwargs={'pk': pk, }))
+            self.assertEqual(response.status_code, 200)
+
+            ref_render_html = ref_render.read()
+            rendered_html = response.content.decode("utf-8")
+
+            from lxml.html.diff import htmldiff
+            self.longMessage = False
+            self.assertEqual(
+                ref_render_html,
+                rendered_html,
+                htmldiff(ref_render_html, rendered_html)
+            )
+            self.longMessage = True

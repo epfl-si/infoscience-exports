@@ -6,7 +6,7 @@
 	up down logs restart restart-web \
 	superadmin collectstatic migrations migrate \
 	dump restore release push-prod deploy \
-	fast-test test coverage shell bash \
+	fast-test test test-render stop coverage shell bash \
 	migration-load-dump migration-build-delta \
 	migration-post-generate-csvs migration-migrate \
 	migration-migrate-selective-with-subset migration-migrate-all \
@@ -97,6 +97,9 @@ reset: build up
 
 up:
 	docker-compose -f docker-compose-dev.yml up -d
+
+stop:
+	docker-compose -f docker-compose-dev.yml stop
 
 down:
 	docker-compose -f docker-compose-dev.yml down
@@ -245,6 +248,10 @@ test: check-env
 		flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
 	docker-compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py test exports --settings=settings.test --noinput
+
+test-render: check-env
+	docker-compose -f docker-compose-dev.yml exec web \
+		python infoscience_exports/manage.py test --failfast exports.test.test_crud_views:ExportTest.test_old_render_view --settings=settings.test-silent-coverage --noinput
 
 shell:
 	docker-compose -f docker-compose-dev.yml exec web \
