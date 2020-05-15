@@ -14,13 +14,14 @@ Once the docker is launched and you have access to the database:
     --host "localhost" \
     --port "$POSTGRES_PORT" \
     -l \
-    "/media/del/SSD850EVO1TB/workspace/infoscience-exports/backup/db.list" > db.list
+    "/media/del/SSD850EVO1TB/workspace/infoscience-exports-TIND-dumps/db.list" > db.list
     ```
 - remove session table
     `sed -i 's/.*TABLE DATA public django_session.*/;&/' db.list  | grep django_session`
 
 - load datas in respect of the db.list
     ```
+    POSTGRES_PORT=25432
     pg_restore \
     --clean \
     --verbose \
@@ -29,6 +30,6 @@ Once the docker is launched and you have access to the database:
     --username "django" \
     --host "localhost" \
     --port "$POSTGRES_PORT" \
-    -L "/media/del/SSD850EVO1TB/workspace/infoscience-exports/backup/db.list" \
-    "/media/del/SSD850EVO1TB/workspace/infoscience-exports/backup/backup.sql.tar"
+    -L "/media/del/SSD850EVO1TB/workspace/infoscience-exports-TIND-dumps/db.list" \
+    "/media/del/SSD850EVO1TB/workspace/infoscience-exports-TIND-dumps/backup.sql.tar"
     ```
