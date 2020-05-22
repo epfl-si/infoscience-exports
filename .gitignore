@@ -66,3 +66,4 @@ env/lib64
 env/pyvenv.cfg
 db_data/
 backup/
+/infoscience_exports/exports/test/html/export_rendered.html

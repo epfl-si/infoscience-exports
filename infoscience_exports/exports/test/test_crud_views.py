@@ -1,3 +1,6 @@
+from pathlib import Path
+from lxml.html.diff import htmldiff
+
 from django.test import TransactionTestCase
 from django.urls import reverse
 
@@ -112,28 +115,44 @@ class ExportTest(TransactionTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertFalse(Export.objects.filter(pk=pk).exists())
 
-    def test_old_render_view(self):
+
+class ExportRenderTest(TransactionTestCase):
+    def setUpExport(self, url='https://infoscience.epfl.ch/search?ln=en&p=vetterli&f=&sf=&so=d&rg=2'):
+        #'https://infoscience.epfl.ch/search?ln=en&p=article&f=&sf=&so=d&rg=10'
+        self.url = url
+        self.mpl = ExportFactory(url=url, formats_type="DETAILED")
+
+        pk = self.mpl.pk
+        self.client.force_login(self.mpl.user)
+
+        response = self.client.get(reverse('crud:export-view', kwargs={'pk': pk, }))
+        self.assertEqual(response.status_code, 200)
+        self.rendered_html = response.content.decode("utf-8")
+
+        # for debugging porpose, better write down the file
+        export_html_file = Path(__file__).resolve().parent / "html" / "export_rendered.html"
+        export_html_file.write_text(self.rendered_html)
+
+    def setUp(self):
+        self.setUpExport()
+
+    def test_limit_is_applied(self):
+        self.assertIn("&rg=2", self.url)
+        self.assertEqual(self.rendered_html.count('<div class="row">'), 2)
+
+    def test_new_render_view(self):
         """
-        Test final html rendered
+        Test final html rendered by comparing with a reference file.
+        Write the result into ./rendered/export.html
         """
-        import os
-        dir_path = os.path.dirname(os.path.realpath(__file__))
+        ref_render_html = (Path(__file__).resolve().parent / 'new_ref_render.html').read_text()
 
-        with open(dir_path + '/old_ref_render.html') as ref_render:
-            pk = self.mpl.pk
-            self.client.force_login(self.mpl.user)
+        self.longMessage = False
+        self.assertEqual(
+            ref_render_html,
+            self.rendered_html,
+            htmldiff(ref_render_html, self.rendered_html)
+        )
+        self.longMessage = True
 
-            response = self.client.get(reverse('crud:export-2010-view', kwargs={'pk': pk, }))
-            self.assertEqual(response.status_code, 200)
-
-            ref_render_html = ref_render.read()
-            rendered_html = response.content.decode("utf-8")
-
-            from lxml.html.diff import htmldiff
-            self.longMessage = False
-            self.assertEqual(
-                ref_render_html,
-                rendered_html,
-                htmldiff(ref_render_html, rendered_html)
-            )
-            self.longMessage = True
+        assert False

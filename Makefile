@@ -251,7 +251,7 @@ test: check-env
 
 test-render: check-env
 	docker-compose -f docker-compose-dev.yml exec web \
-		python infoscience_exports/manage.py test --failfast exports.test.test_crud_views:ExportTest.test_old_render_view --settings=settings.test-silent-coverage --noinput
+		python infoscience_exports/manage.py test --failfast exports.test.test_crud_views:ExportRenderTest --settings=settings.test-silent-coverage --noinput
 
 shell:
 	docker-compose -f docker-compose-dev.yml exec web \

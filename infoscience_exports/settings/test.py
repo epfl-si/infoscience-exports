@@ -7,6 +7,8 @@ DEBUG = True
 for config in TEMPLATES:
     config['OPTIONS']['debug'] = DEBUG
 
+ALLOWED_HOSTS = ["*"]
+
 # Testing
 INSTALLED_APPS += ('django_nose',)
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
