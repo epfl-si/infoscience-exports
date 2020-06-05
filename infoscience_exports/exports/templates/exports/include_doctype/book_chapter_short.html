@@ -2,17 +2,6 @@
 {% load staticfiles %}
 
 
-{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
-
-{% if article.Authors %}
-	<span> : </span>
-{% endif %}
-
-{% if article.Title %}
-	<span><strong>{{ article.Title }}</strong></span>
-    <span>{% if article.Publisher or article.Publication_Location or article.Publication_Institution or article.Publication_Date %}; {% else %}. {% endif %}</span>
-{% endif %}
-
 {% if article.Publisher %}
 	<span><i>{{ article.Publisher }}</i></span>
 	{% if article.Publication_Location or article.Publication_Institution or article.Publication_Date %}

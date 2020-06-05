@@ -5,10 +5,10 @@
 {% if authors %}
 {% for author in authors|slice:":6" %}
 	{% if forloop.counter > 5 %}
-	<span> et al. </span>
+	&nbsp;<span class="infoscience_more_authors_element">et al.</span>
 	{% else %}
-	<span>{% if not forloop.first %}; {% endif %}</span>
-	<span>{% if options.link_authors %}<a href="{{ author.search_url }}" target="_blank">{%endif %}{{ author.initname }}{% if options.link_authors %}</a>{% endif %}</span>
+  {% if not forloop.first %}<span>; </span>{% endif %}
+	<span class="text-muted infoscience_author">{% if options.link_authors %}<a href="{{ author.search_url }}" target="_blank">{%endif %}{{ author.initname }}{% if options.link_authors %}</a>{% endif %}</span>
 	{% endif %}
 {% endfor %}
 {% endif %}

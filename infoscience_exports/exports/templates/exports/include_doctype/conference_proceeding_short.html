@@ -3,16 +3,13 @@
 
 
 {% if article.Authors_1 %}
-	{% include "exports/include_doctype/common/authors.html" with authors=article.Authors_1 %}
-	<span> : </span>
+  <p class="text-muted small mb-2 infoscience_authors">
+    {% include "exports/include_doctype/common/authors.html" with authors=article.Authors_1 %}
+  </p>
 {% elif article.Authors_3 %}
-	{% include "exports/include_doctype/common/authors.html" with authors=article.Authors_3 %}
-	<span> : </span>
-{% endif %}
-
-{% if article.Title %}
-	<span><strong>{{ article.Title }}</strong></span>
-	<span>{% if article.Publisher %} ; {% else %}. {% endif %}</span>
+  <p class="text-muted small mb-2 infoscience_authors">
+    {% include "exports/include_doctype/common/authors.html" with authors=article.Authors_3 %}
+  </p>
 {% endif %}
 
 {% if article.Publication_Date %}

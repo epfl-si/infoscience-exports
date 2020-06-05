@@ -2,18 +2,14 @@
 {% load staticfiles %}
 
 
-{% if article.Title %}
-<h3 class="infoscience_title">{{ article.Title }}</h3>
-{% endif %}
-
 {% if article.Authors_1 %}
-<p class="infoscience_authors">
-{% include "exports/include_doctype/common/authors.html" with authors=article.Authors_1 %}	
-</p>
+  <p class="text-muted small mb-2 infoscience_authors">
+    {% include "exports/include_doctype/common/authors.html" with authors=article.Authors_1 %}
+  </p>
 {% elif article.Authors_3 %}
-<p class="infoscience_authors">
-{% include "exports/include_doctype/common/authors.html" with authors=article.Authors_3 %}	
-</p>
+  <p class="text-muted small mb-2 infoscience_authors">
+    {% include "exports/include_doctype/common/authors.html" with authors=article.Authors_3 %}
+  </p>
 {% endif %}
 
 {% if article.Publication_Date %}

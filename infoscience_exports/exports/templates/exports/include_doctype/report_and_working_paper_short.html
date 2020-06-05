@@ -2,17 +2,6 @@
 {% load staticfiles %}
 
 
-{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}
-
-{% if article.Authors %}
-	<span> : </span>
-{% endif %}
-
-{% if article.Title %}
-	<span><strong>{{ article.Title }}</strong></span>
-	<span>. </span>
-{% endif %}
-
 {% if article.Publication_Date %}
 	<span>{{ article.Publication_Date }}</span>
 	<span>. </span>

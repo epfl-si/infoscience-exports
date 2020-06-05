@@ -2,16 +2,6 @@
 {% load staticfiles %}
 
 
-{% if article.Title %}
-<h3 class="infoscience_title">{{ article.Title }}</h3>
-{% endif %}
-
-{% if article.Authors %}
-<p class="infoscience_authors">
-{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
-</p>
-{% endif %}
-
 <p class="infoscience_host">
 
 {% if article.Publication_Location %}

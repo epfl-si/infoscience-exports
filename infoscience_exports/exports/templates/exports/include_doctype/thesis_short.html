@@ -2,24 +2,20 @@
 {% load staticfiles %}
 
 
-{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
-
-{% if article.Authors and options.adv_thesis_directors and article.Directors %}
-	<span> / </span>
-{% endif %}
-
-{% if options.adv_thesis_directors %}
-{% include "exports/include_doctype/common/authors.html" with authors=article.Directors %}
-<span> ({% trans "Dir." %}) </span>
-{% endif %}
-
+{% comment %}#TODO: fix/check complex author{% endcomment %}
 {% if article.Authors or options.adv_thesis_directors and article.Directors %}
-	<span> : </span>
-{% endif %}
+<p class="text-muted small mb-2 infoscience_authors">
+  {% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}
 
-{% if article.Title %}
-	<span><strong>{{ article.Title }}</strong></span>
-	<span>. </span>
+  {% if article.Authors and options.adv_thesis_directors and article.Directors %}
+    <span class="text-muted"> / </span>
+  {% endif %}
+
+  {% if options.adv_thesis_directors %}
+    {% include "exports/include_doctype/common/authors.html" with authors=article.Directors %}
+    <span class="text-muted"> ({% trans "Dir." %}) </span>
+  {% endif %}
+</p>
 {% endif %}
 
 {% if article.Publication_Location %}
