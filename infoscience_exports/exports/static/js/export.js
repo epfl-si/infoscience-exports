@@ -52,9 +52,8 @@ jQuery(function($) {
 		params['adv_book_chapter_doi'] = $("#id_show_book_chapter_doi").is(':checked');
 		params['adv_patent_status'] = $("#id_show_patent_status").is(':checked');
 
-        $.get(INFOSCIENCE_PATH+'/preview/', {params: params}, function (data) {
-            ($("#display-mrc21xml").html(data));
-        });
+		full_url = INFOSCIENCE_PATH + '/preview/?' + $.param(params);
+		$("#display-mrc21xml").attr("src", full_url);
     });
 
 	$('.fa-clipboard').click(function () {

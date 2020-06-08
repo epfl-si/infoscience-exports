@@ -1,5 +1,6 @@
 from urllib.parse import unquote
 
+from django.conf import settings
 from django.urls import reverse_lazy as django_reverse_lazy
 from django.http import HttpResponse
 from django.template import loader
@@ -155,39 +156,39 @@ def preview(request):
 
     options = {}
     options['is_extern'] = False
-    options['url'] = params['params[url]']
-    options['format'] = params['params[format]']
-    options['bullet'] = params['params[bullet]']
-    options['thumb'] = params['params[thumb]'] == 'true'
-    options['summary'] = params['params[summary]'] == 'true'
-    options['link_authors'] = params['params[link_authors]'] == 'true'
-    options['link_print'] = params['params[link_print]'] == 'true'
-    options['link_detailed'] = params['params[link_detailed]'] == 'true'
-    options['link_fulltext'] = params['params[link_fulltext]'] == 'true'
-    options['link_publisher'] = params['params[link_publisher]'] == 'true'
-    options['groupsby_all'] = params['params[groupsby_all]']
-    options['groupsby_year'] = params['params[groupsby_year]']
-    options['groupsby_doc'] = params['params[groupsby_doc]']
-    options['pending_publications'] = params['params[pending_publications]'] == 'true'
-    options['adv_article_volume'] = params['params[adv_article_volume]'] == 'true'
-    options['adv_article_volume_number'] = params['params[adv_article_volume_number]'] == 'true'
-    options['adv_article_volume_pages'] = params['params[adv_article_volume_pages]'] == 'true'
-    options['adv_thesis_directors'] = params['params[adv_thesis_directors]'] == 'true'
-    options['adv_thesis_pages'] = params['params[adv_thesis_pages]'] == 'true'
-    options['adv_report_working_papers_pages'] = params['params[adv_report_working_papers_pages]'] == 'true'
-    options['adv_conf_proceed_place'] = params['params[adv_conf_proceed_place]'] == 'true'
-    options['adv_conf_proceed_date'] = params['params[adv_conf_proceed_date]'] == 'true'
-    options['adv_conf_paper_journal_name'] = params['params[adv_conf_paper_journal_name]'] == 'true'
-    options['adv_book_isbn'] = params['params[adv_book_isbn]'] == 'true'
-    options['adv_book_doi'] = params['params[adv_book_doi]'] == 'true'
-    options['adv_book_chapter_isbn'] = params['params[adv_book_chapter_isbn]'] == 'true'
-    options['adv_book_chapter_doi'] = params['params[adv_book_chapter_doi]'] == 'true'
-    options['adv_patent_status'] = params['params[adv_patent_status]'] == 'true'
+    options['url'] = params['url']
+    options['format'] = params['format']
+    options['bullet'] = params['bullet']
+    options['thumb'] = params['thumb'] == 'true'
+    options['summary'] = params['summary'] == 'true'
+    options['link_authors'] = params['link_authors'] == 'true'
+    options['link_print'] = params['link_print'] == 'true'
+    options['link_detailed'] = params['link_detailed'] == 'true'
+    options['link_fulltext'] = params['link_fulltext'] == 'true'
+    options['link_publisher'] = params['link_publisher'] == 'true'
+    options['groupsby_all'] = params['groupsby_all']
+    options['groupsby_year'] = params['groupsby_year']
+    options['groupsby_doc'] = params['groupsby_doc']
+    options['pending_publications'] = params['pending_publications'] == 'true'
+    options['adv_article_volume'] = params['adv_article_volume'] == 'true'
+    options['adv_article_volume_number'] = params['adv_article_volume_number'] == 'true'
+    options['adv_article_volume_pages'] = params['adv_article_volume_pages'] == 'true'
+    options['adv_thesis_directors'] = params['adv_thesis_directors'] == 'true'
+    options['adv_thesis_pages'] = params['adv_thesis_pages'] == 'true'
+    options['adv_report_working_papers_pages'] = params['adv_report_working_papers_pages'] == 'true'
+    options['adv_conf_proceed_place'] = params['adv_conf_proceed_place'] == 'true'
+    options['adv_conf_proceed_date'] = params['adv_conf_proceed_date'] == 'true'
+    options['adv_conf_paper_journal_name'] = params['adv_conf_paper_journal_name'] == 'true'
+    options['adv_book_isbn'] = params['adv_book_isbn'] == 'true'
+    options['adv_book_doi'] = params['adv_book_doi'] == 'true'
+    options['adv_book_chapter_isbn'] = params['adv_book_chapter_isbn'] == 'true'
+    options['adv_book_chapter_doi'] = params['adv_book_chapter_doi'] == 'true'
+    options['adv_patent_status'] = params['adv_patent_status'] == 'true'
 
     options = get_notices(options)
-    c = {'options': options}
+    c = {'options': options, 'SITE_PATH': settings.SITE_PATH}
 
-    t = loader.get_template('exports/export.html')
+    t = loader.get_template('exports/export_complete.html')
     return HttpResponse(t.render(c))
 
 
