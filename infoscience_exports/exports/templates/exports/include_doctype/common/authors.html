@@ -8,7 +8,7 @@
 	&nbsp;<span class="infoscience_more_authors_element">et al.</span>
 	{% else %}
   {% if not forloop.first %}<span>; </span>{% endif %}
-	<span class="text-muted infoscience_author">{% if options.link_authors %}<a href="{{ author.search_url }}" target="_blank">{%endif %}{{ author.initname }}{% if options.link_authors %}</a>{% endif %}</span>
+	{% if options.link_authors %}<a class="text-muted infoscience_author" href="{{ author.search_url }}" target="_blank">{%endif %}{{ author.initname }}{% if options.link_authors %}</a>{% endif %}
 	{% endif %}
 {% endfor %}
 {% endif %}
