@@ -135,10 +135,15 @@ def validate_url(url):
     url = modify_url(url, queries, "sf", "year", True)
     url = modify_url(url, queries, "so", "d", False)
 
-    if 'rg' in queries and queries['rg'][0] == '10':
-        url = url.replace("rg=10", "rg=" + str(settings.RANGE_DISPLAY))
+    if settings.RANGE_DISPLAY:
+        max_limit = settings.RANGE_DISPLAY
+    else:
+        max_limit = 100  # should be a good limit by default
+
+    if 'rg' in queries and queries['rg'][0] == '10':   #HACK: 10 = meaning we have the default, so we want more
+        url = url.replace("rg=10", "rg=" + str(max_limit))
     elif '&rg=' not in url:
-        url = url + "&rg=" + str(settings.RANGE_DISPLAY)
+        url = url + "&rg=" + str(max_limit)
 
     return url
 
