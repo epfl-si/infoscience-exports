@@ -277,7 +277,7 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_record = parse_dict(record.as_dict())
         dict_result['Id'] = dict_record['control_number']
         dict_result['Infoscience_URL'] = "{}/record/{}".format(
-            settings.SITE_DOMAIN, dict_record['control_number'])
+            '//infoscience.epfl.ch', dict_record['control_number'])
         dict_result['ELA_Icon'] = dict_record['electronic_location_access']['icon']
         dict_result['ELA_URL'] = dict_record['electronic_location_access']['fulltexts']
         dict_result['DOI'] = dict_record['other_standard_identification_doi']
