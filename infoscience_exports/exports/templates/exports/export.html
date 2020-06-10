@@ -5,9 +5,17 @@
 <!-- {{ SITE_DOMAIN }}{{ request.path }} -->
 <!-- VERSION:{{ VERSION }} BUILD:{{ BUILD }} -->
 
-<!-- TODO: add debug vars
- epfl_infoscience_search params &  epfl_infoscience_search used url
- {{ options.url }}
+<!--
+Export url :
+{{ options.url }}
+-->
+<!--
+Export parameters:
+{% for key, value in options.items %}
+{% if key != "marc21xml" and key != "url" %}
+{{ key }}="{{ value }}";
+{% endif %}
+{% endfor %}
 -->
 
 
