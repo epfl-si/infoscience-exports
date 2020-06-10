@@ -120,7 +120,11 @@ class ExportRenderTest(TransactionTestCase):
     def setUpExport(self, url='https://infoscience.epfl.ch/search?ln=en&p=vetterli&f=&sf=&so=d&rg=2'):
         #'https://infoscience.epfl.ch/search?ln=en&p=article&f=&sf=&so=d&rg=10'
         self.url = url
-        self.mpl = ExportFactory(url=url, formats_type="DETAILED")
+        self.mpl = ExportFactory(url=url,
+                                 formats_type="DETAILED",
+                                 groupsby_type="DOC_TITLE",
+                                 groupsby_year="YEAR_TITLE"
+                                 )
 
         pk = self.mpl.pk
         self.client.force_login(self.mpl.user)
