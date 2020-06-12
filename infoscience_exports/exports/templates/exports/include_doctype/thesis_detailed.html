@@ -2,7 +2,6 @@
 {% load staticfiles %}
 
 
-{% comment %}#TODO: fix/check complex author{% endcomment %}
 {% if article.Authors or options.adv_thesis_directors and article.Directors %}
 <p class="text-muted small mb-2 infoscience_authors">
 	{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}
@@ -18,30 +17,39 @@
 </p>
 {% endif %}
 
+{% if options.summary and article.Summary %}
+  <p class="text-muted small infoscience_abstract tex2jax_process">{{ article.Summary }}</p>
+{% endif %}
+
 {% if article.Publication_Location or article.Publication_Institution or article.Publication_Date %}
-	<p class="infoscience_host">
+<span class="text-muted small mb-0">
+  <span class="infoscience_host">
 {% endif %}
 
-{% if article.Publication_Location %}
-	<span>{{ article.Publication_Location }}</span>
-	<span>{% if article.Publication_Institution or article.Publication_Date %}, {% else %}. {% endif %}</span>
-{% endif %}
+  {% if article.Publication_Location %}
+    <span>{{ article.Publication_Location }}</span>
+    <span>{% if article.Publication_Institution or article.Publication_Date %}, {% else %}. {% endif %}</span>
+  {% endif %}
 
-{% if article.Publication_Institution %}
-	<span>{{ article.Publication_Institution }}</span>
-	<span>{% if article.Publication_Date %}, {% else %}. {% endif %}</span>
-{% endif %}
+  {% if article.Publication_Institution %}
+    <span>{{ article.Publication_Institution }}</span>
+    <span>{% if article.Publication_Date %}, {% else %}. {% endif %}</span>
+  {% endif %}
 
-{% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}. </span>
-{% endif %}
+  {% if article.Publication_Date %}
+    <span>{{ article.Publication_Date }}. </span>
+  {% endif %}
 
-{% if options.adv_thesis_pages and article.Publication_Pages %}
-	<span>{% trans "p." %} {{ article.Publication_Pages }}. </span>
-{% endif %}
+  {% if options.adv_thesis_pages and article.Publication_Pages %}
+    <span>{% trans "p." %} {{ article.Publication_Pages }}. </span>
+  {% endif %}
 
-{% if article.Publication_Location or article.Publication_Institution or article.Publication_Date %}</p>{% endif %}
+{% if article.Publication_Location or article.Publication_Institution or article.Publication_Date %}
+  </span>
 
 {% if article.DOI %}
-	<p>{% trans "DOI" %} : {{ article.DOI }}.</p>
+  <p class="mb-1 mt-1 infoscience_doi">{% trans "DOI" %} : {{ article.DOI }}.</p>
+{% endif %}
+
+</span>
 {% endif %}
