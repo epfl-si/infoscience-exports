@@ -117,13 +117,14 @@ class ExportTest(TransactionTestCase):
 
 
 class ExportRenderTest(TransactionTestCase):
-    def setUpExport(self, url='https://infoscience.epfl.ch/search?ln=en&p=vetterli&f=&sf=&so=d&rg=2'):
+    def setUpExport(self, url='https://infoscience.epfl.ch/search?as=1&fieldrestriction=any&ln=en&of=xm&p=037__a%3A%27ARTICLE%27&rg=12&sf=year&so=d'):
         #'https://infoscience.epfl.ch/search?ln=en&p=article&f=&sf=&so=d&rg=10'
         self.url = url
         self.mpl = ExportFactory(url=url,
-                                 formats_type="DETAILED",
+                                 formats_type="SHORT",
                                  groupsby_type="DOC_TITLE",
-                                 groupsby_year="YEAR_TITLE"
+                                 groupsby_year="YEAR_TITLE",
+                                 show_linkable_authors=True
                                  )
 
         pk = self.mpl.pk
