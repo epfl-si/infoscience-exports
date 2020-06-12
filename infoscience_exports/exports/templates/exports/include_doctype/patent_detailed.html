@@ -2,43 +2,45 @@
 {% load staticfiles %}
 
 
-<p class="infoscience_host">
+<span class="text-muted small mb-0">
+  <span class="infoscience_host">
 
-{% if article.Corporate_Name %}
-	<span>{{ article.Corporate_Name.0 }}</span>
-	{% if article.Company_Name %}
-	<span> / </span>
-	{% else %}
-	<span>: </span>
-	{% endif %}
-{% endif %}
+  {% if article.Corporate_Name %}
+    <span class="infoscience_publication_corporate_name">{{ article.Corporate_Name.0 }}</span>
+    {% if article.Company_Name %}
+    <span> / </span>
+    {% else %}
+    <span>: </span>
+    {% endif %}
+  {% endif %}
 
-{% if article.Company_Name %}
-	<span>{{ article.Company_Name }}</span>
-	{% if article.Publication_Date %}
-	<span>: </span>
-	{% else %}
-	<span>. </span>
-	{% endif %}
-{% endif %}
+  {% if article.Company_Name %}
+    <span class="infoscience_publication_company_name">{{ article.Company_Name }}</span>
+    {% if article.Publication_Date %}
+    <span>: </span>
+    {% else %}
+    <span>. </span>
+    {% endif %}
+  {% endif %}
 
-{% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}. </span>
-{% endif %}
-</p>
+  {% if article.Publication_Date %}
+    <p class="infoscience_publication_date">{{ article.Publication_Date }}. </p>
+  {% endif %}
+  </p>
 
-{% if article.Patents %}
-<p>
-	<div>
-		<div class="patent-patents-list-left">
-			<span>{% trans "Patent number(s)" %} :</span>
-		</div>
-		<div class="patent-patents-list-right">
-			{% for patent in article.Patents %}
-			<span>{{ patent.a }} {% if options.adv_patent_status and patent.c %}({{ patent.c }}){% endif %}</span><br />
-			{% endfor %}			
-		</div>
-	</div>
-</p>
-{% endif %}
-
+  {% if article.Patents %}
+  <p>
+    <div>
+      <div>
+        <span>{% trans "Patent number(s)" %} :</span>
+      </div>
+      <div>
+        {% for patent in article.Patents %}
+        <span class="infoscience_publication_patent_number">{{ patent.a }} {% if options.adv_patent_status and patent.c %}({{ patent.c }}){% endif %}</span><br />
+        {% endfor %}
+      </div>
+    </div>
+  </p>
+  {% endif %}
+  </span>
+</span>
