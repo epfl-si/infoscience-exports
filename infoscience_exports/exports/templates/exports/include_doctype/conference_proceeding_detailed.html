@@ -13,23 +13,24 @@
 {% endif %}
 
 {% if article.Publication_Date %}
-	<p>{{ article.Publication_Date }}.</p>
+  <p class="text-muted small mb-0 infoscience_publication_date">{{ article.Publication_Date }}.</p>
 {% endif %}
 
-<p class="infoscience_host">
+<span class="text-muted small mb-0">
+  <span class="infoscience_host">
 
-{% if article.Conference_Meeting_Name %}
-	<span>{{ article.Conference_Meeting_Name }}</span>
-	<span>{% if options.adv_conf_proceed_place and article.Conference_Meeting_Location or options.adv_conf_proceed_date and article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
-{% endif %}
+  {% if article.Conference_Meeting_Name %}
+    <span class="infoscience_conference_name">{{ article.Conference_Meeting_Name }}</span>
+    <span>{% if options.adv_conf_proceed_place and article.Conference_Meeting_Location or options.adv_conf_proceed_date and article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
+  {% endif %}
 
-{% if options.adv_conf_proceed_place and article.Conference_Meeting_Location %}
-	<span>{{ article.Conference_Meeting_Location }}</span>
-	<span>{% if options.adv_conf_proceed_date and article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
-{% endif %}
+  {% if options.adv_conf_proceed_place and article.Conference_Meeting_Location %}
+    <span class="infoscience_conference_location">{{ article.Conference_Meeting_Location }}</span>
+    <span>{% if options.adv_conf_proceed_date and article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
+  {% endif %}
 
-{% if options.adv_conf_proceed_date and article.Conference_Meeting_Date %}
-	<span>{{ article.Conference_Meeting_Date }}.</span>
-{% endif %}
-
-</p>
+  {% if options.adv_conf_proceed_date and article.Conference_Meeting_Date %}
+    <span class="infoscience_conference_date">{{ article.Conference_Meeting_Date }}.</span>
+  {% endif %}
+  </span>
+</span>
