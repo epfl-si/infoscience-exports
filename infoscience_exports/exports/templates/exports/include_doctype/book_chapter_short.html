@@ -1,9 +1,9 @@
 {% load i18n %}
 {% load staticfiles %}
 
-
+<span class="text-muted small mb-0">
 {% if article.Publisher %}
-	<span><i>{{ article.Publisher }}</i></span>
+	<span class="infoscience_publication_publisher"><i>{{ article.Publisher }}</i></span>
 	{% if article.Publication_Location or article.Publication_Institution or article.Publication_Date %}
 		<span>; </span>
 	{% else %}
@@ -12,7 +12,7 @@
 {% endif %}
 
 {% if article.Publication_Location %}
-	<span>{{ article.Publication_Location }}</span>
+	<span class="infoscience_publication_location">{{ article.Publication_Location }}</span>
 	{% if article.Publication_Institution %}
 		<span>: </span>
 	{% elif article.Publication_Date %}
@@ -23,7 +23,7 @@
 {% endif %}
 
 {% if article.Publication_Institution %}
-	<span>{{ article.Publication_Institution }}</span>
+	<span class="infoscience_publication_institution">{{ article.Publication_Institution }}</span>
 	{% if article.Publication_Date %}
 		<span>, </span>
 	{% else %}
@@ -32,7 +32,7 @@
 {% endif %}
 
 {% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}. </span>
+	<span class="infoscience_publication_date">{{ article.Publication_Date }}. </span>
 {% endif %}
 
 {% if article.Publisher_Volume_Pages %}
@@ -47,8 +47,8 @@
 	<span>. </span>
 {% endif %}
 
+</span>
+
 {% if options.adv_book_chapter_doi and article.DOI %}
-	<span>{% trans "DOI" %} : {{ article.DOI }}.</span>
+	<p class="text-muted small mb-0 infoscience_doi">{% trans "DOI" %} : {{ article.DOI }}.</p>
 {% endif %}
-
-
