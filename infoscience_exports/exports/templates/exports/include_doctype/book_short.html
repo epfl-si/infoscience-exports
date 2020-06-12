@@ -2,44 +2,43 @@
 {% load staticfiles %}
 
 
-{% if article.Publication_Location %}
-	<span>{{ article.Publication_Location }}</span>
-	{% if article.Publication_Institution or options.article.Publication_Date %}
-		<span>: </span>
-	{% elif options.adv_book_isbn and article.ISBN %}
-		<span> - </span>
-	{% else %}
-		<span>. </span>		
-	{% endif %}
-{% endif %}
+<span class="text-muted small mb-0">
+  {% if article.Publication_Location %}
+    <span class="infoscience_publication_location">{{ article.Publication_Location }}</span>
+    {% if article.Publication_Institution or options.article.Publication_Date %}
+      <span>: </span>
+    {% elif options.adv_book_isbn and article.ISBN %}
+      <span> - </span>
+    {% else %}
+      <span>. </span>
+    {% endif %}
+  {% endif %}
 
-{% if article.Publication_Institution %}
-	<span>{{ article.Publication_Institution }}</span>
-	{% if options.article.Publication_Date %}
-		<span>, </span>
-	{% elif options.adv_book_isbn and article.ISBN %}
-		<span> - </span>
-	{% else %}
-		<span>. </span>		
-	{% endif %}
-{% endif %}
+  {% if article.Publication_Institution %}
+    <span class="infoscience_publication_institution">{{ article.Publication_Institution }}</span>
+    {% if options.article.Publication_Date %}
+      <span>, </span>
+    {% elif options.adv_book_isbn and article.ISBN %}
+      <span> - </span>
+    {% else %}
+      <span>. </span>
+    {% endif %}
+  {% endif %}
 
-{% if options.article.Publication_Date %}
-	<span>{{ article.Publication_Date }}</span>
-	{% if options.adv_book_isbn and article.ISBN %}
-		<span> - </span>
-	{% else %}
-		<span>. </span>
-	{% endif %}
-{% endif %}
+  {% if options.article.Publication_Date %}
+    <span class="infoscience_publication_date">{{ article.Publication_Date }}</span>
+    {% if options.adv_book_isbn and article.ISBN %}
+      <span> - </span>
+    {% else %}
+      <span>. </span>
+    {% endif %}
+  {% endif %}
+</span>
 
 {% if options.adv_book_isbn and article.ISBN %}
-	<span>{{ article.ISBN }}</span>
-	<span>. </span>
+	<span class="text-muted small infoscience_isbn">{{ article.ISBN }}</span>
 {% endif %}
 
 {% if options.adv_book_doi and article.DOI %}
-	<span>{% trans "DOI" %} : {{ article.DOI }}.</span>
+	<p class="text-muted small infoscience_doi">{% trans "DOI" %} : {{ article.DOI }}.</p>
 {% endif %}
-
-
