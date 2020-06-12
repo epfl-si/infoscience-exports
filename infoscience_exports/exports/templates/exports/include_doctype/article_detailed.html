@@ -1,33 +1,34 @@
 {% load i18n %}
 {% load staticfiles %}
 
+<span class="text-muted small mb-0">
+  <span class="infoscience_host">
 
-<p class="infoscience_host">
+  {% if article.Publisher %}
+    <p class="mb-0 infoscience_journal_publisher"><i>{{ article.Publisher }}</i></p>
+  {% endif %}
 
-{% if article.Publisher %}
-	<span><i>{{ article.Publisher }}</i>. </span>
-{% endif %}
+  {% if article.Publication_Date %}
+    <p class="mb-0 infoscience_publication_date">{{ article.Publication_Date }}</p>
+  {% endif %}
 
-{% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}. </span>
-{% endif %}
+  {% if options.adv_article_volume and article.Publisher_Volume %}
+    <span class="infoscience_journal_volume">{% trans "Vol." %} {{ article.Publisher_Volume }}</span>
+    <span>{% if options.adv_article_volume_number and article.Publisher_Volume_Number or options.adv_article_volume_pages and article.Publisher_Volume_Pages %}, {% else %}. {% endif %}</span>
+  {% endif %}
 
-{% if options.adv_article_volume and article.Publisher_Volume %}
-	<span>{% trans "Vol." %} {{ article.Publisher_Volume }}</span> 
-	<span>{% if options.adv_article_volume_number and article.Publisher_Volume_Number or options.adv_article_volume_pages and article.Publisher_Volume_Pages %}, {% else %}. {% endif %}</span>
-{% endif %}
+  {% if options.adv_article_volume_number and article.Publisher_Volume_Number %}
+    <span class="infoscience_journal_volume_number">{% trans "num." %} {{ article.Publisher_Volume_Number }}</span>
+    <span>{% if options.adv_article_volume_pages and article.Publisher_Volume_Pages %}, {% else %}. {% endif %}</span>
+  {% endif %}
 
-{% if options.adv_article_volume_number and article.Publisher_Volume_Number %}
-	<span>{% trans "num." %} {{ article.Publisher_Volume_Number }}</span>
-	<span>{% if options.adv_article_volume_pages and article.Publisher_Volume_Pages %}, {% else %}. {% endif %}</span>
-{% endif %}
-
-{% if options.adv_article_volume_pages and article.Publisher_Volume_Pages %}
-	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}. </span>
-{% endif %}
-</p>
+  {% if options.adv_article_volume_pages and article.Publisher_Volume_Pages %}
+    <span class="mb-0 infoscience_journal_page">{% trans "p." %} {{ article.Publisher_Volume_Pages }}. </span>
+  {% endif %}
+  </span>
 
 {% if article.DOI %}
-<p>{% trans "DOI" %} : {{ article.DOI }}.</p>
+<p class="mb-1 mt-1 infoscience_doi">{% trans "DOI" %} : {{ article.DOI }}</p>
 {% endif %}
 
+</span>
