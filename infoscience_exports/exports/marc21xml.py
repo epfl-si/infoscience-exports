@@ -22,8 +22,8 @@ class Author:
 
     def __init__(self, author):
         self.fullname = author
-        self.search_url = "{}/search?p={}".format(
-            settings.SITE_DOMAIN, author.replace(",", "+").replace(" ", "+"))
+        self.search_url = "https://infoscience.epfl.ch/search?p={}".format(
+                                author.replace(",", "+").replace(" ", "+"))
         self.initname = self.compute_name()
 
     def compute_name(self):
