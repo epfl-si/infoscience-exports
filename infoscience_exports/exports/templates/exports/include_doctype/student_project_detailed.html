@@ -2,10 +2,12 @@
 {% load staticfiles %}
 
 
-<p class="infoscience_host">
+<span class="text-muted small mb-0">
+  <span class="infoscience_host">
 
-{% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}.</span>
-{% endif %}
+  {% if article.Publication_Date %}
+    <span class="infoscience_publication_date">{{ article.Publication_Date }}</span>
+  {% endif %}
 
-</p>
+  </span>
+</span>
