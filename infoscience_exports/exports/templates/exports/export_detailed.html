@@ -34,11 +34,15 @@
             <h4 class="h5 tex2jax_process infoscience_title">{{ article.Title }}</h4>
           {% endif %}
 
-          {% if article.Doc_Type != 'Conference Proceedings' or article.Doc_Type != 'Theses' %}
+          {% if article.Doc_Type != 'Conference Proceedings' and article.Doc_Type != 'Theses' %}
             {% if article.Authors %}
             <p class="text-muted small mb-2 infoscience_authors">
             {% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}
             </p>
+            {% endif %}
+
+            {% if options.summary and article.Summary %}
+              <p class="text-muted small mb-1 infoscience_abstract tex2jax_process">{{ article.Summary }}</p>
             {% endif %}
           {% endif %}
 
@@ -68,21 +72,20 @@
 							{% include "exports/include_doctype/book_chapter_detailed.html" with article=article %}
                         {% elif article.Doc_Type == 'Patents' %}
 							{% include "exports/include_doctype/patent_detailed.html" with article=article %}
+
 						{% else %}
 
 							{% if article.Publication_Date %}
-							<p>{{ article.Publication_Date }}.</p>
+            <p class="text-muted small infoscience_publication_date">{{ article.Publication_Date }}.</p>
 							{% endif %}
 
 						{% endif %}
+          </div>
 
-						{% if options.summary and article.Summary %}
-							<p class="infoscience_abstract">{{ article.Summary }}</p>
-						{% endif %}
-					</div>
           <div class="col-md-2 text-right mt-4 mt-md-0">
 					{% include "exports/include_doctype/common/links-bar.html" %}
           </div>
+
 				</div>
 			</div>
 		{% endif %}

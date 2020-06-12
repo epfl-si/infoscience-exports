@@ -26,9 +26,9 @@
     <span class="mb-0 infoscience_journal_page">{% trans "p." %} {{ article.Publisher_Volume_Pages }}. </span>
   {% endif %}
   </span>
+</span>
 
 {% if article.DOI %}
-<p class="mb-1 mt-1 infoscience_doi">{% trans "DOI" %} : {{ article.DOI }}</p>
+<p class="text-muted small infoscience_doi">{% trans "DOI" %} : {{ article.DOI }}</p>
 {% endif %}
 
-</span>
