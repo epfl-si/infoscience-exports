@@ -1,21 +1,20 @@
 {% load i18n %}
 {% load staticfiles %}
 
+<span class="text-muted small mb-0">
+  <span class="infoscience_host">
+    {% if article.Publication_Date %}
+      <p class="mb-0 infoscience_publication_date">{{ article.Publication_Date }}</p>
+    {% endif %}
 
-<p class="infoscience_host">
+  {% if options.adv_report_working_papers_pages and article.Publication_Pages %}
+    <span>{% trans "p." %} {{ article.Publication_Pages }}. </span>
+  {% endif %}
 
-{% if article.Publication_Date %}
-	<span>{{ article.Publication_Date }}. </span>
-{% endif %}
+  </span>
 
-{% if options.adv_report_working_papers_pages and article.Publication_Pages %}
-	<span>{% trans "p." %} {{ article.Publication_Pages }}. </span>
-{% endif %}
-
-</p>
-
-{% if article.Local_Url_Link %}
-	<p><a href="{{ article.Local_Url_Link }}" target="_blank">{{ article.Local_Url_Link }}</a>.</p>
-{% endif %}
-
+  {% if article.Local_Url_Link %}
+    <p><a href="{{ article.Local_Url_Link }}" target="_blank" class="text-muted small infoscience_publication_work_link">{{ article.Local_Url_Link }}</a></p>
+  {% endif %}
+</span>
 
