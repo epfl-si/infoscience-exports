@@ -2,7 +2,6 @@
 {% load staticfiles %}
 
 
-{% comment %}#TODO: fix/check complex author{% endcomment %}
 {% if article.Authors or options.adv_thesis_directors and article.Directors %}
 <p class="text-muted small mb-2 infoscience_authors">
   {% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}
