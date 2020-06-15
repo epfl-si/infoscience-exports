@@ -17,19 +17,22 @@
 			<h2 class="h3 mt-1 mb-2">{{ article.title }}</h2>
 			{% endif %}
 		{% else %}
-			{% if options.bullet != 'NONE' %}
-			<div class="list-group-item list-group-item-publication infoscience_record_bulleted">
-				<span class="infoscience_bullet">{{ article.bulleting }}</span>
-			{% else %}
-			<div class="list-group-item list-group-item-publication">
-			{% endif %}
+      <div class="list-group-item list-group-item-publication">
 				<div class="row">
 					<div class="col-md-10">
           {% if options.thumb and article.ELA_Icon %}
             <a href="{{ article.ELA_Icon }}" target="_blank"><img style="max-width:80px;" src="{{ article.ELA_Icon }}" class="float-left mr-3 infoscience_publication_illustration" alt="publication thumbnail"></a>
           {% endif %}
-          {% if article.Title %}
-            <h4 class="h5 tex2jax_process infoscience_title">{{ article.Title }}</h4>
+          {% if options.bullet != 'NONE' %}
+            {% if article.Title %}
+              <h4 class="h5 "><span class="infoscience_bullet">{{ article.bulleting }}</span>&nbsp;<span class="infoscience_title tex2jax_process">{{ article.Title }}</span></h4>
+            {% else %}
+              <h4 class="h5 "><span class="infoscience_bullet">{{ article.bulleting }}</span></h4>
+            {% endif %}
+          {% else %}
+            {% if article.Title %}
+              <h4 class="h5 tex2jax_process infoscience_title">{{ article.Title }}</h4>
+            {% endif %}
           {% endif %}
 
           {% if article.Doc_Type != 'Conference Proceedings' and article.Doc_Type != 'Theses' %}
