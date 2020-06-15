@@ -4,7 +4,7 @@ from exports.marc21xml import Author
 
 
 def expected_url(name):
-    return "{}/search?p={}".format(settings.SITE_DOMAIN, name)
+    return "{}/search?p={}".format("https://infoscience.epfl.ch", name)
 
 
 def test_standard_case():
