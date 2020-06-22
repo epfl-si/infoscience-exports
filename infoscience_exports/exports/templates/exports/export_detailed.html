@@ -8,23 +8,45 @@
 	{% for groups in titles %}
 	{% if forloop.first %}
 		{% if options.group_title %}
-		<h1 class="infoscience_header1">{{ groups.title }}</h1>
+      <h1 class="h2 mt-3">{{ groups.title }}</h1>
 		{% endif %}
 	{% else %}
 		{% for article in groups %}
 		{% if forloop.first %}
 			{% if options.subgroup_title %}
-			<h2 class="infoscience_header2">{{ article.title }}</h2>
+        <h2 class="h3 mt-1 mb-2">{{ article.title }}</h2>
 			{% endif %}
 		{% else %}
-			{% if options.bullet != 'NONE' %}
-			<div class="infoscience_record infoscience_record_bulleted">
-				<span class="infoscience_bullet">{{ article.bulleting }}</span>
-			{% else %}
-			<div class="infoscience_record">
-			{% endif %}
-				<div class="infoscience_data">
-					<div class="record-content">
+      <div class="list-group-item list-group-item-publication">
+				<div class="row">
+					<div class="col-md-10">
+          {% if options.thumb and article.ELA_Icon %}
+            <a href="{{ article.ELA_Icon }}" target="_blank"><img style="max-width:80px;" src="{{ article.ELA_Icon }}" class="float-left mr-3 infoscience_publication_illustration" alt="publication thumbnail"></a>
+          {% endif %}
+          {% if options.bullet != 'NONE' %}
+            {% if article.Title %}
+              <h4 class="h5 "><span class="infoscience_bullet">{{ article.bulleting }}</span>&nbsp;<span class="infoscience_title tex2jax_process">{{ article.Title }}</span></h4>
+            {% else %}
+              <h4 class="h5 "><span class="infoscience_bullet">{{ article.bulleting }}</span></h4>
+            {% endif %}
+          {% else %}
+            {% if article.Title %}
+              <h4 class="h5 tex2jax_process infoscience_title">{{ article.Title }}</h4>
+            {% endif %}
+          {% endif %}
+
+          {% if article.Doc_Type != 'Conference Proceedings' and article.Doc_Type != 'Theses' %}
+            {% if article.Authors %}
+            <p class="text-muted small mb-2 infoscience_authors">
+            {% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}
+            </p>
+            {% endif %}
+
+            {% if options.summary and article.Summary %}
+              <p class="text-muted small mb-1 infoscience_abstract tex2jax_process">{{ article.Summary }}</p>
+            {% endif %}
+          {% endif %}
+
                         {% if article.Doc_Type == 'Journal Articles' %}
 							{% include "exports/include_doctype/article_detailed.html" with article=article %}
                         {% elif article.Doc_Type == 'Reviews' %}
@@ -51,30 +73,19 @@
 							{% include "exports/include_doctype/book_chapter_detailed.html" with article=article %}
                         {% elif article.Doc_Type == 'Patents' %}
 							{% include "exports/include_doctype/patent_detailed.html" with article=article %}
+
 						{% else %}
 
-							{% if article.Title %}
-							<h3 class="infoscience_title">{{ article.Title }}</h3>
-							{% endif %}
-
-							{% if article.Authors %}
-							<p class="infoscience_authors">
-							{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
-							</p>
-							{% endif %}	
-
 							{% if article.Publication_Date %}
-							<p>{{ article.Publication_Date }}.</p>
+            <p class="text-muted small infoscience_publication_date">{{ article.Publication_Date }}.</p>
 							{% endif %}
 
 						{% endif %}
+          </div>
 
-						{% if options.summary and article.Summary %}
-							<p class="infoscience_abstract">{{ article.Summary }}</p>
-						{% endif %}
-					</div>
-					
+          <div class="col-md-2 text-right mt-4 mt-md-0">
 					{% include "exports/include_doctype/common/links-bar.html" %}
+          </div>
 
 				</div>
 			</div>

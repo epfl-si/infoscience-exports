@@ -20,8 +20,19 @@ jQuery(function($) {
 		$('#export_form').submit();
     });
 
+	$('#display-mrc21xml').ready(function () {
+		$('#display-mrc21xml-loading').hide();
+		$("#display-mrc21xml").show();
+	});
+
+	$('#display-mrc21xml').load(function () {
+		$('#display-mrc21xml-loading').hide();
+		$("#display-mrc21xml").show();
+	});
+
 	$('#btn-preview').click(function () {
-		$("#display-mrc21xml").html('<div class="alert alert-info" role="alert"><span>'+$("#display-mrc21xml").attr('data-progress')+'</span></div>');
+		$('#display-mrc21xml-loading').show();
+		$("#display-mrc21xml").hide();
 		var params = {};
         params['url'] = $("#id_url").val();
 		params['format'] = $("#id_formats_type").find(":selected").val();
@@ -52,9 +63,8 @@ jQuery(function($) {
 		params['adv_book_chapter_doi'] = $("#id_show_book_chapter_doi").is(':checked');
 		params['adv_patent_status'] = $("#id_show_patent_status").is(':checked');
 
-        $.get(INFOSCIENCE_PATH+'/preview/', {params: params}, function (data) {
-            ($("#display-mrc21xml").html(data));
-        });
+		full_url = INFOSCIENCE_PATH + '/preview/?' + $.param(params);
+		$("#display-mrc21xml").attr("src", full_url);
     });
 
 	$('.fa-clipboard').click(function () {

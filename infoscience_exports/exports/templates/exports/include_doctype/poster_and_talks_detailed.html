@@ -2,32 +2,22 @@
 {% load staticfiles %}
 
 
-{% if article.Title %}
-<h3 class="infoscience_title">{{ article.Title }}</h3>
-{% endif %}
+<span class="text-muted small mb-0">
+  <span class="infoscience_host">
 
-{% if article.Authors %}
-<p class="infoscience_authors">
-{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
-</p>
-{% endif %}
+  {% if article.Conference_Meeting_Name %}
+    <span class="infoscience_conference_name">{{ article.Conference_Meeting_Name }}</span>
+    <span>{% if article.Conference_Meeting_Location or article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
+  {% endif %}
 
-<p class="infoscience_host">
+  {% if article.Conference_Meeting_Location %}
+    <span class="infoscience_conference_location">{{ article.Conference_Meeting_Location }}</span>
+    <span>{% if article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
+  {% endif %}
 
-{% if article.Conference_Meeting_Name %}
-	<span>{{ article.Conference_Meeting_Name }}</span>
-	<span>{% if article.Conference_Meeting_Location or article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
-{% endif %}
+  {% if article.Conference_Meeting_Date %}
+    <span class="infoscience_conference_date">{{ article.Conference_Meeting_Date }}.</span>
+  {% endif %}
 
-{% if article.Conference_Meeting_Location %}
-	<span>{{ article.Conference_Meeting_Location }}</span>
-	<span>{% if article.Conference_Meeting_Date %}, {% else %}. {% endif %}</span>
-{% endif %}
-
-{% if article.Conference_Meeting_Date %}
-	<span>{{ article.Conference_Meeting_Date }}.</span>
-{% endif %}
-
-</p>
-
-
+  </span>
+</span>

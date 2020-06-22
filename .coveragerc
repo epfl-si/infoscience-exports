@@ -1,10 +1,10 @@
 [run]
 branch = True
 
-include = 
+include =
     ./infoscience_exports/*.py
 
-omit = 
+omit =
     */migrations/*,
     */test/*,
     */pytests/*,

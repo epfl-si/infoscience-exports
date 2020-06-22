@@ -3,7 +3,15 @@ from exports import views
 
 export_patterns = ([
     url(r'^$', views.ExportList.as_view(), name='export-list'),
-    url(r'^(?P<pk>\d+)/$', views.ExportView.as_view(), name='export-view'),
+
+    url(r'^(?P<pk>\d+)/$',
+        views.ExportView.as_view(template_name="exports/export.html"),
+        name='export-view'),
+
+    url(r'^(?P<pk>\d+)/old/$',
+        views.ExportView.as_view(template_name="exports_2010/export.html"),
+        name='export-2010-view'),
+
     url(r'^new/$', views.ExportCreate.as_view(), name='export-create'),
     url(r'^(?P<pk>\d+)/update/$', views.ExportUpdate.as_view(), name='export-update'),
     url(r'^(?P<pk>\d+)/delete/$', views.ExportDelete.as_view(), name='export-delete'),

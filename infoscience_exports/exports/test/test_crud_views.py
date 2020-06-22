@@ -1,5 +1,11 @@
+import re
+
+from pathlib import Path
+from lxml.html.diff import htmldiff
+
 from django.test import TransactionTestCase
 from django.urls import reverse
+
 from .factories import ExportFactory, ExportInMemoryFactory
 from ..models import Export
 
@@ -110,3 +116,55 @@ class ExportTest(TransactionTestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertFalse(Export.objects.filter(pk=pk).exists())
+
+# This tests are inactivated, as there are us mainly to test the generate the final render ("./html/export_rendered.html")
+class ExportRenderTest(TransactionTestCase):
+    def setUpExport(self, url='https://infoscience.epfl.ch/search?as=1&fieldrestriction=any&ln=en&of=xm&p=037__a%3A%27ARTICLE%27&rg=5&sf=year&so=d'):
+        #'https://infoscience.epfl.ch/search?ln=en&p=article&f=&sf=&so=d&rg=10'
+        self.url = url
+        self.mpl = ExportFactory(url=url,
+                                 formats_type="SHORT",
+                                 groupsby_type="DOC_TITLE",
+                                 groupsby_year="YEAR_TITLE",
+                                 show_linkable_authors=True
+                                 )
+
+        pk = self.mpl.pk
+        self.client.force_login(self.mpl.user)
+
+        response = self.client.get(reverse('crud:export-view', kwargs={'pk': pk, }))
+        self.assertEqual(response.status_code, 200)
+        self.rendered_html = response.content.decode("utf-8")
+
+        # for debugging porpose, better write down the file
+        export_html_file = Path(__file__).resolve().parent / "html" / "export_rendered.html"
+        export_html_file.write_text(self.rendered_html)
+
+    def setUp(self):
+        self.setUpExport()
+
+    def test_limit_is_applied(self):
+        limit_in_url_expression = r'(&rg=)([0-9]+)'
+        match = re.search(limit_in_url_expression, self.url)
+        self.assertTrue(match)
+        self.assertEqual(self.rendered_html.count('<div class="row">'), int(match.group(2)))
+
+
+    def test_new_render_view(self):
+        """
+        Test final html rendered by comparing with a reference file.
+        Write the result into ./rendered/export.html
+        """
+        ref_render_html = (Path(__file__).resolve().parent / 'new_ref_render.html').read_text()
+
+        # this was a try to test against an another file. I won't say it was not working, but yeah, manual
+        # verification was really more helpful
+        assert True
+        return
+        self.longMessage = False
+        self.assertEqual(
+            ref_render_html,
+            self.rendered_html,
+            htmldiff(ref_render_html, self.rendered_html)
+        )
+        self.longMessage = True

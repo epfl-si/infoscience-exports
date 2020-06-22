@@ -22,7 +22,7 @@ pg_restore \
 --host "localhost" \
 --port "$POSTGRES_PORT" \
 -l \
-"/media/del/SSD850EVO1TB/workspace/Infoscience-exports-data/backup.sql.tar" > db.list
+"/media/del/SSD850EVO1TB/workspace/infoscience-exports/backup/db.list" > db.list
 
 # remove session table
 sed -i 's/.*TABLE DATA public django_session.*/;&/' db.list  | grep django_session
@@ -36,11 +36,8 @@ pg_restore \
 --username "django" \
 --host "localhost" \
 --port "$POSTGRES_PORT" \
--L db.list \
-"/media/del/SSD850EVO1TB/workspace/Infoscience-exports-data/backup.sql.tar"
+-L "/media/del/SSD850EVO1TB/workspace/infoscience-exports/backup/db.list" \
+"/media/del/SSD850EVO1TB/workspace/infoscience-exports/backup/backup.sql.tar"
 
 # clean
 rm ./db.list
-
-# todo dump it too ?
-

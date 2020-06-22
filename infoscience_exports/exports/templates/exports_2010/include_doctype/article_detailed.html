@@ -1,0 +1,43 @@
+{% load i18n %}
+{% load staticfiles %}
+
+
+{% if article.Title %}
+<h3 class="infoscience_title">{{ article.Title }}</h3>
+{% endif %}
+
+{% if article.Authors %}
+<p class="infoscience_authors">
+{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
+</p>
+{% endif %}
+
+<p class="infoscience_host">
+
+{% if article.Publisher %}
+	<span><i>{{ article.Publisher }}</i>. </span>
+{% endif %}
+
+{% if article.Publication_Date %}
+	<span>{{ article.Publication_Date }}. </span>
+{% endif %}
+
+{% if options.adv_article_volume and article.Publisher_Volume %}
+	<span>{% trans "Vol." %} {{ article.Publisher_Volume }}</span> 
+	<span>{% if options.adv_article_volume_number and article.Publisher_Volume_Number or options.adv_article_volume_pages and article.Publisher_Volume_Pages %}, {% else %}. {% endif %}</span>
+{% endif %}
+
+{% if options.adv_article_volume_number and article.Publisher_Volume_Number %}
+	<span>{% trans "num." %} {{ article.Publisher_Volume_Number }}</span>
+	<span>{% if options.adv_article_volume_pages and article.Publisher_Volume_Pages %}, {% else %}. {% endif %}</span>
+{% endif %}
+
+{% if options.adv_article_volume_pages and article.Publisher_Volume_Pages %}
+	<span>{% trans "p." %} {{ article.Publisher_Volume_Pages }}. </span>
+{% endif %}
+</p>
+
+{% if article.DOI %}
+<p>{% trans "DOI" %} : {{ article.DOI }}.</p>
+{% endif %}
+

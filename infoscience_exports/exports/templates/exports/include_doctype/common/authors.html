@@ -1,14 +1,16 @@
 {% load i18n %}
 {% load staticfiles %}
 
+{% spaceless %}
 
 {% if authors %}
 {% for author in authors|slice:":6" %}
 	{% if forloop.counter > 5 %}
-	<span> et al. </span>
+	&nbsp;<span class="infoscience_more_authors_element">et al.</span>
 	{% else %}
-	<span>{% if not forloop.first %}; {% endif %}</span>
-	<span>{% if options.link_authors %}<a href="{{ author.search_url }}" target="_blank">{%endif %}{{ author.initname }}{% if options.link_authors %}</a>{% endif %}</span>
-	{% endif %}
+    {% comment %} Keep this one line, otherwise it adds empty spaces on final render {% endcomment %}
+    {% if not forloop.first %}<span>;&nbsp;</span>{% endif %}{% if options.link_authors %}<a class="text-muted infoscience_author" href="{{ author.search_url }}" target="_blank">{% else %}<span class="text-muted infoscience_author">{% endif %}{{ author.initname }}{% if options.link_authors %}</a>{% else %}</span>{% endif %}{% endif %}
 {% endfor %}
 {% endif %}
+
+{% endspaceless %}

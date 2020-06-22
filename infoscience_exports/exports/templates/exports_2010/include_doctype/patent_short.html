@@ -1,0 +1,44 @@
+{% load i18n %}
+{% load staticfiles %}
+
+
+{% include "exports/include_doctype/common/authors.html" with authors=article.Authors %}	
+
+{% if article.Authors %}
+	<span> ; </span>
+{% endif %}
+
+{% if article.Corporate_Name %}
+	<span>{{ article.Corporate_Name.0 }}</span>
+	{% if article.Company_Name %}
+	<span> / </span>
+	{% else %}
+	<span>: </span>
+	{% endif %}
+{% endif %}
+
+{% if article.Company_Name %}
+	<span>{{ article.Company_Name }}</span>
+	<span>: </span>
+{% endif %}
+
+{% if article.Title %}
+	<span><strong>{{ article.Title }}</strong></span>
+	<span>{% if article.Patent %} ; {% else %}. {% endif %}</span>
+{% endif %}
+
+{% if article.Patents %}
+	{% for patent in article.Patents %}
+		<span>{{ patent.a }} {% if options.adv_patent_status and patent.c %}({{ patent.c }}){% endif %}</span>
+		{% if forloop.last %}
+		<span>. </span>
+		{% else %}
+        <span>; </span>
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+{% if article.Publication_Date %}
+	<span>{{ article.Publication_Date }}</span>
+	<span>.</span>
+{% endif %}
