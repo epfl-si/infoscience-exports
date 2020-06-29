@@ -67,3 +67,6 @@ env/pyvenv.cfg
 db_data/
 backup/
 /infoscience_exports/exports/test/html/export_rendered.html
+
+# ansible tmp
+ansible/ansible-tmp
