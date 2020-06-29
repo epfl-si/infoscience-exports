@@ -1,0 +1,16 @@
+---
+# vars file for epfl.wp-veritas
+
+app_name: "infoscience-exports"
+svc_name: "{{ app_name }}"
+route_name: "{{ app_name }}"
+secret_name: "django"
+cname: "{{ app_name + '.epfl.ch' if openshift_namespace == 'wwp' else app_name + '.128.178.222.83.nip.io' }}"
+deploy_name: "{{ app_name }}"
+image_version: 'latest'
+image_tag: 'epflidevelop/infoscience-exports:{{ image_version }}'
+db_name: "infoscience_exports"
+db_user: "infoscience-exports"
+db_password: "{{ lookup('env','WP_VERITAS_DB_PASSWORD_PROD') if openshift_namespace == 'wwp' else lookup('env','WP_VERITAS_DB_PASSWORD_TEST') }}"
+#sample : meteor_settings_env: " {{ lookup('env','METEOR_SETTINGS') }}"
+db_host: 'mongodb-svc-1'
