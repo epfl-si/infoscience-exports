@@ -40,9 +40,16 @@ platform_check () {
     fi
     export PATH="$PWD/ansible-tmp/bin:$PATH"
     export ANSIBLE_ROLES_PATH="$PWD/ansible-tmp/roles"
+
+    oc_check
 }
 
-
+oc_check () {
+  if ! oc projects >/dev/null 2>&1; then
+    echo "Please login to openshift:"
+    oc login
+  fi
+}
 
 ###########################################################################
 
