@@ -217,7 +217,7 @@ push-prod:
 
 update-changelog:
 	# updating CHANGELOG
-	github_changelog_generator
+	github_changelog_generator -u ${GITHUB_OWNER} -p ${GITHUB_REPO}
 
 	# commit master
 	git add CHANGELOG.md
