@@ -1,6 +1,6 @@
 # To push this playbook to OpenShift, say
 #
-#   ansible-playbook playbook.yml -i hosts-prod
+#   ansible-playbook playbook.yml -i hosts-oc-prod
 
 - name: Infoscience exports
   hosts: all

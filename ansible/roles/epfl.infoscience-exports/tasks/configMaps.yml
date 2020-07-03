@@ -1,0 +1,19 @@
+- name: infoscience-exports Config Maps
+  openshift:
+    state: latest
+    resource: ConfigMaps
+    name: "{{ config_maps_name }}"
+    content: |
+      apiVersion: v1
+      data:
+        DJANGO_SETTINGS_MODULE: 'settings.prod'
+        SITE_URL: 'https://infoscience-exports.128.178.222.83.nip.io:80/publication-exports'
+        SITE_PATH: '/publication-exports'
+        DEV_PORT: '80'
+        ALLOWED_HOSTS: 'infoscience-exports.128.178.222.83.nip.io'
+        CACHE_TIMEOUT: '7200'
+        RANGE_DISPLAY: '100'
+      kind: ConfigMap
+      metadata:
+        name: "{{ config_maps_name }}"
+        namespace: "{{ openshift_namespace }}"

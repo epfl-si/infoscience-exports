@@ -1,8 +1,11 @@
-- First, do a `oc login` on your Openshift target
-- Setting yourself to the good project may be a good idea: `oc project xxx`
+# How to setup Openshift with Ansible
+## Prerequiste
+- Keybase
+    - Have access to the content of this folder
+        - /keybase/team/epfl_idevfsd.devrun/infoscience-exports/
 
-The, by running the script `./expotsible`, you will:
+## Deploy
+The, by running the script `./exportsible`, you will:
  - install the ansible suit if needed
  - deploy the application on the Openshift server
  
-Done !

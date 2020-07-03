@@ -10,7 +10,7 @@
 	migration-load-dump migration-build-delta \
 	migration-post-generate-csvs migration-migrate \
 	migration-migrate-selective-with-subset migration-migrate-all \
-	migration-post-generate-csv-all
+	migration-post-generate-csv-all setup-openshift
 
 VERSION:=$(shell python update_release.py -v)
 
@@ -314,6 +314,9 @@ migration-post-generate-csv-all:
 	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
 	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv " \
 	--all_csv_path "/var/log/django/infoscience_exports_all_new_url.csv"
+
+setup-openshift:check-env
+	./ansible/exportsible
 
 check-env:
 ifeq ($(wildcard .env),)

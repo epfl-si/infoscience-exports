@@ -75,7 +75,7 @@ esac
 set -e
 
 inventories () {
-    echo "-i hosts-prod"
+    echo "-i hosts-oc-prod"
 }
 
 platform_check

@@ -1,0 +1,2 @@
+[infoscience-exports-prod-group]
+infoscience_exports_openshift               ansible_connection=local   openshift_namespace=infoscience-exports   ansible_python_interpreter=/usr/bin/python3

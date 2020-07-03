@@ -1,0 +1,28 @@
+- name: infoscience-exports service
+  openshift:
+    state: latest
+    resource: Service
+    name: "{{ svc_name }}"
+    namespace: "{{ openshift_namespace }}"
+    content: |
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: "{{ svc_name }}"
+        namespace: "{{ openshift_namespace }}"
+        labels:
+          app: "{{ app_name }}"
+          author: jdelasoie
+          team: idev-fsd
+        annotations:
+          authors: idev-fsd
+      spec:
+        ports:
+        - name: "80"
+          port: 80
+          protocol: TCP
+          targetPort: 80
+        selector:
+          app: "{{ app_name }}"
+          deployment: "{{ deploy_name }}"
+        type: ClusterIP
