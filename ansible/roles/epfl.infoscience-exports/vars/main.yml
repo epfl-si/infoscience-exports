@@ -9,3 +9,5 @@ cname: "infoscience-exports.epfl.ch"
 deploy_name: "{{ app_name }}"
 image_version: 'latest'
 image_tag: 'epflidevelop/infoscience-exports:{{ image_version }}'
+volume_name_logs: "{{ app_name }}-logs"
+volume_name_staticfiles: "{{ app_name }}-staticfiles"
