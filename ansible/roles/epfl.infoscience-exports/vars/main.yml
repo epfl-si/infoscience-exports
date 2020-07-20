@@ -5,7 +5,7 @@ svc_name: "{{ app_name }}"
 route_name: "{{ app_name }}"
 secret_name: "infoscience-exports.secrets"
 config_maps_name: "infoscience-exports-config"
-cname: "infoscience-exports.128.178.222.83.nip.io"
+cname: "infoscience-exports.epfl.ch"
 deploy_name: "{{ app_name }}"
 image_version: 'latest'
 image_tag: 'epflidevelop/infoscience-exports:{{ image_version }}'
