@@ -18,10 +18,10 @@
           authors: idev-fsd
       spec:
         ports:
-        - name: "80"
-          port: 80
+        - name: "443"
+          port: 443
           protocol: TCP
-          targetPort: 80
+          targetPort: 3000
         selector:
           app: "{{ app_name }}"
           deployment: "{{ deploy_name }}"

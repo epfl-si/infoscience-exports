@@ -81,7 +81,7 @@
                 imagePullPolicy: Always
                 name: pod-infoscience-exports
                 ports:
-                  - containerPort: 80
+                  - containerPort: 3000
                     protocol: TCP
                 volumeMounts:
                   - mountPath: /var/log/django
