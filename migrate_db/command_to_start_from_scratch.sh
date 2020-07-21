@@ -1,4 +1,6 @@
 #!/bin/bash
+# This file is obsolete and was used by the dev to set his own Postgres installation
+# #toremove
 set -x
 
 POSTGRES_PORT=25432
@@ -26,6 +28,9 @@ pg_restore \
 
 # remove session table
 sed -i 's/.*TABLE DATA public django_session.*/;&/' db.list  | grep django_session
+
+- remove cached table data
+    `sed -i 's/.*TABLE DATA public generated_export_cache_expires.*/;&/' db.list  | grep generated_export_cache_expires`
 
 # load datas
 pg_restore \

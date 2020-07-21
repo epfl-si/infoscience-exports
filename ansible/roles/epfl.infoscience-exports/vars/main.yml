@@ -1,0 +1,13 @@
+---
+# vars file for epfl.infoscience-exports
+app_name: "infoscience-exports"
+svc_name: "{{ app_name }}"
+route_name: "{{ app_name }}"
+secret_name: "infoscience-exports.secrets"
+config_maps_name: "infoscience-exports-config"
+cname: "infoscience-exports.epfl.ch"
+deploy_name: "{{ app_name }}"
+image_version: 'latest'
+image_tag: 'epflidevelop/infoscience-exports:{{ image_version }}'
+volume_name_logs: "{{ app_name }}-logs"
+volume_name_staticfiles: "{{ app_name }}-staticfiles"

@@ -45,3 +45,7 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
 	python infoscience_exports/manage.py compilemessages
 
 VOLUME ["/usr/src/app/staticfiles", "/var/log/django", "/usr/src/app/coverage.xml"]
+
+EXPOSE 3000
+
+CMD ["gunicorn", "--reload", "--bind", ":3000", "--workers", "4", "wsgi:application"]

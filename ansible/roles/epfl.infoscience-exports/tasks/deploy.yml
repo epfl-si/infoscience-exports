@@ -1,0 +1,101 @@
+- name: infoscience-exports deploy
+  openshift:
+    state: latest
+    resource: Deployment
+    name: "{{ deploy_name }}"
+    namespace: "{{ openshift_namespace }}"
+    content: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        annotations:
+          version: "{{ image_version }}"
+        labels:
+          app: "{{ app_name }}"
+          author: jdelasoie
+          team: idev-fsd
+          version: "{{ image_version }}"
+        name: "{{ deploy_name }}"
+        namespace: "{{ openshift_namespace }}"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: "{{ app_name }}"
+        template:
+          metadata:
+            labels:
+              app: "{{ app_name }}"
+              author: jdelasoie
+              team: idev-fsd
+              deployment: "{{ deploy_name }}"
+          spec:
+            containers:
+              - env:
+                  - name: DATABASE_URL
+                    valueFrom:
+                      secretKeyRef:
+                        name: "{{ secret_name }}"
+                        key: DATABASE_URL
+                  - name: SECRET_KEY
+                    valueFrom:
+                      secretKeyRef:
+                        name: "{{ secret_name }}"
+                        key: SECRET_KEY
+                  - name: DJANGO_SETTINGS_MODULE
+                    valueFrom:
+                      configMapKeyRef:
+                        name: "{{ config_maps_name }}"
+                        key: DJANGO_SETTINGS_MODULE
+                  - name: SITE_URL
+                    valueFrom:
+                      configMapKeyRef:
+                        name: "{{ config_maps_name }}"
+                        key: SITE_URL
+                  - name: SITE_PATH
+                    valueFrom:
+                      configMapKeyRef:
+                        name: "{{ config_maps_name }}"
+                        key: SITE_PATH
+                  - name: DEV_PORT
+                    valueFrom:
+                      configMapKeyRef:
+                        name: "{{ config_maps_name }}"
+                        key: DEV_PORT
+                  - name: ALLOWED_HOSTS
+                    valueFrom:
+                      configMapKeyRef:
+                        name: "{{ config_maps_name }}"
+                        key: ALLOWED_HOSTS
+                  - name: CACHE_TIMEOUT
+                    valueFrom:
+                      configMapKeyRef:
+                        name: "{{ config_maps_name }}"
+                        key: CACHE_TIMEOUT
+                  - name: RANGE_DISPLAY
+                    valueFrom:
+                      configMapKeyRef:
+                        name: "{{ config_maps_name }}"
+                        key: RANGE_DISPLAY
+                image: "{{ image_tag }}"
+                imagePullPolicy: Always
+                name: pod-infoscience-exports
+                ports:
+                  - containerPort: 3000
+                    protocol: TCP
+                volumeMounts:
+                  - mountPath: /var/log/django
+                    name: "volume-{{ volume_name_logs }}"
+                  - mountPath: /usr/src/app/staticfiles
+                    name: "volume-{{ volume_name_staticfiles }}"
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            terminationGracePeriodSeconds: 30
+            volumes:
+              - name: "volume-{{ volume_name_logs }}"
+                persistentVolumeClaim:
+                  claimName: {{ volume_name_logs }}
+              - name: "volume-{{ volume_name_staticfiles }}"
+                persistentVolumeClaim:
+                  claimName: {{ volume_name_staticfiles }}
