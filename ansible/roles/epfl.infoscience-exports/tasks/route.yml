@@ -19,7 +19,7 @@
       spec:
         host: "{{ cname }}"
         port:
-          targetPort: "80"
+          targetPort: "443"
         tls:
           termination: edge
         to:
