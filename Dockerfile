@@ -46,6 +46,8 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
 
 VOLUME ["/usr/src/app/staticfiles", "/var/log/django", "/usr/src/app/coverage.xml"]
 
+WORKDIR /usr/src/app/infoscience_exports
+
 EXPOSE 3000
 
 CMD ["gunicorn", "--reload", "--bind", ":3000", "--workers", "4", "wsgi:application"]
