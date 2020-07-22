@@ -1,12 +1,16 @@
 # Changelog
 
+## [0.5.10](https://github.com/epfl-si/infoscience-exports/tree/0.5.10) (2020-07-22)
+
+[Full Changelog](https://github.com/epfl-si/infoscience-exports/compare/qa-release...0.5.10)
+
+## [qa-release](https://github.com/epfl-si/infoscience-exports/tree/qa-release) (2020-07-22)
+
+[Full Changelog](https://github.com/epfl-si/infoscience-exports/compare/0.5.9...qa-release)
+
 ## [0.5.9](https://github.com/epfl-si/infoscience-exports/tree/0.5.9) (2020-07-21)
 
-[Full Changelog](https://github.com/epfl-si/infoscience-exports/compare/qa-release...0.5.9)
-
-## [qa-release](https://github.com/epfl-si/infoscience-exports/tree/qa-release) (2020-07-21)
-
-[Full Changelog](https://github.com/epfl-si/infoscience-exports/compare/0.5.8...qa-release)
+[Full Changelog](https://github.com/epfl-si/infoscience-exports/compare/0.5.8...0.5.9)
 
 **Merged pull requests:**
 
