@@ -10,7 +10,7 @@
         SITE_URL: 'https://infoscience-exports.epfl.ch'
         SITE_PATH: '/'
         DEV_PORT: '3000'
-        ALLOWED_HOSTS: 'infoscience-exports.epfl.ch'
+        ALLOWED_HOSTS: 'infoscience-exports.epfl.ch,infoscience.epfl.ch'
         CACHE_TIMEOUT: '7200'
         RANGE_DISPLAY: '100'
       kind: ConfigMap
