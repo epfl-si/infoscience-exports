@@ -6,6 +6,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		tree \
 		curl \
 		libevent-dev \
+		rsync \
+		nano
 	&& rm -rf /var/cache/apt/ \
 	&& rm -rf /var/lib/apt/lists/*
 
@@ -50,4 +52,4 @@ WORKDIR /usr/src/app/infoscience_exports
 
 EXPOSE 3000
 
-CMD ["gunicorn", "--reload", "--bind", ":3000", "--workers", "4", "wsgi:application"]
+CMD ["gunicorn", "--bind", ":3000", "--workers", "9", "wsgi:application"]
