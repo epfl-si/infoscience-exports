@@ -23,7 +23,10 @@ def get_env_variable(var_name, default=None):
 
 parsed_url = parse.urlparse(get_env_variable('SITE_URL'))
 SITE_DOMAIN = "{0}://{1}".format(parsed_url.scheme, parsed_url.netloc)
-SITE_PATH = parsed_url.path.rstrip('/')
+if parsed_url.path == '':
+    SITE_PATH = '/'
+else:
+    SITE_PATH = parsed_url.path.rstrip('/')
 
 # Django Tequila
 AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
