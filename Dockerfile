@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		curl \
 		libevent-dev \
 		rsync \
-		nano
+		nano \
 	&& rm -rf /var/cache/apt/ \
 	&& rm -rf /var/lib/apt/lists/*
 
