@@ -55,4 +55,4 @@ RUN chmod g+rwx -R /usr/src/app
 
 EXPOSE 3000
 
-CMD ["gunicorn", "--reload", "--bind", ":3000", "--workers", "9", "wsgi:application"]
+CMD ["gunicorn", "--bind", ":3000", "--workers", "4", "wsgi:application"]
