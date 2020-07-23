@@ -52,4 +52,4 @@ WORKDIR /usr/src/app/infoscience_exports
 
 EXPOSE 3000
 
-CMD ["gunicorn", "--bind", ":3000", "--workers", "9", "wsgi:application"]
+CMD ["gunicorn", "--reload", "--bind", ":3000", "--workers", "9", "wsgi:application"]
