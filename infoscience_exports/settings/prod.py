@@ -19,6 +19,8 @@ SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
 SECURE_SSL_REDIRECT = True
 
+MIDDLEWARE = ('whitenoise.middleware.WhiteNoiseMiddleware',) + MIDDLEWARE
+
 # Template
 # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_LOADERS = (

@@ -19,6 +19,7 @@ markdown = "*"
 pymarc = "*"
 pytz = "*"
 django-cors-headers = "*"
+whitenoise = "*"
 
 [dev-packages]
 "autopep8" = "*"
