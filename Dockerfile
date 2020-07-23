@@ -50,6 +50,9 @@ VOLUME ["/usr/src/app/staticfiles", "/var/log/django", "/usr/src/app/coverage.xm
 
 WORKDIR /usr/src/app/infoscience_exports
 
+# set the root group advanced permissions, in case of live change
+RUN chmod g+rwx -R /usr/src/app
+
 EXPOSE 3000
 
 CMD ["gunicorn", "--reload", "--bind", ":3000", "--workers", "9", "wsgi:application"]
