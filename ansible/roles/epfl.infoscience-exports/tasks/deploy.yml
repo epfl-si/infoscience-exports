@@ -45,8 +45,6 @@
                 volumeMounts:
                   - mountPath: /var/log/django
                     name: "volume-{{ volume_name_logs }}"
-                  - mountPath: /usr/src/app/staticfiles
-                    name: "volume-{{ volume_name_staticfiles }}"
             dnsPolicy: ClusterFirst
             restartPolicy: Always
             schedulerName: default-scheduler
@@ -55,6 +53,3 @@
               - name: "volume-{{ volume_name_logs }}"
                 persistentVolumeClaim:
                   claimName: {{ volume_name_logs }}
-              - name: "volume-{{ volume_name_staticfiles }}"
-                persistentVolumeClaim:
-                  claimName: {{ volume_name_staticfiles }}
