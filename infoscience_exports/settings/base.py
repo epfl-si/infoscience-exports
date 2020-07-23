@@ -34,9 +34,8 @@ AUTH_USER_MODEL = 'exports.User'
 # override django-tequila urls if we are serving the application from a folder path
 LOGIN_URL = "{}/login".format(SITE_PATH)
 LOGIN_REDIRECT_URL = "{}".format(SITE_PATH)
-# this is the invenio logout, so when we finished logging out the user,
-# sending him here will invalid is invenio session too.
-LOGOUT_URL = "/youraccount/logout"
+
+LOGOUT_URL = "/logged-out/"
 LOGIN_REDIRECT_IF_NOT_ALLOWED = "{}/not_allowed".format(SITE_PATH)
 LOGIN_REDIRECT_TEXT_IF_NOT_ALLOWED = "Not allowed"
 
