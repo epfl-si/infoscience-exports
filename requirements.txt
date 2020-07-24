@@ -1,24 +1,26 @@
 -i https://pypi.python.org/simple
 -e git+https://github.com/epfl-si/django-tequila.git@ee467bb58df23d933ff85b43c929154146c5dd83#egg=django-tequila
-beautifulsoup4==4.9.0
+beautifulsoup4==4.9.1
 dj-database-url==0.5.0
 django-auditlog==0.4.7
-django-bootstrap4==1.1.1
-django-cors-headers==3.2.1
+django-bootstrap4==2.2.0
+django-cors-headers==3.4.0
 django-dirtyfields==1.4
-django-filter==2.2.0
+django-filter==2.3.0
 django-jsonfield==1.4.0
 django-model-utils==4.0.0
 django==2.2
-gevent==20.4.0
-greenlet==0.4.15 ; platform_python_implementation == 'CPython'
+gevent==20.6.2
+greenlet==0.4.16 ; platform_python_implementation == 'CPython'
 gunicorn==20.0.4
-markdown==3.2.1
+markdown==3.2.2
 psycopg2-binary==2.8.5
 pymarc==4.0.0
 python-dateutil==2.6.0
-pytz==2019.3
-six==1.14.0
-soupsieve==2.0
+pytz==2020.1
+six==1.15.0
+soupsieve==2.0.1
 sqlparse==0.3.1
 whitenoise==5.1.0
+zope.event==4.4
+zope.interface==5.1.0
