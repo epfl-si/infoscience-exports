@@ -48,13 +48,9 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
 
 VOLUME ["/usr/src/app/staticfiles", "/var/log/django", "/usr/src/app/coverage.xml"]
 
-WORKDIR /usr/src/app/infoscience_exports
-
 # set the root group advanced permissions, in case of live change
 RUN chmod g+rwx -R /usr/src/app
 
-WORKDIR /usr/src/app
-
 EXPOSE 3000
 
-CMD ["gunicorn", "--bind", ":3000", "--workers", "4", "wsgi:application"]
+CMD ["gunicorn", "--bind", ":3000", "--workers", "4", "--chdir", "/usr/src/app/infoscience_exports", "wsgi:application"]
