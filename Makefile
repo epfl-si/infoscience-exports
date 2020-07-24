@@ -2,7 +2,7 @@
 # Default values, can be overridden either on the command line of make
 # or in .env
 
-.PHONY: version vars init-venv build build-travis init-db reset \
+.PHONY: version vars init-venv build build-travis init init-db reset \
 	up down logs restart restart-web \
 	superadmin collectstatic migrations migrate \
 	dump restore release push-prod deploy \
@@ -85,6 +85,8 @@ init-db:
 	# create super admin in app
 	make superadmin
 	@echo "  -> All set up! You can connect with your tequila acount or the admin (${SUPER_ADMIN_EMAIL})"
+
+init: reset
 
 reset: build up
 	@echo ''
