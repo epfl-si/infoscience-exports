@@ -48,6 +48,7 @@ Check the result wit your favorite browser on https://127.0.0.1:8000/ and https:
 ## Developing
 
 ### Prerequisite
+
 The first thing to do is enable a post-commit git hook in order to have the versions taken care of
 
 ```shell
@@ -65,7 +66,7 @@ When you are happy with your changes, you can release a new version.
 
 First, be sure to have the [Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) installed: 
 ```shell
-sudo gem install github_changelog_generator in order to generate automatically the CHANGELOG file
+sudo gem install github_changelog_generator
 ```
 
 Then, create the release:
