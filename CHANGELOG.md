@@ -1,12 +1,16 @@
 # Changelog
 
+## [0.5.11](https://github.com/epfl-si/infoscience-exports/tree/0.5.11) (2020-07-24)
+
+[Full Changelog](https://github.com/epfl-si/infoscience-exports/compare/qa-release...0.5.11)
+
+## [qa-release](https://github.com/epfl-si/infoscience-exports/tree/qa-release) (2020-07-24)
+
+[Full Changelog](https://github.com/epfl-si/infoscience-exports/compare/0.5.10...qa-release)
+
 ## [0.5.10](https://github.com/epfl-si/infoscience-exports/tree/0.5.10) (2020-07-22)
 
-[Full Changelog](https://github.com/epfl-si/infoscience-exports/compare/qa-release...0.5.10)
-
-## [qa-release](https://github.com/epfl-si/infoscience-exports/tree/qa-release) (2020-07-22)
-
-[Full Changelog](https://github.com/epfl-si/infoscience-exports/compare/0.5.9...qa-release)
+[Full Changelog](https://github.com/epfl-si/infoscience-exports/compare/0.5.9...0.5.10)
 
 ## [0.5.9](https://github.com/epfl-si/infoscience-exports/tree/0.5.9) (2020-07-21)
 
@@ -144,7 +148,6 @@
 - Reduce docker image size [\#88](https://github.com/epfl-si/infoscience-exports/pull/88) ([dabelenda](https://github.com/dabelenda))
 - Translated in French [\#87](https://github.com/epfl-si/infoscience-exports/pull/87) ([ebreton](https://github.com/ebreton))
 - Removed useless spaces [\#86](https://github.com/epfl-si/infoscience-exports/pull/86) ([dragonleman](https://github.com/dragonleman))
-- Added cors headers [\#85](https://github.com/epfl-si/infoscience-exports/pull/85) ([ebreton](https://github.com/ebreton))
 - Update django.po [\#84](https://github.com/epfl-si/infoscience-exports/pull/84) ([tommybeck](https://github.com/tommybeck))
 - don't translate 'et al.' [\#83](https://github.com/epfl-si/infoscience-exports/pull/83) ([dragonleman](https://github.com/dragonleman))
 - Per object caching [\#82](https://github.com/epfl-si/infoscience-exports/pull/82) ([jdelasoie](https://github.com/jdelasoie))
@@ -155,6 +158,7 @@
 
 **Merged pull requests:**
 
+- Added cors headers [\#85](https://github.com/epfl-si/infoscience-exports/pull/85) ([ebreton](https://github.com/ebreton))
 - Better display of doc\_types [\#80](https://github.com/epfl-si/infoscience-exports/pull/80) ([dragonleman](https://github.com/dragonleman))
 - Fix loggout process on dev [\#79](https://github.com/epfl-si/infoscience-exports/pull/79) ([jdelasoie](https://github.com/jdelasoie))
 - activated detailed forms + added summary [\#78](https://github.com/epfl-si/infoscience-exports/pull/78) ([dragonleman](https://github.com/dragonleman))
