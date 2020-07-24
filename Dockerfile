@@ -53,6 +53,8 @@ WORKDIR /usr/src/app/infoscience_exports
 # set the root group advanced permissions, in case of live change
 RUN chmod g+rwx -R /usr/src/app
 
+WORKDIR /usr/src/app
+
 EXPOSE 3000
 
 CMD ["gunicorn", "--bind", ":3000", "--workers", "4", "wsgi:application"]
