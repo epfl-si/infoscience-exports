@@ -138,7 +138,7 @@ def validate_url(url):
     if settings.RANGE_DISPLAY:
         max_limit = settings.RANGE_DISPLAY
     else:
-        max_limit = 100  # should be a good limit by default
+        max_limit = 1000  # should be a good limit by default
 
     if 'rg' in queries and queries['rg'][0] == '10':   #HACK: 10 = meaning we have the default, so we want more
         url = url.replace("rg=10", "rg=" + str(max_limit))
