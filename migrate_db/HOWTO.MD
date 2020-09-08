@@ -15,7 +15,7 @@ Once the docker is launched and you have access to the database:
     --host "$POSTGRES_HOST" \
     --port "$POSTGRES_PORT" \
     -l \
-    "/media/del/SSD850EVO1TB/workspace/infoscience-exports-TIND-dumps/db.list" > db.list
+    "/media/del/SSD850EVO1TB/workspace/infoscience-exports-TIND-dumps/backup.sql.tar" > db.list
     ```
 - remove session table data
     `sed -i 's/.*TABLE DATA public django_session.*/;&/' db.list  | grep django_session`
