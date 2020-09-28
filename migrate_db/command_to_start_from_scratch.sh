@@ -41,8 +41,8 @@ pg_restore \
 --username "django" \
 --host "localhost" \
 --port "$POSTGRES_PORT" \
--L "/media/del/SSD850EVO1TB/workspace/infoscience-exports/backup/db.list" \
-"/media/del/SSD850EVO1TB/workspace/infoscience-exports/backup/backup.sql.tar"
+-L "/media/del/SSD850EVO1TB/workspace/infoscience-exports-TIND-dumps/db.list" \
+"/media/del/SSD850EVO1TB/workspace/infoscience-exports-TIND-dumps/backup.sql.tar"
 
 # clean
 rm ./db.list

@@ -2,8 +2,8 @@
 
 Once the docker is launched and you have access to the database: 
 
-- Set the port `POSTGRES_PORT=5432`
-- Set the host `POSTGRES_HOST=pgsql.epfl.ch`
+- Set the port `POSTGRES_PORT=25432`
+- Set the host `POSTGRES_HOST=localhost`
 
 - Create the list of tables we want to import (go directly to load data if you have already the db.list)
     ```
