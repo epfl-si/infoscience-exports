@@ -155,7 +155,9 @@ def parse_dict(record):
     fields = record['fields']
 
     # '001', ' ', ' ', []
-    result['control_number'] = get_list(fields, '001', ' ', ' ', [])[0]
+    control_number = get_list(fields, '001', ' ', ' ', [])
+    if control_number:
+        result['control_number'] = control_number[0]
 
     # '013', ' ', ' ', ['a', 'c']
     result['patent_control_information'] = get_list(fields, '013', ' ', ' ', ['a', 'c'])
@@ -242,6 +244,10 @@ def parse_dict(record):
     approved_publications = get_list(fields, '909', 'C', '0', ['p'])
     result['approved_publications'] = get_values(approved_publications, 'p')
 
+    # '980', '', '', ['c']
+    publication_status = get_list(fields, '980', '', '', ['c'])
+    result['publication_status'] = get_values(publication_status, 'c')
+
     # '999', 'C', '0', ['p']
     pending_publications = get_list(fields, '999', 'C', '0', ['p'])
     result['pending_publications'] = get_values(pending_publications, 'p')
@@ -275,6 +281,14 @@ def import_marc21xml(url, can_display_pending_publications):
     for record in reader:
         dict_result = {}
         dict_record = parse_dict(record.as_dict())
+
+        ##
+        # only parse the good ones
+        if 'publication_status' in dict_record and dict_record['publication_status'] == 'DELETED':
+            continue
+        if 'control_number' not in dict_record:
+            continue
+
         dict_result['Id'] = dict_record['control_number']
         dict_result['Infoscience_URL'] = "{}/record/{}".format(
             'https://infoscience.epfl.ch', dict_record['control_number'])
