@@ -16,7 +16,6 @@ NOSE_ARGS = [
     BASE_DIR,
     '--nologcapture',
     '--with-coverage',
-    '--with-progressive',
     '--cover-package={}'.format(BASE_DIR)
 ]
 

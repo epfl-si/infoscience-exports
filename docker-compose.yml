@@ -1,20 +1,23 @@
-web:
-  image: epflidevelop/infoscience-exports
-  restart: always
-  stdin_open: true
-  tty: true
-  expose:
-    - "80"
-  links:
-    - postgres
-  env_file:
-    - ./env/django.env
-  environment:
-    # the following vars need to be overridden because the directive env_file
-    # does not compute their value from the other variables
-    - SITE_URL=${SITE_URL}
-    - DATABASE_URL=${DATABASE_URL}
-  command: gunicorn --reload -w 4 -b :80 --chdir /usr/src/app/infoscience_exports wsgi:application
+version: "3.9"
 
-postgres:
-  image: postgres:12
+services:
+  web:
+    image: epflidevelop/infoscience-exports
+    restart: always
+    stdin_open: true
+    tty: true
+    expose:
+      - "80"
+    links:
+      - postgres
+    env_file:
+      - ./env/django.env
+    environment:
+      # the following vars need to be overridden because the directive env_file
+      # does not compute their value from the other variables
+      - SITE_URL=${SITE_URL}
+      - DATABASE_URL=${DATABASE_URL}
+    command: gunicorn --reload -w 4 -b :80 --chdir /usr/src/app/infoscience_exports wsgi:application
+
+  postgres:
+    image: postgres:12

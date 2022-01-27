@@ -1,61 +1,66 @@
-web:
-  build: .
-  restart: always
-  stdin_open: true
-  tty: true
-  expose:
-    # used by nginx: see proxy in sites-enabled
-    - "${DEV_PORT}"
-    # live test server port range
-    - "8081-8179"
-  links:
-    - postgres
-    - selenium
-  volumes:
-    - ./infoscience_exports:/usr/src/app/infoscience_exports
-    - ./staticfiles:/usr/src/app/staticfiles
-    - ./coverage.xml:/usr/src/app/coverage.xml
-    - ./logs:/var/log/django
-  env_file:
-    - .env
-  environment:
-    # the following vars need to be overridden because the directive env_file
-    # does not compute their value from the other variables
-    - SITE_URL=${SITE_URL}
-    - DATABASE_URL=${DATABASE_URL}
-  command: gunicorn --reload -w 4 -b :${DEV_PORT} --chdir /usr/src/app/infoscience_exports wsgi:application
+version: "3.9"
 
-nginx:
-  build: ./nginx
-  ports:
-    # out:in = from [out] host, into [in] container
-    - "${DEV_PORT}:${DEV_PORT}"
-  volumes:
-    - ./nginx/sites-enabled/web.template:/etc/nginx/conf.d/web.template
-    - ./nginx/assets:/usr/share/nginx/html
-  volumes_from:
-    - web
-  links:
-    # used in nginx/sites-enabled/web.conf
-    - web
-  environment:
-    - SERVER_HOST=${SERVER_HOST}
-    - SITE_PATH=${SITE_PATH}
-    - DEV_PORT=${DEV_PORT}
-    - DOLLAR=$$
-  command: /bin/bash -c "envsubst < /etc/nginx/conf.d/web.template > /etc/nginx/conf.d/web.conf && nginx -g 'daemon off;'"
+services:
+  web:
+    build: .
+    restart: always
+    stdin_open: true
+    tty: true
+    expose:
+      # used by nginx: see proxy in sites-enabled
+      - "${DEV_PORT}"
+      # live test server port range
+      - "8081-8179"
+    links:
+      - postgres
+      - selenium
+    volumes:
+      - ./infoscience_exports:/usr/src/app/infoscience_exports
+      - ./staticfiles:/usr/src/app/staticfiles
+      - ./coverage.xml:/usr/src/app/coverage.xml
+      - ./logs:/var/log/django
+    env_file:
+      - .env
+    environment:
+      # the following vars need to be overridden because the directive env_file
+      # does not compute their value from the other variables
+      - SITE_URL=${SITE_URL}
+      - DATABASE_URL=${DATABASE_URL}
+    command: gunicorn --reload -w 4 -b :${DEV_PORT} --chdir /usr/src/app/infoscience_exports wsgi:application
 
-postgres:
-  image: postgres:12
-  environment:
-    - POSTGRES_PASSWORD=django
-  volumes:
-    - ./db_data:/var/lib/postgresql
-  ports:
-    - "25432:5432"
+  nginx:
+    build: ./nginx
+    ports:
+      # out:in = from [out] host, into [in] container
+      - "${DEV_PORT}:${DEV_PORT}"
+    volumes:
+      - ./nginx/sites-enabled/web.template:/etc/nginx/conf.d/web.template
+      - ./nginx/assets:/usr/share/nginx/html
+      - ./infoscience_exports:/usr/src/app/infoscience_exports
+      - ./staticfiles:/usr/src/app/staticfiles
+      - ./coverage.xml:/usr/src/app/coverage.xml
+      - ./logs:/var/log/django
+    links:
+      # used in nginx/sites-enabled/web.conf
+      - web
+    environment:
+      - SERVER_HOST=${SERVER_HOST}
+      - SITE_PATH=${SITE_PATH}
+      - DEV_PORT=${DEV_PORT}
+      - DOLLAR=$$
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/web.template > /etc/nginx/conf.d/web.conf && nginx -g 'daemon off;'"
 
-selenium:
-  image: selenium/standalone-chrome-debug:3.11
-  ports:
-    - "4444:4444"   # Selenium
-    - "${VNC_PORT}:5900"   # VNC server, pass is "secret"
+  postgres:
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=django
+    volumes:
+      - ./db_data:/var/lib/postgresql
+    ports:
+      - "25432:5432"
+
+  selenium:
+    image: selenium/standalone-chrome-debug:3.11
+    ports:
+      - "4444:4444"   # Selenium
+      - "${VNC_PORT}:5900"   # VNC server, pass is "secret"
