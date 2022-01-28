@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 
-<span class="text-muted small mb-0">
+<span class="text-muted small mb-2">
   <span class="infoscience_host">
 
   {% if article.Publication_Date %}
@@ -11,3 +11,9 @@
 
   </span>
 </span>
+
+{% if article.Doc_Type == 'Student Projects' and article.Directors %}
+  <p class="text-muted small infoscience_advisors mt-2">
+    Advisor(s) : {% include "exports/include_doctype/common/authors.html" with authors=article.Directors %}
+  </p>
+{% endif %}
