@@ -36,6 +36,7 @@
                     name: "{{ config_maps_name }}"
                 - secretRef:
                     name: "{{ secret_name }}"
+      ----> Change this
                 image: "{{ image_tag }}"
                 imagePullPolicy: Always
                 name: pod-infoscience-exports

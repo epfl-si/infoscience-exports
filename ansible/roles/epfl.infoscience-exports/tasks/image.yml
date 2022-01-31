@@ -1,0 +1,11 @@
+- name: "Build image locally and push it to {{ openshift_namespace }}"
+  tags:
+    - update-image-with-local
+    - never
+  shell: |
+    set -e -x
+    oc whoami -t | docker login {{ openshift_image_registry }} -u unused --password-stdin
+    docker build -t {{ image_tag }} ..
+    docker push {{ image_tag }}
+  register: output_push_image
+  delegate_to: localhost

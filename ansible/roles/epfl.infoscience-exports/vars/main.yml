@@ -7,7 +7,7 @@ secret_name: "infoscience-exports.secrets"
 config_maps_name: "infoscience-exports-config"
 cname: "infoscience-exports.epfl.ch"
 deploy_name: "{{ app_name }}"
-image_version: 'latest'
-image_tag: 'epflidevelop/infoscience-exports:{{ image_version }}'
+openshift_image_registry: "os-docker-registry.epfl.ch"
+image_tag: "{{openshift_image_registry}}/{{openshift_namespace}}/{{svc_name}}:latest"
 volume_name_logs: "{{ app_name }}-logs"
 volume_name_staticfiles: "{{ app_name }}-staticfiles"
