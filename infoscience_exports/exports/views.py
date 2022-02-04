@@ -57,7 +57,7 @@ class ExportCreate(LoginRequiredMixin, CreateView):
         # url in parameter is a form initial
         if request.GET.get('url'):
             self.initial.update({
-                'url': unquote(request.GET['url'])
+                'url': unquote(request.GET['url']).replace(" ", "+")
             })
 
         return super().get(request, *args, **kwargs)
