@@ -89,10 +89,6 @@ init-db:
 init: reset
 
 reset: build up
-	@echo ''
-	@echo "! sleeping 6secs, time for postgres container to be available"
-	@echo ''
-	sleep 6
 	make init-db
 	make collectstatic
 	make compilemessages
