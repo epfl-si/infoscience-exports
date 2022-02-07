@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8-slim
 
 # install gettext
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		libevent-dev \
 		rsync \
 		nano \
+        git \
 	&& rm -rf /var/cache/apt/ \
 	&& rm -rf /var/lib/apt/lists/*
 
@@ -21,8 +22,8 @@ WORKDIR /usr/src/app
 
 # install requirements
 # (asap to make cache more efficent)
-COPY ./requirements*.txt /usr/src/app/
-RUN pip install --no-cache-dir -r requirements-dev.txt
+COPY ./requirements.txt /usr/src/app/
+RUN pip install --no-cache-dir -r requirements.txt
 
 # copy project files
 COPY ./update_release.py /usr/src/app/update_release.py

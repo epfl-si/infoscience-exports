@@ -87,11 +87,15 @@ This will take care of creating the version number, the branches, the tags, the 
         
 ### Deploy        
 
+- Asset Openshift is correctly configured:
 ```shell
-make setup-openshift
+./ansible/exportsible
 ```
 
-This command install for you the necessary tools, like Ansible and Python, with the help of [ansible.suitcase](https://github.com/epfl-si/ansible.suitcase)   
+- Start the local compilation, and send the new image to openshift:
+```shell
+./ansible/exportsible -t update-image
+```
 
 ## Advanced configuration / Usages
 

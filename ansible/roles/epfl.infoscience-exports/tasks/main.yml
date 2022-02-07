@@ -12,3 +12,12 @@
 
 - name: Including route task...
   include_tasks: '{{ "route.yml" }}'
+
+- name: Update image tasks
+  include_tasks:
+    file: "image.yml"
+    apply:
+      tags: update-image-with-local
+  tags:
+    - never
+    - update-image-with-local
