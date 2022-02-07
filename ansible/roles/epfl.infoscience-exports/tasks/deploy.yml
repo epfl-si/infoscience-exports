@@ -36,8 +36,7 @@
                     name: "{{ config_maps_name }}"
                 - secretRef:
                     name: "{{ secret_name }}"
-      ----> Change this
-                image: "{{ image_tag }}"
+                image: "{{ openshift_local_images_base }}"
                 imagePullPolicy: Always
                 name: pod-infoscience-exports
                 ports:
