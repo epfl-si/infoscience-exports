@@ -10,7 +10,7 @@ django-dirtyfields = "*"
 django-filter = "*"
 django-model-utils = "*"
 django-auditlog = "*"
-django-tequila = {editable = true, git = "https://github.com/epfl-si/django-tequila.git"}
+django-tequila = "3.4.0"
 "django-bootstrap4" = "*"
 gevent = "*"
 gunicorn = "*"
