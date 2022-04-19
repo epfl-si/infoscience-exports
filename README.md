@@ -94,7 +94,7 @@ This will take care of creating the version number, the branches, the tags, the 
 
 - Start the local compilation, and send the new image to openshift:
 ```shell
-./ansible/exportsible -t update-image
+./ansible/exportsible -t update-image-with-local
 ```
 
 ## Advanced configuration / Usages
