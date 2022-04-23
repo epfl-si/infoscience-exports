@@ -36,7 +36,10 @@ fatal () {
 platform_check () {
     if ! test -f ansible-tmp/.versions 2>/dev/null; then
         curl https://raw.githubusercontent.com/epfl-si/ansible.suitcase/master/install.sh | \
-            SUITCASE_DIR=$PWD/ansible-tmp SUITCASE_ANSIBLE_REQUIREMENTS=requirements.yml sh -x
+            SUITCASE_DIR=$PWD/ansible-tmp \
+            SUITCASE_ANSIBLE_VERSION=3.4.0 \
+            SUITCASE_ANSIBLE_REQUIREMENTS=requirements.yml \
+            sh -x
     fi
     export PATH="$PWD/ansible-tmp/bin:$PATH"
     export ANSIBLE_ROLES_PATH="$PWD/ansible-tmp/roles"
