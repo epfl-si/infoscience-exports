@@ -5,7 +5,7 @@
   shell: |
     set -e -x
     oc whoami -t | docker login {{ openshift_image_registry }} -u unused --password-stdin
-    docker build -t {{ image_tag }} ..
+    docker build -t {{ image_tag }} --build-arg DJANGO_ENV=production ..
     docker push {{ image_tag }}
   register: output_push_image
   delegate_to: localhost

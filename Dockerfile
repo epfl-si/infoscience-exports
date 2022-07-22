@@ -1,8 +1,22 @@
 FROM python:3.8-slim
 
+ARG DJANGO_ENV
+
+ENV DJANGO_ENV=${DJANGO_ENV} \
+  PYTHONFAULTHANDLER=1 \
+  PYTHONUNBUFFERED=1 \
+  PYTHONHASHSEED=random \
+  PIP_NO_CACHE_DIR=off \
+  PIP_DISABLE_PIP_VERSION_CHECK=on \
+  PIP_DEFAULT_TIMEOUT=100 \
+  PIPENV_HIDE_EMOJIS=true \
+  PIPENV_COLORBLIND=true \
+  PIPENV_NOSPIN=true
+
 # install gettext
 RUN apt-get update && apt-get install -y --no-install-recommends \
-		gettext \
+        bash \
+        gettext \
 		tree \
 		curl \
 		libevent-dev \
@@ -21,9 +35,10 @@ RUN mkdir -p /usr/src/app && \
 WORKDIR /usr/src/app
 
 # install requirements
-# (asap to make cache more efficent)
-COPY ./requirements.txt /usr/src/app/
-RUN pip install --no-cache-dir -r requirements.txt
+COPY ./Pipfile /usr/src/app/Pipfile
+COPY ./Pipfile.lock /usr/src/app/Pipfile.lock
+RUN pip install pipenv
+RUN /bin/bash -c 'pipenv install $(test "$DJANGO_ENV" == production || echo "--dev") --deploy --system --ignore-pipfile'
 
 # copy project files
 COPY ./update_release.py /usr/src/app/update_release.py

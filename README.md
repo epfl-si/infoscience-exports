@@ -10,9 +10,10 @@ see [this documentation](/doc/DEV_INSTALL.md).
 
 ### Prerequisite
 
+- Make
+- pipenv
 - Docker
 - Docker-compose
-- Make
 
 ### Initialize environnement variables
 
@@ -41,6 +42,7 @@ Build the images, run the containers and initialize the DB:
 
 ```shell
 make init
+make init-db
 ```
 
 Get the working url:

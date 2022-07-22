@@ -54,13 +54,7 @@ endif
 
 build:
 	# udpating requirements
-	pipenv lock --requirements > requirements.txt
-	echo "-r requirements.txt" > requirements-dev.txt
-	pipenv lock --requirements --dev >> requirements-dev.txt
-	# clean up requirements
-	sed -i "s/# -e git/-e git/g" requirements.txt
-	sed -i -r "s/--hash=[^ ]+//g" requirements.txt
-	sed -i -r "s/--hash=[^ ]+//g" requirements-dev.txt
+	pipenv lock
 	# build docker image
 	docker-compose -f docker-compose-dev.yml down
 	docker-compose -f docker-compose-dev.yml build
