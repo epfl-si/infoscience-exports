@@ -20,7 +20,7 @@ services:
       - ./infoscience_exports:/usr/src/app/infoscience_exports
       - ./staticfiles:/usr/src/app/staticfiles
       - ./coverage.xml:/usr/src/app/coverage.xml
-      - ./logs:/var/log/django
+      - ./docker_volumes/logs:/var/log/django
     env_file:
       - .env
     environment:
@@ -41,7 +41,7 @@ services:
       - ./infoscience_exports:/usr/src/app/infoscience_exports
       - ./staticfiles:/usr/src/app/staticfiles
       - ./coverage.xml:/usr/src/app/coverage.xml
-      - ./logs:/var/log/django
+      - ./docker_volumes/logs:/var/log/django
     links:
       # used in nginx/sites-enabled/web.conf
       - web
@@ -57,7 +57,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=django
     volumes:
-      - ./db_data:/var/lib/postgresql
+      - ./docker_volumes/db_data:/var/lib/postgresql
     ports:
       - "25432:5432"
     healthcheck:
