@@ -4,7 +4,7 @@ server {
     server_name ${SERVER_HOST};
     charset utf-8;
 
-    ssl                             on;
+    #ssl                             on;
     ssl_certificate                 /etc/nginx/certs/server.crt;
     ssl_certificate_key             /etc/nginx/certs/server.key;
     ssl_session_cache               shared:SSL:5m;
