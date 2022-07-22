@@ -14,6 +14,8 @@ services:
     links:
       - postgres
       - selenium
+    depends_on:
+      - postgres
     volumes:
       - ./infoscience_exports:/usr/src/app/infoscience_exports
       - ./staticfiles:/usr/src/app/staticfiles
