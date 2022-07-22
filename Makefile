@@ -324,3 +324,6 @@ else
 include .env
 export
 endif
+
+show-app-url:
+	@echo '${SITE_URL}'

@@ -43,7 +43,11 @@ Build the images, run the containers and initialize the DB:
 make init
 ```
 
-Check the result wit your favorite browser on https://127.0.0.1:8000/ and https://127.0.0.1:8000/admin
+Get the working url:
+```shell
+make show-app-url
+```
+And check the result with your favorite browser on it (add `/admin` if needed).
 
 ## Developing
 
