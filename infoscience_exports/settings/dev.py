@@ -4,7 +4,8 @@ from .test import *
 DEBUG = True
 
 # Django Tequila
-TEQUILA_SERVER_URL = "https://test-tequila.epfl.ch"
+TEQUILA_SERVER_URL = "https://tequila.epfl.ch"
+TEQUILA_STRONG_AUTHENTICATION = True
 # reset backend from test to dev
 AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
 
