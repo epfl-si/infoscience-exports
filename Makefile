@@ -106,8 +106,7 @@ logs:
 	docker-compose -f docker-compose-dev.yml logs -f
 
 restart:
-	# FIXME: OperationalError at / FATAL: role "django" does not exist
-	# docker-compose -f docker-compose-dev.yml down
+	docker-compose -f docker-compose-dev.yml stop
 	docker-compose -f docker-compose-dev.yml up -d
 	docker-compose -f docker-compose-dev.yml logs
 
