@@ -9,7 +9,7 @@
         DJANGO_SETTINGS_MODULE: 'settings.prod'
         SITE_URL: 'https://infoscience-exports.epfl.ch'
         DEV_PORT: '3000'
-        ALLOWED_HOSTS: 'infoscience-exports.epfl.ch,infoscience.epfl.ch'
+        ALLOWED_HOSTS: 'infoscience-exports.epfl.ch,infoscience.epfl.ch,infoscience-prod.epfl.ch,infoscience-test.epfl.ch'
         CACHE_TIMEOUT: '7200'
         RANGE_DISPLAY: '1000'
       kind: ConfigMap
