@@ -102,7 +102,11 @@ LOGGING['loggers'] = {
 
 
 def show_toolbar(request):
-    return True
+    patterns = [
+        "/preview/",  # ignore preview as it create an infinite loop
+    ]
+    return not any(p in request.path for p in patterns)
+
 
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": show_toolbar,
