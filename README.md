@@ -49,7 +49,20 @@ Get the working url:
 ```shell
 make show-app-url
 ```
+Depending on your envs, it may be https://127.0.0.1:3000/publication-exports/.
+
 And check the result with your favorite browser on it (add `/admin` if needed).
+
+Later you can start the stack with:
+
+```shell
+make up
+```
+
+and stop with:
+```shell
+make stop
+```
 
 ## Developing
 
@@ -63,10 +76,7 @@ cp update_release.py .git/hooks/post-commit
 
 This hook will update automagically the file './versions.py' on each commit, so you are ready to release new versions.
 
-### Develop
-
-What are you waiting for ? Start editing some files and enjoy ;)
- 
+### Develop 
 ### Release
 When you are happy with your changes, you can release a new version.
 
