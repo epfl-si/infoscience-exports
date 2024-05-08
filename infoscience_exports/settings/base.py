@@ -221,7 +221,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'generated_export_cache',
-        'TIMEOUT': get_env_variable('CACHE_TIMEOUT', 7200),
+        'TIMEOUT': get_env_variable('CACHE_TIMEOUT', 7200),  # 2h
         'OPTIONS': {
             'MAX_ENTRIES': 3000,  # default is 300
             'CULL_FREQUENCY': 5,  # 1/5 of the cache is clean when max entry is reached
