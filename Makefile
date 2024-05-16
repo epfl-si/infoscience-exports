@@ -56,25 +56,25 @@ build:
 	# udpating requirements
 	pipenv lock
 	# build docker image
-	docker-compose -f docker-compose-dev.yml down
-	docker-compose -f docker-compose-dev.yml build
+	docker compose -f docker-compose-dev.yml down
+	docker compose -f docker-compose-dev.yml build
 
 init-db:
 	# create DB
-	docker-compose -f docker-compose-dev.yml exec postgres \
+	docker compose -f docker-compose-dev.yml exec postgres \
 		psql -c 'CREATE DATABASE "${DB_NAME}";' -U postgres
 	# create DB user for app
-	docker-compose -f docker-compose-dev.yml exec postgres \
+	docker compose -f docker-compose-dev.yml exec postgres \
 		psql ${DB_NAME} -c "CREATE USER ${DATABASE_USER} WITH PASSWORD '${DATABASE_PASSWORD}';" -U postgres
-	docker-compose -f docker-compose-dev.yml exec postgres \
+	docker compose -f docker-compose-dev.yml exec postgres \
 		psql ${DB_NAME} -c "ALTER ROLE ${DATABASE_USER} WITH CREATEDB;" -U postgres
 	# initialize DBs executing migration scripts
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py makemigrations
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
 	# make a room for the cache
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py createcachetable
 	# create super admin in app
 	make superadmin
@@ -88,56 +88,56 @@ reset: build up
 	make compilemessages
 
 up:
-	docker-compose -f docker-compose-dev.yml up -d
+	docker compose -f docker-compose-dev.yml up -d
 
 stop:
-	docker-compose -f docker-compose-dev.yml stop
+	docker compose -f docker-compose-dev.yml stop
 
 down:
-	docker-compose -f docker-compose-dev.yml down
+	docker compose -f docker-compose-dev.yml down
 
 logs:
-	docker-compose -f docker-compose-dev.yml logs -f
+	docker compose -f docker-compose-dev.yml logs -f
 
 restart:
-	docker-compose -f docker-compose-dev.yml stop
-	docker-compose -f docker-compose-dev.yml up -d
-	docker-compose -f docker-compose-dev.yml logs
+	docker compose -f docker-compose-dev.yml stop
+	docker compose -f docker-compose-dev.yml up -d
+	docker compose -f docker-compose-dev.yml logs
 
 restart-web:
-	docker-compose -f docker-compose-dev.yml stop web
-	docker-compose -f docker-compose-dev.yml start web
+	docker compose -f docker-compose-dev.yml stop web
+	docker compose -f docker-compose-dev.yml start web
 
 superadmin:
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 	python infoscience_exports/manage.py shell -c "from django.contrib.auth import get_user_model; \
 		User = get_user_model(); \
 		User.objects.filter(email='${SUPER_ADMIN_EMAIL}').delete(); \
 		User.objects.create_superuser('${SUPER_ADMIN_USERNAME}', '${SUPER_ADMIN_EMAIL}', '${SUPER_ADMIN_PASSWORD}');"
 
 collectstatic: up
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py collectstatic --noinput
 
 migrations: up
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py makemigrations
 
 migrate: up
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
 
 messages: up
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py makemessages --all
 
 compilemessages: up
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py compilemessages
 
 dump:
 	@echo dumping DB on last commit `git rev-parse --verify HEAD`
-	docker-compose -f docker-compose-dev.yml run --rm \
+	docker compose -f docker-compose-dev.yml run --rm \
 		-v $(shell pwd)/backup/:/backup \
 		postgres sh -c 'exec pg_dump -C -hpostgres -Upostgres -Ox -Ft \
 		   -f/backup/$(shell date +"%F:%T")-$(shell git rev-parse --verify HEAD).sql.tar -d${DB_NAME}'
@@ -148,7 +148,7 @@ restore:
 	git checkout $(shell ls -t backup/*.sql.tar | head -1 | cut -d'-' -f4 | cut -d '.' -f1)
 
 	# restore DB
-	docker-compose -f docker-compose-dev.yml run --rm \
+	docker compose -f docker-compose-dev.yml run --rm \
 		-v $(shell pwd)/backup/:/backup \
 		postgres sh -c 'exec pg_restore -c -hpostgres -U${DATABASE_USER} -Ox -Ft -d${DB_NAME} `ls -t /backup/*.sql.tar | head -1`'
 
@@ -218,11 +218,11 @@ update-changelog:
 deploy: dump
 	git pull
 	# update docker images
-	docker-compose -f docker-compose-dev.yml build
+	docker compose -f docker-compose-dev.yml build
 	# restart containers
 	make restart
 	# update DB
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py migrate
 	# update languages
 	make collectstatic
@@ -231,25 +231,25 @@ deploy: dump
 	make restart-web
 
 fast-test: check-env
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py test exports --settings=settings.test --noinput --failfast --keepdb
 
 test: check-env
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py test exports --settings=settings.test --noinput
 
 test-render: check-env
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py test --failfast exports.test.test_crud_views:ExportRenderTest --settings=settings.test-silent-coverage --noinput
 
 shell:
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py shell_plus
 
 bash:
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		bash
 
 coverage: check-env
@@ -259,8 +259,8 @@ coverage: check-env
 	open htmlcov/index.html
 
 build-travis:
-	docker-compose -f docker-compose-dev.yml build
-	docker-compose -f docker-compose-dev.yml up -d
+	docker compose -f docker-compose-dev.yml build
+	docker compose -f docker-compose-dev.yml up -d
 
 test-travis:
 	flake8 infoscience_exports/exports --max-line-length=120 --exclude=migrations
@@ -268,40 +268,40 @@ test-travis:
 	coverage xml
 
 migration-load-dump:
-	docker-compose -f docker-compose-dev.yml exec web \
+	docker compose -f docker-compose-dev.yml exec web \
 		python infoscience_exports/manage.py loaddata --app exporter exports_from_32
 
 migration-build-delta:
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py add_quality_content_comparaison
+	docker compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py add_quality_content_comparaison
 
 migration-migrate:
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
+	docker compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
 	migrate_from_legacy --jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv \
             --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
             --ids_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv
 
 migration-migrate-selective-with-subset:
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
+	docker compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
 	migrate_from_legacy --jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv \
             --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
             --ids_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv \
             --subset_only 1
 
 migration-migrate-all:
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
+	docker compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py \
 	migrate_from_legacy --jahia_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-prod-jahia.csv.extended.csv \
             --people_csv_path /usr/src/app/infoscience_exports/exporter/fixtures/infoscience-people-actif-only.csv.extended.csv \
             --migrate_all 1
 
 migration-post-generate-csv:
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \
+	docker compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \
 	--ids_csv_path "/usr/src/app/infoscience_exports/exporter/fixtures/ids_to_migrate.csv" \
 	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
 	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv " \
 	--all_csv_path "/var/log/django/infoscience_exports_all_new_url.csv"
 
 migration-post-generate-csv-all:
-	docker-compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \
+	docker compose -f docker-compose-dev.yml exec web python infoscience_exports/manage.py legacy_url_old_to_new \
 	--jahia_csv_path "/var/log/django/infoscience_exports_new_url_jahia.csv" \
 	--people_csv_path "/var/log/django/infoscience_exports_new_url_people.csv " \
 	--all_csv_path "/var/log/django/infoscience_exports_all_new_url.csv"
