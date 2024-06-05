@@ -13,9 +13,10 @@ AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
 ALLOWED_HOSTS = get_env_variable('ALLOWED_HOSTS').split(',') \
     + [ "127.0.0.1",
         "localhost",
-        "idevelopsrv25.epfl.ch",
-        "test-infoscience.epfl.ch",
         "infoscience.epfl.ch",
+        "infoscience-prod.epfl.ch",
+        "infoscience-test.epfl.ch",
+        "infoscience-sb.epfl.ch",
     ]
 
 for config in TEMPLATES:
