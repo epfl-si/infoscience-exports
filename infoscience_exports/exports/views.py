@@ -14,6 +14,7 @@ from log_utils import LogMixin
 from .models import Export
 from .forms import ExportForm
 from .options_notices import get_notices
+from .options import get_options_from_params, get_options_from_export_attributes
 
 
 class IsTheUserAccessTest(UserPassesTestMixin):
@@ -127,38 +128,10 @@ class ExportView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        options = {}
-        options['is_extern'] = True
-        options['url'] = self.object.url
-        options['format'] = self.object.formats_type
-        options['bullet'] = self.object.bullets_type
-        options['thumb'] = self.object.show_thumbnail
-        options['summary'] = self.object.show_summary
-        options['link_authors'] = self.object.show_linkable_authors
-        options['link_print'] = self.object.show_links_for_printing
-        options['link_detailed'] = self.object.show_detailed
-        options['link_fulltext'] = self.object.show_fulltext
-        options['link_publisher'] = self.object.show_viewpublisher
-        options['groupsby_all'] = self.object.groupsby_type
-        options['groupsby_year'] = self.object.groupsby_year
-        options['groupsby_doc'] = self.object.groupsby_doc
-        options['pending_publications'] = self.object.show_pending_publications
-        options['adv_article_volume'] = self.object.show_article_volume
-        options['adv_article_volume_number'] = self.object.show_article_volume_number
-        options['adv_article_volume_pages'] = self.object.show_article_volume_pages
-        options['adv_thesis_directors'] = self.object.show_thesis_directors
-        options['adv_thesis_pages'] = self.object.show_thesis_pages
-        options['adv_report_working_papers_pages'] = self.object.show_report_working_papers_pages
-        options['adv_conf_proceed_place'] = self.object.show_conf_proceed_place
-        options['adv_conf_proceed_date'] = self.object.show_conf_proceed_date
-        options['adv_conf_paper_journal_name'] = self.object.show_conf_paper_journal_name
-        options['adv_book_isbn'] = self.object.show_book_isbn
-        options['adv_book_doi'] = self.object.show_book_doi
-        options['adv_book_chapter_isbn'] = self.object.show_book_chapter_isbn
-        options['adv_book_chapter_doi'] = self.object.show_book_chapter_doi
-        options['adv_patent_status'] = self.object.show_patent_status
 
+        options = get_options_from_export_attributes(self.object)
         options = get_notices(options)
+
         context['options'] = options
         return context
 
@@ -166,38 +139,10 @@ class ExportView(DetailView):
 def preview(request):
     params = request.GET.dict()
 
-    options = {}
-    options['is_extern'] = False
-    options['url'] = params['url']
-    options['format'] = params['format']
-    options['bullet'] = params['bullet']
-    options['thumb'] = params['thumb'] == 'true'
-    options['summary'] = params['summary'] == 'true'
-    options['link_authors'] = params['link_authors'] == 'true'
-    options['link_print'] = params['link_print'] == 'true'
-    options['link_detailed'] = params['link_detailed'] == 'true'
-    options['link_fulltext'] = params['link_fulltext'] == 'true'
-    options['link_publisher'] = params['link_publisher'] == 'true'
-    options['groupsby_all'] = params['groupsby_all']
-    options['groupsby_year'] = params['groupsby_year']
-    options['groupsby_doc'] = params['groupsby_doc']
-    options['pending_publications'] = params['pending_publications'] == 'true'
-    options['adv_article_volume'] = params['adv_article_volume'] == 'true'
-    options['adv_article_volume_number'] = params['adv_article_volume_number'] == 'true'
-    options['adv_article_volume_pages'] = params['adv_article_volume_pages'] == 'true'
-    options['adv_thesis_directors'] = params['adv_thesis_directors'] == 'true'
-    options['adv_thesis_pages'] = params['adv_thesis_pages'] == 'true'
-    options['adv_report_working_papers_pages'] = params['adv_report_working_papers_pages'] == 'true'
-    options['adv_conf_proceed_place'] = params['adv_conf_proceed_place'] == 'true'
-    options['adv_conf_proceed_date'] = params['adv_conf_proceed_date'] == 'true'
-    options['adv_conf_paper_journal_name'] = params['adv_conf_paper_journal_name'] == 'true'
-    options['adv_book_isbn'] = params['adv_book_isbn'] == 'true'
-    options['adv_book_doi'] = params['adv_book_doi'] == 'true'
-    options['adv_book_chapter_isbn'] = params['adv_book_chapter_isbn'] == 'true'
-    options['adv_book_chapter_doi'] = params['adv_book_chapter_doi'] == 'true'
-    options['adv_patent_status'] = params['adv_patent_status'] == 'true'
+    options = get_options_from_params(params)
 
     options = get_notices(options)
+
     c = {'options': options, 'SITE_PATH': settings.SITE_PATH}
 
     t = loader.get_template('exports/export_complete.html')
