@@ -83,6 +83,7 @@ init-db:
 init: reset
 
 reset: build up
+	sleep 3
 	make init-db
 	make collectstatic
 	make compilemessages
