@@ -113,6 +113,11 @@ This will take care of creating the version number, the branches, the tags, the 
 ./ansible/exportsible -t update-image-with-local
 ```
 
+#### Reload the pod with env changes (after per ex. a deployment edit)
+```shell
+oc rollout restart deployment/infoscience-exports
+```
+
 ## Advanced configuration / Usages
 
 Take a look into the [documentation folder](/doc)
