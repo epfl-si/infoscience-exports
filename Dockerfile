@@ -11,17 +11,14 @@ ENV DJANGO_ENV=${DJANGO_ENV} \
   PIP_DEFAULT_TIMEOUT=100 \
   PIPENV_HIDE_EMOJIS=true \
   NO_COLOR=true \
-  PIPENV_NOSPIN=true
+  PIPENV_NOSPIN=true \
+  DEBIAN_FRONTEND=noninteractive
 
 # install gettext
 RUN apt-get update && apt-get install -y --no-install-recommends \
         bash \
         gettext \
-		tree \
-		curl \
-		libevent-dev \
-		rsync \
-		nano \
+        postgresql-client \
         tree \
         curl \
         libevent-dev \
