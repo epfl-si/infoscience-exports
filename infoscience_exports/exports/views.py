@@ -81,6 +81,9 @@ class ExportUpdate(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
         return super(ExportUpdate, self).form_valid(form)
 
 
+class ExportUpgrade(ExportUpdate):
+    template_name = 'exports/export_upgrade.html'
+
 class ExportDelete(IsTheUserAccessTest, LoginRequiredMixin, DeleteView):
     model = Export
     success_url = django_reverse_lazy('crud:export-list')

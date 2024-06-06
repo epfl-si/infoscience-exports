@@ -10,6 +10,7 @@ export_patterns = ([
 
     url(r'^new/$', views.ExportCreate.as_view(), name='export-create'),
     url(r'^(?P<pk>\d+)/update/$', views.ExportUpdate.as_view(), name='export-update'),
+    url(r'^(?P<pk>\d+)/update/to-dynamic-list/$', views.ExportUpgrade.as_view(), name='export-update-to-dynamic-list'),
     url(r'^(?P<pk>\d+)/delete/$', views.ExportDelete.as_view(), name='export-delete'),
     url(r'^preview/$', views.preview, name='export-preview'),
     url(r'^version/$', views.version),

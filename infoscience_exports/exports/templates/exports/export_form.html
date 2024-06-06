@@ -25,9 +25,12 @@
     {% endfor %}
 {% endif %}
 
-
+    {% block title %}
     <h1>{% trans "Create/Update Publication List" %}</h1>
+    {% endblock %}
+
     <form id="export_form" method="post" action="." class="form">
+
 		{% csrf_token %}
 
 		<div class="row">
