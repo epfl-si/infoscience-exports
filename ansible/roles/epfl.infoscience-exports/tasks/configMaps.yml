@@ -12,6 +12,7 @@
         ALLOWED_HOSTS: 'infoscience-exports.epfl.ch,infoscience.epfl.ch,infoscience-prod.epfl.ch,infoscience-test.epfl.ch,infoscience-sb.epfl.ch'
         CACHE_TIMEOUT: '7200'
         RANGE_DISPLAY: '1000'
+        SERVER_ENGINE: 'invenio'
       kind: ConfigMap
       metadata:
         name: "{{ config_maps_name }}"

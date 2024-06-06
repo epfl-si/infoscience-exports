@@ -1,3 +1,5 @@
+import os
+
 from django.urls import reverse
 from django.db import models
 from django.conf import settings
@@ -34,8 +36,46 @@ class Export(BulletsSettings,
     updated_at = models.DateTimeField(auto_now=True)
     url = models.TextField()
 
+    SERVER_ENGINE_CHOICES = {
+        ('invenio', "invenio"),
+        ('dspace', "dspace"),
+    }
+
+    # save if the data for this export come from Invenio or Dspace
+    server_engine = models.CharField(
+        max_length=10,
+        choices=SERVER_ENGINE_CHOICES,
+        blank=True
+    )
+
+    # The rendered page is saved into this. This mechanism is here as we may move away from Invenio, so some export
+    # may not be able to crawl again the data. In that case, it should use this.
+    last_rendered_page = models.TextField(
+        editable=False,
+        default=None,
+        null=True
+    )
+    last_rendered_page_usage_at = models.DateTimeField(
+        editable=False,
+        default=None,
+        null=True
+    )
+
     def __str__(self):
         return "Export {} {}".format(self.id, self.name)
+
+    @classmethod
+    def post_create(cls, sender, instance, created, *args, **kwargs):
+        if not created:
+            return
+
+        # set the correct engine name when creating new exports.
+        # There is no safe way to tell which one is right.
+        # So the default one is written into an env. variable.
+        # Default being 'dspace'.
+        current_server_engine = os.environ.get('SERVER_ENGINE', 'dspace')
+        instance.server_engine = current_server_engine
+        instance.save()
 
     def get_absolute_url(self):
         return reverse('crud:export-view', args=[str(self.id)])
@@ -46,6 +86,9 @@ class Export(BulletsSettings,
 
     class Meta:
         ordering = ['-id']
+
+
+post_save.connect(Export.post_create, sender=Export)
 
 
 class LegacyExport(models.Model):

@@ -109,7 +109,19 @@ class ExportView(DetailView):
         else:
             context = self.get_context_data(object=self.object)
             rendered_response = self.render_to_response(context).render()
+
+            # save render in two caches, the temp one from Django here
             cache.set(cache_key, rendered_response)
+
+        # the other one into the 'export.last_rendered_page' model, to get it back when things go blackout
+        # this field is reserved for invenio exports only, dspace does not need this mechanism
+        if self.object.server_engine == 'invenio':
+            self.object.last_rendered_page = rendered_response.rendered_content
+            self.object.save()
+            # TODO: render it back when appropriate (when env.SERVER_ENGINE == 'dspace' maybe) with
+            # self.object.last_rendered_page = django.utils.timezone.now()
+            # self.object.save()
+            # return HttpResponse(self.object.last_rendered_page)
 
         return rendered_response
 
