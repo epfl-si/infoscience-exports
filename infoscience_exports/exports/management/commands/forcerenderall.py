@@ -1,6 +1,7 @@
 import time
 
 from django.core.management.base import BaseCommand
+from django.http import request
 from django.test import Client
 from django.urls import reverse
 
@@ -52,7 +53,7 @@ class Command(BaseCommand):
                 f'Progress: {count_export_processed + 1}/{total_export}')
             )
 
-            request_url = reverse('crud:export-view', args=[str(export.id)])
+            request_url = request.build_absolute_uri(reverse('crud:export-view', args=[str(export.id)]))
 
             self.stdout.write(self.style.NOTICE(
                 f'Processing: {request_url}')
