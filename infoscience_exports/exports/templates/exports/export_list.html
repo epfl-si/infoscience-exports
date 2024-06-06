@@ -17,15 +17,47 @@
 					<h4><a href="{% url 'crud:export-update' object.pk %}">{{ object.name }}</a></h4>
 					<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}" target="_blank">
 						{{ SITE_DOMAIN }}{{ object.get_absolute_url }}</a></p>
+          {% if object.server_engine == 'invenio' %}
+          <div class="category-upgrade">
+            <div>
+              <p
+                class="badge badge-pill badge-warning"
+                data-toggle="tooltip"
+                data-html="true"
+                data-trigger="hover click"
+                data-delay='{ "show": 0, "hide": 200 }'
+                title='Please note that the publication lists from Infoscience integrated into the EPFL website, lab or people pages are frozen following the launch of the new version of platform.
+                  The owners of these pages are invited to recreate their publication list from <a href="https://infoscience.epfl.ch/" target="_blank">Infoscience</a>.
+                  For any assistance, please consult the <a href="https://help-infoscience.epfl.ch/" target="_blank">Infoscience help</a> or <a href="mailto:infoscience@epfl.ch" target="_blank">contact support</a>.'
+              >Frozen</p>
+            </div>
+          </div>
+          {% endif %}
+          {% if object.server_engine == 'dspace' %}
+          <div class="category-upgrade">
+            <div>
+              <p
+                class="badge badge-pill badge-success"
+                data-toggle="tooltip"
+                title="This export is dynamic and will show the latest publications from Infoscience."
+              >Dynamic</p>
+            </div>
+          </div>
+          {% endif %}
 				</div>
 				<div class="category-tools">
 					<input type="hidden" value="{{ SITE_DOMAIN }}{{ object.get_absolute_url }}">
 					<a class="btn btn-primary" href="{% url 'crud:export-delete' object.pk %}" role="button" data-placement="top" data-toggle="tooltip" title="{% trans 'Remove' %}">
 						<span class="fa fa-trash fa-lg"></span>
 					</a>
-					<a class="btn btn-primary" href="#" role="button"" data-placement="top" data-toggle="tooltip" data-tip="{% trans 'Copy to clipboard' %}" title="{% trans 'Copy to clipboard' %}">
-						<span class="fa fa-clipboard fa-lg"></span>						
+					<a class="btn btn-primary" href="#" role="button" data-placement="top" data-toggle="tooltip" data-tip="{% trans 'Copy to clipboard' %}" title="{% trans 'Copy to clipboard' %}">
+						<span class="fa fa-clipboard fa-lg"></span>
 					</a>
+          {% if object.server_engine == 'invenio' %}
+          <a class="btn btn-primary btn-upgrade" href="{% url 'crud:export-update-to-dynamic-list' object.pk %}" role="button" data-placement="top" data-toggle="tooltip" data-tip="{% trans 'Upgrade to a dynamic list' %}" title="{% trans 'Upgrade to a dynamic list' %}">
+            <span class="fa fa-arrow-circle-o-up fa-lg"></span>
+          </a>
+          {% endif %}
 				</div>
 			</div>
 		</li>
@@ -49,4 +81,11 @@
 	    </span>
 	</div>
 	{% endif %}
+
+<!-- Initialize tooltips -->
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
 {% endblock %}
