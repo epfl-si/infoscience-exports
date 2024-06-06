@@ -85,8 +85,17 @@ class LegacyExportInline(admin.StackedInline):
 
 
 class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
-    list_display = ('name', 'user', 'view_url', 'legacy_url', 'updated_at',)
-    list_filter = ('updated_at', LegacyExportFilter)
+    list_display = (
+        'name',
+        'user',
+        'view_url',
+        'legacy_url',
+        'updated_at',
+        'server_engine',
+        'has_render_in_db',
+        'last_render_usage',
+    )
+    list_filter = ['updated_at', 'server_engine', LegacyExportFilter]
     inlines = [LegacyExportInline]
     search_fields = (
         'id', 'name', 'user__email',
@@ -113,6 +122,12 @@ class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
                 legacy_url, legacy_url))
         except IndexError:  # no legacy linked
             return ''
+
+    def has_render_in_db(self, obj):
+        return True if obj.last_rendered_page else False
+
+    def last_render_usage(self, obj):
+        return obj.last_rendered_page_usage_at
 
 
 class ExportInline(admin.StackedInline):
