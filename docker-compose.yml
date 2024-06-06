@@ -17,10 +17,13 @@ services:
       # does not compute their value from the other variables
       - SITE_URL=${SITE_URL}
       - DATABASE_URL=${DATABASE_URL}
+      - PGPASSWORD=${POSTGRES_PASSWORD}
     command: gunicorn --reload -w 4 -b :80 --chdir /usr/src/app/infoscience_exports wsgi:application
 
   postgres:
     image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "25432:5432"
     healthcheck:

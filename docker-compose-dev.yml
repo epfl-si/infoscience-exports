@@ -27,6 +27,7 @@ services:
       - SITE_URL=${SITE_URL}
       - DATABASE_URL=${DATABASE_URL}
       - DJANGO_ENV=dev
+      - PGPASSWORD=${POSTGRES_PASSWORD}
     command: gunicorn --reload -w 4 -b :${DEV_PORT} --chdir /usr/src/app/infoscience_exports wsgi:application
 
   nginx:
@@ -54,7 +55,7 @@ services:
   postgres:
     image: postgres:12
     environment:
-      - POSTGRES_PASSWORD=django
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - ./docker_volumes/db_data:/var/lib/postgresql
     ports:
