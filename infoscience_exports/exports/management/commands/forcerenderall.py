@@ -1,7 +1,7 @@
+import os
 import time
 
 from django.core.management.base import BaseCommand
-from django.http import request
 from django.test import Client
 from django.urls import reverse
 
@@ -53,16 +53,12 @@ class Command(BaseCommand):
                 f'Progress: {count_export_processed + 1}/{total_export}')
             )
 
-            request_url = request.build_absolute_uri(reverse('crud:export-view', args=[str(export.id)]))
+            request_url = f'{os.getenv("SITE_URL")}/{str(export.id)}/'
 
             self.stdout.write(self.style.NOTICE(
-                f'Processing: {request_url}')
-            )
-            self.stdout.write(self.style.NOTICE(
-                f'Calling url: {export.url}')
+                f'Calling: {request_url} to cache result of {export.url}')
             )
 
-            #export.render_into_db()
             # call the view to do the render
             response = client.get(request_url)
             count_export_processed += 1
@@ -73,7 +69,9 @@ class Command(BaseCommand):
                     '200 ok returned')
                 )
             else:
-                self.stdout.write(self.style.WARNING('Not a 200 returned'))
+                self.stdout.write(self.style.WARNING(
+                    f'Not a 200 returned. Error was : {response.status_code}'
+                ))
 
             # refresh the object and check for his data
             export = Export.objects.get(id=export.id)
