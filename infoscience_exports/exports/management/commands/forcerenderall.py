@@ -4,6 +4,7 @@ import time
 from django.core.management.base import BaseCommand
 from django.test import Client
 from django.urls import reverse
+from django.conf import settings
 
 from exports.models.export import Export
 
@@ -60,7 +61,7 @@ class Command(BaseCommand):
             )
 
             # call the view to do the render
-            response = client.get(request_url)
+            response = client.get(request_url, {}, HTTP_HOST=settings.ALLOWED_HOSTS[0])
             count_export_processed += 1
 
             # check for http response
