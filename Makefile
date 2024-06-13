@@ -95,6 +95,7 @@ stop:
 	docker compose -f docker-compose-dev.yml stop
 
 down:
+	@echo -n "Are you sure? The db will be lost [y/N] " && read ans && [ $${ans:-N} = y ]
 	docker compose -f docker-compose-dev.yml down
 
 logs:
