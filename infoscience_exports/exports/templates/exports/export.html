@@ -8,11 +8,13 @@
 <!--
 Export url :
 {{ options.url }}
+Export server engine :
+{{ options.server_engine }}
 -->
 <!--
 Export parameters:
 {% for key, value in options.items %}
-{% if key != "marc21xml" and key != "url" %}
+{% if key != "marc21xml" and key != "url" and key != "server_engine" %}
 {{ key }}="{{ value }}";
 {% endif %}
 {% endfor %}

@@ -135,6 +135,9 @@ class ExportView(DetailView):
         options = get_options_from_export_attributes(self.object)
         options = get_notices(options)
 
+        # knowing from which engine this has been generated on front can be  helpful
+        options['server_engine'] = self.object.server_engine
+
         context['options'] = options
         return context
 
