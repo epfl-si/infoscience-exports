@@ -42,7 +42,6 @@ Build the images, run the containers and initialize the DB:
 
 ```shell
 make init
-make init-db
 ```
 
 Get the working url:
