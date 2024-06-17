@@ -1,13 +1,15 @@
+import os
 from urllib.parse import unquote
 
 from django.conf import settings
-from django.urls import reverse_lazy as django_reverse_lazy
-from django.http import HttpResponse
+from django.urls import reverse_lazy as django_reverse_lazy, reverse
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.translation import gettext as _, get_language
 from django.core.cache import cache
+from django.utils.timezone import now
 
 from exports import format_version
 from log_utils import LogMixin
@@ -73,6 +75,17 @@ class ExportUpdate(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
     form_class = ExportForm
     success_url = django_reverse_lazy('crud:export-list')
 
+    def get(self, request, *args, **kwargs):
+        export = self.get_object()
+
+        # we don't want anmyore the invenio ones.
+        # in case we want to update the data,
+        # send the user directly to the upgrade process
+        if export.server_engine == 'invenio':
+            return HttpResponseRedirect(reverse('crud:export-update-to-dynamic-list', args=[export.id]))
+        else:
+            return super().get(request, *args, **kwargs)
+
     def form_valid(self, form):
         if form.instance.user != self.request.user and not self.request.user.is_staff:
             form.add_error(None, _("Only the creator can edit the publication"))
@@ -81,8 +94,19 @@ class ExportUpdate(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
         return super(ExportUpdate, self).form_valid(form)
 
 
-class ExportUpgrade(ExportUpdate):
+class ExportUpgrade(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
+    model = Export
+    form_class = ExportForm
     template_name = 'exports/export_upgrade.html'
+    success_url = django_reverse_lazy('crud:export-list')
+
+    def form_valid(self, form):
+        if form.instance.user != self.request.user and not self.request.user.is_staff:
+            form.add_error(None, _("Only the creator can edit the publication"))
+            return super(ExportUpgrade, self).form_invalid(form)
+
+        return super(ExportUpgrade, self).form_valid(form)
+
 
 class ExportDelete(IsTheUserAccessTest, LoginRequiredMixin, DeleteView):
     model = Export
@@ -103,6 +127,14 @@ class ExportView(DetailView):
     def get(self, request, *args, **kwargs):
         """ Warning, as we cache the view, don't use any request data"""
         self.object = self.get_object()
+
+        # ok here, if we have moved to dspace, it means we don't have any results coming from invenio anymore
+        # so check if we are in dspace mode
+        if self.object.server_engine == 'invenio' and os.getenv('SERVER_ENGINE') == 'dspace':
+            self.object.last_rendered_usage = now()
+            self.object.save()
+            return HttpResponse(self.object.last_rendered_page)
+
         # language dependant cache
         ln = get_language()
         cache_key = self.object.get_cache_key_for_view(ln)
@@ -122,10 +154,6 @@ class ExportView(DetailView):
         if self.object.server_engine == 'invenio':
             self.object.last_rendered_page = rendered_response.rendered_content
             self.object.save()
-            # TODO: render it back when appropriate (when env.SERVER_ENGINE == 'dspace' maybe) with
-            # self.object.last_rendered_page = django.utils.timezone.now()
-            # self.object.save()
-            # return HttpResponse(self.object.last_rendered_page)
 
         return rendered_response
 
@@ -154,6 +182,16 @@ def preview(request):
     t = loader.get_template('exports/export_complete.html')
     return HttpResponse(t.render(c))
 
+def compare_with_preview(request, pk):
+    try:
+        export = Export.objects.get(id=pk)
+    except Export.DoesNotExist:
+        raise Http404("Export does not exist")
+
+    c = {'export': export, 'SITE_PATH': settings.SITE_PATH}
+    t = loader.get_template('exports/export_compare.html')
+
+    return HttpResponse(t.render(c))
 
 def version(request, label='version'):
     return HttpResponse(format_version(label))

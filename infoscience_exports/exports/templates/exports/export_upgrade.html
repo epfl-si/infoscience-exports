@@ -7,4 +7,45 @@
 
 {% block title %}
 <h1>Upgrade Publication list to a dynamic list</h1>
+<div class="alert alert-warning" role="alert">
+  <p>Some explaination about the new Infoscience and the static thing, that you can still use the static list but as soon you update this it becomes dynamic and the static is lost...</p>
+</div>
+
+{% endblock %}
+
+
+{% block form-buttons %}
+  {% buttons %}
+    <a class="btn btn-primary" href="{% url 'crud:export-list' %}" role="button">{% trans "Cancel and keep using the frozen export" %}</a>
+    <button id="btn-preview" type="button" class="btn btn-secondary">{% trans "Get a preview with the new Infoscience" %}</button>
+    <button id="btn-submit" type="button" class="btn btn-primary">{% trans "Update" %}</button>
+  {% endbuttons %}
+{% endblock %}
+
+{% block preview %}
+{% endblock %}
+
+{% block full-width-content %}
+<div id="compare_and_preview" class="container-fluid border-top pt-4" >
+
+  <div class="row">
+    <div class="col-6 pl-4 left-frame-compare"><h2>Frozen</h2> Current static list in usage for the url {{ SITE_DOMAIN }}{{ object.get_absolute_url }}</div>
+   <div class="col-6 pl-4"><h2>Preview</h2> The dynamic list with the new Infoscience data</div>
+  </div>
+
+  <div class="row">
+    <div id="iframe-compare-container" class="embed-responsive embed-responsive-1by1 col-6 left-frame-compare">
+      <iframe id="display-old-mrc21xml" class="embed-responsive-item pl-4" src="{{ SITE_DOMAIN }}{% url 'crud:export-compare' object.pk %}"></iframe>
+    </div>
+    <div id="display-mrc21xml-loading" class="col-6 mt-2 text-center">
+      <div class="spinner-border text-primary mt-5" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div id="iframe-preview-container" class="embed-responsive embed-responsive-1by1 col-6">
+      <iframe id="display-mrc21xml" class="embed-responsive-item pl-4" src=""></iframe>
+    </div>
+  </div>
+
+</div>
 {% endblock %}

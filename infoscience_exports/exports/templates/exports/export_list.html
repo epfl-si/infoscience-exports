@@ -14,7 +14,12 @@
 		<li class="list-group-item">
 			<div>
 				<div class="category-content">
-					<h4><a href="{% url 'crud:export-update' object.pk %}">{{ object.name }}</a></h4>
+            {% if object.server_engine == 'invenio' %}
+            <h4 class="text-dark">{{ object.name }}</h4>
+            {% else %}
+            <h4><a href="{% url 'crud:export-update' object.pk %}">{{ object.name }}</a></h4>
+            {% endif %}
+
 					<p>{% trans "Export url" %}: <a href="{{ object.get_absolute_url }}" target="_blank">
 						{{ SITE_DOMAIN }}{{ object.get_absolute_url }}</a></p>
           {% if object.server_engine == 'invenio' %}

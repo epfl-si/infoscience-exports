@@ -159,9 +159,14 @@
 
 
 
-<div class="pagebody"><div class="pagebodystripemiddle"><h1 class="headline">{% block headline %}{% endblock %}</h1>
+<div class="pagebody">
+  <div class="pagebodystripemiddle">
+    <h1 class="headline">{% block headline %}{% endblock %}</h1>
         {% block content %}
         {% endblock %}
-</div></div>
+  </div>
+  {% block full-width-content %}
+  {% endblock %}
+</div>
 
 {% include "base/footer.html" %}

@@ -80,6 +80,22 @@
 }
 
 /*
+ * Export Compare
+*/
+
+#compare_and_preview {
+    width: 94vw;
+    margin-left: 1%;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.left-frame-compare {
+    border-right: solid 4px;
+}
+
+/*
  * Export List
 */ 
 

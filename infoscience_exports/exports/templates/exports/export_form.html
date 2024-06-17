@@ -140,17 +140,22 @@
 			</div>
 		</div>
 
+  {% block form-buttons %}
 		{% buttons %}
 		<a class="btn btn-primary" href="{% url 'crud:export-list' %}" role="button">{% trans "Cancel" %}</a>
 		<button id="btn-preview" type="button" class="btn btn-primary" title="{% trans 'Defined by www.epfl.ch/css/epfl.css' %}">{% trans "Preview" %}</button>
 		<button id="btn-submit" type="button" class="btn btn-primary">{% trans "Submit" %}</button>
 		{% endbuttons %}
+  {% endblock %}
+
 	</form>
 
+{% block preview %}
   <div id="display-mrc21xml-loading" class="alert alert-info" role="alert"><span>{% trans 'In progress' %}</span></div>
 
   <div class="embed-responsive embed-responsive-1by1">
     <iframe id="display-mrc21xml" class="embed-responsive-item" src=""></iframe>
   </div>
+{% endblock %}
 
 {% endblock %}

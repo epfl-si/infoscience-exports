@@ -13,6 +13,8 @@ export_patterns = ([
     url(r'^(?P<pk>\d+)/update/to-dynamic-list/$', views.ExportUpgrade.as_view(), name='export-update-to-dynamic-list'),
     url(r'^(?P<pk>\d+)/delete/$', views.ExportDelete.as_view(), name='export-delete'),
     url(r'^preview/$', views.preview, name='export-preview'),
+    # this one is used to show a full export saved in db aside the preview
+    url(r'^(?P<pk>\d+)/compare/$', views.compare_with_preview, name='export-compare'),
     url(r'^version/$', views.version),
     url(r'^version/(?P<label>\w+)/$', views.version, name='export-version'),
     ], 'exports')
