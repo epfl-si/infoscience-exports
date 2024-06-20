@@ -16,6 +16,7 @@ ENV DJANGO_ENV=${DJANGO_ENV} \
 
 # install gettext
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
         bash \
         gettext \
         postgresql-client \
