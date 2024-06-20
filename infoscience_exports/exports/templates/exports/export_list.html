@@ -54,7 +54,7 @@
 						<span class="fa fa-clipboard fa-lg"></span>
 					</a>
           {% if object.server_engine == 'invenio' %}
-          <a class="btn btn-primary btn-upgrade" href="{% url 'crud:export-update-to-dynamic-list' object.pk %}" role="button" data-placement="top" data-toggle="tooltip" data-tip="{% trans 'Upgrade to a dynamic list' %}" title="{% trans 'Upgrade to a dynamic list' %}">
+          <a class="btn btn-primary btn-upgrade" href="{% url 'crud:export-update-to-dynamic-list' object.pk %}" role="button" data-placement="top" data-toggle="tooltip" data-tip="{% trans 'Migrate to dynamic' %}" title="{% trans 'Migrate to dynamic' %}">
             <span class="fa fa-arrow-circle-o-up fa-lg"></span>
           </a>
           {% else %}

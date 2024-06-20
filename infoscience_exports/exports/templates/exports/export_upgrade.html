@@ -6,7 +6,7 @@
 
 
 {% block title %}
-<h1>Migrate Publication list to a dynamic list</h1>
+<h1>Migrate Publication list</h1>
 <div class="alert alert-warning border-warning" role="alert">
   <p>
   Please note that Infoscience has been migrated to a new system.
@@ -23,9 +23,9 @@
 
 {% block form-buttons %}
   {% buttons %}
-    <a class="btn btn-primary" href="{% url 'crud:export-list' %}" role="button">{% trans "Cancel and keep using the frozen export" %}</a>
+    <a class="btn btn-primary" href="{% url 'crud:export-list' %}" role="button">{% trans "Cancel and keep the frozen export" %}</a>
     <button id="btn-preview" type="button" class="btn btn-secondary">{% trans "Preview" %}</button>
-    <button id="btn-submit" type="button" class="btn btn-primary">{% trans "Update" %}</button>
+    <button id="btn-submit" type="button" class="btn btn-primary">{% trans "Migrate" %}</button>
   {% endbuttons %}
 {% endblock %}
 
