@@ -82,7 +82,7 @@ class ExportUpdate(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
         # in case we want to update the data,
         # send the user directly to the upgrade process
         if export.server_engine == 'invenio':
-            return HttpResponseRedirect(reverse('crud:export-update-to-dynamic-list', args=[export.id]))
+            return HttpResponseRedirect(reverse('crud:export-migrate', args=[export.id]))
         else:
             return super().get(request, *args, **kwargs)
 
@@ -94,18 +94,18 @@ class ExportUpdate(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
         return super(ExportUpdate, self).form_valid(form)
 
 
-class ExportUpgrade(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
+class ExportMigrate(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
     model = Export
     form_class = ExportForm
-    template_name = 'exports/export_upgrade.html'
+    template_name = 'exports/export_migrate.html'
     success_url = django_reverse_lazy('crud:export-list')
 
     def form_valid(self, form):
         if form.instance.user != self.request.user and not self.request.user.is_staff:
-            form.add_error(None, _("Only the creator can edit the publication"))
-            return super(ExportUpgrade, self).form_invalid(form)
+            form.add_error(None, _("Only the creator can migrate the publication"))
+            return super(ExportMigrate, self).form_invalid(form)
 
-        return super(ExportUpgrade, self).form_valid(form)
+        return super(ExportMigrate, self).form_valid(form)
 
 
 class ExportDelete(IsTheUserAccessTest, LoginRequiredMixin, DeleteView):
