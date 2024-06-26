@@ -1,0 +1,64 @@
+{% extends "exports/export_form.html" %}
+
+{% load i18n %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+
+{% block title %}
+<h1>Migrate Publication list</h1>
+<div class="alert alert-warning border-warning" role="alert">
+  <p>
+  Please note that Infoscience has been migrated to a new system.
+  The publication lists are frozen following the launch of the new version of platform.<br/><br/>
+  On this page, you will be able to migrate your export to the new system.
+  It is your responsibility to ensure the data are correct before updating this list.<br/><br/>
+  For any assistance, please consult <a href="https://help-infoscience.epfl.ch/" target="_blank">the Infoscience help <i class="fa fa-external-link" aria-hidden="true" style="font-size: 0.75em;"></i>
+  </a> or <a href="mailto:infoscience@epfl.ch">contact support</a>.<br/>
+  </p>
+</div>
+
+{% endblock %}
+
+
+{% block form-buttons %}
+  {% buttons %}
+    <a class="btn btn-primary" href="{% url 'crud:export-list' %}" role="button">{% trans "Cancel and keep the frozen export" %}</a>
+    <button id="btn-preview" type="button" class="btn btn-secondary">{% trans "Preview" %}</button>
+    <button id="btn-submit" type="button" class="btn btn-primary">{% trans "Migrate" %}</button>
+  {% endbuttons %}
+{% endblock %}
+
+{% block preview %}
+{% endblock %}
+
+{% block full-width-content %}
+<div id="compare_and_preview" class="container-fluid border-top pt-4" >
+
+  <div class="row">
+    <div class="col-6 pl-4 left-frame-compare">
+      <h2>Frozen</h2>
+      Current list in usage for at {{ SITE_DOMAIN }}{{ object.get_absolute_url }}
+    </div>
+   <div class="col-6 pl-4">
+     <h2>Preview</h2>
+     The dynamic list with the new Infoscience data
+   </div>
+  </div>
+
+  <div class="row">
+    <div id="iframe-compare-container" class="embed-responsive embed-responsive-1by1 col-6 left-frame-compare">
+      <iframe id="display-old-mrc21xml" class="embed-responsive-item pl-4" src="{{ SITE_DOMAIN }}{% url 'crud:export-compare' object.pk %}"></iframe>
+    </div>
+    <div id="display-mrc21xml-loading" class="col-6 mt-2 text-center">
+      <div class="spinner-border text-primary mt-5" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div id="iframe-preview-container" class="embed-responsive embed-responsive-1by1 col-6">
+      <iframe id="display-mrc21xml" class="embed-responsive-item pl-4" src=""></iframe>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

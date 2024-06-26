@@ -105,6 +105,7 @@ LOGGING['loggers'] = {
 def show_toolbar(request):
     patterns = [
         "/preview/",  # ignore preview as it create an infinite loop
+        "/compare/",
     ]
     return not any(p in request.path for p in patterns)
 

@@ -10,8 +10,11 @@ export_patterns = ([
 
     url(r'^new/$', views.ExportCreate.as_view(), name='export-create'),
     url(r'^(?P<pk>\d+)/update/$', views.ExportUpdate.as_view(), name='export-update'),
+    url(r'^(?P<pk>\d+)/update/to-dynamic-list/$', views.ExportMigrate.as_view(), name='export-migrate'),
     url(r'^(?P<pk>\d+)/delete/$', views.ExportDelete.as_view(), name='export-delete'),
     url(r'^preview/$', views.preview, name='export-preview'),
+    # this one is used to show a full export saved in db aside the preview
+    url(r'^(?P<pk>\d+)/compare/$', views.compare_with_preview, name='export-compare'),
     url(r'^version/$', views.version),
     url(r'^version/(?P<label>\w+)/$', views.version, name='export-version'),
     ], 'exports')

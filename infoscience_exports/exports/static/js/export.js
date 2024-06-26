@@ -91,15 +91,17 @@ jQuery(function($) {
 		$('[data-toggle="tooltip"]').tooltip();
 
 		var selected = $('#id_groupsby_type').find(':selected').val();
-		if (selected.indexOf('YEAR') != -1){
-			$('#id_groupsby_year').hide();
-		} else if (selected.indexOf('DOC') != -1) {
-			$('#id_groupsby_doc').hide();
-		} else {
-			$('#id_groupsby_year').prop('disabled', true);
- 			$('#groupby2-label').css("color", 'grey');
-			$('#id_groupsby_doc').hide();
-		}
+    if (selected !== undefined) {
+      if (selected.indexOf('YEAR') != -1) {
+        $('#id_groupsby_year').hide();
+      } else if (selected.indexOf('DOC') != -1) {
+        $('#id_groupsby_doc').hide();
+      } else {
+        $('#id_groupsby_year').prop('disabled', true);
+        $('#groupby2-label').css("color", 'grey');
+        $('#id_groupsby_doc').hide();
+      }
+    }
 	});
 
     $('#id_groupsby_type').change(function () {
