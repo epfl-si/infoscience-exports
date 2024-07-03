@@ -49,19 +49,15 @@
 		    <div class="topleftmenu-wrapper">
 		        <ul class="menu neutrallist">
 		            <li class="topleftmenu headermoduleboxbody">
-						<div class="hassubmenu">
-							{% if LANGUAGE_CODE == 'fr' %}
-							<span class="langinfo headerspan">Français</span>
-							<ul class="subsubmenu">
-								<li><a class="change_lang_en" href="{{ request.path }}?ln=en">English</a></li>
-							</ul>
-							{% else %}
-							<span class="langinfo headerspan">English</span>
-							<ul class="subsubmenu">
-								<li><a class="change_lang_fr" href="{{ request.path }}?ln=fr">Français</a></li>
-							</ul>
-							{% endif %}
-						</div>
+                  {% if LANGUAGE_CODE == 'fr' %}
+                  <a class="header-link has-img" href="//infoscience.epfl.ch/?ln=fr">
+                    <img class="header-img" src="{{ SITE_PATH }}/static/img/main_logo_en.png" alt="Infoscience"/>
+                  </a>
+                  {% else %}
+                  <a class="header-link has-img" href="//infoscience.epfl.ch/?ln=en">
+                    <img class="header-img" src="{{ SITE_PATH }}/static/img/main_logo_en.png" alt="Infoscience"/>
+                  </a>
+                  {% endif %}
 					</li>
 		        </ul>
 		    </div>
@@ -79,16 +75,10 @@
 		        </li>
 
 				{% if LANGUAGE_CODE == 'fr' %}
-				<li class="headermoduleboxbody">
-                    <a class="header" href="https://infoscience.epfl.ch/collections/?c=Infoscience%2FResearch?ln=fr">Browse Collections</a>
-                </li>
                 <li class="headermoduleboxbody">
                     <a class="header" href="http://help-infoscience.epfl.ch/">Aide</a>
                 </li>
 				{% else %}
-				<li class="headermoduleboxbody">
-                    <a class="header" href="https://infoscience.epfl.ch/collections/?c=Infoscience%2FResearch&ln=en">Browse Collections</a>
-                </li>
                 <li class="headermoduleboxbody">
                     <a class="header" href="http://help-infoscience.epfl.ch/">Help</a>
                 </li>
@@ -102,6 +92,24 @@
 		        <i class="user-icon"></i><span class="account">guest</span><span class="separator"> :: </span>
 		               <a class="userinfo logout" href="{{ SITE_PATH }}/login">login</a>
 		        {% endif %}
+          <ul class="menu neutrallist">
+            <li class="headermoduleboxbody">
+              <div class="hassubmenu">
+                {% if LANGUAGE_CODE == 'fr' %}
+                <span class="langinfo headerspan">Français</span>
+                <ul class="subsubmenu">
+                  <li><a class="change_lang_en" href="{{ request.path }}?ln=en">English</a></li>
+                </ul>
+                {% else %}
+                <span class="langinfo headerspan">English</span>
+                <ul class="subsubmenu">
+                  <li><a class="change_lang_fr" href="{{ request.path }}?ln=fr">Français</a></li>
+                </ul>
+                {% endif %}
+              </div>
+
+            </li>
+          </ul>
 		    </div>
 		</div>
 		<table class="navtrailbox">
@@ -121,14 +129,11 @@
 	<div class="headerboxbodylogo-wrapper">
 		<div class="headerboxbodylogo scrolled">
 		    <div class="logo-wrapper">
+          <p id="infoscience_title">Infoscience</p>
 				{% if LANGUAGE_CODE == 'fr' %}
-                <a class="header-link has-img" href="//infoscience.epfl.ch/?ln=fr">
-                    <img class="header-img" src="{{ SITE_PATH }}/static/img/main_logo_en.png" alt="Infoscience"/>
-                </a>
+          <p id="infoscience_pushline_fr">Unlocking Knowledge</p>
 				{% else %}
-	            <a class="header-link has-img" href="//infoscience.epfl.ch/?ln=en">
-	                <img class="header-img" src="{{ SITE_PATH }}/static/img/main_logo_en.png" alt="Infoscience"/>
-	            </a>
+          <p id="infoscience_pushline_en">Unlocking Knowledge</p>
 		        {% endif %}
 		    </div>
 		</div>

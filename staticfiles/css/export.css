@@ -2,6 +2,12 @@
 	background-color: rgb(245, 245, 245);
 }
 
+.Infoscience .header-img {
+    max-height: 72px;
+    max-width: 95%;
+    margin-left: 30px;
+}
+
 .Infoscience h1 {
 	font-family: "Arial Black", Arial, Helvetica, sans-serif;
     font-weight: bold;
@@ -34,6 +40,35 @@
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 123, 255, 0.6);
 	outline: 0 none;
 }
+
+#infoscience_title {
+    font-family: SuisseIntl, Arial, sans-serif;
+    font-size: 64px;
+    line-height: 1.2;
+    margin-bottom:0!important;
+    color:red;
+    font-weight:800;
+}
+
+@media (max-width: 1200px) {
+    #infoscience_title {
+        font-size: calc(1.575rem + 3.9vw)
+    }
+}
+
+#infoscience_pushline_en, #infoscience_pushline_fr {
+    font-family: SuisseIntl, Arial, sans-serif;
+    color: #212121;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+@media (max-width: 1200px) {
+    #infoscience_pushline_en, #infoscience_pushline_fr {
+        font-size: calc(1.253rem + .036vw)
+    }
+}
+
 
 /*
  * Export Edit
@@ -83,13 +118,8 @@
  * Export Compare
 */
 
-/*#display-old-mrc21xml .infoscienceBox {*/
-/*    background-color: rgba(222, 222, 222, 0.4);*/
-/*    z-index: 1;*/
-/*}*/
-
 #compare_and_preview {
-    width: 95vw;
+    width: 94vw;
     margin-left: 1%;
     margin-right: 0;
     margin-top: 0;
