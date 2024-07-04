@@ -18,7 +18,6 @@ def get_options_from_export_attributes(obj):
         'groupsby_all': obj.groupsby_type,
         'groupsby_year': obj.groupsby_year,
         'groupsby_doc': obj.groupsby_doc,
-        'pending_publications': obj.show_pending_publications,
         'adv_article_volume': obj.show_article_volume,
         'adv_article_volume_number': obj.show_article_volume_number,
         'adv_article_volume_pages': obj.show_article_volume_pages,

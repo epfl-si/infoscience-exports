@@ -96,6 +96,7 @@ class GroupBySettings(BaseSettings):
 
 
 class PendingPublicationsSettings(BaseSettings):
+    # this was used in invenio. no more usage in dspace, but kept as a compatibility
     show_pending_publications = models.BooleanField(default=False)
 
     class Meta:

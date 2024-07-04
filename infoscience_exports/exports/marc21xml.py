@@ -255,7 +255,7 @@ def parse_dict(record):
     return result
 
 
-def import_marc21xml(url, can_display_pending_publications):
+def import_marc21xml(url):
     result = []
 
     o = urlparse(url)
@@ -325,9 +325,7 @@ def import_marc21xml(url, can_display_pending_publications):
         dict_result['Description'] = [entry.format_field() for entry in record.physicaldescription()]
         dict_result['Subjects'] = [entry.format_field() for entry in record.subjects()]
 
-        is_pending = dict_result['Pending_Publications'] and not dict_result['Approved_Publications']
-        if not is_pending or can_display_pending_publications:
-            result.append(dict_result)
+        result.append(dict_result)
 
     if len(result) == 0 and len(reader) > 0:
         result.append(get_message('info', _('There are only pending publications')))

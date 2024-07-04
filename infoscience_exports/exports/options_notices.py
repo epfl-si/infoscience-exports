@@ -160,14 +160,11 @@ def get_notices(options):
     options['group_title'] = 'TITLE' in groupsby_all
     options['subgroup_title'] = 'TITLE' in groupsby_year or 'TITLE' in groupsby_doc
 
-    # remove pending publications if not needed
-    can_display_pending_publications = options['pending_publications']
-
     # validate url
     url = validate_url(options['url'])
 
     # get notices
-    notices = import_marc21xml(url, can_display_pending_publications)
+    notices = import_marc21xml(url)
 
     # check errors
     # FIXME: use exception to manage errors
