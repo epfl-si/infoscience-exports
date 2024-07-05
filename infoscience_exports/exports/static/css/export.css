@@ -2,10 +2,13 @@
 	background-color: rgb(245, 245, 245);
 }
 
+.Infoscience .pageheader {
+
+}
+
 .Infoscience .header-img {
-    max-height: 72px;
-    max-width: 95%;
-    margin-left: 30px;
+    margin-left: 37px;
+    width: 110px;
 }
 
 .Infoscience h1 {
@@ -46,7 +49,7 @@
     font-size: 64px;
     line-height: 1.2;
     margin-bottom:0!important;
-    color:red;
+    color:#00a79f;
     font-weight:800;
 }
 
