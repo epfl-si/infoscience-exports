@@ -107,7 +107,6 @@ body {
     line-height: 1.2;
     margin-bottom:0!important;
     color:#00a79f;
-    font-weight:800;
 }
 
 @media (max-width: 1200px) {
@@ -120,7 +119,6 @@ body {
     font-family: SuisseIntl, Arial, sans-serif;
     color: #212121;
     font-size: 32px;
-    font-weight: 600;
 }
 
 
