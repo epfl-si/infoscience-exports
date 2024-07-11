@@ -126,18 +126,27 @@
 		<!-- end replaced page header -->
 	</div>
 
-	<div class="headerboxbodylogo-wrapper">
-		<div class="headerboxbodylogo scrolled">
-		    <div class="logo-wrapper">
-          <p id="infoscience_title">Infoscience</p>
-				{% if LANGUAGE_CODE == 'fr' %}
-          <p id="infoscience_pushline_fr">Unlocking Knowledge</p>
-				{% else %}
-          <p id="infoscience_pushline_en">Unlocking Knowledge</p>
-		        {% endif %}
-		    </div>
-		</div>
-	</div>
+  <div class="background-image-container">
+    <div class="container">
+
+        <div class="logo-container">
+          <div class="lead-logo">
+            <picture class="logo-image">
+              <img src="{{ SITE_PATH }}/static/img/logo_icon.svg">
+            </picture>
+          </div>
+          <div class="header-text-after-image">
+            <span id="infoscience_title">Infoscience</span>
+            {% if LANGUAGE_CODE == 'fr' %}
+            <span id="infoscience_pushline_fr">Unlocking Knowledge</span>
+            {% else %}
+            <span id="infoscience_pushline_en">Unlocking Knowledge</span>
+            {% endif %}
+          </div>
+
+      </div>
+    </div>
+  </div>
 
   <div class="pagebody">
     <div class="pagebodystripemiddle">
