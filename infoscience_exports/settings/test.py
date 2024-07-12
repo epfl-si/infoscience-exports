@@ -10,14 +10,17 @@ for config in TEMPLATES:
 ALLOWED_HOSTS = ["*"]
 
 # Testing
-INSTALLED_APPS += ('django_nose',)
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-NOSE_ARGS = [
-    BASE_DIR,
-    '--nologcapture',
-    '--with-coverage',
-    '--cover-package={}'.format(BASE_DIR)
-]
+# Nose has been desactivated because it's in maintenance mode
+# and not really compatible with the new pythons
+# An alternative is still to be find
+# INSTALLED_APPS += ('django_nose',)
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+# NOSE_ARGS = [
+#     BASE_DIR,
+#     '--nologcapture',
+#     '--with-coverage',
+#     '--cover-package={}'.format(BASE_DIR)
+# ]
 
 # for test verification at the moment
 INFOSCIENCE_SITE_URL = 'https://infoscience.epfl.ch'

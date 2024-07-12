@@ -104,12 +104,20 @@ LOGGING['loggers'] = {
 
 def show_toolbar(request):
     patterns = [
-        "/preview/",  # ignore preview as it create an infinite loop
+        "/preview/",
         "/compare/",
     ]
-    return not any(p in request.path for p in patterns)
 
+    if any(p in request.path for p in patterns):
+        return False
+    elif request.path.startswith('/publication-exports/') and request.path.split('/')[-2].isdigit():
+        return False
+    return True
 
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": show_toolbar,
 }
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

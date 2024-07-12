@@ -3,7 +3,7 @@ Abstract classes, mainly used to avoid the one big model
 
 """
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 
 

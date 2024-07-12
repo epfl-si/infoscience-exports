@@ -56,7 +56,7 @@ build:
 	# udpating requirements
 	pipenv lock
 	# build docker image
-	docker compose -f docker-compose-dev.yml down
+	docker compose -f docker-compose-dev.yml stop
 	docker compose -f docker-compose-dev.yml build
 
 init-db:

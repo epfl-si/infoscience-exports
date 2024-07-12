@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM python:3.12-slim
 
 ARG DJANGO_ENV
 
@@ -72,4 +72,4 @@ RUN chmod g+rwx -R /usr/src/app
 
 EXPOSE 3000
 
-CMD ["gunicorn", "--bind", ":3000", "--workers", "4", "--chdir", "/usr/src/app/infoscience_exports", "wsgi:application"]
+CMD ["gunicorn", "--timeout 600", "--bind", ":3000", "--workers", "1", "--chdir", "/usr/src/app/infoscience_exports", "wsgi:application"]
