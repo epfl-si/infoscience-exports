@@ -151,7 +151,7 @@ class ExportView(DetailView):
 
         # the other one into the 'export.last_rendered_page' model, to get it back when things go blackout
         # this field is reserved for invenio exports only, dspace does not need this mechanism
-        if self.object.server_engine == 'invenio':
+        if self.object.server_engine == 'invenio' and os.getenv('SERVER_ENGINE') == 'invenio':
             self.object.last_rendered_page = rendered_response.rendered_content
             self.object.save()
 
