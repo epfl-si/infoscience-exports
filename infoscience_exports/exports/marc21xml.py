@@ -290,7 +290,7 @@ def import_marc21xml(url):
             continue
 
         dict_result['Id'] = dict_record['control_number']
-        dict_result['Infoscience_URL'] = "{}/record/{}".format(
+        dict_result['Infoscience_URL'] = "{}/items/{}".format(
             'https://infoscience.epfl.ch', dict_record['control_number'])
         dict_result['ELA_Icon'] = dict_record['electronic_location_access']['icon']
         dict_result['ELA_URL'] = dict_record['electronic_location_access']['fulltexts']
