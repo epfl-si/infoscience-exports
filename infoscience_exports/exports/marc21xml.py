@@ -22,8 +22,7 @@ class Author:
 
     def __init__(self, author):
         self.fullname = author
-        self.search_url = "https://infoscience.epfl.ch/search?p={}".format(
-                                author.replace(",", "+").replace(" ", "+"))
+        self.search_url = "https://infoscience.epfl.ch/search?configuration=researchoutputs&query=author_editor:({})".format(author)
         self.initname = self.compute_name()
 
     def compute_name(self):
