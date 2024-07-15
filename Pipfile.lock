@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e6a9e223217cf4010a89b250b111231d48b936a705e75d658e130dd41e644035"
+            "sha256": "f99a9646936a9b301721bb5a8d01b1bed0f3ae7af58881df4ef39c0d386974b5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -141,6 +141,14 @@
             "index": "pypi",
             "version": "==4.0.0"
         },
+        "furl": {
+            "hashes": [
+                "sha256:5a6188fe2666c484a12159c18be97a1977a71d632ef5bb867ef15f54af39cc4e",
+                "sha256:9ab425062c4217f9802508e45feb4a83e54324273ac4b202f1850363309666c0"
+            ],
+            "index": "pypi",
+            "version": "==2.1.3"
+        },
         "gevent": {
             "hashes": [
                 "sha256:03aa5879acd6b7076f6a2a307410fb1e0d288b84b03cdfd8c74db8b4bc882fc5",
@@ -278,6 +286,13 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==3.6"
+        },
+        "orderedmultidict": {
+            "hashes": [
+                "sha256:04070bbb5e87291cc9bfa51df413677faf2141c73c61d2a5f7b26bea3cd882ad",
+                "sha256:43c839a17ee3cdd62234c47deca1a8508a3f2ca1d0678a3bf791c87cf84adbf3"
+            ],
+            "version": "==1.0.1"
         },
         "packaging": {
             "hashes": [
@@ -888,7 +903,7 @@
                 "sha256:637996211036b6385ef91435e4fae22989472f9d571faba8927ba8253acbc330",
                 "sha256:b8c3f85900b9dc423225913c5aace94729fe1fa9763b38939a95226f02d37186"
             ],
-            "markers": "python_version < '3.11' and python_version >= '3.7'",
+            "markers": "python_version >= '3.5'",
             "version": "==5.1.1"
         },
         "django": {
@@ -1651,7 +1666,7 @@
                 "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
                 "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"
             ],
-            "markers": "python_version < '3.11' and python_version >= '3.7'",
+            "markers": "python_version < '3.11'",
             "version": "==2.0.1"
         },
         "traitlets": {

@@ -40,12 +40,14 @@
 			<div class="col-12">
 				{{ form.name }}
 			</div>
+      {% block export_form_url %}
 			<div class="col-12">
 				<h4>{% trans "Request Url" %}</h4>
 			</div>
 			<div class="col-12">
 				{{ form.url }}
 			</div>
+      {% endblock %}
 			<div class="col-12">	
 				<h4>{% trans "Format" %}</h4>
 			</div>

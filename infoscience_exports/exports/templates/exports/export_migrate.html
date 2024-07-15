@@ -16,7 +16,22 @@
   </a> or <a href="mailto:infoscience@epfl.ch">contact support</a>.<br/>
   </p>
 </div>
+{% endblock %}
 
+{% block export_form_url %}
+<div class="col-12">
+  <h4>Request Url</h4>
+  <h6>{% trans "Frozen Url in use" %}</h6>
+  <p><code>{{ current_url }}</code></p>
+  <h6>{% trans "New proposed Url" %}</h6>
+  {{ form.url }}
+</div>
+<div class="col-12">
+
+</div>
+<div class="col-12">
+
+</div>
 {% endblock %}
 
 

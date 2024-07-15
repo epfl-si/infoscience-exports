@@ -1,3 +1,4 @@
+import os
 from logging import getLogger
 
 from django.utils.translation import gettext_lazy as _
@@ -6,6 +7,7 @@ from django.conf import settings
 from urllib.parse import parse_qs, urlsplit
 from itertools import groupby
 from operator import itemgetter
+from furl import furl
 
 from .marc21xml import import_marc21xml
 from .messages import get_message
@@ -124,6 +126,48 @@ def modify_url(url, queries, option, default, force_default):
     return result
 
 
+def convert_url_for_dspace(url):
+    # as we are on dspace, some parameters convert parameters for dspace, with python-requests
+    # get the latest built URL and reparse it
+    f = furl(url)
+
+    #REMOVEME:
+    f.host = 'infoscience-test.epfl.ch'
+
+    # by default add this index
+    if 'configuration' not in f.args:
+        f.args['configuration'] = 'researchoutputs'
+
+    if 'p' in f.args:
+        f.args['query'] = f.args['p']
+        del f.args['p']
+
+    if 'recid:' in f.args['query']:
+        # direct search with p=recid:'51128';
+        # becomes query=cris.legacyId:51128
+        f.args['query'] = f.args['query'].replace('recid:', 'cris.legacyId:')
+
+    if 'rg' in f.args and 'spc.rpp' not in f.args:
+        f.args['spc.rpp'] = f.args['rg']
+        del f.args['rg']
+
+    if 'sf' in f.args and f.args['sf'] == 'year' and 'dc.date.issued' not in f.args:
+        f.args['spc.sf'] = 'dc.date.issued'
+        del f.args['sf']
+
+    if 'so' in f.args and 'spc.sd' not in f.args:
+        if f.args['so'] == 'd':
+            f.args['spc.sd'] = 'DESC'
+        elif f.args['so'] == 'a':
+            f.args['spc.sd'] = 'ASC'
+        del f.args['so']
+
+    if 'c' in f.args:
+        del f.args['c']
+
+    return f.url
+
+
 def validate_url(url):
     queries = parse_qs(urlsplit(url).query)
 
@@ -145,7 +189,12 @@ def validate_url(url):
     elif '&rg=' not in url:
         url = url + "&rg=" + str(max_limit)
 
-    return url
+
+    if os.environ.get('SERVER_ENGINE', 'dspace') == 'dspace':
+        return convert_url_for_dspace(url)
+    else:
+        # Ok, we are done here for invenio
+        return url
 
 
 def get_notices(options):

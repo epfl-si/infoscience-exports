@@ -14,8 +14,8 @@ from django.utils.timezone import now
 from exports import format_version
 from log_utils import LogMixin
 from .models import Export
-from .forms import ExportForm
-from .options_notices import get_notices
+from .forms import ExportForm, ExportMigrateForm
+from .options_notices import get_notices, convert_url_for_dspace
 from .options import get_options_from_params, get_options_from_export_attributes
 
 
@@ -96,9 +96,15 @@ class ExportUpdate(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
 
 class ExportMigrate(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
     model = Export
-    form_class = ExportForm
+    form_class = ExportMigrateForm
     template_name = 'exports/export_migrate.html'
     success_url = django_reverse_lazy('crud:export-list')
+
+    def get_initial(self):
+        initial = super().get_initial()
+
+        initial['url'] = convert_url_for_dspace(self.object.url)
+        return initial
 
     def form_valid(self, form):
         if form.instance.user != self.request.user and not self.request.user.is_staff:
@@ -107,6 +113,10 @@ class ExportMigrate(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
 
         return super(ExportMigrate, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_url'] = self.object.url
+        return context
 
 class ExportDelete(IsTheUserAccessTest, LoginRequiredMixin, DeleteView):
     model = Export
