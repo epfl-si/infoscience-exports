@@ -8,6 +8,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.translation import gettext as _, get_language
 from django.core.cache import cache
+from django.utils.timezone import now
 
 from exports import format_version
 from log_utils import LogMixin
@@ -99,6 +100,19 @@ class ExportView(DetailView):
     def get(self, request, *args, **kwargs):
         """ Warning, as we cache the view, don't use any request data"""
         self.object = self.get_object()
+
+        # this field is reserved for invenio exports only, dspace does not need this mechanism
+        if self.object.server_engine == 'invenio':
+            if self.object.last_rendered_page:
+                # this was the long term cache that is not used anymore, set as readonly
+                # Now it's time to render what is in the db for invenio
+                self.object.last_rendered_page_usage_at = now()
+                self.object.save()
+                return HttpResponse(self.object.last_rendered_page)
+            else:
+                # nothing to return as invenio is no more
+                return HttpResponse(status=204)
+
         # language dependant cache
         ln = get_language()
         cache_key = self.object.get_cache_key_for_view(ln)
@@ -112,16 +126,6 @@ class ExportView(DetailView):
 
             # save render in two caches, the temp one from Django here
             cache.set(cache_key, rendered_response)
-
-        # the other one into the 'export.last_rendered_page' model, to get it back when things go blackout
-        # this field is reserved for invenio exports only, dspace does not need this mechanism
-        if self.object.server_engine == 'invenio':
-            self.object.last_rendered_page = rendered_response.rendered_content
-            self.object.save()
-            # TODO: render it back when appropriate (when env.SERVER_ENGINE == 'dspace' maybe) with
-            # self.object.last_rendered_page = django.utils.timezone.now()
-            # self.object.save()
-            # return HttpResponse(self.object.last_rendered_page)
 
         return rendered_response
 
