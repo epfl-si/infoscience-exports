@@ -138,12 +138,17 @@ class ExportView(DetailView):
         """ Warning, as we cache the view, don't use any request data"""
         self.object = self.get_object()
 
-        # ok here, if we have moved to dspace, it means we don't have any results coming from invenio anymore
-        # so check if we are in dspace mode
-        if self.object.server_engine == 'invenio' and os.getenv('SERVER_ENGINE') == 'dspace':
-            self.object.last_rendered_usage = now()
-            self.object.save()
-            return HttpResponse(self.object.last_rendered_page)
+        # this field is reserved for invenio exports only, dspace does not need this mechanism
+        if self.object.server_engine == 'invenio':
+            if self.object.last_rendered_page:
+                # this was the long term cache that is not used anymore, set as readonly
+                # Now it's time to render what is in the db for invenio
+                self.object.last_rendered_page_usage_at = now()
+                self.object.save()
+                return HttpResponse(self.object.last_rendered_page)
+            else:
+                # nothing to return as invenio is no more
+                return HttpResponse(status=204)
 
         # language dependant cache
         ln = get_language()
@@ -158,12 +163,6 @@ class ExportView(DetailView):
 
             # save render in two caches, the temp one from Django here
             cache.set(cache_key, rendered_response)
-
-        # the other one into the 'export.last_rendered_page' model, to get it back when things go blackout
-        # this field is reserved for invenio exports only, dspace does not need this mechanism
-        if self.object.server_engine == 'invenio' and os.getenv('SERVER_ENGINE') == 'invenio':
-            self.object.last_rendered_page = rendered_response.rendered_content
-            self.object.save()
 
         return rendered_response
 
