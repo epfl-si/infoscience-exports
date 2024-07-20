@@ -147,6 +147,9 @@ def convert_url_for_dspace(url):
         # becomes query=cris.legacyId:51128
         f.args['query'] = f.args['query'].replace('recid:', 'cris.legacyId:')
 
+    if 'unit:' in f.args['query']:
+        f.args['query'] = f.args['query'].replace('unit:', 'dc.description.sponsorship:')
+
     if 'rg' in f.args and 'spc.rpp' not in f.args:
         f.args['spc.rpp'] = f.args['rg']
         del f.args['rg']
