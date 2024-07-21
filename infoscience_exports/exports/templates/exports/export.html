@@ -8,8 +8,10 @@
 <!--
 Export url :
 {{ options.url }}
+
 Export server engine :
-{{ options.server_engine }}
+{{ options.server_engine|default:"dspace" }}
+
 -->
 <!--
 Export parameters:
