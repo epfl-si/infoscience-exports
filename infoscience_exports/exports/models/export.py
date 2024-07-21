@@ -11,7 +11,7 @@ from auditlog.registry import auditlog
 from dirtyfields import DirtyFieldsMixin
 
 from .settings import BulletsSettings, ThumbnailSettings, LinksSettings, \
-    GroupBySettings, PendingPublicationsSettings, FormatsSettings, \
+    GroupBySettings, PendingPublicationsSettings, FormatsSettings, LimitSettings, \
     AdvancedOptionsSettings, SummarySettings
 
 
@@ -22,6 +22,7 @@ class Export(BulletsSettings,
              GroupBySettings,
              PendingPublicationsSettings,
              FormatsSettings,
+             LimitSettings,
              AdvancedOptionsSettings,
              models.Model,
              DirtyFieldsMixin,

@@ -118,6 +118,15 @@ class FormatsSettings(BaseSettings):
     class Meta:
         abstract = True
 
+class LimitSettings(BaseSettings):
+    limit = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        abstract = True
+
 
 class AdvancedOptionsSettings(BaseSettings):
     show_article_volume = models.BooleanField(default=False)

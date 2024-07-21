@@ -13,6 +13,12 @@ class ExportForm(FormLoggingMixin, forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': ""}),
             'url': forms.TextInput(attrs={'placeholder': "https://infoscience.epfl.ch/search?..."}),
+            'limit': forms.NumberInput(
+                attrs={
+                    'placeholder': '20',
+                    'style': 'padding: 5px 0px 5px 5px'
+                }
+            ),
         }
 
 class ExportMigrateForm(FormLoggingMixin, forms.ModelForm):
@@ -28,4 +34,10 @@ class ExportMigrateForm(FormLoggingMixin, forms.ModelForm):
                 'rows':3,
                 'cols':95
             }),
+            'limit': forms.NumberInput(
+                attrs={
+                    'placeholder': '20',
+                    'style': 'padding: 5px 0px 5px 5px'
+                }
+            ),
         }
