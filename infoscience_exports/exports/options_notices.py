@@ -142,13 +142,13 @@ def convert_url_for_dspace(url):
         f.args['query'] = f.args['p']
         del f.args['p']
 
-    if 'recid:' in f.args['query']:
-        # direct search with p=recid:'51128';
-        # becomes query=cris.legacyId:51128
-        f.args['query'] = f.args['query'].replace('recid:', 'cris.legacyId:')
-
-    if 'unit:' in f.args['query']:
-        f.args['query'] = f.args['query'].replace('unit:', 'dc.description.sponsorship:')
+    if 'query' in f.args:
+        if 'recid:' in f.args['query']:
+            # direct search with p=recid:'51128';
+            # becomes query=cris.legacyId:51128
+            f.args['query'] = f.args['query'].replace('recid:', 'cris.legacyId:')
+        if 'unit:' in f.args['query']:
+            f.args['query'] = f.args['query'].replace('unit:', 'dc.description.sponsorship:')
 
     if 'rg' in f.args and 'spc.rpp' not in f.args:
         f.args['spc.rpp'] = f.args['rg']
