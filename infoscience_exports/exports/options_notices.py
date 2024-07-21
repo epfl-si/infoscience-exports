@@ -179,19 +179,8 @@ def validate_url(url):
         url += '?'
 
     url = modify_url(url, queries, "of", "xm", True)
-    url = modify_url(url, queries, "sf", "year", True)
-    url = modify_url(url, queries, "so", "d", False)
-
-    if settings.RANGE_DISPLAY:
-        max_limit = settings.RANGE_DISPLAY
-    else:
-        max_limit = 1000  # should be a good limit by default
-
-    if 'rg' in queries and queries['rg'][0] == '10':   #HACK: 10 = meaning we have the default, so we want more
-        url = url.replace("rg=10", "rg=" + str(max_limit))
-    elif '&rg=' not in url:
-        url = url + "&rg=" + str(max_limit)
-
+    url = modify_url(url, queries, "spc.sf", "dc.date.issued", True)
+    url = modify_url(url, queries, "spc.sd", "DESC", False)
 
     if os.environ.get('SERVER_ENGINE', 'dspace') == 'dspace':
         return convert_url_for_dspace(url)
