@@ -131,9 +131,6 @@ def convert_url_for_dspace(url):
     # get the latest built URL and reparse it
     f = furl(url)
 
-    #REMOVEME:
-    f.host = 'infoscience-test.epfl.ch'
-
     # by default add this index
     if 'configuration' not in f.args:
         f.args['configuration'] = 'researchoutputs'
