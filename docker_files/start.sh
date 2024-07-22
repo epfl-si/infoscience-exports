@@ -7,4 +7,4 @@ declare -p | grep -Ev 'BASHOPTS|BASH_VERSINFO|EUID|PPID|SHELLOPTS|UID' > /contai
 /etc/init.d/cron start
 
 # Start Gunicorn
-exec gunicorn --bind :3000 --workers 4 --chdir /usr/src/app/infoscience_exports wsgi:application
+exec gunicorn --bind :3000 --workers 2 --chdir /usr/src/app/infoscience_exports wsgi:application
