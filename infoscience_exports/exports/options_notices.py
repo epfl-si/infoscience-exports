@@ -176,6 +176,7 @@ def validate_url(url):
         url += '?'
 
     url = modify_url(url, queries, "of", "xm", True)
+    url = modify_url(url, queries, "spc.page", "1", True)  # mandatory
     url = modify_url(url, queries, "spc.sf", "dc.date.issued", True)
     url = modify_url(url, queries, "spc.sd", "DESC", False)
 
