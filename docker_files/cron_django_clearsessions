@@ -1,0 +1,3 @@
+SHELL=/bin/bash
+BASH_ENV=/container.env
+0 3 * * * DJANGO_SETTINGS_MODULE=settings.prod /usr/local/bin/python /usr/src/app/infoscience_exports/manage.py clearsessions >> /var/log/django/cron.log 2>&1
