@@ -3,6 +3,7 @@
 app_name: "infoscience-exports"
 svc_name: "{{ app_name }}"
 route_name: "{{ app_name }}"
+cron_job_name: "{{ app_name }}-clear-sessions"
 secret_name: "infoscience-exports.secrets"
 config_maps_name: "infoscience-exports-config"
 cname: "infoscience-exports.epfl.ch"

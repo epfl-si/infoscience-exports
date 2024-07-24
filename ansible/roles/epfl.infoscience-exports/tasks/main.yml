@@ -13,6 +13,11 @@
 - name: Including route task...
   include_tasks: '{{ "route.yml" }}'
 
+- name: Including cronJobs task...
+  include_tasks: '{{ "cron.yml" }}'
+  tags:
+    - cron-job
+
 - name: Update image tasks
   include_tasks:
     file: "image.yml"
