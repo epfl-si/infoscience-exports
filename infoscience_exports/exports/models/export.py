@@ -148,4 +148,4 @@ def invalidate_view_cache(sender, instance, **kwargs):
 
 
 post_save.connect(invalidate_view_cache, sender=Export)
-auditlog.register(Export)
+auditlog.register(Export, exclude_fields=['last_rendered_page', 'last_rendered_page_usage_at'])
