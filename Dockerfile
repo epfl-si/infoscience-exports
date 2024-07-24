@@ -70,16 +70,6 @@ VOLUME ["/usr/src/app/staticfiles", "/var/log/django", "/usr/src/app/coverage.xm
 # set the root group advanced permissions, in case of live change
 RUN chmod g+rwx -R /usr/src/app
 
-# set the cleaning cron
-COPY ./docker_files/cron_django_clearsessions /etc/cron.d/cron_django_clearsessions
-RUN chmod 0644 /etc/cron.d/cron_django_clearsessions
-RUN crontab /etc/cron.d/cron_django_clearsessions
-RUN touch /var/log/django/cron.log
-
-# copy startup script
-COPY ./docker_files/start.sh /usr/src/app/start.sh
-RUN chmod +x /usr/src/app/start.sh
-
 EXPOSE 3000
 
-CMD ["bash", "-c", "/usr/src/app/start.sh"]
+CMD ["gunicorn", "--bind", ":3000", "--workers", "2", "--chdir", "/usr/src/app/infoscience_exports", "wsgi:application"]
