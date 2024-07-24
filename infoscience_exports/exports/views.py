@@ -143,8 +143,6 @@ class ExportView(DetailView):
             if self.object.last_rendered_page:
                 # this was the long term cache that is not used anymore, set as readonly
                 # Now it's time to render what is in the db for invenio
-                self.object.last_rendered_page_usage_at = now()
-                self.object.save()
                 return HttpResponse(self.object.last_rendered_page)
             else:
                 # nothing to return as invenio is no more
