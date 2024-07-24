@@ -19,6 +19,8 @@ SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
 SECURE_SSL_REDIRECT = True
 
+SESSION_COOKIE_AGE = 24*60*60  # default is 2 weeks, it is really too much
+
 MIDDLEWARE = ('whitenoise.middleware.WhiteNoiseMiddleware',) + MIDDLEWARE
 
 # Template
