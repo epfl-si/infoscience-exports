@@ -1,5 +1,6 @@
 from django.utils import translation
 from django.conf import settings
+from django.urls import resolve
 
 
 class InvenioLocaleMiddleware:
@@ -17,9 +18,13 @@ class InvenioLocaleMiddleware:
         else:
             language = settings.LANGUAGE_CODE
 
-        translation.activate(language)
-        request.LANGUAGE_CODE = language
-        request.session[settings.LANGUAGE_SESSION_KEY] = language
+        if language != translation.get_language():  # is this different from current?
+            translation.activate(language)
+            request.LANGUAGE_CODE = language
+
+            # don't save into sessions when only viewing a list of publication
+            if resolve(request.path_info).url_name != 'export-view':
+                request.session[settings.LANGUAGE_SESSION_KEY] = language
 
         response = self.get_response(request)
         return response
