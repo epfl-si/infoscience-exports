@@ -189,6 +189,7 @@ def preview(request):
     t = loader.get_template('exports/export_complete.html')
     return HttpResponse(t.render(c))
 
+
 def compare_with_preview(request, pk):
     try:
         export = Export.objects.get(id=pk)
@@ -199,6 +200,7 @@ def compare_with_preview(request, pk):
     t = loader.get_template('exports/export_compare.html')
 
     return HttpResponse(t.render(c))
+
 
 def version(request, label='version'):
     return HttpResponse(format_version(label))
