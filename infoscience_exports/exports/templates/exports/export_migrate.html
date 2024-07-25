@@ -5,22 +5,33 @@
 {% load static %}
 
 {% block title %}
-<h1>Migrate Publication list</h1>
+<h1>{% trans "Migrate Publication list" %}</h1>
 <div class="alert alert-warning border-warning" role="alert">
+  {% if LANGUAGE_CODE == 'fr' %}
   <p>
-  Please note that Infoscience has been migrated to a new system.
-  The publication lists are frozen following the launch of the new version of platform.<br/><br/>
-  On this page, you will be able to migrate your export to the new system.
-  It is your responsibility to ensure the data are correct before updating this list.<br/><br/>
-  For any assistance, please consult <a href="https://help-infoscience.epfl.ch/" target="_blank">the Infoscience help <i class="fa fa-external-link" aria-hidden="true" style="font-size: 0.75em;"></i>
-  </a> or <a href="mailto:infoscience@epfl.ch">contact support</a>.<br/>
+    Veuillez noter qu'Infosicence a été migré sur un nouveau système.
+    Les listes de publications utilisant l'ancien système sont actuellement figées.<br/><br/>
+    Sur cette page, vous pouvez migrer vers le nouveau système.
+    Il est de votre responsabilité de vous assurer que les données sont corrects avant de mettre à jour la liste.<br/><br/>
+    Pour tout besoin d'assistance, veuillez consulter <a href="https://help-infoscience.epfl.ch/" target="_blank">l'aide Infosicnece<i class="fa fa-external-link" aria-hidden="true" style="font-size: 0.75em;"></i>
+    </a> ou <a href="mailto:infoscience@epfl.ch">contacter le support</a>.<br/>
   </p>
+  {% else %}
+  <p>
+    Please note that Infoscience has been migrated to a new system.
+    The publication lists are frozen following the launch of the new version of platform.<br/><br/>
+    On this page, you will be able to migrate your export to the new system.
+    It is your responsibility to ensure the data are correct before updating this list.<br/><br/>
+    For any assistance, please consult <a href="https://help-infoscience.epfl.ch/" target="_blank">the Infoscience help <i class="fa fa-external-link" aria-hidden="true" style="font-size: 0.75em;"></i>
+    </a> or <a href="mailto:infoscience@epfl.ch">contact support</a>.<br/>
+  </p>
+  {% endif %}
 </div>
 {% endblock %}
 
 {% block export_form_url %}
 <div class="col-12">
-  <h4>Request Url</h4>
+  <h4>{% trans "Request Url" %}</h4>
   <h6>{% trans "Frozen Url in use" %}</h6>
   <p><code>{{ current_url }}</code></p>
   <h6>{% trans "New proposed Url" %}</h6>
@@ -51,12 +62,12 @@
 
   <div class="row">
     <div class="col-6 pl-4 left-frame-compare">
-      <h2>Frozen</h2>
-      Current list in usage for at {{ SITE_DOMAIN }}{{ object.get_absolute_url }}
+      <h2>{% trans "Frozen" %}</h2>
+      {% trans "Current list in usage for" %} {{ SITE_DOMAIN }}{{ object.get_absolute_url }}
     </div>
    <div class="col-6 pl-4">
-     <h2>Preview</h2>
-     The dynamic list with the new Infoscience data
+     <h2>{% trans "Preview" %}</h2>
+     {% trans "The dynamic list with the new Infoscience data" %}
    </div>
   </div>
 
@@ -66,7 +77,7 @@
     </div>
     <div id="display-mrc21xml-loading" class="col-6 mt-2 text-center">
       <div class="spinner-border text-primary mt-5" role="status">
-        <span class="sr-only">Loading...</span>
+        <span class="sr-only">{% trans "Loading" %}...</span>
       </div>
     </div>
     <div id="iframe-preview-container" class="embed-responsive embed-responsive-1by1 col-6">
