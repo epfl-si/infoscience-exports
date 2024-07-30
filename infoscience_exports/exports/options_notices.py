@@ -11,6 +11,7 @@ from furl import furl
 
 from .marc21xml import import_marc21xml
 from .messages import get_message
+from .utils import is_valid_uuid
 
 logger = getLogger(__name__)
 
@@ -131,13 +132,36 @@ def convert_url_for_dspace(url):
     # get the latest built URL and reparse it
     f = furl(url)
 
-    # by default add this index
-    if 'configuration' not in f.args:
-        f.args['configuration'] = 'researchoutputs'
+    is_a_direct_item_url = False
 
-    if 'p' in f.args:
-        f.args['query'] = f.args['p']
-        del f.args['p']
+    try:
+        # check if we are with a direct item url
+        if len(f.path.segments) > 2 and \
+                'entities' in f.path.segments:
+            if is_valid_uuid(f.path.segments[2]):
+                uuid = f.path.segments[2]
+                # yes we are. Is that for a unit ?
+                if 'orgunit' in f.path.segments[1]:  # convert any direct unit url
+                    f.path = 'server/api/discover/export'
+                    f.args['configuration'] = 'RELATION.OrgUnit.publications'
+                    f.args['scope'] = uuid
+                    is_a_direct_item_url = True
+                elif 'person' in f.path.segments[1]:  # convert any direct person url
+                    f.path = 'server/api/discover/export'
+                    f.args['configuration'] = 'RELATION.Person.researchoutputs'
+                    f.args['scope'] = uuid
+                    is_a_direct_item_url = True
+    except:  # skip url modification on any errors
+        pass
+
+    if not is_a_direct_item_url:
+        # by default add this index
+        if 'configuration' not in f.args:
+            f.args['configuration'] = 'researchoutputs'
+
+        if 'p' in f.args:
+            f.args['query'] = f.args['p']
+            del f.args['p']
 
     if 'query' in f.args:
         if 'recid:' in f.args['query']:
