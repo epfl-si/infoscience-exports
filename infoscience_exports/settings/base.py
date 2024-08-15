@@ -40,7 +40,7 @@ LOGIN_REDIRECT_IF_NOT_ALLOWED = "{}/not_allowed".format(SITE_PATH)
 LOGIN_REDIRECT_TEXT_IF_NOT_ALLOWED = "Not allowed"
 
 # Default values for export configurations
-RANGE_DISPLAY = get_env_variable('RANGE_DISPLAY', 1000)
+RANGE_DISPLAY = get_env_variable('RANGE_DISPLAY', 500)
 
 # Site
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts

@@ -189,11 +189,19 @@ def convert_url_for_dspace(url):
     if 'c' in f.args:
         del f.args['c']
 
-    # last check, do not allow empty query, as it may crash the server
+    # Safeguards part
+    # do not allow empty query, as it may crash the server
     if (not is_a_direct_item_url and
             ('query' not in f.args or not f.args['query'])
     ):
         raise Exception("the URL provided has not the 'query' parameters")
+
+    # hard limit or crash the server
+    if settings.RANGE_DISPLAY and \
+            'spc.rpp' in f.args and \
+            f.args['spc.rpp'].isnumeric() and \
+            int(f.args['spc.rpp']) > int(settings.RANGE_DISPLAY):
+        f.args['spc.rpp'] = settings.RANGE_DISPLAY
 
     return f.url
 
