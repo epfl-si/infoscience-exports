@@ -189,6 +189,12 @@ def convert_url_for_dspace(url):
     if 'c' in f.args:
         del f.args['c']
 
+    # last check, do not allow empty query, as it may crash the server
+    if (not is_a_direct_item_url and
+            ('query' not in f.args or not f.args['query'])
+    ):
+        raise Exception("the URL provided has not the 'query' parameters")
+
     return f.url
 
 
@@ -224,7 +230,11 @@ def get_notices(options):
     options['subgroup_title'] = 'TITLE' in groupsby_year or 'TITLE' in groupsby_doc
 
     # validate url
-    url = validate_url(options['url'])
+    try:
+        url = validate_url(options['url'])
+    except Exception as e:
+        options['error'] = get_message('danger', e)
+        return options
 
     # get notices
     notices = import_marc21xml(url)
