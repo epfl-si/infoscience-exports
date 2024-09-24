@@ -153,15 +153,22 @@ class ExportView(DetailView):
 
         if cache_key in cache:
             # do we have the result in the cache?
-            rendered_response = cache.get(cache_key)
+            return cache.get(cache_key)
         else:
+            # nope, time to render
             context = self.get_context_data(object=self.object)
             rendered_response = self.render_to_response(context).render()
 
-            # save render in two caches, the temp one from Django here
-            cache.set(cache_key, rendered_response)
+            def has_error_in_options(context):
+                return ('options' in context and
+                        'error' in context['options'] and
+                        context['options']['error'] != '')
 
-        return rendered_response
+            # save render in cache if there is no error
+            if not has_error_in_options(context):
+                cache.set(cache_key, rendered_response)
+
+            return rendered_response
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
