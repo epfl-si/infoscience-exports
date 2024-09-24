@@ -1,4 +1,3 @@
-import os
 from urllib.parse import unquote
 
 from django.conf import settings
@@ -9,13 +8,13 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.translation import gettext as _, get_language
 from django.core.cache import cache
-from django.utils.timezone import now
 
 from exports import format_version
 from log_utils import LogMixin
 from .models import Export
 from .forms import ExportForm, ExportMigrateForm
-from .options_notices import get_notices, convert_url_for_dspace
+from .options_notices import get_notices
+from .url_validator import convert_url_for_dspace
 from .options import get_options_from_params, get_options_from_export_attributes
 
 

@@ -6,12 +6,9 @@ Parse a marc-21-xml file
 import re
 from logging import getLogger
 from django.utils.translation import gettext as _
-from django.conf import settings
 from os.path import dirname, splitext
 from urllib.parse import urlparse
-from urllib.request import urlopen
 from pymarc import marcxml
-import unicodedata
 
 from .messages import get_message
 
@@ -254,28 +251,10 @@ def parse_dict(record):
     return result
 
 
-def import_marc21xml(url):
+def import_marc21xml(marcXMLData):
     result = []
 
-    o = urlparse(url)
-    if '*' not in settings.ALLOWED_HOSTS and \
-            o.netloc not in settings.ALLOWED_HOSTS:
-        result.append(get_message('danger', _('The domain is not allowed')))
-        return result
-
-    if url.find(settings.SITE_DOMAIN + settings.SITE_PATH) != -1:  # self referencing url is bad
-        result.append(get_message('danger', _('The domain is not allowed')))
-        return result
-
-    try:
-        url = ''.join(c for c in unicodedata.normalize('NFD', url) if unicodedata.category(c) != 'Mn')
-        reader = marcxml.parse_xml_to_array(urlopen(url))
-    except IOError as e:
-        result.append(get_message('danger', str(e)))
-    except Exception as e:
-        result.append(get_message('danger', str(e)))
-    if result:
-        return result
+    reader = marcxml.parse_xml_to_array(marcXMLData)
 
     for record in reader:
         dict_result = {}

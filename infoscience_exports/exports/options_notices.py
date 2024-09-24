@@ -1,17 +1,16 @@
-import os
 from logging import getLogger
+from urllib.request import urlopen
 
 from django.utils.translation import gettext_lazy as _
-from django.conf import settings
 
+import unicodedata
 from urllib.parse import parse_qs, urlsplit
 from itertools import groupby
 from operator import itemgetter
-from furl import furl
 
 from .marc21xml import import_marc21xml
 from .messages import get_message
-from .utils import is_valid_uuid
+from .url_validator import DomainNotAllowedError, validate_url
 
 logger = getLogger(__name__)
 
@@ -107,124 +106,6 @@ def setbullets(notices, bullet_choice, notices_length):
                     index += 1
 
 
-def modify_url(url, queries, option, default, force_default):
-    result = url
-    if option in queries:
-        if force_default:
-            value = option + "=" + queries[option][0]
-            result = url.replace(value, option + "=" + default)
-    else:
-        # empty option
-        value = "?" + option + "=&"
-        if value in url:
-            result = url.replace(value, "?" + option + "=" + default + "&")
-        else:
-            value = "&" + option + "="
-            if value in url:
-                result = url.replace(value, "&" + option + "=" + default)
-            else:
-                result = url + "&" + option + "=" + default
-    return result
-
-
-def convert_url_for_dspace(url):
-    # as we are on dspace, some parameters convert parameters for dspace, with python-requests
-    # get the latest built URL and reparse it
-    f = furl(url)
-
-    is_a_direct_item_url = False
-
-    try:
-        # check if we are with a direct item url
-        if len(f.path.segments) > 2 and \
-                'entities' in f.path.segments:
-            if is_valid_uuid(f.path.segments[2]):
-                uuid = f.path.segments[2]
-                # yes we are. Is that for a unit ?
-                if 'orgunit' in f.path.segments[1]:  # convert any direct unit url
-                    f.path = 'server/api/discover/export'
-                    f.args['configuration'] = 'RELATION.OrgUnit.publications'
-                    f.args['scope'] = uuid
-                    is_a_direct_item_url = True
-                elif 'person' in f.path.segments[1]:  # convert any direct person url
-                    f.path = 'server/api/discover/export'
-                    f.args['configuration'] = 'RELATION.Person.researchoutputs'
-                    f.args['scope'] = uuid
-                    is_a_direct_item_url = True
-    except:  # skip url modification on any errors
-        pass
-
-    if not is_a_direct_item_url:
-        # by default add this index
-        if 'configuration' not in f.args:
-            f.args['configuration'] = 'researchoutputs'
-
-        if 'p' in f.args:
-            f.args['query'] = f.args['p']
-            del f.args['p']
-
-    if 'query' in f.args:
-        if 'recid:' in f.args['query']:
-            # direct search with p=recid:'51128';
-            # becomes query=cris.legacyId:51128
-            f.args['query'] = f.args['query'].replace('recid:', 'cris.legacyId:')
-        if 'unit:' in f.args['query']:
-            f.args['query'] = f.args['query'].replace('unit:', 'dc.description.sponsorship:')
-
-    if 'rg' in f.args and 'spc.rpp' not in f.args:
-        f.args['spc.rpp'] = f.args['rg']
-        del f.args['rg']
-
-    if 'sf' in f.args and f.args['sf'] == 'year' and 'dc.date.issued' not in f.args:
-        f.args['spc.sf'] = 'dc.date.issued'
-        del f.args['sf']
-
-    if 'so' in f.args and 'spc.sd' not in f.args:
-        if f.args['so'] == 'd':
-            f.args['spc.sd'] = 'DESC'
-        elif f.args['so'] == 'a':
-            f.args['spc.sd'] = 'ASC'
-        del f.args['so']
-
-    if 'c' in f.args:
-        del f.args['c']
-
-    # Safeguards part
-    # do not allow empty query, as it may crash the server
-    if (not is_a_direct_item_url and
-            ('query' not in f.args or not f.args['query'])
-    ):
-        raise Exception("the URL provided has not the 'query' parameters")
-
-    # hard limit or crash the server
-    if settings.RANGE_DISPLAY and \
-            'spc.rpp' in f.args and \
-            f.args['spc.rpp'].isnumeric() and \
-            int(f.args['spc.rpp']) > int(settings.RANGE_DISPLAY):
-        f.args['spc.rpp'] = settings.RANGE_DISPLAY
-
-    return f.url
-
-
-def validate_url(url):
-    queries = parse_qs(urlsplit(url).query)
-
-    if '?' not in url:
-        # add missing ? in an url, as we add parameters next
-        url += '?'
-
-    url = modify_url(url, queries, "of", "xm", True)
-    url = modify_url(url, queries, "spc.page", "1", True)  # mandatory
-    url = modify_url(url, queries, "spc.sf", "dc.date.issued", True)
-    url = modify_url(url, queries, "spc.sd", "DESC", False)
-
-    if os.environ.get('SERVER_ENGINE', 'dspace') == 'dspace':
-        return convert_url_for_dspace(url)
-    else:
-        # Ok, we are done here for invenio
-        return url
-
-
 def get_notices(options):
     if options['url'] == "":
         options['error'] = get_message('danger', _("Url field is empty"))
@@ -240,15 +121,34 @@ def get_notices(options):
     # validate url
     try:
         url = validate_url(options['url'])
+        # Look like it serve to remove all non-spacing (invisible) Unicode
+        url = ''.join(c for c in unicodedata.normalize('NFD', url) if unicodedata.category(c) != 'Mn')
+    except DomainNotAllowedError:
+        options['error'] = get_message('danger', _('The domain is not allowed'))
+        return options
     except Exception as e:
         options['error'] = get_message('danger', e)
         return options
 
-    # get notices
-    notices = import_marc21xml(url)
+    # download data
+    try:
+        server_response = urlopen(url)
+    except Exception as e:
+        options['error'] = get_message('danger', f"Server responded with an error: {e}")
+        return options
 
-    # check errors
-    # FIXME: use exception to manage errors
+    # get notices
+    try:
+        notices = import_marc21xml(server_response)
+    except Exception as e:
+        if str(e).startswith('<unknown>:'):
+            options['error'] = get_message('danger', f"XML parse error: {e}")
+            return options
+        else:
+            options['error'] = get_message('danger', e)
+            return options
+
+    # check errors inside parsed result
     if notices and notices[0].get('message', '') != '':
         options['error'] = notices[0]
         notices = ''
