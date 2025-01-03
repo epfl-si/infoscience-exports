@@ -1,0 +1,23 @@
+all:
+  hosts:
+    infoscience-exports-test-openshift:
+      ansible_connection: local
+      ansible_host: localhost
+      ansible_python_interpreter: "{{ exportsible_suitcase_dir }}/bin/python3"
+      openshift_namespace: svc0089t-infoscience
+  vars:
+    # Routing
+    #run_environment: test
+    #infoscience_exports_host: infoscience-exports-test.epfl.ch
+    # Storage
+    #memento_pv_name: svc0089-si-infoscience-exports-staging-app
+    #memento_pv_storage: 40Gi
+    # App/DB
+    infoscience_exports_server_environment_name: test
+    infoscience_exports_site_domain: https://infoscience-exports-test.epfl.ch
+    infoscience_exports_show_debug_toolbar: true
+    # Images
+    python_image_version: "python:3.12-slim"
+    python_image_source: "docker.io/python/{{ python_image_version }}"
+    app_image: infoscience-exports:0.0.0
+    app_image_source: "ghcr.io/epfl-si/{{ app_image }}"

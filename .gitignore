@@ -70,3 +70,4 @@ backup/
 
 # ansible tmp
 ansible/ansible-tmp
+ansible/ansible-deps-cache

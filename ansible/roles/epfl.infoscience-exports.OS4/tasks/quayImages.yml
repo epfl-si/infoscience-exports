@@ -1,0 +1,12 @@
+# Setup quay to have the necessary base images
+- name: Images - Pull Python
+  community.docker.docker_image:
+    name: "{{ python_image_version }}"
+    source: pull
+
+- name: Images - Tag and push Python to Quay
+  community.docker.docker_image:
+    name: "{{ python_image_version }}"
+    repository: "{{ quay_host }}/{{ quay_organisation_name }}/{{ python_image_version }}"
+    push: yes
+    source: local

@@ -1,0 +1,59 @@
+- name: Quay bot secret
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: Secret
+      type: kubernetes.io/dockerconfigjson
+      metadata:
+        name: quay-pull-push-secret
+        namespace: "{{ openshift_namespace }}"
+      data:
+        .dockerconfigjson: "{{ quay_push_pull_config | to_json | b64encode }}"
+
+- name: Build Config Service Account
+  when: >-
+    openshift_namespace in ["svc0089d-infoscience","svc0089t-infoscience"]
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: builder-for-quay
+        namespace: "{{ openshift_namespace }}"
+      secrets:
+        - name: quay-pull-push-secret
+        # This is not supposed to be required (it worked without in
+        # OpenShift 4.14); but see
+        # https://access.redhat.com/solutions/7098226
+      imagePullSecrets:
+        - name: quay-pull-push-secret
+
+- name: Build config
+  when: >-
+    openshift_namespace in ["svc0089d-infoscience","svc0089t-infoscience"]
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: build.openshift.io/v1
+      kind: BuildConfig
+      metadata:
+        name:  infoscience-exports-image
+        namespace: "{{ openshift_namespace }}"
+      spec:
+        serviceAccount: builder-for-quay
+        source:
+          type: Git
+          git:
+            ref: "master"
+            uri: "https://github.com/epfl-si/infoscience-exports"
+        strategy:
+          type: Docker
+          dockerStrategy:
+            forcePull: true
+        output:
+          to:
+            kind: DockerImage
+            name: "{{ quay_host }}/{{ quay_organisation_name }}/infoscience-exports:latest"
+        resources:
+          requests:
+            cpu: "100m"  # Adjust this value as needed
+            memory: "1Gi"

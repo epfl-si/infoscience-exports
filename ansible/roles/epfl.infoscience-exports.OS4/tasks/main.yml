@@ -1,0 +1,17 @@
+- name: Doing Quay images setup...
+  include_tasks:
+    file: quayImages.yml
+    apply:
+      tags:
+        - quay
+  tags:
+    - quay
+
+- name: Doing build config tasks...
+  include_tasks:
+    file: buildConfig.yml
+    apply:
+      tags:
+        - build-config
+  tags:
+    - build-config
