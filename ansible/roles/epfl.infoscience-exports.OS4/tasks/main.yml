@@ -25,3 +25,11 @@
   tags:
     - volumes
 
+- name: Applying secrets(s)...
+  include_tasks:
+    file: secrets.yml
+    apply:
+      tags:
+        - secrets
+  tags:
+    - secrets
