@@ -1,0 +1,19 @@
+- name: VolumeClaim for logs
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: pvc-export-logs
+        namespace: "{{ openshift_namespace }}"
+        labels:
+          app: infoscience-exports
+      spec:
+        accessModes:
+          - ReadWriteMany
+        storageClassName: ""
+        volumeMode: Filesystem
+        resources:
+          requests:
+            storage: 1Gi
+        volumeName: pvc-export-logs

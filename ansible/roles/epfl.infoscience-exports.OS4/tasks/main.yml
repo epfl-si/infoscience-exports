@@ -7,7 +7,7 @@
   tags:
     - quay
 
-- name: Doing build config tasks...
+- name: Applying buildConfig(s)...
   include_tasks:
     file: buildConfig.yml
     apply:
@@ -15,3 +15,13 @@
         - build-config
   tags:
     - build-config
+
+- name: Applying volume claim(s)...
+  include_tasks:
+    file: volumes.yml
+    apply:
+      tags:
+        - volumes
+  tags:
+    - volumes
+
