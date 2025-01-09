@@ -10,3 +10,15 @@
     repository: "{{ quay_host }}/{{ quay_organisation_name }}/{{ python_image_version }}"
     push: yes
     source: local
+
+- name: Images - Pull Postgres
+  community.docker.docker_image:
+    name: "{{ postgres_image_version }}"
+    source: pull
+
+- name: Images - Tag and push Postgres to Quay
+  community.docker.docker_image:
+    name: "{{ postgres_image_version }}"
+    repository: "{{ quay_host }}/{{ quay_organisation_name }}/{{ postgres_image_version }}"
+    push: yes
+    source: local

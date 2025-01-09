@@ -42,3 +42,12 @@
         - volumes
   tags:
     - volumes
+
+- name: Setting a DB, if needed...
+  include_tasks:
+    file: DB.yml
+    apply:
+      tags:
+        - db
+  tags:
+    - db

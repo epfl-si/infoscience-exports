@@ -1,0 +1,72 @@
+- name: Apply DB secrets
+  when: >-
+    openshift_namespace in ["svc0089d-infoscience"]
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "{{ secret_name }}.db"
+        namespace: "{{ openshift_namespace }}"
+      data:
+        POSTGRES_PASSWORD: "{{ lookup('file', postgres_password_definition_path) }}"
+
+- name: Setup DB pod
+  when: >-
+    openshift_namespace in ["svc0089d-infoscience"]
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: postgres-deployment
+        namespace: "{{ openshift_namespace }}"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: postgres
+        template:
+          metadata:
+            labels:
+              app: postgres
+          spec:
+            serviceAccountName: builder-for-quay
+            containers:
+            - name: postgres
+              image: "{{ quay_host }}/{{ quay_organisation_name }}/{{ postgres_image_version }}"
+              ports:
+              - containerPort: 5432
+              envFrom:
+                - secretRef:
+                    name: "{{ secret_name }}.db"
+              env:
+              - name: PGDATA
+                value: "/var/lib/postgresql/data/pgdata"
+              - name: POSTGRES_DB
+                value: "{{ postgres_db_name }}"
+              - name: POSTGRES_USER
+                value: "{{ postgres_username }}"
+              resources:
+                requests:
+                  memory: "256Mi"
+                  cpu: "100m"
+
+- name: Setup DB route
+  when: >-
+    openshift_namespace in ["svc0089d-infoscience"]
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: postgres-service
+        namespace: "{{ openshift_namespace }}"
+      spec:
+        selector:
+          app: postgres
+        ports:
+          - protocol: TCP
+            port: 5432
+            targetPort: 5432
+        type: ClusterIP
