@@ -6,15 +6,23 @@ all:
       ansible_python_interpreter: "{{ exportsible_suitcase_dir }}/bin/python3"
       openshift_namespace: svc0089t-infoscience
   vars:
-    # App
-    #infoscience_exports_server_environment_name: test
-    #infoscience_exports_site_domain: https://infoscience-exports-test.epfl.ch
-    #show_debug_toolbar: true
     # DB
-    database_url_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/test/DATABASE_URL"
-    secret_key_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/test/SECRET_KEY"
-    # Images
+    postgres_image_version: "postgres:13"
+    postgres_image_source: "docker.io/postgres/{{ postgres_image_version }}"
+
+    # Image building
     python_image_version: "python:3.12-slim"
     python_image_source: "docker.io/python/{{ python_image_version }}"
+
+    # App
     app_image: infoscience-exports:0.0.0
     app_image_source: "ghcr.io/epfl-si/{{ app_image }}"
+
+    database_url_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/test/DATABASE_URL"
+    secret_key_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/test/SECRET_KEY"
+
+    django_settings_module: "settings.prod"
+    django_site_url: "infoscience-exports-test.128.178.211.2.nip.io"
+    django_cache_timeout: "43200"
+    django_range_display: "500"
+    django_server_engine: "dspace"

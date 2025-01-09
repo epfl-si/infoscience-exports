@@ -16,15 +16,6 @@
   tags:
     - build-config
 
-- name: Applying volume claim(s)...
-  include_tasks:
-    file: volumes.yml
-    apply:
-      tags:
-        - volumes
-  tags:
-    - volumes
-
 - name: Applying secrets(s)...
   include_tasks:
     file: secrets.yml
@@ -33,3 +24,21 @@
         - secrets
   tags:
     - secrets
+
+- name: Applying configMap(s)...
+  include_tasks:
+    file: configMaps.yml
+    apply:
+      tags:
+        - configMaps
+  tags:
+    - configMaps
+
+- name: Applying volume claim(s)...
+  include_tasks:
+    file: volumes.yml
+    apply:
+      tags:
+        - volumes
+  tags:
+    - volumes
