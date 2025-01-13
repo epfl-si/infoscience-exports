@@ -31,7 +31,7 @@ LOGGING['handlers'].update({
     'file': {
         'level': 'DEBUG',
         'class': 'logging.handlers.RotatingFileHandler',
-        'filename': '/var/log/django/infoscience_exports.log',
+        'filename': '/var/log/django/infoscience-exports/infoscience_exports.log',
         'maxBytes': 1024*1024*5,  # 5 MB
         'backupCount': 5,
         'formatter': 'verbose',
@@ -39,7 +39,7 @@ LOGGING['handlers'].update({
     'migration_file': {
         'level': 'DEBUG',
         'class': 'logging.handlers.RotatingFileHandler',
-        'filename': '/var/log/django/infoscience_exports_migration.log',
+        'filename': '/var/log/django/infoscience-exports/infoscience_exports_migration.log',
         'maxBytes': 1024*1024*5,  # 5 MB
         'backupCount': 5,
         'formatter': 'verbose',

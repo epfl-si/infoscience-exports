@@ -51,3 +51,12 @@
         - db
   tags:
     - db
+
+- name: Applying App(s)...
+  include_tasks:
+    file: apps.yml
+    apply:
+      tags:
+        - apps
+  tags:
+    - apps

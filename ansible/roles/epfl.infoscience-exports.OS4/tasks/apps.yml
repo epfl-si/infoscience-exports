@@ -1,0 +1,54 @@
+- name: Django app
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        annotations:
+          version: "{{ app_version }}"
+        labels:
+          app: "{{ app_name }}"
+          version: "{{ app_version }}"
+        name: "{{ deploy_name }}"
+        namespace: "{{ openshift_namespace }}"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: "{{ app_name }}"
+        template:
+          metadata:
+            labels:
+              app: "{{ app_name }}"
+              deployment: "{{ deploy_name }}"
+          spec:
+            serviceAccountName: builder-for-quay
+            containers:
+              - name: pod-infoscience-exports
+                envFrom:
+                  - configMapRef:
+                      name: "{{ config_maps_name }}"
+                  - secretRef:
+                      name: "{{ secret_name }}"
+                image: "{{ app_image_source }}"
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 3000
+                    protocol: TCP
+                volumeMounts:
+                  - name: "{{ volume_name_logs }}"
+                    mountPath: /var/log/django
+                    subPath: infoscience-exports
+                resources:
+                  requests:
+                    memory: "256Mi"
+                    cpu: "20m"
+            dnsPolicy: ClusterFirst
+            restartPolicy: Always
+            schedulerName: default-scheduler
+            terminationGracePeriodSeconds: 30
+            volumes:
+              - name: "{{ volume_name_logs }}"
+                persistentVolumeClaim:
+                  claimName: "{{ volume_name_logs }}"
+

@@ -18,8 +18,9 @@ all:
     python_image_source: "docker.io/python/{{ python_image_version }}"
 
     # App
-    app_image: infoscience-exports:0.0.0
-    app_image_source: "ghcr.io/epfl-si/{{ app_image }}"
+    app_version: "latest"
+    app_image: "infoscience-exports:{{ app_version }}"
+    app_image_source: "{{ quay_host }}/{{ quay_organisation_name }}/{{ app_image }}"
 
     database_url_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/DATABASE_URL"
     secret_key_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/SECRET_KEY"
