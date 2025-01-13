@@ -14,3 +14,5 @@
       metadata:
         name: "{{ config_maps_name }}"
         namespace: "{{ openshift_namespace }}"
+        labels:
+          app: "{{ app_name }}"

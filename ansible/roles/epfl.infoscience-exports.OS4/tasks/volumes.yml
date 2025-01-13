@@ -7,7 +7,7 @@
         name: pvc-export-logs
         namespace: "{{ openshift_namespace }}"
         labels:
-          app: infoscience-exports
+          app: "{{ app_name }}"
       spec:
         accessModes:
           - ReadWriteMany

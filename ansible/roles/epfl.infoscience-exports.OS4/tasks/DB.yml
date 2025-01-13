@@ -8,6 +8,8 @@
       metadata:
         name: "{{ secret_name }}.db"
         namespace: "{{ openshift_namespace }}"
+        labels:
+          app: "{{ app_name }}"
       data:
         POSTGRES_PASSWORD: "{{ lookup('file', postgres_password_definition_path) }}"
 
@@ -21,6 +23,8 @@
       metadata:
         name: postgres-deployment
         namespace: "{{ openshift_namespace }}"
+        labels:
+          app: "{{ app_name }}"
       spec:
         replicas: 1
         selector:
@@ -62,6 +66,8 @@
       metadata:
         name: postgres-service
         namespace: "{{ openshift_namespace }}"
+        labels:
+          app: "{{ app_name }}"
       spec:
         selector:
           app: postgres
