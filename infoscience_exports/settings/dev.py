@@ -1,5 +1,7 @@
 # flake8: noqa
-from .test import *
+from .base import *
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DEBUG = True
 
@@ -8,7 +10,6 @@ TEQUILA_SERVER_URL = "https://tequila.epfl.ch"
 TEQUILA_STRONG_AUTHENTICATION = True
 # reset backend from test to dev
 AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
-
 
 ALLOWED_HOSTS = get_env_variable('ALLOWED_HOSTS').split(',') \
     + [ "127.0.0.1",

@@ -4,28 +4,42 @@ services:
     restart: always
     stdin_open: true
     tty: true
-    expose:
-      - "80"
+    ports:
+      - "3000:3000"
     links:
-      - postgres
+      - db
     depends_on:
-      - postgres
+      - db
+    volumes:
+      - ./infoscience_exports:/usr/src/app/infoscience_exports
+      - ./staticfiles:/usr/src/app/staticfiles
+      - ./coverage.xml:/usr/src/app/coverage.xml
+      - ./docker_volumes/logs:/var/log/django
+      - ./entrypoint.sh:/usr/src/app/entrypoint.sh
     env_file:
+      # mix the two
       - ./env/django.env
+      - .env
     environment:
       # the following vars need to be overridden because the directive env_file
       # does not compute their value from the other variables
       - SITE_URL=${SITE_URL}
-      - DATABASE_URL=${DATABASE_URL}
-      - PGPASSWORD=${POSTGRES_PASSWORD}
-    command: gunicorn --reload -w 4 -b :80 --chdir /usr/src/app/infoscience_exports wsgi:application
+      - DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@db:5432/infoscience_exports
+    command: >
+      sh -c "python infoscience_exports/manage.py collectstatic --noinput &&
+             python infoscience_exports/manage.py migrate &&
+             /usr/src/app/entrypoint.sh"
 
-  postgres:
-    image: postgres:12
+  db:
+    image: postgres:13
     environment:
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=infoscience_exports
     ports:
       - "25432:5432"
+    volumes:
+      - ./docker_volumes/db_data:/var/lib/postgresql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s

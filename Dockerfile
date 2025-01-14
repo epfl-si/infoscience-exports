@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         cron \
         nano \
         git \
+        procps \
     && rm -rf /var/cache/apt/ \
     && rm -rf /var/lib/apt/lists/*
 
@@ -65,6 +66,9 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
     DATABASE_URL="not needed to compilemessages" \
     python infoscience_exports/manage.py compilemessages
 
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
+
 VOLUME ["/usr/src/app/staticfiles", "/var/log/django", "/usr/src/app/coverage.xml"]
 
 # Set ownership and permissions for running locally (UID 1000) or in OpenShift (which uses the root group (GID 0) for containers)
@@ -76,4 +80,4 @@ USER 1000
 
 EXPOSE 3000
 
-CMD ["gunicorn", "--bind", ":3000", "--workers", "2", "--chdir", "/usr/src/app/infoscience_exports", "wsgi:application"]
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
