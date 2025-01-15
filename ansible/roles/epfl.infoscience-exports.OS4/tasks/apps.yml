@@ -52,3 +52,31 @@
                 persistentVolumeClaim:
                   claimName: "{{ volume_name_logs }}"
 
+- name: Django app - Service
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: "{{ svc_name }}"
+        namespace: "{{ openshift_namespace }}"
+        labels:
+          app: "{{ app_name }}"
+      spec:
+        ports:
+          - name: "443"
+            port: 443
+            protocol: TCP
+            targetPort: 3000
+        type: ClusterIP
+        selector:
+          app: "{{ app_name }}"
+          deployment: "{{ deploy_name }}"
+
+- name: Django app - Restart
+  when: >-
+    ('django-app.restart' in ansible_run_tags)
+  local_action:
+    module: shell
+    cmd: "oc rollout restart deployment/{{ deploy_name }} --namespace {{ openshift_namespace }}"
+  tags: django-app.restart
