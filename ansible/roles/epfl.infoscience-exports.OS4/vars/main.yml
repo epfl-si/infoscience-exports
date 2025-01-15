@@ -1,13 +1,13 @@
 ---
 # vars file for epfl.infoscience-exports
 app_name: "infoscience-exports"
-svc_name: "{{ app_name }}"
+svc_name: "{{ app_name }}-svc"
 route_name: "{{ app_name }}"
 cron_job_name: "{{ app_name }}-clear-sessions"
 secret_name: "infoscience-exports.secrets"
 config_maps_name: "infoscience-exports-config"
 cname: "infoscience-exports.epfl.ch"
-deploy_name: "{{ app_name }}"
+deploy_name: "django-app"
 volume_name_logs: "pvc-export-logs"
 volume_name_staticfiles: "{{ app_name }}-staticfiles"
 
