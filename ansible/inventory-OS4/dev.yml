@@ -17,6 +17,9 @@ all:
     python_image_version: "python:3.12-slim"
     python_image_source: "docker.io/python/{{ python_image_version }}"
 
+    # Route
+    avi_route_access_level: private
+
     # App
     app_version: "latest"
     app_image: "infoscience-exports:{{ app_version }}"
