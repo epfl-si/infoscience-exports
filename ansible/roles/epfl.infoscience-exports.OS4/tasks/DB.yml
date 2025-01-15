@@ -19,7 +19,7 @@
   kubernetes.core.k8s:
     definition:
       apiVersion: apps/v1
-      kind: Deployment
+      kind: StatefulSet
       metadata:
         name: postgres-deployment
         namespace: "{{ openshift_namespace }}"
