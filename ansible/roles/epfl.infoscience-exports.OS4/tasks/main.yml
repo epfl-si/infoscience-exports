@@ -61,6 +61,15 @@
   tags:
     - apps
 
+- name: Applying cronJobs(s)...
+  include_tasks:
+    file: cronJobs.yml
+    apply:
+      tags:
+        - cronJobs
+  tags:
+    - cronJobs
+
 - name: Applying route to app...
   include_tasks:
     file: route.yml

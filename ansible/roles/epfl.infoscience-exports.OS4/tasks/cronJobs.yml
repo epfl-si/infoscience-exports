@@ -1,0 +1,37 @@
+- name: Clear sessions cron job
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: batch/v1
+      kind: CronJob
+      metadata:
+        name: "{{ cron_job_name }}"
+        namespace: "{{ openshift_namespace }}"
+        labels:
+          app: "{{ app_name }}"
+      spec:
+        schedule: "0 3 * * *"
+        concurrencyPolicy: "Replace"
+        jobTemplate:
+          spec:
+            template:
+              metadata:
+                labels:
+                  app: "{{ app_name }}"
+              spec:
+                containers:
+                  - name: "{{ cron_job_name }}"
+                    image: "{{ app_image_source }}"
+                    command: ["/usr/local/bin/python", "/usr/src/app/infoscience_exports/manage.py", "clearsessions"]
+                    volumeMounts:
+                      - mountPath: /var/log/django
+                        name: "{{ volume_name_logs }}"
+                    envFrom:
+                      - configMapRef:
+                          name: "{{ config_maps_name }}"
+                      - secretRef:
+                          name: "{{ secret_name }}"
+                restartPolicy: Never
+                volumes:
+                  - name: "{{ volume_name_logs }}"
+                    persistentVolumeClaim:
+                      claimName: "{{ volume_name_logs }}"
