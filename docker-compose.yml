@@ -23,6 +23,7 @@ services:
     environment:
       # the following vars need to be overridden because the directive env_file
       # does not compute their value from the other variables
+      - GUNICORN_CMD_ARGS= --reload
       - SITE_URL=${SITE_URL}
       - DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@db:5432/infoscience_exports
     command: >
