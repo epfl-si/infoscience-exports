@@ -4,8 +4,10 @@
     apply:
       tags:
         - quay
+        - never
   tags:
     - quay
+    - never
 
 - name: Applying buildConfig(s)...
   include_tasks:
