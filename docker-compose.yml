@@ -31,6 +31,18 @@ services:
              python infoscience_exports/manage.py migrate &&
              /usr/src/app/entrypoint.sh"
 
+  nginx:
+    build:
+      context: docker/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "443:443"
+    volumes:
+      - ./docker_volumes/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./staticfiles:/usr/src/app/staticfiles
+    depends_on:
+      - web
+
   db:
     image: postgres:13
     environment:
