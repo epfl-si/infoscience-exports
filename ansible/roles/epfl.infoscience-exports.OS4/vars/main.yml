@@ -1,7 +1,7 @@
 ---
 # vars file for epfl.infoscience-exports
 app_name: "infoscience-exports"
-svc_name: "{{ app_name }}-svc"
+svc_name: "web-service"
 route_name: "{{ app_name }}"
 cron_job_name: "{{ app_name }}-clear-sessions"
 secret_name: "infoscience-exports.secrets"

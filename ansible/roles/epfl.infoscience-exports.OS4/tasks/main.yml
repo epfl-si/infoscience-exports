@@ -43,6 +43,15 @@
   tags:
     - volumes
 
+- name: Applying network policies...
+  include_tasks:
+    file: networkPolicies.yml
+    apply:
+      tags:
+        - networkPolicies
+  tags:
+    - networkPolicies
+
 - name: Setting a DB, if needed...
   include_tasks:
     file: DB.yml
@@ -72,9 +81,9 @@
 
 - name: Applying route to app...
   include_tasks:
-    file: route.yml
+    file: routes.yml
     apply:
       tags:
-        - route
+        - routes
   tags:
-    - route
+    - routes

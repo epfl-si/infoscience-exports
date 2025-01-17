@@ -64,8 +64,8 @@
           app: "{{ app_name }}"
       spec:
         ports:
-          - name: "443"
-            port: 443
+          - name: "http"
+            port: 80
             protocol: TCP
             targetPort: 3000
         type: ClusterIP

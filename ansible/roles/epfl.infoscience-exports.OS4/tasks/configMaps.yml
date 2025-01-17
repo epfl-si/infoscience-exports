@@ -6,7 +6,7 @@
         DJANGO_SETTINGS_MODULE: "{{ django_settings_module }}"
         SITE_URL: "{{ django_site_url }}"
         DEV_PORT: '3000'
-        ALLOWED_HOSTS: 'infoscience-exports.epfl.ch,infoscience.epfl.ch,infoscience-prod.epfl.ch,infoscience-test.epfl.ch,infoscience-sb.epfl.ch'
+        ALLOWED_HOSTS: '{{ django_site_url }},infoscience-exports.epfl.ch,infoscience.epfl.ch,infoscience-prod.epfl.ch,infoscience-test.epfl.ch,infoscience-sb.epfl.ch'
         CACHE_TIMEOUT: "{{ django_cache_timeout }}"
         RANGE_DISPLAY: "{{ django_range_display }}"
         SERVER_ENGINE: "{{ django_server_engine }}"

@@ -12,7 +12,7 @@
       spec:
         host: "{{ django_site_url }}"
         port:
-          targetPort: "443"
+          targetPort: "http"
         tls:
           termination: edge
           insecureEdgeTerminationPolicy: Redirect
