@@ -117,17 +117,16 @@ class ExportMigrate(LoginRequiredMixin, IsTheUserAccessTest, UpdateView):
         context['current_url'] = self.object.url
         return context
 
-class ExportDelete(IsTheUserAccessTest, LoginRequiredMixin, DeleteView):
+class ExportDelete(LoginRequiredMixin, IsTheUserAccessTest, DeleteView):
     model = Export
     success_url = django_reverse_lazy('crud:export-list')
 
-    def form_valid(self, form):
-        if form.instance.user != self.request.user and not self.request.user.is_staff:
-            form.add_error(None, _("Only the creator can delete the publication"))
-            return super(ExportDelete, self).form_invalid(form)
-
-        return super(ExportDelete, self).form_valid(form)
-
+    def get_object(self, queryset=None):
+        """ Hook to ensure object is owned by request.user. """
+        obj = super(ExportDelete, self).get_object()
+        if obj.user != self.request.user and not self.request.user.is_staff:
+            raise Http404
+        return obj
 
 class ExportView(DetailView):
     model = Export
