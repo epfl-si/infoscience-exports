@@ -69,12 +69,12 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
 COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
 RUN chmod +x /usr/src/app/entrypoint.sh
 
-VOLUME ["/usr/src/app/staticfiles", "/var/log/django", "/usr/src/app/coverage.xml"]
+VOLUME ["/usr/src/app/staticfiles", "/var/log/django"]
 
 # Set ownership and permissions for running locally (UID 1000) or in OpenShift (which uses the root group (GID 0) for containers)
 # https://developers.redhat.com/blog/2020/10/26/adapting-docker-and-kubernetes-containers-to-run-on-red-hat-openshift-container-platform#group_ownership_and_file_permission
-RUN chown -R 1000:0 /usr/src/app/staticfiles /var/log/django /usr/src/app/coverage.xml && \
-  chmod -R ug+rwx /usr/src/app/staticfiles /var/log/django /usr/src/app/coverage.xml
+RUN chown -R 1000:0 /usr/src/app/staticfiles /var/log/django && \
+  chmod -R ug+rwx /usr/src/app/staticfiles /var/log/django
 
 USER 1000
 
