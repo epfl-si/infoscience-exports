@@ -10,9 +10,7 @@ from django_tequila.urls import urlpatterns as django_tequila_urlpatterns
 
 app_patterns = [
     re_path(r'^admin/', admin.site.urls),
-
-    re_path(r'^', include('exports.urls')),
-
+    re_path(r'', include('exports.urls')),
     re_path(r'^logged-out/$', TemplateView.as_view(template_name='log_out.html')),
 ]
 
