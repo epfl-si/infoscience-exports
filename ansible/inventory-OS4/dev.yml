@@ -30,6 +30,7 @@ all:
 
     django_settings_module: "settings.dev"
     django_site_url: "infoscience-exports-dev.10.98.42.200.nip.io"
+    django_site_full_url: "https://{{ django_site_url }}"
     django_cache_timeout: "43200"
     django_range_display: "500"
     django_server_engine: "dspace"
