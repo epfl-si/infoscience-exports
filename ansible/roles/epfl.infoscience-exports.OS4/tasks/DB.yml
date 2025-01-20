@@ -11,7 +11,7 @@
         labels:
           app: "{{ app_name }}"
       data:
-        POSTGRES_PASSWORD: "{{ lookup('file', postgres_password_definition_path) }}"
+        POSTGRES_PASSWORD: "{{ lookup('file', postgres_password_definition_path) | b64encode }}"
 
 - name: Setup DB pod
   when: >-
