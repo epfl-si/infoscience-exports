@@ -1,0 +1,18 @@
+- name: Network Policy
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      metadata:
+        name: infoscience-exports-network-policy
+        namespace: "{{ openshift_namespace }}"
+      spec:
+        podSelector: {}
+        policyTypes:
+        - Ingress
+        ingress:
+        - from:
+          - podSelector: {} # Allow traffic from any pod in the same namespace
+          - namespaceSelector: # Allow traffic from namespaces with specific labels
+              matchLabels:
+                network.openshift.io/policy-group: ingress
