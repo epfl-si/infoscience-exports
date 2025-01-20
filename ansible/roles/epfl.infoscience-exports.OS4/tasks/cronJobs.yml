@@ -30,6 +30,10 @@
                           name: "{{ config_maps_name }}"
                       - secretRef:
                           name: "{{ secret_name }}"
+                    resources:
+                      requests:
+                        memory: "256Mi"
+                        cpu: "10m"
                 restartPolicy: Never
                 volumes:
                   - name: "{{ volume_name_logs }}"
