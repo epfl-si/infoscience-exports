@@ -52,7 +52,7 @@ CORS_ORIGIN_WHITELIST = [
     "https://127.0.0.1",
 ]
 X_FRAME_OPTIONS = "SAMEORIGIN"
-CSRF_TRUSTED_ORIGINS = ['https://*.epfl.ch','https://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://*.epfl.ch','https://127.0.0.1', get_env_variable('SITE_URL')]
 
 INSTALLED_APPS = (
     'django.contrib.admin',
