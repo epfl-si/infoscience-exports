@@ -10,7 +10,7 @@
           app: "{{ app_name }}"
       spec:
         schedule: "0 3 * * *"
-        concurrencyPolicy: "Replace"
+        concurrencyPolicy: "Forbid"
         jobTemplate:
           spec:
             template:
@@ -18,13 +18,15 @@
                 labels:
                   app: "{{ app_name }}"
               spec:
+                serviceAccountName: builder-for-quay
                 containers:
                   - name: "{{ cron_job_name }}"
                     image: "{{ app_image_source }}"
-                    command: ["/usr/local/bin/python", "/usr/src/app/infoscience_exports/manage.py", "clearsessions"]
+                    command: ["/usr/local/bin/python", "-Wi", "/usr/src/app/infoscience_exports/manage.py", "clearsessions"]
                     volumeMounts:
-                      - mountPath: /var/log/django
-                        name: "{{ volume_name_logs }}"
+                    - name: "{{ volume_name_logs }}"
+                      mountPath: /var/log/django
+                      subPath: infoscience-exports
                     envFrom:
                       - configMapRef:
                           name: "{{ config_maps_name }}"
