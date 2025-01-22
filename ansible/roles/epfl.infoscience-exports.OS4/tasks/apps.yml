@@ -153,8 +153,8 @@
 
 - name: Django app - Restart
   when: >-
-    ('django-app.restart' in ansible_run_tags)
+    ('apps.restart' in ansible_run_tags)
   local_action:
     module: shell
     cmd: "oc rollout restart deployment/{{ deploy_name }} --namespace {{ openshift_namespace }}"
-  tags: django-app.restart
+  tags: apps.restart

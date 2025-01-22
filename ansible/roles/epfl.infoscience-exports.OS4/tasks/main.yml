@@ -71,6 +71,7 @@
         - apps
   tags:
     - apps
+    - apps.restart
 
 - name: Applying cronJobs(s)...
   include_tasks:
