@@ -28,7 +28,7 @@ all:
     database_url_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/DATABASE_URL"
     secret_key_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/SECRET_KEY"
 
-    django_settings_module: "settings.dev"
+    django_settings_module: "settings.prod"
     django_site_url: "infoscience-exports-dev.10.98.42.200.nip.io"
     django_site_full_url: "https://{{ django_site_url }}"
     django_cache_timeout: "43200"
