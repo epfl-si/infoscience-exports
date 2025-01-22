@@ -131,7 +131,6 @@ DEBUG = False
 for config in TEMPLATES:
     config['OPTIONS']['debug'] = DEBUG
 
-SECRET_KEY = 'Not a secret'
 WSGI_APPLICATION = 'wsgi.application'
 
 # Allow for less strict handling of urls

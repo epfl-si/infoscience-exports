@@ -1,23 +1,7 @@
 # flake8: noqa
 from .base import *
 
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-# https://devcenter.heroku.com/articles/getting-started-with-django
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 SECRET_KEY = get_env_variable('SECRET_KEY')
-
-# Email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-SECURE_HSTS_SECONDS = 60
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_FRAME_DENY = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = True
-SESSION_COOKIE_SECURE = False
-SESSION_COOKIE_HTTPONLY = True
-SECURE_SSL_REDIRECT = True
 
 SESSION_COOKIE_AGE = 24*60*60  # default is 2 weeks, it is really too much
 
