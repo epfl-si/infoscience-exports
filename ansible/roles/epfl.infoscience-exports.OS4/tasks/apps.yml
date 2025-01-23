@@ -1,7 +1,8 @@
+# PROD ONLY
 - name: Django app
   when: >-
-    openshift_namespace in ["svc0089t-infoscience", "svc0089p-infoscience"]
-  # the diff with the dev one is the remove of the initContainer
+    openshift_namespace in ["svc0089p-infoscience"]
+  # the diff with the next task definition is the removal of the initContainer
   kubernetes.core.k8s:
     definition:
       apiVersion: apps/v1
@@ -57,7 +58,7 @@
 
 - name: Django app
   when: >-
-    openshift_namespace in ["svc0089d-infoscience"]
+    openshift_namespace in ["svc0089d-infoscience", "svc0089t-infoscience"]
   kubernetes.core.k8s:
     definition:
       apiVersion: apps/v1
