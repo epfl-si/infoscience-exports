@@ -5,7 +5,6 @@
       data:
         DJANGO_SETTINGS_MODULE: "{{ django_settings_module }}"
         SITE_URL: "{{ django_site_full_url }}"
-        DEV_PORT: '3000'
         TEQUILA_ALLOWED_REQUEST_HOSTS: "{{ tequila_allowed_request_hosts }}"
         ALLOWED_HOSTS: '{{ django_site_url }},infoscience-exports.epfl.ch,infoscience.epfl.ch,infoscience-prod.epfl.ch,infoscience-test.epfl.ch,infoscience-sb.epfl.ch'
         CACHE_TIMEOUT: "{{ django_cache_timeout }}"
