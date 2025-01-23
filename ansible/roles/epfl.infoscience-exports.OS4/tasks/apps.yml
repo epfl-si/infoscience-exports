@@ -15,7 +15,7 @@
         name: "{{ deploy_name }}"
         namespace: "{{ openshift_namespace }}"
       spec:
-        replicas: 1
+        replicas: 2
         selector:
           matchLabels:
             app: "{{ app_name }}"
@@ -71,7 +71,7 @@
         name: "{{ deploy_name }}"
         namespace: "{{ openshift_namespace }}"
       spec:
-        replicas: 1
+        replicas: 2
         selector:
           matchLabels:
             app: "{{ app_name }}"
@@ -128,7 +128,6 @@
               - name: "{{ volume_name_logs }}"
                 persistentVolumeClaim:
                   claimName: "{{ volume_name_logs }}"
-
 
 - name: Django app - Service
   kubernetes.core.k8s:
