@@ -1,6 +1,6 @@
 all:
   hosts:
-    infoscience-exports-test-openshift:
+    openshift-4-dev:
       ansible_connection: local
       ansible_host: localhost
       ansible_python_interpreter: "{{ exportsible_suitcase_dir }}/bin/python3"
@@ -21,13 +21,16 @@ all:
     avi_route_access_level: private
 
     # App
+    ### Image
     app_version: "latest"
     app_image: "infoscience-exports:{{ app_version }}"
     app_image_source: "{{ quay_host }}/{{ quay_organisation_name }}/{{ app_image }}"
 
+    ### Secrets
     database_url_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/DATABASE_URL"
     secret_key_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/SECRET_KEY"
 
+    ### Config
     django_settings_module: "settings.prod"
     django_site_url: "infoscience-exports-dev.10.98.42.200.nip.io"
     django_site_full_url: "https://{{ django_site_url }}"
@@ -35,4 +38,5 @@ all:
     django_range_display: "500"
     django_server_engine: "dspace"
 
-    tequila_allowed_request_hosts: 10.98.84.180|10.98.84.181
+    ### Security
+    tequila_allowed_request_hosts: 10.98.84.179|10.98.84.180|10.98.84.181
