@@ -11,8 +11,6 @@
         .dockerconfigjson: "{{ quay_push_pull_config | to_json | b64encode }}"
 
 - name: Build Config Service Account
-  when: >-
-    openshift_namespace in ["svc0089d-infoscience","svc0089t-infoscience"]
   kubernetes.core.k8s:
     definition:
       apiVersion: v1
