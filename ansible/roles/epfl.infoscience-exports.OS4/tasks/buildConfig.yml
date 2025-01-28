@@ -27,8 +27,6 @@
         - name: quay-pull-push-secret
 
 - name: Build config
-  when: >-
-    openshift_namespace in ["svc0089d-infoscience","svc0089t-infoscience"]
   kubernetes.core.k8s:
     definition:
       apiVersion: build.openshift.io/v1
