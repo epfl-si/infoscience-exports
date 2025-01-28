@@ -32,4 +32,4 @@ all:
     django_server_engine: "dspace"
 
     ### Security
-    tequila_allowed_request_hosts: 10.98.84.179|10.98.84.180|10.98.84.181
+    tequila_allowed_request_hosts: 10.98.82.179|10.98.82.180|10.98.82.181
