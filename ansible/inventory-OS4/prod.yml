@@ -11,7 +11,7 @@ all:
     python_image_source: "docker.io/python/{{ python_image_version }}"
 
     # Route
-    avi_route_access_level: private
+    avi_route_access_level: public
 
     # App
     ### Image
@@ -25,7 +25,8 @@ all:
 
     ### Config
     django_settings_module: "settings.prod"
-    django_site_url: "infoscience-exports-prod.10.98.42.206.nip.io"
+    django_site_url: "infoscience-exports-prod.128.178.211.3.nip.io"
+    #django_site_url: "infoscience-exports.epfl.ch"
     django_site_full_url: "https://{{ django_site_url }}"
     django_cache_timeout: "43200"
     django_range_display: "500"
