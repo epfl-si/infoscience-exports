@@ -1,0 +1,9 @@
+- name: Build and Push the Django app image into quay-its.epfl.ch
+  community.docker.docker_image:
+    name: quay-its.epfl.ch/svc0089/infoscience-exports
+    tag: latest
+    source: build
+    build:
+      path: ../
+    state: present
+    push: true

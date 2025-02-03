@@ -59,6 +59,11 @@ You should be able to access https://127.0.0.1/ (add `/admin` if needed).
 ./ansible/exportsibleOS4 --dev
 ```
 
+### Update the image with your machine
+```shell
+./ansible/exportsibleOS4 -t local-build-and-push
+```
+
 #### Reload the pod with env changes (after per ex. a deployment edit, or a new image to deploy)
 ```shell
 oc rollout restart deployment/web-service

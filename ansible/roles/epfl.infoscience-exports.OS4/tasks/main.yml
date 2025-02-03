@@ -1,3 +1,14 @@
+- name: Doing Local build and push...
+  include_tasks:
+    file: local.yml
+    apply:
+      tags:
+        - local-build-and-push
+        - never
+  tags:
+    - local-build-and-push
+    - never
+
 - name: Doing Quay images setup...
   include_tasks:
     file: quayImages.yml
