@@ -45,8 +45,8 @@
                     subPath: infoscience-exports
                 resources:
                   requests:
-                    memory: "256Mi"
-                    cpu: "20m"
+                    memory: "512Mi"
+                    cpu: "50m"
             dnsPolicy: ClusterFirst
             restartPolicy: Always
             schedulerName: default-scheduler
