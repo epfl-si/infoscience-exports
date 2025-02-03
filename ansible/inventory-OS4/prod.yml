@@ -25,8 +25,8 @@ all:
 
     ### Config
     django_settings_module: "settings.prod"
-    django_site_url: "infoscience-exports-prod.128.178.211.3.nip.io"
-    #django_site_url: "infoscience-exports.epfl.ch"
+    #django_site_url: "infoscience-exports-prod.128.178.211.3.nip.io"
+    django_site_url: "infoscience-exports.epfl.ch"
     django_site_full_url: "https://{{ django_site_url }}"
     django_cache_timeout: "43200"
     django_range_display: "500"
