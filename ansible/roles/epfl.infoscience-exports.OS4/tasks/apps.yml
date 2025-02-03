@@ -47,6 +47,9 @@
                   requests:
                     memory: "512Mi"
                     cpu: "50m"
+                  limits:
+                    memory: "4Gi"
+                    cpu: "150m"
             dnsPolicy: ClusterFirst
             restartPolicy: Always
             schedulerName: default-scheduler
@@ -98,8 +101,11 @@
                     subPath: infoscience-exports
                 resources:
                   requests:
-                    memory: "256Mi"
+                    memory: "512Mi"
                     cpu: "10m"
+                  limits:
+                    memory: "4Gi"
+                    cpu: "150m"
                 command: [ "python", "infoscience_exports/manage.py", "migrate", "--no-input" ]
             containers:
               - name: pod-infoscience-exports

@@ -36,6 +36,9 @@
                       requests:
                         memory: "256Mi"
                         cpu: "10m"
+                      limits:
+                        memory: "2Gi"
+                        cpu: "100m"
                 restartPolicy: Never
                 volumes:
                   - name: "{{ volume_name_logs }}"
