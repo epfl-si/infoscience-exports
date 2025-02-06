@@ -25,9 +25,9 @@
     file: buildConfig.yml
     apply:
       tags:
-        - build-config
+        - buildConfigs
   tags:
-    - build-config
+    - buildConfigs
 
 - name: Applying secrets(s)...
   include_tasks:

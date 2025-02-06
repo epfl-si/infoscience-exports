@@ -27,6 +27,8 @@
         - name: quay-pull-push-secret
 
 - name: Build config
+  when: >-
+    openshift_namespace in ["svc0089d-infoscience"]
   kubernetes.core.k8s:
     definition:
       apiVersion: build.openshift.io/v1
@@ -39,7 +41,7 @@
         source:
           type: Git
           git:
-            ref: "master"
+            ref: "{{ git_branch_to_build }}"
             uri: "https://github.com/epfl-si/infoscience-exports"
         strategy:
           type: Docker

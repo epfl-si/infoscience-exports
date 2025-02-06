@@ -15,7 +15,7 @@ all:
 
     # App
     ### Image
-    app_version: "latest"
+    app_version: "0.6.0"
     app_image: "infoscience-exports:{{ app_version }}"
     app_image_source: "{{ quay_host }}/{{ quay_organisation_name }}/{{ app_image }}"
 

@@ -25,6 +25,7 @@ all:
     app_version: "latest"
     app_image: "infoscience-exports:{{ app_version }}"
     app_image_source: "{{ quay_host }}/{{ quay_organisation_name }}/{{ app_image }}"
+    git_branch_to_build: "feature/openshift4"
 
     ### Secrets
     database_url_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/DATABASE_URL"
