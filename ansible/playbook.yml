@@ -1,9 +1,0 @@
-# To push this playbook to OpenShift, say
-#
-#   ansible-playbook playbook.yml -i hosts-oc-prod
-
-- name: Infoscience exports
-  hosts: all
-  gather_facts: no   # Not yet
-  roles:
-    - role: roles/epfl.infoscience-exports
