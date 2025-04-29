@@ -6,4 +6,4 @@
   hosts: all
   gather_facts: no   # Not yet
   roles:
-    - role: roles/epfl.infoscience-exports.OS4
+    - role: roles/epfl.infoscience-exports

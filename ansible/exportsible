@@ -3,9 +3,9 @@
 # This is a wrapper around ansible-playbook.
 
 # Easy to use with ansible (default is --dev)
-#   ./ansible/exportsibleOS4 --dev
-#   ./ansible/exportsibleOS4 --test
-#   ./ansible/exportsibleOS4 --prod
+#   ./ansible/exportsible --dev
+#   ./ansible/exportsible --test
+#   ./ansible/exportsible --prod
 #
 # If you are unfamiliar with Ansible, read up on it at
 # - https://www.ansible.com/overview/how-ansible-works
@@ -102,11 +102,11 @@ fi
 
 inventories () {
     case "$inventory_mode" in
-        dev) echo "-i inventory-OS4/dev.yml" ;;
-        test) echo "-i inventory-OS4/test.yml" ;;
-        prod) echo "-i inventory-OS4/prod.yml" ;;
+        dev) echo "-i inventory/dev.yml" ;;
+        test) echo "-i inventory/test.yml" ;;
+        prod) echo "-i inventory/prod.yml" ;;
         *) fatal "Invalid inventory_mode" ;;
     esac
 }
 
-ansible-playbook $(inventories) "${ansible_args[@]}" playbook-OS4.yml
+ansible-playbook $(inventories) "${ansible_args[@]}" playbook.yml
