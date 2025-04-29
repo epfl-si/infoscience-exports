@@ -1,0 +1,43 @@
+all:
+  hosts:
+    openshift-4-dev:
+      ansible_connection: local
+      ansible_host: localhost
+      ansible_python_interpreter: "{{ exportsible_suitcase_dir }}/bin/python3"
+      openshift_namespace: svc0089d-infoscience
+  vars:
+    # DB
+    postgres_image_version: "postgres:13"
+    postgres_image_source: "docker.io/postgres/{{ postgres_image_version }}"
+    postgres_db_name: "infoscience_exports"
+    postgres_username: "postgres"
+    postgres_password_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/POSTGRES_PASSWORD"
+
+    # Images building
+    python_image_version: "python:3.12-slim"
+    python_image_source: "docker.io/python/{{ python_image_version }}"
+
+    # Route
+    avi_route_access_level: private
+
+    # App
+    ### Image
+    app_version: "latest"
+    app_image: "infoscience-exports:{{ app_version }}"
+    app_image_source: "{{ quay_host }}/{{ quay_organisation_name }}/{{ app_image }}"
+    git_branch_to_build: "feature/openshift4"
+
+    ### Secrets
+    database_url_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/DATABASE_URL"
+    secret_key_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/SECRET_KEY"
+
+    ### Config
+    django_settings_module: "settings.prod"
+    django_site_url: "infoscience-exports-dev.10.98.42.200.nip.io"
+    django_site_full_url: "https://{{ django_site_url }}"
+    django_cache_timeout: "43200"
+    django_range_display: "500"
+    django_server_engine: "dspace"
+
+    ### Security
+    tequila_allowed_request_hosts: 10.98.84.179|10.98.84.180|10.98.84.181
