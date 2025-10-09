@@ -56,12 +56,12 @@ You should be able to access https://127.0.0.1/ (add `/admin` if needed).
 
 - Asset Openshift is correctly configured:
 ```shell
-./ansible/exportsibleOS4 --dev
+./ansible/exportsible --dev
 ```
 
 ### Update the image with your machine
 ```shell
-./ansible/exportsibleOS4 -t local-build-and-push
+./ansible/exportsible -t local-build-and-push
 ```
 
 #### Reload the pod with env changes (after per ex. a deployment edit, or a new image to deploy)
