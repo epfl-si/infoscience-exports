@@ -13,6 +13,7 @@ volume_name_staticfiles: "{{ app_name }}-staticfiles"
 
 quay_host: "quay-its.epfl.ch"
 quay_organisation_name: svc0089
+quay_repo: "{{ quay_host }}/{{ quay_organisation_name }}"
 
 _quay_push_pull_credential: "{{ lookup('file', '/keybase/team/epfl_idevfsd/infoscience-exports/QUAY_BOT_ACCOUNT') }}"
 

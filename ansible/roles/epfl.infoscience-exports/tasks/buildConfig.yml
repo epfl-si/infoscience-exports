@@ -37,7 +37,6 @@
         name:  infoscience-exports-image
         namespace: "{{ openshift_namespace }}"
       spec:
-        serviceAccount: builder-for-quay
         source:
           type: Git
           git:
@@ -47,10 +46,16 @@
           type: Docker
           dockerStrategy:
             forcePull: true
+              - name: "BASE_IMAGE"
+                value: "{{ python_image_source }}"
+            pullSecret:
+              name: quay-pull-push-secret
         output:
           to:
             kind: DockerImage
             name: "{{ quay_host }}/{{ quay_organisation_name }}/infoscience-exports:latest"
+          pushSecret:
+            name: quay-pull-push-secret
         resources:
           requests:
             cpu: "100m"  # Adjust this value as needed

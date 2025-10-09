@@ -8,14 +8,14 @@ all:
   vars:
     # DB
     postgres_image_version: "postgres:13"
-    postgres_image_source: "docker.io/postgres/{{ postgres_image_version }}"
+    postgres_image_source: "{{ quay_repo }}/{{ postgres_image_version }}"
     postgres_db_name: "infoscience_exports"
     postgres_username: "postgres"
     postgres_password_definition_path: "/keybase/team/epfl_idevfsd/infoscience-exports/dev/POSTGRES_PASSWORD"
 
     # Images building
     python_image_version: "python:3.12-slim"
-    python_image_source: "docker.io/python/{{ python_image_version }}"
+    python_image_source: "{{ quay_repo }}/{{ python_image_version }}"
 
     # Route
     avi_route_access_level: private
