@@ -39,10 +39,11 @@ RUN mkdir -p /usr/src/app && \
 
 WORKDIR /usr/src/app
 
+RUN pip install pipenv
+
 # install requirements
 COPY ./Pipfile /usr/src/app/Pipfile
 COPY ./Pipfile.lock /usr/src/app/Pipfile.lock
-RUN pip install pipenv
 RUN /bin/bash -c 'pipenv install $(test "$DJANGO_ENV" == production || echo "--dev") --deploy --system --ignore-pipfile'
 
 # copy project files
