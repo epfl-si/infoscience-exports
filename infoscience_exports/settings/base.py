@@ -25,19 +25,27 @@ parsed_url = parse.urlparse(get_env_variable('SITE_URL'))
 SITE_DOMAIN = "{0}://{1}".format(parsed_url.scheme, parsed_url.netloc)
 SITE_PATH = parsed_url.path.rstrip('/')
 
-# Django Tequila
-AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
-TEQUILA_SERVICE_NAME = "Infoscience Exports"
-TEQUILA_SERVER_URL = "https://tequila.epfl.ch"
-TEQUILA_ALLOWED_REQUEST_HOSTS = os.environ.get('TEQUILA_ALLOWED_REQUEST_HOSTS')
+# Entra ID connect
+AUTHENTICATION_BACKENDS = ('django_epfl_entra_id.auth.EPFLOIDCAB',)
+TENANT_ID = get_env_variable('AUTH_ENTRA_TENANT_ID')
+OIDC_RP_CLIENT_ID = get_env_variable('AUTH_ENTRA_CLIENT_ID')
+OIDC_RP_CLIENT_SECRET = get_env_variable('AUTH_ENTRA_SECRET')
+
+AUTH_DOMAIN = f"https://login.microsoftonline.com/{TENANT_ID}"
+OIDC_OP_AUTHORIZATION_ENDPOINT = f"{AUTH_DOMAIN}/oauth2/v2.0/authorize"
+OIDC_OP_TOKEN_ENDPOINT = f"{AUTH_DOMAIN}/oauth2/v2.0/token"
+OIDC_OP_JWKS_ENDPOINT = f"{AUTH_DOMAIN}/discovery/v2.0/keys"
+OIDC_OP_USER_ENDPOINT = "https://graph.microsoft.com/oidc/userinfo"
+OIDC_RP_SIGN_ALGO = "RS256"
+
 AUTH_USER_MODEL = 'exports.User'
 
-# override django-tequila urls if we are serving the application from a folder path
-LOGIN_URL = "{}/login".format(SITE_PATH)
-LOGIN_REDIRECT_URL = "{}".format(SITE_PATH)
+LOGIN_URL = "/auth/authenticate"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
-LOGOUT_URL = "/logged-out/"
-LOGIN_REDIRECT_IF_NOT_ALLOWED = "{}/not_allowed".format(SITE_PATH)
+# LOGOUT_URL = "/logged-out/"
+LOGIN_REDIRECT_IF_NOT_ALLOWED = "/not_allowed"
 LOGIN_REDIRECT_TEXT_IF_NOT_ALLOWED = "Not allowed"
 
 # Default values for export configurations
@@ -65,7 +73,7 @@ INSTALLED_APPS = (
 
     # Third party apps
     'bootstrap4',
-    'django_tequila',
+    "mozilla_django_oidc",
     'auditlog',
     'corsheaders',
 
@@ -85,8 +93,8 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_tequila.middleware.TequilaMiddleware',
     'auditlog.middleware.AuditlogMiddleware',
+    'mozilla_django_oidc.middleware.SessionRefresh',
 )
 
 ROOT_URLCONF = 'urls'
@@ -191,6 +199,16 @@ LOGGING = {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
         }
+    },
+    "loggers": {
+        "mozilla_django_oidc": {
+            "handlers": ["console"],
+            "level": "DEBUG"
+        },
+        "django_epfl_entra_id": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
     },
     'formatters': {
         'verbose': {

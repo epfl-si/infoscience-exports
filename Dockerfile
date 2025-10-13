@@ -58,6 +58,9 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
     ALLOWED_HOSTS="not needed to collectstaticfiles" \
     SITE_URL="not needed to collectstaticfiles" \
     DATABASE_URL="not needed to collectstaticfiles" \
+    AUTH_ENTRA_TENANT_ID="not needed to collectstaticfiles" \
+    AUTH_ENTRA_CLIENT_ID="not needed to collectstaticfiles" \
+    AUTH_ENTRA_SECRET="not needed to collectstaticfiles" \
     python infoscience_exports/manage.py collectstatic
 
 # compilemessages
@@ -66,6 +69,9 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
     ALLOWED_HOSTS="not needed to compilemessages" \
     SITE_URL="not needed to compilemessages" \
     DATABASE_URL="not needed to compilemessages" \
+    AUTH_ENTRA_TENANT_ID="not needed to collectstaticfiles" \
+    AUTH_ENTRA_CLIENT_ID="not needed to collectstaticfiles" \
+    AUTH_ENTRA_SECRET="not needed to collectstaticfiles" \
     python infoscience_exports/manage.py compilemessages
 
 COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
