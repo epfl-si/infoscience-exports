@@ -38,7 +38,7 @@ make vars
 Build the images, run the containers and initialize the DB:
 
 ```shell
-docker compose up
+make up
 ```
 
 You should be able to access https://127.0.0.1/ (add `/admin` if needed).
