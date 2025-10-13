@@ -21,3 +21,5 @@ quay_push_pull_config:
   auths:
     "quay-its.epfl.ch":
       "auth": "{{ _quay_push_pull_credential | b64encode }}"
+
+django_entra_auth_secrets_name: 'infoscience-exports.auth.entra'

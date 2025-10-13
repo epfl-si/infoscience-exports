@@ -34,6 +34,8 @@
                       name: "{{ config_maps_name }}"
                   - secretRef:
                       name: "{{ secret_name }}"
+                  - secretRef:
+                      name: "{{ django_entra_auth_secrets_name }}"
                 image: "{{ app_image_source }}"
                 imagePullPolicy: Always
                 ports:
