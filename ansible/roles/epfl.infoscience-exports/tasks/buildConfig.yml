@@ -46,6 +46,7 @@
           type: Docker
           dockerStrategy:
             forcePull: true
+            buildArgs:
               - name: "BASE_IMAGE"
                 value: "{{ python_image_source }}"
             pullSecret:
