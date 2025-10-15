@@ -40,7 +40,7 @@
         source:
           type: Git
           git:
-            ref: "{{ git_branch_to_build }}"
+            ref: "{{ app_build_image_git_branch }}"
             uri: "https://github.com/epfl-si/infoscience-exports"
         strategy:
           type: Docker
@@ -54,7 +54,7 @@
         output:
           to:
             kind: DockerImage
-            name: "{{ quay_host }}/{{ quay_organisation_name }}/infoscience-exports:latest"
+            name: "{{ quay_host }}/{{ quay_organisation_name }}/infoscience-exports:{{ app_built_image_tag }}"
           pushSecret:
             name: quay-pull-push-secret
         resources:
