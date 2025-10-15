@@ -60,4 +60,4 @@
         resources:
           requests:
             cpu: "100m"  # Adjust this value as needed
-            memory: "1Gi"
+            memory: "600Mi"
