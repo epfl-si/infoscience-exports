@@ -44,7 +44,6 @@ LOGIN_URL = "/auth/authenticate"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-# LOGOUT_URL = "/logged-out/"
 LOGIN_REDIRECT_IF_NOT_ALLOWED = "/not_allowed"
 LOGIN_REDIRECT_TEXT_IF_NOT_ALLOWED = "Not allowed"
 
