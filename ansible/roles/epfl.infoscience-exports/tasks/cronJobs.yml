@@ -33,7 +33,7 @@
                       - secretRef:
                           name: "{{ secret_name }}"
                       - secretRef:
-                        name: "{{ django_entra_auth_secrets_name }}"
+                          name: "{{ django_entra_auth_secrets_name }}"
                     resources:
                       requests:
                         memory: "256Mi"
