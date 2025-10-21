@@ -11,9 +11,6 @@ MIDDLEWARE = ('whitenoise.middleware.WhiteNoiseMiddleware',) + MIDDLEWARE
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-AUDITLOG_TWO_STEP_MIGRATION = True
-AUDITLOG_USE_TEXT_CHANGES_IF_JSON_IS_NOT_PRESENT = True
-
 # Template
 # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_LOADERS = (
