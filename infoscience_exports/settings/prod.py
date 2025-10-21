@@ -7,6 +7,10 @@ SESSION_COOKIE_AGE = 24*60*60  # default is 2 weeks, it is really too much
 
 MIDDLEWARE = ('whitenoise.middleware.WhiteNoiseMiddleware',) + MIDDLEWARE
 
+# Things coming from k8s may need to be proxied from https to http
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Template
 # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_LOADERS = (

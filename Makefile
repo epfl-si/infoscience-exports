@@ -60,12 +60,16 @@ build:
 	docker compose -f docker-compose-dev.yml build
 
 init-db:
-	# create DB
+	# create DB if it does not exists
 	docker compose -f docker-compose-dev.yml exec postgres \
-		psql -c 'CREATE DATABASE "${DB_NAME}";' -U postgres
-	# create DB user for app
+		psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}'" | grep -q 1 || \
+		docker compose -f docker-compose-dev.yml exec postgres \
+		psql -U postgres -c "CREATE DATABASE \"${DB_NAME}\";"
+	# create DB user for app if it does not exists
 	docker compose -f docker-compose-dev.yml exec postgres \
-		psql ${DB_NAME} -c "CREATE USER ${DATABASE_USER} WITH PASSWORD '${DATABASE_PASSWORD}';" -U postgres
+    	psql -U postgres -tc "SELECT 1 FROM pg_roles WHERE rolname='${DATABASE_USER}'" | grep -q 1 || \
+    	docker compose -f docker-compose-dev.yml exec postgres \
+    	psql ${DB_NAME} -U postgres -c "CREATE USER ${DATABASE_USER} WITH PASSWORD '${DATABASE_PASSWORD}';"
 	docker compose -f docker-compose-dev.yml exec postgres \
 		psql ${DB_NAME} -c "ALTER ROLE ${DATABASE_USER} WITH CREATEDB;" -U postgres
 	# initialize DBs executing migration scripts

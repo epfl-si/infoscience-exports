@@ -39,10 +39,11 @@ RUN mkdir -p /usr/src/app && \
 
 WORKDIR /usr/src/app
 
+RUN pip install pipenv
+
 # install requirements
 COPY ./Pipfile /usr/src/app/Pipfile
 COPY ./Pipfile.lock /usr/src/app/Pipfile.lock
-RUN pip install pipenv
 RUN /bin/bash -c 'pipenv install $(test "$DJANGO_ENV" == production || echo "--dev") --deploy --system --ignore-pipfile'
 
 # copy project files
@@ -57,6 +58,9 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
     ALLOWED_HOSTS="not needed to collectstaticfiles" \
     SITE_URL="not needed to collectstaticfiles" \
     DATABASE_URL="not needed to collectstaticfiles" \
+    AUTH_ENTRA_TENANT_ID="not needed to collectstaticfiles" \
+    AUTH_ENTRA_CLIENT_ID="not needed to collectstaticfiles" \
+    AUTH_ENTRA_SECRET="not needed to collectstaticfiles" \
     python infoscience_exports/manage.py collectstatic
 
 # compilemessages
@@ -65,6 +69,9 @@ RUN DJANGO_SETTINGS_MODULE=settings.prod \
     ALLOWED_HOSTS="not needed to compilemessages" \
     SITE_URL="not needed to compilemessages" \
     DATABASE_URL="not needed to compilemessages" \
+    AUTH_ENTRA_TENANT_ID="not needed to collectstaticfiles" \
+    AUTH_ENTRA_CLIENT_ID="not needed to collectstaticfiles" \
+    AUTH_ENTRA_SECRET="not needed to collectstaticfiles" \
     python infoscience_exports/manage.py compilemessages
 
 COPY ./entrypoint.sh /usr/src/app/entrypoint.sh

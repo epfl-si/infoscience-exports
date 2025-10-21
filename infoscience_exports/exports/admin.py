@@ -5,7 +5,6 @@ from django.contrib.admin.options import ModelAdmin
 from django.conf import settings
 from django.contrib.auth.forms import UsernameField
 from django.utils.safestring import mark_safe
-from django_tequila.admin import TequilaAdminSite
 from django.utils.translation import gettext_lazy as _
 from django.contrib.admin import SimpleListFilter
 
@@ -17,7 +16,6 @@ admin.autodiscover()
 admin.site.site_url = settings.SITE_PATH
 admin.site.site_header = "Infoscience-Exporter Admin"
 admin.site.site_title = "Publication lists exporter"
-admin.site.__class__ = TequilaAdminSite
 
 
 class UserChangeForm(forms.ModelForm):

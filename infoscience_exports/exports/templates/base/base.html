@@ -86,8 +86,7 @@
 		    </ul>
 		    <div class="userinfoboxbody">
 		        {% if user.is_authenticated %}
-		        <i class="user-icon"></i><span class="account">{{ user.first_name }}&nbsp;{{ user.last_name }}</span><span class="separator"> :: </span>
-		               <a class="userinfo logout" href="{{ SITE_PATH }}/logout">logout</a>
+		        <i class="user-icon"></i><span class="account">{{ user.first_name }}&nbsp;{{ user.last_name }}</span><span class="separator"></span>
 		        {% else %}
 		        <i class="user-icon"></i><span class="account">guest</span><span class="separator"> :: </span>
 		               <a class="userinfo logout" href="{{ SITE_PATH }}/login">login</a>
