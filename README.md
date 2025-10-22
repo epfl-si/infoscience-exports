@@ -41,7 +41,7 @@ Build the images, run the containers and initialize the DB:
 make up
 ```
 
-You should be able to access https://127.0.0.1/ (add `/admin` if needed).
+You should be able to access http://localhost:3000 (add `/admin` if needed).
 
 
 ## Deploying
