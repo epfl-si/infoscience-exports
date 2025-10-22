@@ -5,7 +5,7 @@
 <span class="text-muted small mb-0">
   {% if article.Publication_Location %}
     <span class="infoscience_publication_location">{{ article.Publication_Location }}</span>
-    {% if article.Publication_Institution or options.article.Publication_Date %}
+    {% if article.Publication_Institution or article.Publication_Date %}
       <span>: </span>
     {% elif options.adv_book_isbn and article.ISBN %}
       <span> - </span>
@@ -16,7 +16,7 @@
 
   {% if article.Publication_Institution %}
     <span class="infoscience_publication_institution">{{ article.Publication_Institution }}</span>
-    {% if options.article.Publication_Date %}
+    {% if article.Publication_Date %}
       <span>, </span>
     {% elif options.adv_book_isbn and article.ISBN %}
       <span> - </span>
@@ -25,7 +25,7 @@
     {% endif %}
   {% endif %}
 
-  {% if options.article.Publication_Date %}
+  {% if article.Publication_Date %}
     <span class="infoscience_publication_date">{{ article.Publication_Date }}</span>
     {% if options.adv_book_isbn and article.ISBN %}
       <span> - </span>
