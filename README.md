@@ -45,7 +45,7 @@ You should be able to access http://localhost:3000 (add `/admin` if needed).
 
 
 ## Deploying
-### Prerequiste
+### Prerequisite
 - Openshift
     - Have a running Openshift instance
 - Keybase
