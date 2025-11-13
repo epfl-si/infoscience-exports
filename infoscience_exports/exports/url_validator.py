@@ -120,7 +120,11 @@ def validate_url(url):
 
     url = modify_url(url, queries, "of", "xm", True)
     url = modify_url(url, queries, "spc.page", "1", True)  # mandatory
-    url = modify_url(url, queries, "spc.sf", "dc.date.issued", True)
+
+    # There was a time when the sort field was forced to "dc.date.issued", as it may have been a need to
+    # assert we get "the top x" (x being the limit) publications before doing custom group-by or sorts
+    # Now we allow the sort to be defined by the user's provided Infoscience URL
+    url = modify_url(url, queries, "spc.sf", "dc.date.issued", False)
     url = modify_url(url, queries, "spc.sd", "DESC", False)
 
     if os.environ.get('SERVER_ENGINE', 'dspace') == 'dspace':
