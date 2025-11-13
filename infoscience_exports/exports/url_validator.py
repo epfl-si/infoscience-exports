@@ -137,7 +137,7 @@ def validate_url(url):
         raise DomainNotAllowedError()
 
     # Don't welcome self-referencing urls
-    if url.find(settings.SITE_DOMAIN + settings.SITE_PATH) != -1
+    if url.find(settings.SITE_DOMAIN + settings.SITE_PATH) != -1:
         raise DomainNotAllowedError()
 
     return url
