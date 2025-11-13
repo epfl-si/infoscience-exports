@@ -115,7 +115,7 @@ def validate_url(url):
     queries = parse_qs(urlsplit(url).query)
 
     if '?' not in url:
-        # add missing ? in an url, as we add parameters next
+        # mandatory seperator
         url += '?'
 
     url = modify_url(url, queries, "of", "xm", True)
