@@ -123,6 +123,7 @@ def get_notices(options):
         url = validate_url(options['url'])
         # Look like it serve to remove all non-spacing (invisible) Unicode
         url = ''.join(c for c in unicodedata.normalize('NFD', url) if unicodedata.category(c) != 'Mn')
+        logger.debug(f"URL { url } passed the validation. Fetching the URL..")
     except DomainNotAllowedError:
         options['error'] = get_message('danger', _('The domain is not allowed'))
         return options
@@ -133,6 +134,7 @@ def get_notices(options):
     # download data
     try:
         server_response = urlopen(url)
+        logger.debug(f"URL opened successfully. HTTP code: { server_response.getcode() }")
     except Exception as e:
         options['error'] = get_message('danger', f"Server responded with an error: {e}")
         return options
@@ -156,6 +158,8 @@ def get_notices(options):
         options['error'] = ''
 
     notices_length = len(notices)
+
+    logger.debug(f"Records successfully transformed from MarcXML to array. Length: { notices_length }")
 
     # second groupby firstly
     if 'DOC' in groupsby_doc:
