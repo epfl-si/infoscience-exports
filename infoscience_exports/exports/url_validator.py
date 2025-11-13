@@ -115,7 +115,7 @@ def validate_url(url):
     queries = parse_qs(urlsplit(url).query)
 
     if '?' not in url:
-        # mandatory seperator
+        # mandatory seperator for next parts
         url += '?'
 
     url = modify_url(url, queries, "of", "xm", True)
@@ -132,7 +132,8 @@ def validate_url(url):
             o.netloc not in settings.ALLOWED_HOSTS:
         raise DomainNotAllowedError()
 
-    if url.find(settings.SITE_DOMAIN + settings.SITE_PATH) != -1:  # self referencing url is bad
+    # Don't welcome self-referencing urls
+    if url.find(settings.SITE_DOMAIN + settings.SITE_PATH) != -1
         raise DomainNotAllowedError()
 
     return url
