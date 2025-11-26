@@ -150,7 +150,7 @@ def get_notices(options):
             options['error'] = get_message('danger', e)
             return options
 
-    # check errors inside parsed result
+    # check errors inside the parsed result
     if notices and notices[0].get('message', '') != '':
         options['error'] = notices[0]
         notices = ''
