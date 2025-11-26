@@ -36,7 +36,7 @@ DOC_TYPE_ORDERED = {
 }
 
 
-def get_groups(options, notices, attr, subattr):
+def get_groups(notices, attr, subattr):
     groups_list = []
     for key, items in groupby(notices, itemgetter(attr)):
         subgroups_list = []
@@ -161,21 +161,25 @@ def get_notices(options):
 
     logger.debug(f"Records successfully transformed from MarcXML to array. Length: { notices_length }")
 
-    # second groupby firstly
-    if 'DOC' in groupsby_doc:
-        notices = get_sorted_by_doc_types(notices)
+    # does a groupby is set ?
+    if groupsby_year != "NONE" or \
+        groupsby_doc != "NONE" or \
+        groupsby_all != "NONE":
+        # second groupby firstly
+        if 'DOC' in groupsby_doc:
+            notices = get_sorted_by_doc_types(notices)
 
-    # first groupby secondly
-    if 'DOC' in groupsby_all:
-        notices = get_sorted_by_doc_types(notices)
-    else:
-        notices = get_sorted_by_year(notices, url)
+        # first groupby secondly
+        if 'DOC' in groupsby_all:
+            notices = get_sorted_by_doc_types(notices)
+        else:
+            notices = get_sorted_by_year(notices, url)
 
     # set groups
     if 'DOC' in groupsby_all:
-        notices = get_groups(options, notices, 'Doc_Type', 'Publication_Year')
+        notices = get_groups(notices, 'Doc_Type', 'Publication_Year')
     else:
-        notices = get_groups(options, notices, 'Publication_Year', 'Doc_Type')
+        notices = get_groups(notices, 'Publication_Year', 'Doc_Type')
 
     # add counter (for bullet numbering)
     setbullets(notices, options['bullet'], notices_length)
