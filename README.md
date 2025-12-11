@@ -3,9 +3,14 @@
 
 Configurable exports from Infoscience for your list of records
 
-## Installing locally / Getting started
+## Running locally
+
+See [how to run locally](./DEV.md)
+
+## Running with Docker
 
 Here we expose the docker way to get started.
+If you want to run locally with your own Django installed
 
 ### Prerequisite
 
@@ -66,7 +71,7 @@ You should be able to access http://localhost:3000 (add `/admin` if needed).
 
 #### Reload the pod with env changes (after per ex. a deployment edit, or a new image to deploy)
 ```shell
-oc rollout restart deployment/web-service
+oc -n {your_namespace} rollout restart deployment/web-service
 ```
 
 ## Advanced configuration / Usages
