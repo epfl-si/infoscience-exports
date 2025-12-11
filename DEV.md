@@ -1,7 +1,7 @@
 
 # Dev locally
 
-Here we expose how to to get started when you want to dev locally.
+Here we expose how to get started when you want to dev locally.
 
 ## Prepare
 
