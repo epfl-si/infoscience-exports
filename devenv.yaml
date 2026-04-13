@@ -1,0 +1,10 @@
+inputs:
+  nixpkgs-python:
+    url: github:cachix/nixpkgs-python
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
+secretspec:
+  enable: true
+  provider: dotenv:/keybase/team/epfl_idevfsd/infoscience-exports/dev/secretspec.env
+  profile: default

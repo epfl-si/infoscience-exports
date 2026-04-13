@@ -72,3 +72,8 @@ local/
 # ansible tmp
 ansible/ansible-tmp
 ansible/ansible-deps-cache
+
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
