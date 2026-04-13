@@ -5,9 +5,14 @@ from django.urls import include, re_path, path
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.http import HttpResponseForbidden
 
+
+def disable_admin_login(request, *args, **kwargs):
+    return HttpResponseForbidden("Please contact your admin if you need the administrator permissions.")
 
 app_patterns = [
+    path("admin/login/", disable_admin_login),  # override BEFORE admin.site.urls
     re_path(r'^admin/', admin.site.urls),
     re_path(r'', include('exports.urls')),
     re_path(r'^logged-out/$', TemplateView.as_view(template_name='log_out.html')),
