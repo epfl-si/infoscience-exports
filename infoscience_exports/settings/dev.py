@@ -24,11 +24,14 @@ MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
+LOGGER_EXPORTS_FILE_PATH = get_env_variable('LOGGER_EXPORTS_FILE_PATH') or '/var/log/django/infoscience_exports.log'
+LOGGER_MIGRATION_FILE_PATH = get_env_variable('LOGGER_MIGRATION_FILE_PATH') or '/var/log/django/infoscience_exports_migration.log'
+
 LOGGING['handlers'].update({
     'file': {
         'level': 'DEBUG',
         'class': 'logging.handlers.RotatingFileHandler',
-        'filename': '/var/log/django/infoscience_exports.log',
+        'filename': LOGGER_EXPORTS_FILE_PATH,
         'maxBytes': 1024*1024*5,  # 5 MB
         'backupCount': 5,
         'formatter': 'verbose',
@@ -36,7 +39,7 @@ LOGGING['handlers'].update({
     'migration_file': {
         'level': 'DEBUG',
         'class': 'logging.handlers.RotatingFileHandler',
-        'filename': '/var/log/django/infoscience_exports_migration.log',
+        'filename': LOGGER_MIGRATION_FILE_PATH,
         'maxBytes': 1024*1024*5,  # 5 MB
         'backupCount': 5,
         'formatter': 'verbose',
