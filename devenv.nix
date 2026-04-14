@@ -48,10 +48,6 @@
     secretspec
 
     # Deploy utilities
-    python313
-    (python313.withPackages (ps: with ps; [
-      kubernetes
-    ]))
     ansible
     ansible-lint
     openshift
@@ -61,7 +57,12 @@
   languages.python = {
     enable  = true;
     version = "3.12";
-    venv.enable = true;
+    venv = {
+      enable = true;
+      requirements = ''
+        kubernetes
+      '';
+    };
   };
 
   # https://devenv.sh/services/
