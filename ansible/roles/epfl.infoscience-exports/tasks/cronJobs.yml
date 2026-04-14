@@ -36,11 +36,10 @@
                           name: "{{ django_entra_auth_secrets_name }}"
                     resources:
                       requests:
-                        memory: "256Mi"
-                        cpu: "10m"
+                        memory: "372Mi"
+                        cpu: "0.001"
                       limits:
-                        memory: "2Gi"
-                        cpu: "100m"
+                        memory: "744Mi"
                 restartPolicy: Never
                 volumes:
                   - name: "{{ volume_name_logs }}"
