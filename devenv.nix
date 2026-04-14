@@ -31,6 +31,10 @@
     AUTH_ENTRA_CLIENT_ID = config.secretspec.secrets.AUTH_ENTRA_CLIENT_ID or "";
     AUTH_ENTRA_SECRET = config.secretspec.secrets.AUTH_ENTRA_SECRET or "";
     SECRET_KEY = config.secretspec.secrets.SECRET_KEY or "";
+
+    # Deploy
+    SKIP_ANSIBLE_SUITECASE = "true";
+
   };
 
   # https://devenv.sh/packages/
