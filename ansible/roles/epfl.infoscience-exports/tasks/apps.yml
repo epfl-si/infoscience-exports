@@ -164,9 +164,9 @@
           deployment: "{{ deploy_name }}"
 
 - name: Django app - Restart
-  when: >-
-    ('apps.restart' in ansible_run_tags)
-  local_action:
-    module: shell
-    cmd: "oc rollout restart deployment/{{ deploy_name }} --namespace {{ openshift_namespace }}"
+  when: "'apps.restart' in ansible_run_tags"
+  ansible.builtin.shell: >
+    oc rollout restart deployment/{{ deploy_name }}
+    --namespace {{ openshift_namespace }}
+  delegate_to: localhost
   tags: apps.restart
