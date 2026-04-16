@@ -1,68 +1,30 @@
-# PROD ONLY
 - name: Django app
-  when: >-
-    openshift_namespace in ["svc0089p-infoscience"]
-  # the diff with the next task definition is the removal of the initContainer
-  kubernetes.core.k8s:
-    definition:
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        annotations:
-          version: "{{ app_version }}"
-        labels:
-          app: "{{ app_name }}"
-          version: "{{ app_version }}"
-        name: "{{ deploy_name }}"
-        namespace: "{{ openshift_namespace }}"
-      spec:
-        replicas: 2
-        selector:
-          matchLabels:
-            app: "{{ app_name }}"
-        template:
-          metadata:
-            labels:
-              app: "{{ app_name }}"
-              deployment: "{{ deploy_name }}"
-          spec:
-            serviceAccountName: builder-for-quay
-            containers:
-              - name: pod-infoscience-exports
-                envFrom:
-                  - configMapRef:
-                      name: "{{ config_maps_name }}"
-                  - secretRef:
-                      name: "{{ secret_name }}"
-                  - secretRef:
-                      name: "{{ django_entra_auth_secrets_name }}"
-                image: "{{ app_image_source }}"
-                imagePullPolicy: Always
-                ports:
-                  - containerPort: 3000
-                    protocol: TCP
-                volumeMounts:
-                  - name: "{{ volume_name_logs }}"
-                    mountPath: /var/log/django
-                    subPath: infoscience-exports
-                resources:
-                  requests:
-                    memory: "372Mi"
-                    cpu: "0.01"
-                  limits:
-                    memory: "744Mi"
-            dnsPolicy: ClusterFirst
-            restartPolicy: Always
-            schedulerName: default-scheduler
-            terminationGracePeriodSeconds: 30
-            volumes:
-              - name: "{{ volume_name_logs }}"
-                persistentVolumeClaim:
-                  claimName: "{{ volume_name_logs }}"
+  vars:
+    use_django_migrate: "{{ openshift_namespace in ['svc0089d-infoscience', 'svc0089t-infoscience'] }}"
 
-- name: Django app
-  when: >-
-    openshift_namespace in ["svc0089d-infoscience", "svc0089t-infoscience"]
+    django_migrate_init_container_def:
+      - name: init-pod-infoscience-exports-migrate-db
+        envFrom:
+          - configMapRef:
+              name: "{{ config_maps_name }}"
+          - secretRef:
+              name: "{{ secret_name }}"
+          - secretRef:
+              name: "{{ django_entra_auth_secrets_name }}"
+        image: "{{ app_image_source }}"
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: "{{ volume_name_logs }}"
+            mountPath: /var/log/django
+            subPath: infoscience-exports
+        resources:
+          requests:
+            memory: "372Mi"
+            cpu: "0.01"
+          limits:
+            memory: "744Mi"
+        command: [ "python", "infoscience_exports/manage.py", "migrate", "--no-input" ]
+
   kubernetes.core.k8s:
     definition:
       apiVersion: apps/v1
@@ -87,28 +49,9 @@
               deployment: "{{ deploy_name }}"
           spec:
             serviceAccountName: builder-for-quay
-            initContainers:
-              - name: init-pod-infoscience-exports-migrate-db
-                envFrom:
-                  - configMapRef:
-                      name: "{{ config_maps_name }}"
-                  - secretRef:
-                      name: "{{ secret_name }}"
-                  - secretRef:
-                      name: "{{ django_entra_auth_secrets_name }}"
-                image: "{{ app_image_source }}"
-                imagePullPolicy: Always
-                volumeMounts:
-                  - name: "{{ volume_name_logs }}"
-                    mountPath: /var/log/django
-                    subPath: infoscience-exports
-                resources:
-                  requests:
-                    memory: "372Mi"
-                    cpu: "0.01"
-                  limits:
-                    memory: "744Mi"
-                command: [ "python", "infoscience_exports/manage.py", "migrate", "--no-input" ]
+
+            initContainers: "{{ django_migrate_init_container_def if use_django_migrate else omit }}"
+
             containers:
               - name: pod-infoscience-exports
                 envFrom:
@@ -129,8 +72,10 @@
                     subPath: infoscience-exports
                 resources:
                   requests:
-                    memory: "256Mi"
-                    cpu: "20m"
+                    memory: "372Mi"
+                    cpu: "0.01"
+                  limits:
+                    memory: "744Mi"
             dnsPolicy: ClusterFirst
             restartPolicy: Always
             schedulerName: default-scheduler
