@@ -74,15 +74,15 @@
   tags:
     - db
 
-- name: Applying App(s)...
+- name: Applying the Web app...
   include_tasks:
-    file: apps.yml
+    file: web-app.yml
     apply:
       tags:
-        - apps
+        - web-app
   tags:
-    - apps
-    - apps.restart
+    - web-app
+    - web-app.restart
 
 - name: Applying cronJobs(s)...
   include_tasks:
