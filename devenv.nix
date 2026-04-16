@@ -72,12 +72,6 @@
     listen_addresses = "localhost";
     port        = 5432;
 
-#    initialScript = ''
-#      CREATE USER infoscience WITH PASSWORD 'infoscience';
-#      CREATE DATABASE infoscience_exports OWNER infoscience;
-#      GRANT ALL PRIVILEGES ON DATABASE infoscience_exports TO infoscience;
-#    '';
-
     initialDatabases = [{
       name = "infoscience_exports";
       user= "infoscience";
