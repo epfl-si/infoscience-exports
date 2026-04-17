@@ -140,28 +140,28 @@
     # 🔐 Keybase check
     if [ -d "/keybase" ]; then
       if [ -r "/keybase" ]; then
-        echo "  🔐 /keybase is mounted and accessible ✅"
+        echo "🔐 /keybase is mounted and accessible ✅"
       else
-        echo "  ⚠️  /keybase exists but is not readable"
+        echo "⚠️  /keybase exists but is not readable"
       fi
     else
-      echo "  ❌ /keybase is NOT mounted"
-      echo "     👉 As we rely on Keybase for shared secrets,"
-      echo "        make sure Keybase is running on your system."
+      echo "❌ /keybase is NOT mounted"
+      echo "  👉 As we rely on Keybase for shared secrets,"
+      echo "     make sure Keybase is running on your system."
     fi
 
     echo ""
     echo "Infoscience Exports dev environment"
     echo "====================================="
     echo "Notable tools: python, pg_*, ./ansible/exportsible"
-    echo "DB URL  : $DATABASE_URL"
+    echo "Once dev setup is started, access the DB on: $DATABASE_URL"
     echo ""
-    echo "1️⃣ First time? Run :  devenv processes up -d; dev-setup"
-    echo "▶️  Start server:     devenv processes up -d; dev-server   (or: devenv up)"
-    echo "⚙️  Django manage:    dj <command>"
-    echo "Run tests:        dev-test"
+    echo "🆕  First time?:                   devenv processes up -d; dev-setup"
+    echo "▶️  Start the DB and the web-app:  devenv processes up -d; dev-server"
+    echo "⚙️  Django manage:                 dj <command>"
+    echo "🧪  Tests:                         dev-test"
     echo ""
     echo "Tips:"
-    echo "  if you are the only user, you can get admin rights with: set-first-user-as-admin"
+    echo "  if you are the only user, you can get admin rights on the local setup with: set-first-user-as-admin"
   '';
 }
