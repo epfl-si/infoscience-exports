@@ -7,7 +7,24 @@ all:
       openshift_namespace: svc0089t-infoscience
   vars:
     # Secrets
-    keybase_secrets_folder: "/keybase/team/epfl_idevfsd/infoscience-exports/test"
+    keybase_base_folder: "/keybase/team/epfl_idevfsd/infoscience-exports"
+    keybase_secrets_folder: "{{ keybase_base_folder }}/test"
+
+    # DB
+    database:
+      cluster: "postgres"
+      host: "postgres-rw"
+      name: "infoscience-exports"
+      user: "infoscience_exports_user"
+      password: "{{ lookup('file', keybase_secrets_folder ~ '/postgres_password.yaml') | from_yaml }}"
+      size: "2Gi"
+      backup_frequency: "0 0 3 1 * *"
+      backup_s3: >-
+        {{
+          lookup('file', keybase_base_folder ~ '/S3_DEV_TEST_PROD.yaml')
+          | from_yaml
+          | combine({'folder': 'test'})
+        }}
 
     # Image building
     ## base
@@ -27,7 +44,6 @@ all:
     app_image_source: "{{ quay_host }}/{{ quay_organisation_name }}/{{ app_image }}"
 
     ### Secrets
-    database_url_definition_path: "{{ keybase_secrets_folder }}/DATABASE_URL"
     secret_key_definition_path: "{{ keybase_secrets_folder }}/SECRET_KEY"
 
     ### Config
