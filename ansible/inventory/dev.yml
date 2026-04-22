@@ -19,9 +19,10 @@ all:
       password: "{{ lookup('file', keybase_secrets_folder ~ '/postgres_password.yaml') | from_yaml }}"
       size: "1Gi"
       backup_frequency: "0 0 3 1 * *"
+      backup_retentionPolicy: "1d"
       backup_s3: >-
         {{
-          lookup('file', keybase_base_folder ~ '/S3_DEV_TEST_PROD.yaml')
+          lookup('file', keybase_base_folder ~ '/backup_S3_DEV_TEST_PROD.yaml')
           | from_yaml
           | combine({'folder': 'dev'})
         }}

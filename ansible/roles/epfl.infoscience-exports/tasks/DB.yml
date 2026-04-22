@@ -24,6 +24,7 @@
           limits:
             memory: "512Mi"
         backup:
+          retentionPolicy: "{{ database.backup_retentionPolicy }}"
           barmanObjectStore:
             destinationPath: "s3://{{ database.backup_s3.bucket }}/{{ database.backup_s3.folder }}"
             endpointURL: "https://{{ database.backup_s3.endpoint }}"
