@@ -9,6 +9,23 @@ all:
     # Secrets
     keybase_secrets_folder: "/keybase/team/epfl_idevfsd/infoscience-exports/prod"
 
+    # DB
+    database:
+      cluster: "postgres"
+      host: "postgres-rw"
+      name: "infoscience-exports"
+      user: "infoscience_exports_user"
+      password: "{{ lookup('file', keybase_secrets_folder ~ '/postgres_password.yaml') | from_yaml }}"
+      size: "5Gi"
+      backup_frequency: "0 */6 * * * *"
+      backup_retentionPolicy: "4d"
+      backup_s3: >-
+        {{
+          lookup('file', keybase_base_folder ~ '/backup_S3_DEV_TEST_PROD.yaml')
+          | from_yaml
+          | combine({'folder': 'dev'})
+        }}
+
     # Image building
     python_image_version: "python:3.12-slim"
     python_image_source: "{{ quay_repo }}/{{ python_image_version }}"
