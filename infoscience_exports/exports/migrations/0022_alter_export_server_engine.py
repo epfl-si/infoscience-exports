@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("exports", "0022_export_last_rendered_page_generation_duration_and_more"),
+        ("exports", "0021_alter_user_first_name"),
     ]
 
     operations = [

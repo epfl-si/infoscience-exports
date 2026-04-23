@@ -1,3 +1,4 @@
+import time
 from urllib.parse import unquote
 
 from django.conf import settings
@@ -154,7 +155,9 @@ class ExportView(DetailView):
             # do we have the result in the cache?
             return cache.get(cache_key)
         else:
-            # nope, time to render
+            # nope, let's render it
+            start_time = time.perf_counter()
+
             context = self.get_context_data(object=self.object)
             rendered_response = self.render_to_response(context).render()
 
@@ -166,6 +169,13 @@ class ExportView(DetailView):
             # save render in cache if there is no error
             if not has_error_in_options(context):
                 cache.set(cache_key, rendered_response)
+
+            end_time = time.perf_counter()
+            self.object.last_rendered_page_generation_duration = end_time - start_time
+            self.object.save(
+                # bypass the 'updated_at' with this arg
+                update_fields=['last_rendered_page_generation_duration']
+            )
 
             return rendered_response
 
