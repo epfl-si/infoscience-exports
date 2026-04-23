@@ -28,7 +28,7 @@ class Export(BulletsSettings,
              ):
     """
     This should be the only no abstract model, reuniting all the settings
-    trough inheritance of abstracts models
+    through inheritance of abstracts models
     """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
@@ -48,7 +48,7 @@ class Export(BulletsSettings,
         blank=True
     )
 
-    # The rendered page is saved into this. This mechanism is here as we may move away from Invenio, so some export
+    # The rendered page is saved into this. This mechanism is here as we may move away from Invenio, so some exports
     # may not be able to crawl again the data. In that case, it should use this.
     last_rendered_page = models.TextField(
         editable=False,
@@ -81,7 +81,7 @@ class Export(BulletsSettings,
         return reverse('crud:export-view', args=[str(self.id)])
 
     def get_cache_key_for_view(self, language):
-        """ build an uniq key per object for the view"""
+        """ build a uniq key per object for the view"""
         return "view_export_{}_{}".format(self.id, language)
 
     class Meta:
@@ -110,12 +110,12 @@ class LegacyExport(models.Model):
     legacy_id = models.IntegerField(blank=True, null=True)
     legacy_url = models.TextField()
     language = models.TextField()
-    referenced_url = models.TextField()  # the page that use this export
+    referenced_url = models.TextField()  # represent the page that uses this export
     origin = models.TextField(choices=ORIGIN_CHOICE)
     origin_sciper = models.TextField()
     origin_id = models.TextField()
     raw_csv_entry = models.TextField()
-    content_delta = models.IntegerField(blank=True, null=True)  # diff between old system and new
+    content_delta = models.IntegerField(blank=True, null=True)  # diff between the old system and the new
 
     def __str__(self):
         return "{} ({})".format(self.legacy_url, self.origin)
