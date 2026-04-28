@@ -27,7 +27,7 @@ all:
         }}
 
     # Image building
-    python_image_version: "python:3.12-slim"
+    python_image_version: "python:3.14-slim"
     python_image_source: "{{ quay_repo }}/{{ python_image_version }}"
 
     # Route
