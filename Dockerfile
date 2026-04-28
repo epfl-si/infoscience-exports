@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.12-slim
+ARG BASE_IMAGE=python:3.14-slim
 FROM $BASE_IMAGE
 
 ARG DJANGO_ENV

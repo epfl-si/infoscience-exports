@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "~=4.2"
+django = "~=5.2"
 django-jsonfield-backport = "*"
 dj-database-url = "*"
 django-dirtyfields = "*"
@@ -48,4 +48,4 @@ pytest-django = "*"
 pytest-cov = "*"
 
 [requires]
-python_version = "3.12"
+python_version = "3.14"
