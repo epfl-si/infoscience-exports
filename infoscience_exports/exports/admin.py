@@ -82,6 +82,18 @@ class LegacyExportInline(admin.StackedInline):
                        'raw_csv_entry')
 
 
+class WithRenderDurationExportFilter(SimpleListFilter):
+    title = 'Has a render duration'
+    parameter_name = 'render_duration'
+
+    def lookups(self, request, model_admin):
+        return (('duration', 'Has a render duration'),)
+
+    def queryset(self, request, queryset):
+        if self.value() == 'duration':
+            return queryset.filter(last_rendered_page_generation_duration__isnull=False).distinct()
+
+
 class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
     list_display = (
         'name',
@@ -94,8 +106,16 @@ class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
         'last_render_usage',
         'legacy_url',
     )
-    list_filter = ['updated_at', 'server_engine', LegacyExportFilter]
+
+    list_filter = [
+        'updated_at',
+        'server_engine',
+        LegacyExportFilter,
+        WithRenderDurationExportFilter
+    ]
+
     inlines = [LegacyExportInline]
+
     search_fields = (
         'id', 'name', 'user__email',
     )
@@ -131,8 +151,6 @@ class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
     def last_uncached_render_duration(self, obj):
         if obj.last_rendered_page_generation_duration:
             return f"{obj.last_rendered_page_generation_duration * 1000:.2f} ms"
-        else:
-            return ""
 
     last_uncached_render_duration.admin_order_field = 'last_rendered_page_generation_duration'
 
