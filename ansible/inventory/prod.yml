@@ -23,7 +23,7 @@ all:
         {{
           lookup('file', keybase_base_folder ~ '/backup_S3_DEV_TEST_PROD.yaml')
           | from_yaml
-          | combine({'folder': 'dev'})
+          | combine({'folder': 'prod'})
         }}
 
     # Image building
