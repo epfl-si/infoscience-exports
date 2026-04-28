@@ -156,10 +156,18 @@ class ExportView(DetailView):
             return cache.get(cache_key)
         else:
             # nope, let's render it
+
             start_time = time.perf_counter()
 
             context = self.get_context_data(object=self.object)
             rendered_response = self.render_to_response(context).render()
+
+            end_time = time.perf_counter()
+
+            # bypass Django triggers by updating the SQL way
+            type(self.object).objects.filter(pk=self.object.pk).update(
+                last_rendered_page_generation_duration=end_time - start_time
+            )
 
             def has_error_in_options(context):
                 return ('options' in context and
@@ -169,13 +177,6 @@ class ExportView(DetailView):
             # save render in cache if there is no error
             if not has_error_in_options(context):
                 cache.set(cache_key, rendered_response)
-
-            end_time = time.perf_counter()
-            self.object.last_rendered_page_generation_duration = end_time - start_time
-            self.object.save(
-                # bypass the 'updated_at' with this arg
-                update_fields=['last_rendered_page_generation_duration']
-            )
 
             return rendered_response
 
