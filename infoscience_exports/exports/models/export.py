@@ -55,10 +55,19 @@ class Export(BulletsSettings,
         default=None,
         null=True
     )
+
     last_rendered_page_usage_at = models.DateTimeField(
         editable=False,
         default=None,
         null=True
+    )
+
+    last_rendered_page_generation_duration = models.DecimalField(
+        editable=False,
+        default=None,
+        null=True,
+        max_digits=7,
+        decimal_places=4
     )
 
     def __str__(self):

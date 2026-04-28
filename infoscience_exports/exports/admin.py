@@ -87,11 +87,12 @@ class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
         'name',
         'user',
         'view_url',
-        'legacy_url',
         'updated_at',
+        'last_uncached_render_duration',
         'server_engine',
         'has_render_in_db',
         'last_render_usage',
+        'legacy_url',
     )
     list_filter = ['updated_at', 'server_engine', LegacyExportFilter]
     inlines = [LegacyExportInline]
@@ -126,6 +127,14 @@ class ExportLoggedModelAdmin(LoggedModelAdminMixin, ModelAdmin):
 
     def last_render_usage(self, obj):
         return obj.last_rendered_page_usage_at
+
+    def last_uncached_render_duration(self, obj):
+        if obj.last_rendered_page_generation_duration:
+            return f"{obj.last_rendered_page_generation_duration * 1000:.2f} ms"
+        else:
+            return ""
+
+    last_uncached_render_duration.admin_order_field = 'last_rendered_page_generation_duration'
 
 
 class ExportInline(admin.StackedInline):
