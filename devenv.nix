@@ -67,10 +67,10 @@
 
   # https://devenv.sh/services/
   services.postgres = {
-    enable      = true;
-    package     = pkgs.postgresql;
+    enable = true;
+    package = pkgs.postgresql;
     listen_addresses = "localhost";
-    port        = 5432;
+    port = 5432;
 
     initialDatabases = [{
       name = "infoscience_exports";
