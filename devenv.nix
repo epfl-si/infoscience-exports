@@ -78,7 +78,7 @@
     }];
 
     settings = {
-      log_connections = true;
+      log_connections = false;
     };
   };
 
@@ -105,7 +105,7 @@
     dev-server.exec = ''
       cd infoscience_exports
       exec gunicorn \
-        --max-requests 1 \
+        --max-requests 500 \
         --reload \
         -w 2 \
         -b :''${DEV_PORT} \
