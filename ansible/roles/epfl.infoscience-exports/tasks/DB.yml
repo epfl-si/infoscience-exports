@@ -1,78 +1,89 @@
-- name: Apply DB secrets
-  when: >-
-    openshift_namespace in ["svc0089d-infoscience"]
+- name: PostgreSQL cluster
   kubernetes.core.k8s:
     definition:
-      apiVersion: v1
-      kind: Secret
+      apiVersion: postgresql.cnpg.io/v1
+      kind: Cluster
       metadata:
-        name: "{{ secret_name }}.db"
+        name: "{{ database.cluster }}"
         namespace: "{{ openshift_namespace }}"
         labels:
-          app: "{{ app_name }}"
-      data:
-        POSTGRES_PASSWORD: "{{ lookup('file', postgres_password_definition_path) | b64encode }}"
-
-- name: Setup DB pod
-  when: >-
-    openshift_namespace in ["svc0089d-infoscience"]
-  kubernetes.core.k8s:
-    definition:
-      apiVersion: apps/v1
-      kind: StatefulSet
-      metadata:
-        name: postgres-deployment
-        namespace: "{{ openshift_namespace }}"
-        labels:
-          app: "{{ app_name }}"
+          app.kubernetes.io/name: "postgresql-cluster"
+          app.kubernetes.io/component: database
       spec:
-        replicas: 1
-        selector:
-          matchLabels:
-            app: postgres
-        template:
-          metadata:
-            labels:
-              app: postgres
-          spec:
-            serviceAccountName: builder-for-quay
-            containers:
-            - name: postgres
-              image: "{{ quay_host }}/{{ quay_organisation_name }}/{{ postgres_image_version }}"
-              ports:
-              - containerPort: 5432
-              envFrom:
-                - secretRef:
-                    name: "{{ secret_name }}.db"
-              env:
-              - name: PGDATA
-                value: "/var/lib/postgresql/data/pgdata"
-              - name: POSTGRES_DB
-                value: "{{ postgres_db_name }}"
-              - name: POSTGRES_USER
-                value: "{{ postgres_username }}"
-              resources:
-                requests:
-                  memory: "256Mi"
-                  cpu: "10m"
+        instances: 2
+        monitoring:
+          enablePodMonitor: true
+        storage:
+          size: "{{ database.size }}"
+          storageClass: "ocs-storagecluster-ceph-rbd"
+        enableSuperuserAccess: true
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "256Mi"
+          limits:
+            memory: "512Mi"
+        backup:
+          retentionPolicy: "{{ database.backup_retentionPolicy }}"
+          barmanObjectStore:
+            destinationPath: "s3://{{ database.backup_s3.bucket }}/{{ database.backup_s3.folder }}"
+            endpointURL: "https://{{ database.backup_s3.endpoint }}"
+            s3Credentials:
+              accessKeyId:
+                name: s3-credentials
+                key: AWS_ACCESS_KEY_ID
+              secretAccessKey:
+                name: s3-credentials
+                key: AWS_SECRET_ACCESS_KEY
+        env:
+          - name: AWS_REQUEST_CHECKSUM_CALCULATION
+            value: WHEN_REQUIRED
+          - name: AWS_RESPONSE_CHECKSUM_VALIDATION
+            value: WHEN_REQUIRED
+        postgresql:
+          parameters:
+            max_connections: "600"
+            max_slot_wal_keep_size: 1GB
+            shared_buffers: 128MB
+        managed:
+          roles:
+            - name: "{{ database.user }}"
+              ensure: present
+              login: true
+              superuser: false
+              passwordSecret:
+                name: "infoscience-exports-db-credentials"
 
-- name: Setup DB service
-  when: >-
-    openshift_namespace in ["svc0089d-infoscience"]
+- name: PostgreSQL database
   kubernetes.core.k8s:
     definition:
-      apiVersion: v1
-      kind: Service
+      apiVersion: postgresql.cnpg.io/v1
+      kind: Database
       metadata:
-        name: db-service
+        name: "{{ database.name }}"
         namespace: "{{ openshift_namespace }}"
         labels:
-          app: "{{ app_name }}"
+          app.kubernetes.io/name: "postgresql-database"
+          app.kubernetes.io/component: database
       spec:
-        selector:
-          app: postgres
-        ports:
-          - protocol: TCP
-            port: 5432
-            targetPort: 5432
-        type: ClusterIP
+        name: "{{ database.name }}"
+        owner: "{{ database.user }}"
+        cluster:
+          name: "{{ database.cluster }}"
+
+- name: Scheduled DB backup
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: postgresql.cnpg.io/v1
+      kind: ScheduledBackup
+      metadata:
+        name: "{{ database.cluster }}"
+        namespace: "{{ openshift_namespace }}"
+        labels:
+          app.kubernetes.io/name: "infoscience-exports"
+          app.kubernetes.io/component: backup
+      spec:
+        schedule: "{{ database.backup_frequency }}"
+        backupOwnerReference: self
+        cluster:
+          name: "{{ database.cluster }}"

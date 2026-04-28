@@ -65,7 +65,7 @@
   tags:
     - networkPolicies
 
-- name: Setting a DB, if needed...
+- name: Applying the DB setup...
   include_tasks:
     file: DB.yml
     apply:
