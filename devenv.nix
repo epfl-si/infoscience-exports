@@ -4,6 +4,8 @@
   # https://devenv.sh/basics/
   env = {
 
+    PIPENV_VERBOSITY=-1;
+
     DJANGO_SETTINGS_MODULE = "settings.dev";
     DJANGO_ENV = "dev";
     ALLOWED_HOSTS = "localhost";
@@ -56,7 +58,7 @@
   # https://devenv.sh/languages/
   languages.python = {
     enable  = true;
-    version = "3.12";
+    version = "3.14";
     venv = {
       enable = true;
       requirements = ''
