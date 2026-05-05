@@ -7,7 +7,8 @@ all:
       openshift_namespace: svc0089p-infoscience
   vars:
     # Secrets
-    keybase_secrets_folder: "/keybase/team/epfl_idevfsd/infoscience-exports/prod"
+    keybase_base_folder: "/keybase/team/epfl_idevfsd/infoscience-exports"
+    keybase_secrets_folder: "{{ keybase_base_folder }}/prod"
 
     # DB
     database:
@@ -17,7 +18,7 @@ all:
       user: "infoscience_exports_user"
       password: "{{ lookup('file', keybase_secrets_folder ~ '/postgres_password.yaml') | from_yaml }}"
       size: "5Gi"
-      backup_frequency: "0 */6 * * * *"
+      backup_frequency: "0 0 */6 * * *"
       backup_retentionPolicy: "4d"
       backup_s3: >-
         {{
