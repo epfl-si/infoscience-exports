@@ -45,7 +45,6 @@
     postgresql
 
     # Dev utilities
-    gnumake
     git
     secretspec
 
