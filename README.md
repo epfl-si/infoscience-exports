@@ -50,14 +50,6 @@ You should be able to access http://localhost:3000 (add `/admin` if needed).
 
 
 ## Deploying
-### Prerequisite
-- Openshift
-    - Have a running Openshift instance
-- Keybase
-    - Have access to the content of this folder
-        - /keybase/team/epfl_idevfsd/infoscience-exports/
-        
-### Deploy        
 
 - Asset Openshift is correctly configured:
 ```shell
