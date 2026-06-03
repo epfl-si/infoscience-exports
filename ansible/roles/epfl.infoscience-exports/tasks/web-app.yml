@@ -19,10 +19,10 @@
             subPath: infoscience-exports
         resources:
           requests:
-            memory: "372Mi"
+            memory: "512Mi"
             cpu: "0.01"
           limits:
-            memory: "744Mi"
+            memory: "512Mi"
         command: [ "python", "infoscience_exports/manage.py", "migrate", "--no-input" ]
 
   kubernetes.core.k8s:
@@ -72,10 +72,10 @@
                     subPath: infoscience-exports
                 resources:
                   requests:
-                    memory: "372Mi"
+                    memory: "512Mi"
                     cpu: "0.01"
                   limits:
-                    memory: "744Mi"
+                    memory: "512Mi"
             dnsPolicy: ClusterFirst
             restartPolicy: Always
             schedulerName: default-scheduler
