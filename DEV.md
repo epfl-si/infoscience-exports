@@ -9,11 +9,8 @@ How to start the dev locally.
 Install
 * nix
 * devenv.sh
-* direnv
 
-### Validate direnv
+### auto-activation
 
-Assert the environment is fine by reading `./.envrc`
-Once accepted, run `direnv allow`
-From now, once you enter the project folder, the devenv should be loaded and give
-you the instruction on the next steps.
+- Follow https://devenv.sh/blog/2026/05/07/devenv-21-nix-with-zsh-fish-and-nushell-via-libghostty/#auto-activation-without-direnv
+- Now you can run `devenv allow` to autoload the devenv stack as soon as you enter this folder: 
