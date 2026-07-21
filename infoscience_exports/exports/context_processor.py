@@ -1,5 +1,5 @@
 from django.conf import settings
-from exports import __version__, __build__
+from exports import __version__
 
 
 def site_url(request):
@@ -12,5 +12,4 @@ def site_url(request):
 def version(request):
     return {
         'VERSION': __version__,
-        'BUILD': __build__
-        }
+    }
