@@ -7,6 +7,8 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.http import HttpResponseForbidden
 
+from exports.utils import logout_view
+
 
 def disable_admin_login(request, *args, **kwargs):
     return HttpResponseForbidden("Please contact your admin if you need the administrator permissions.")
@@ -14,8 +16,9 @@ def disable_admin_login(request, *args, **kwargs):
 app_patterns = [
     path("admin/login/", disable_admin_login),  # override BEFORE admin.site.urls
     re_path(r'^admin/', admin.site.urls),
-    re_path(r'', include('exports.urls')),
-    re_path(r'^logged-out/$', TemplateView.as_view(template_name='log_out.html')),
+    re_path(r'', include('exports.urls'), name='home'),
+    path('logout/', logout_view, name='logout'),
+    re_path(r'^logged-out/$', TemplateView.as_view(template_name='log_out.html'), name='logged_out'),
     path("", include("django_epfl_entra_id.urls")),
     path("auth/", include("mozilla_django_oidc.urls")),
 ]
