@@ -127,7 +127,19 @@
 
     set-first-user-as-admin.exec = ''
       cd infoscience_exports
-      exec python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(id=1).update(is_staff=True, is_superuser=True)"
+      python manage.py shell <<'EOF'
+      from django.contrib.auth import get_user_model
+
+      user = get_user_model().objects.order_by('pk').first()
+
+      if user:
+          user.is_staff = True
+          user.is_superuser = True
+          user.save(update_fields=['is_staff', 'is_superuser'])
+          print(f'Promoted {user!s} to admin.')
+      else:
+          print('No users found.')
+      EOF
     '';
   };
 
