@@ -126,20 +126,27 @@
       exec pytest "$@"
     '';
 
-    set-first-user-as-admin.exec = ''
+    set-admin.exec = ''
       cd infoscience_exports
-      python manage.py shell <<'EOF'
+      printf "Sciper of the user to promote: "
+      read -r sciper
+      SCIPER="$sciper" python manage.py shell <<'EOF'
+      import os
       from django.contrib.auth import get_user_model
 
-      user = get_user_model().objects.order_by('pk').first()
+      sciper = os.environ.get("SCIPER", "").strip()
 
-      if user:
-          user.is_staff = True
-          user.is_superuser = True
-          user.save(update_fields=['is_staff', 'is_superuser'])
-          print(f'Promoted {user!s} to admin.')
+      if not sciper:
+          print("No sciper provided.")
       else:
-          print('No users found.')
+          user = get_user_model().objects.filter(sciper=sciper).first()
+          if user:
+              user.is_staff = True
+              user.is_superuser = True
+              user.save(update_fields=["is_staff", "is_superuser"])
+              print(f"Promoted {user!s} to admin.")
+          else:
+              print(f"No user found with sciper {sciper}.")
       EOF
     '';
   };
@@ -172,7 +179,7 @@
     echo ""
     echo "🆕  First time? Run Postgres and setup Django with:"
     echo "       devenv processes up -d; dev-setup"
-    echo "    if you are the only user, get the admin rights with: set-first-user-as-admin"
+    echo "    if you need admin rights, use: set-admin"
     echo ""
     echo "▶️  Once setup done, next times, start directly with:"
     echo "       devenv processes up -d; dev-server"
