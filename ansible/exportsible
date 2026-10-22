@@ -30,10 +30,6 @@ HELP_MSG
 }
 
 ensure_suitcase () {
-    if [[ "${SKIP_ANSIBLE_SUITECASE,,}" = "true" || "$SKIP_ANSIBLE_SUITECASE" == "1" ]]; then
-        return 0
-    fi
-
     if ! test -f ansible-deps-cache/.versions 2>/dev/null; then
         curl https://raw.githubusercontent.com/epfl-si/ansible.suitcase/master/install.sh | \
             SUITCASE_DIR=$PWD/ansible-deps-cache \
@@ -60,7 +56,16 @@ do_login_oc () {
     fi
 }
 
-ensure_suitcase
+# check for the suitcase, unless there is
+# a reason not to
+case "$SKIP_ANSIBLE_SUITCASE" in
+  true | True | TRUE | 1)
+    # Do nothing if it matches
+    ;;
+  *)
+    ensure_suitcase
+    ;;
+esac
 
 [ "$1" == "--help" ] && help
 

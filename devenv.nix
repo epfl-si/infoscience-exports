@@ -35,7 +35,7 @@
     SECRET_KEY = config.secretspec.secrets.SECRET_KEY or "";
 
     # Deploy
-    SKIP_ANSIBLE_SUITECASE = "true";
+    SKIP_ANSIBLE_SUITCASE = "true";
 
   };
 
