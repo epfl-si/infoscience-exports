@@ -47,9 +47,7 @@ COPY ./Pipfile.lock /usr/src/app/Pipfile.lock
 RUN /bin/bash -c 'pipenv install $(test "$DJANGO_ENV" == production || echo "--dev") --deploy --system --ignore-pipfile'
 
 # copy project files
-COPY ./update_release.py /usr/src/app/update_release.py
 COPY ./infoscience_exports/exports/versions.py /usr/src/app/versions.py
-COPY ./Makefile /usr/src/app/Makefile
 COPY ./infoscience_exports /usr/src/app/infoscience_exports
 
 # collectstatic
