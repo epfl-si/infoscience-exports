@@ -36,10 +36,10 @@
                           name: "{{ django_entra_auth_secrets_name }}"
                     resources:
                       requests:
-                        memory: "512Mi"
+                        memory: "{{ '512Mi' if openshift_namespace == 'svc0089p-infoscience' else '200Mi' }}"
                         cpu: "0.001"
                       limits:
-                        memory: "512Mi"
+                        memory: "{{ '512Mi' if openshift_namespace == 'svc0089p-infoscience' else '200Mi' }}"
                 restartPolicy: Never
                 volumes:
                   - name: "{{ volume_name_logs }}"

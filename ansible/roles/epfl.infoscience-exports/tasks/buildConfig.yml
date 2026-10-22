@@ -59,5 +59,8 @@
             name: quay-pull-push-secret
         resources:
           requests:
-            cpu: "100m"  # Adjust this value as needed
+            cpu: "100m"
+            memory: "600Mi"
+          limits:
+            cpu: "100m"
             memory: "600Mi"
