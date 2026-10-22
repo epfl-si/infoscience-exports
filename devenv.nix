@@ -51,6 +51,8 @@
     # Deploy utilities
     ansible
     ansible-lint
+    kubectl
+    kubectl-cnpg
     openshift
   ];
 
