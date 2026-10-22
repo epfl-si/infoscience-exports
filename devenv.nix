@@ -182,7 +182,7 @@
     echo "    if you need admin rights, use: set-admin"
     echo ""
     echo "▶️  Once setup done, next times, start directly with:"
-    echo "       devenv processes up -d; dev-server"
+    echo "       devenv processes up -d"
     echo ""
     echo "⚙️  Django manage: dj <command>"
     echo ""
