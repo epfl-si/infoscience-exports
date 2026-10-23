@@ -9,12 +9,13 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.admin import SimpleListFilter
 
 from log_utils import LoggedModelAdminMixin
+from exports import __version__
 from .models import Export, LegacyExport, User
 
 
 admin.autodiscover()
 admin.site.site_url = settings.SITE_PATH
-admin.site.site_header = "Infoscience-Exporter Admin"
+admin.site.site_header = f"Infoscience-Exporter Admin (w{__version__})"
 admin.site.site_title = "Publication lists exporter"
 
 
