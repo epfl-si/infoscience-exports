@@ -15,7 +15,7 @@ from .models import Export, LegacyExport, User
 
 admin.autodiscover()
 admin.site.site_url = settings.SITE_PATH
-admin.site.site_header = f"Infoscience-Exporter Admin (w{__version__})"
+admin.site.site_header = f"Infoscience-Exporter Admin (v{__version__})"
 admin.site.site_title = "Publication lists exporter"
 
 
