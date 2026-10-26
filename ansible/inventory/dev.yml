@@ -33,7 +33,7 @@ all:
     python_image_source: "{{ quay_repo }}/{{ python_image_version }}"
     ## app
     app_build_image_git_branch: "main"
-    app_built_image_tag: "latest"
+    app_built_image_tag: "dev"
 
     # Route
     avi_route_access_level: private
