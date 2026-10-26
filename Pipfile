@@ -22,6 +22,7 @@ pymarc = "==4.2.2"
 pytz = "*"
 django-cors-headers = "*"
 whitenoise = "*"
+brotli = ">1.2.0"
 
 [dev-packages]
 "autopep8" = "*"
